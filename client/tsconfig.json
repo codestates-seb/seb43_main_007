@@ -8,9 +8,11 @@
       /* Bundler mode */
       "moduleResolution": "bundler",
       "allowImportingTsExtensions": true,
+      "declaration": true,
+      "emitDeclarationOnly": true,
       "resolveJsonModule": true,
       "isolatedModules": true,
-      "noEmit": true,
+      // "noEmit": true,
       "jsx": "react-jsx",
 
       /* Linting */
@@ -19,8 +21,8 @@
       "noUnusedParameters": true,
       "noFallthroughCasesInSwitch": true,
 
-      "rootDir": "./src",
-      "outDir": "../dist"
+      "rootDir": "src",
+      "outDir": "public"
    },
    "include": ["src"],
    "references": [{ "path": "./tsconfig.node.json" }]
