@@ -1,9 +1,11 @@
-import { MantineProvider, Text } from "@mantine/core";
+import { Button } from "@mantine/core";
 
-export default function App() {
+function App() {
    return (
-      <MantineProvider withGlobalStyles withNormalizeCSS>
-         <Text>Welcome to Mantine!</Text>
-      </MantineProvider>
+      <div>
+         <Button>Click me!</Button>
+      </div>
    );
 }
+
+export default App;
