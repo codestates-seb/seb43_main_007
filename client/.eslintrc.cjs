@@ -1,24 +1,25 @@
 module.exports = {
-   env: { browser: true, es2020: true },
+   env: {
+      browser: true,
+      es2021: true,
+   },
    extends: [
       "airbnb",
       "airbnb-typescript",
       "airbnb/hooks",
-      "eslint:recommended",
+      "plugin:react/recommended",
       "plugin:@typescript-eslint/recommended",
-      "plugin:react-hooks/recommended",
       "plugin:prettier/recommended",
    ],
+   overrides: [],
    parser: "@typescript-eslint/parser",
    parserOptions: {
       ecmaVersion: "latest",
       sourceType: "module",
-      project: "./tsconfig.json",
-      tsconfigRootDir: "client",
+      project: ["./tsconfig.json", "./tsconfig.node.json"],
    },
-   plugins: ["react-refresh", "prettier"],
+   plugins: ["react", "@typescript-eslint", "prettier"],
    rules: {
       "react/react-in-jsx-scope": 0,
-      "react-refresh/only-export-components": "warn",
    },
 };
