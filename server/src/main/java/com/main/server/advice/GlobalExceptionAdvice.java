@@ -1,7 +1,7 @@
 package com.main.server.advice;
 
-import com.codestates.exception.BusinessLogicException;
-import com.codestates.response.ErrorResponse;
+import com.main.server.exception.BusinessLogicException;
+import com.main.server.response.ErrorResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
