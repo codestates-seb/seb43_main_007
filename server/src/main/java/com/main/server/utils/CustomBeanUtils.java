@@ -11,6 +11,7 @@ import java.util.Collection;
 public class CustomBeanUtils<T> {
     public T copyNonNullProperties(T source, T destination) {
         if (source == null || destination == null || source.getClass() != destination.getClass()) {
+            System.out.println("@@");
             return null;
         }
 
