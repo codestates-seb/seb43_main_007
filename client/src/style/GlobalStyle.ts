@@ -8,6 +8,16 @@ const GlobalStyles = createGlobalStyle`
     font-weight: 400;
     font-style: normal;
 }
+// 일반 pc
+@media all and (min-width:1024px) {
+    body {
+    display: flex;
+    justify-content: center;
+    }
+  #root {
+    width :1380px;
+  }
+} 
     :root {
         --first-color1: #faf1e6;
         --first-color2: #fdfaf6;
