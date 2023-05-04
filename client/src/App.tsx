@@ -1,10 +1,13 @@
 import { Button } from "@mantine/core";
+import { BrowserRouter } from "react-router-dom";
+import GlobalStyles from "./style/GlobalStyle";
 
 function App() {
    return (
-      <div>
+      <BrowserRouter>
+         <GlobalStyles />
          <Button>Click me!</Button>
-      </div>
+      </BrowserRouter>
    );
 }
 
