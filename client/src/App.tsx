@@ -1,12 +1,12 @@
-import { Button } from "@mantine/core";
 import { BrowserRouter } from "react-router-dom";
 import GlobalStyles from "./style/GlobalStyle";
+import NavbarSearch from "./components/NavBar";
 
 function App() {
    return (
       <BrowserRouter>
          <GlobalStyles />
-         <Button>Click me!</Button>
+         <NavbarSearch />
       </BrowserRouter>
    );
 }
