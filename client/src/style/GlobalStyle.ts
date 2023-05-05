@@ -34,6 +34,8 @@ const GlobalStyles = createGlobalStyle`
         --third-color3: #609966;
         --third-color4: #40513b;
 
+        --dark-gray: #525960;
+        
         --font-large: 17px;
         --font-base: 15px;
         --font-small: 10px;
