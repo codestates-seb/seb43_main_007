@@ -1,12 +1,12 @@
-import { Button } from "@mantine/core";
 import { BrowserRouter } from "react-router-dom";
 import GlobalStyles from "./style/GlobalStyle";
+import Signin from "./pages/Signin";
 
 function App() {
    return (
       <BrowserRouter>
          <GlobalStyles />
-         <Button>Click me!</Button>
+         <Signin />
       </BrowserRouter>
    );
 }
