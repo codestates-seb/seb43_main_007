@@ -1,5 +1,6 @@
 import { BrowserRouter } from "react-router-dom";
 import GlobalStyles from "./style/GlobalStyle";
+import CommunityList from "./pages/CommunityList";
 import NavbarSearch from "./components/NavBar";
 
 function App() {
@@ -7,6 +8,7 @@ function App() {
       <BrowserRouter>
          <GlobalStyles />
          <NavbarSearch />
+         <CommunityList />
       </BrowserRouter>
    );
 }
