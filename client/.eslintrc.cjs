@@ -23,5 +23,6 @@ module.exports = {
    rules: {
       "react/react-in-jsx-scope": 0,
       "@typescript-eslint/no-use-before-define": 0,
+      "react/jsx-props-no-spreading": 0,
    },
 };
