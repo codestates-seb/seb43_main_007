@@ -5,7 +5,7 @@ import githubIcon from "../../../public/img/github-icon.png";
 function SigninOauth() {
    return (
       <SigninOauthContainer>
-         <span className="sns-text">SNS로 회원가입 해보세요</span>
+         <span className="sns-text">SNS로 회원가입 해보세요!</span>
          <div className="oauth-box">
             <button className="oauth-button" type="button">
                <img

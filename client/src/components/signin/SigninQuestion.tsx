@@ -57,5 +57,6 @@ const SigninQuestionContainer = styled.div`
       background-color: transparent;
       height: 30px;
       font-size: 1.2em;
+      cursor: pointer;
    }
 `;
