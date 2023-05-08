@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import googleIcon from "../../../public/img/google-icon.png";
-import githubIcon from "../../../public/img/github-icon.png";
+import googleIcon from "../../assets/img/google-icon.png";
+import githubIcon from "../../assets/img/github-icon.png";
 
 function SigninOauth() {
    return (

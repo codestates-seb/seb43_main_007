@@ -5,7 +5,7 @@ import { SigninTypes } from "./SigninTypes";
 import SigninQuestion from "./SigninQuestion";
 import SigninOauth from "./SigninOauth";
 import validFunc from "./signinValidFunc";
-import logo from "../../../public/img/logo2.png";
+import logo from "../../assets/img/logo2.png";
 
 interface InputContents {
    labelName: string;
