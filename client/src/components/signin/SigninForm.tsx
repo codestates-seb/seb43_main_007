@@ -113,6 +113,7 @@ const SigninFormContainer = styled.form`
    padding-top: 50px;
    background-color: var(--second-color1);
    box-shadow: 2px 3px 5px 0;
+   border-radius: 10px;
    .logo {
       position: absolute;
       width: 200px;
@@ -124,9 +125,15 @@ const SigninFormContainer = styled.form`
    .submit-button {
       width: 350px;
       height: 50px;
-      font-size: 1.5em;
+      font-size: var(--font-large);
       border-radius: 1000px;
       background-color: var(--second-color3);
+      color: white;
       cursor: pointer;
+      transition-duration: 0.2s;
+      &:hover {
+         background-color: var(--second-color4);
+         transition-duration: 0.2s;
+      }
    }
 `;

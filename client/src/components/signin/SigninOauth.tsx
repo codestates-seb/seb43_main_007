@@ -29,9 +29,12 @@ function SigninOauth() {
 export default SigninOauth;
 
 const SigninOauthContainer = styled.div`
+   display: flex;
+   flex-direction: column;
+   align-items: center;
    margin-top: 30px;
    .sns-text {
-      font-size: 25px;
+      font-size: var(--font-large);
    }
    .oauth-box {
       display: flex;
@@ -50,7 +53,7 @@ const SigninOauthContainer = styled.div`
          }
          .github-icon {
             width: 90%;
-            height: 72%;
+            height: 75%;
          }
       }
    }
