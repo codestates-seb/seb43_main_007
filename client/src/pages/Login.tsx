@@ -1,17 +1,30 @@
 import styled from "styled-components";
+import { useState } from "react";
 import LoginForm from "../components/login/LoginForm";
 import FindAndSignin from "../components/login/FindAndSignin";
 import OauthLogin from "../components/login/OauthLogin";
+import FindModal from "../components/login/FindModal";
 
 function Login() {
+   const [isFindModalOpen, setIsFindModalOpen] = useState(false);
+   const [curTab, setCurTab] = useState<"id" | "password">("id");
    return (
       <LoginContainer>
          <FormContainer>
             <span className="login-text">LOGIN</span>
             <LoginForm />
-            <FindAndSignin />
+            <FindAndSignin
+               setIsOpen={setIsFindModalOpen}
+               setCurTab={setCurTab}
+            />
             <OauthLogin />
          </FormContainer>
+         <FindModal
+            isOpen={isFindModalOpen}
+            setIsOpen={setIsFindModalOpen}
+            curTab={curTab}
+            setCurTab={setCurTab}
+         />
       </LoginContainer>
    );
 }

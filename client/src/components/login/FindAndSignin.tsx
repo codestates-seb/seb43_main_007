@@ -1,16 +1,33 @@
 import styled from "styled-components";
 
-function FindAndSignin() {
+interface Props {
+   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+   setCurTab: React.Dispatch<React.SetStateAction<"id" | "password">>;
+}
+
+function FindAndSignin({ setIsOpen, setCurTab }: Props) {
+   const handleIdFindModal = () => {
+      setCurTab("id");
+      setIsOpen(true);
+   };
+   const handlePasswordFindModal = () => {
+      setCurTab("password");
+      setIsOpen(true);
+   };
    return (
       <FindAndSigninContainer>
          <button type="button" className="box">
             회원가입
          </button>
-         <button type="button" className="box">
-            아이디찾기
+         <button type="button" className="box" onClick={handleIdFindModal}>
+            아이디 찾기
          </button>
-         <button type="button" className="box">
-            비밀번호찾기
+         <button
+            type="button"
+            className="box"
+            onClick={handlePasswordFindModal}
+         >
+            비밀번호 찾기
          </button>
       </FindAndSigninContainer>
    );
