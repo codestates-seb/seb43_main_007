@@ -17,10 +17,6 @@ const validPassword = (password: string) => {
    return valid;
 };
 
-const validPasswordConfirm = (passwordConfirm: string) => {
-   return passwordConfirm;
-};
-
 const validSocialNumber = (socialNumber: string) => {
    // 주민번호 유효한지 확인
    const valid =
@@ -39,7 +35,6 @@ export default {
    validNickName,
    validEmail,
    validPassword,
-   validPasswordConfirm,
    validSocialNumber,
    validAnswer,
 };

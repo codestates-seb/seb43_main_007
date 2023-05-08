@@ -13,7 +13,7 @@ interface Props {
    contents: keyof SigninContents;
    errors: FieldErrors<SigninContents>;
    errorMessage: string;
-   validFunction: (v1: string) => boolean | string;
+   validFunction: (v1: string) => boolean;
 }
 
 function SigninInput({
@@ -47,7 +47,7 @@ function SigninInput({
                      ? validFunction
                      : (value) => {
                           const { password } = getValues();
-                          return password === validFunction(value);
+                          return password === value;
                        },
             })}
          />
