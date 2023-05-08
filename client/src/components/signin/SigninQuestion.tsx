@@ -1,11 +1,11 @@
 import styled from "styled-components";
 import { UseFormRegister } from "react-hook-form";
-import { SigninContents } from "./SigninTypes";
+import { SigninTypes } from "./SigninTypes";
 
 interface Props {
-   register: UseFormRegister<SigninContents>;
+   register: UseFormRegister<SigninTypes>;
    labelName: string;
-   contents: keyof SigninContents;
+   contents: keyof SigninTypes;
 }
 
 function SigninQuestion({ register, labelName, contents }: Props) {
