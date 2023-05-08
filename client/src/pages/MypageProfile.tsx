@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import MypageTopProfile from "../components/MypageTopProfile";
-import MypageNavbar from "../components/MypageNavbar";
-import EditProfile from "../components/EditProfile";
+import MypageTopProfile from "../components/mypage-profile/MypageTopProfile";
+import MypageNavbar from "../components/mypage-profile/MypageNavbar";
+import EditProfile from "../components/mypage-profile/EditProfile";
 
 function MypageProfile() {
    return (
