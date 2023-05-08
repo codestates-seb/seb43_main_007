@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { useForm, SubmitHandler } from "react-hook-form";
 import SigninInput from "./SigninInput";
-import { SigninContents } from "./SigninContents";
+import { SigninTypes } from "./SigninTypes";
 import SigninQuestion from "./SigninQuestion";
 import SigninOauth from "./SigninOauth";
 import validFunc from "./signinValidFunc";
@@ -9,7 +9,7 @@ import logo from "../../../public/img/logo2.png";
 
 interface InputContents {
    labelName: string;
-   contents: keyof SigninContents;
+   contents: keyof SigninTypes;
    errorMessage: string;
    validFunction: (v: string) => boolean;
 }
@@ -20,8 +20,8 @@ function SigninForm() {
       handleSubmit,
       getValues,
       formState: { errors },
-   } = useForm<SigninContents>();
-   const onSubmit: SubmitHandler<SigninContents> = (data) => console.log(data);
+   } = useForm<SigninTypes>();
+   const onSubmit: SubmitHandler<SigninTypes> = (data) => console.log(data);
 
    const contentsArr: InputContents[] = [
       {

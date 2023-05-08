@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { UseFormRegister } from "react-hook-form";
-import { SigninContents } from "./SigninContents";
+import { SigninContents } from "./SigninTypes";
 
 interface Props {
    register: UseFormRegister<SigninContents>;

@@ -1,4 +1,4 @@
-export interface SigninContents {
+export interface SigninTypes {
    NickName: string;
    email: string;
    password: string;

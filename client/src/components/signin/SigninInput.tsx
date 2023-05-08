@@ -4,14 +4,14 @@ import {
    FieldErrors,
    UseFormGetValues,
 } from "react-hook-form";
-import { SigninContents } from "./SigninContents";
+import { SigninTypes } from "./SigninTypes";
 
 interface Props {
-   register: UseFormRegister<SigninContents>;
-   getValues: UseFormGetValues<SigninContents>;
+   register: UseFormRegister<SigninTypes>;
+   getValues: UseFormGetValues<SigninTypes>;
    labelName: string;
-   contents: keyof SigninContents;
-   errors: FieldErrors<SigninContents>;
+   contents: keyof SigninTypes;
+   errors: FieldErrors<SigninTypes>;
    errorMessage: string;
    validFunction: (v1: string) => boolean;
 }
