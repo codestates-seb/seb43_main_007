@@ -108,9 +108,9 @@ const SigninFormContainer = styled.form`
    flex-direction: column;
    align-items: center;
    justify-content: center;
-   width: 650px;
-   height: 85%;
-   padding-top: 50px;
+   width: 550px;
+   height: 680px;
+   padding-top: 5%;
    background-color: var(--second-color1);
    box-shadow: 2px 3px 5px 0;
    border-radius: 10px;
@@ -124,7 +124,7 @@ const SigninFormContainer = styled.form`
    }
    .submit-button {
       width: 350px;
-      height: 50px;
+      height: 40px;
       font-size: var(--font-large);
       border-radius: 1000px;
       background-color: var(--second-color3);

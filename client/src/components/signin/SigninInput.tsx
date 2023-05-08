@@ -64,22 +64,23 @@ const SigninInputContainer = styled.div`
    display: flex;
    flex-direction: column;
    width: 70%;
-   height: 70px;
+   height: 50px;
    margin-bottom: 10px;
    color: var(--first-color4);
    .contents-label {
-      font-size: var(--font-large);
-      margin-bottom: 5px;
+      font-size: var(--font-base);
+      margin-bottom: 3px;
    }
    .input {
       border-width: 0 0 3px 0;
       border-color: black;
       margin-bottom: 2px;
       background-color: transparent;
-      height: 30px;
-      font-size: var(--font-large);
+      height: 25px;
+      font-size: var(--font-base);
    }
    .error-message {
       color: red;
+      font-size: 12px;
    }
 `;

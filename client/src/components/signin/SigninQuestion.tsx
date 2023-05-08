@@ -43,11 +43,11 @@ const SigninQuestionContainer = styled.div`
    display: flex;
    flex-direction: column;
    width: 70%;
-   height: 70px;
+   height: 50px;
    margin-bottom: 10px;
    color: var(--first-color4);
    .contents-label {
-      font-size: var(--font-large);
+      font-size: var(--font-base);
       margin-bottom: 5px;
    }
    .input {
@@ -56,7 +56,7 @@ const SigninQuestionContainer = styled.div`
       margin-bottom: 2px;
       background-color: transparent;
       height: 30px;
-      font-size: var(--font-large);
+      font-size: var(--font-base);
       cursor: pointer;
    }
 `;

@@ -32,16 +32,16 @@ const SigninOauthContainer = styled.div`
    display: flex;
    flex-direction: column;
    align-items: center;
-   margin-top: 30px;
+   margin-top: 20px;
    .sns-text {
-      font-size: var(--font-large);
+      font-size: var(--font-base);
    }
    .oauth-box {
       display: flex;
-      margin-top: 15px;
+      margin-top: 5px;
       .oauth-button {
-         width: 100px;
-         height: 100px;
+         width: 80px;
+         height: 80px;
          border: none;
          border-radius: 50%;
          background-color: var(--second-color1);
