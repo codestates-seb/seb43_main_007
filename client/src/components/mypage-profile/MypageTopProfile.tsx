@@ -1,11 +1,18 @@
 import styled from "styled-components";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/store";
+import membership from "../../assets/img/membership.png";
+import userprofile from "../../assets/img/userprofile.png";
 
 function MypageTopProfile() {
+   const profilePhoto = useSelector(
+      (state: RootState) => state.profilePhoto.photo
+   );
    return (
       <TopProfileContainer>
          <ProfileBox>
             <img
-               src="./img/userprofile.png"
+               src={profilePhoto || userprofile}
                alt="user-profile"
                height="150"
                width="150"
@@ -14,7 +21,7 @@ function MypageTopProfile() {
          </ProfileBox>
          <Membership>
             <img
-               src="./img/membership.png"
+               src={membership}
                alt="membership-status"
                height="100"
                width="70"
