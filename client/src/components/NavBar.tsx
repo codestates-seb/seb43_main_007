@@ -21,7 +21,7 @@ import {
 } from "@tabler/icons-react";
 import styled from "styled-components";
 import { useState } from "react";
-import logo from "../../public/img/logo1.png";
+import logo from "../assets/img/logo1.png";
 
 const links = [
    { icon: IconBulb, label: "Home" },
@@ -52,11 +52,6 @@ function NavbarSearch() {
             />
             <span>{link.label}</span>
          </div>
-         {link.notifications && (
-            <Badge size="sm" variant="filled" className={classes.mainLinkBadge}>
-               {link.notifications}
-            </Badge>
-         )}
       </UnstyledButton>
    ));
 

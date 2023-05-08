@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import teamicon from "../../../public/img/teamicon.png";
+import teamicon from "../../assets/img/teamicon.png";
 
 function TeamInfo() {
    return (

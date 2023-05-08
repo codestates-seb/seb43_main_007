@@ -1,10 +1,10 @@
 import styled from "styled-components";
-import icon1 from "../../../public/img/icon1.png";
-import icon2 from "../../../public/img/icon2.png";
-import icon3 from "../../../public/img/icon3.png";
-import icon4 from "../../../public/img/icon4.png";
-import icon5 from "../../../public/img/icon5.png";
-import icon6 from "../../../public/img/icon6.png";
+import icon1 from "../../assets/img/icon1.png";
+import icon2 from "../../assets/img/icon2.png";
+import icon3 from "../../assets/img/icon3.png";
+import icon4 from "../../assets/img/icon4.png";
+import icon5 from "../../assets/img/icon5.png";
+import icon6 from "../../assets/img/icon6.png";
 import IndividualIntro from "./IndividualIntro";
 
 function Introduce() {
