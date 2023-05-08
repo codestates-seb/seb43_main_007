@@ -9,13 +9,13 @@ function OauthLogin() {
             <div className="icon">
                <img className="google" src={googleIcon} alt="google-icon" />
             </div>
-            <div className="text">구글로 로그인하기</div>
+            <div className="text">Google 로그인</div>
          </button>
          <button type="button" className="oauth-box">
             <div className="icon">
                <img className="github" src={githubIcon} alt="github-icon" />
             </div>
-            <div className="text">깃허브로 로그인하기</div>
+            <div className="text">Github 로그인</div>
          </button>
       </OauthLoginContainer>
    );
