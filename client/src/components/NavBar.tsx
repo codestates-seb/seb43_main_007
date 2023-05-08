@@ -52,11 +52,6 @@ function NavbarSearch() {
             />
             <span>{link.label}</span>
          </div>
-         {link.notifications && (
-            <Badge size="sm" variant="filled" className={classes.mainLinkBadge}>
-               {link.notifications}
-            </Badge>
-         )}
       </UnstyledButton>
    ));
 

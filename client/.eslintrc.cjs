@@ -30,6 +30,6 @@ module.exports = {
             labelAttributes: ["htmlFor"],
             controlComponents: ["input"],
          },
-      ],
+      ]
    },
 };
