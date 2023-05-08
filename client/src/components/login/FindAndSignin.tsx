@@ -37,12 +37,14 @@ export default FindAndSignin;
 
 const FindAndSigninContainer = styled.div`
    display: flex;
+   justify-content: center;
    height: 30px;
+   width: 100%;
    .box {
       display: flex;
       justify-content: center;
       align-items: center;
-      width: 150px;
+      width: 20%;
       height: 100%;
       font-size: var(--font-base);
       color: var(--third-color4);

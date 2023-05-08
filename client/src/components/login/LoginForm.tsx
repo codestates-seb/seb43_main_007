@@ -59,7 +59,7 @@ const LoginFormContainer = styled.form`
    flex-direction: column;
    align-items: center;
    width: 100%;
-   height: 40%;
+   height: 35%;
    margin-bottom: 1%;
    .logo {
       position: absolute;
@@ -71,26 +71,26 @@ const LoginFormContainer = styled.form`
    }
    .input-box {
       width: 70%;
-      height: 90px;
+      height: 70px;
       .email-input,
       .password-input {
          width: 100%;
-         height: 50px;
-         font-size: var(--font-large);
+         height: 40px;
+         font-size: var(--font-base);
          padding-left: 2%;
          margin-bottom: 5px;
          border: 0.5px solid var(--second-color3);
          border-radius: 5px;
       }
       .error-message {
-         font-size: var(--font-base);
+         font-size: var(--font-small);
          color: red;
       }
    }
    .submit {
       width: 70%;
-      height: 50px;
-      font-size: var(--font-large);
+      height: 40px;
+      font-size: var(--font-base);
       color: white;
       cursor: pointer;
       background-color: var(--second-color3);

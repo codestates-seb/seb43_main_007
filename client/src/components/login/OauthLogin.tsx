@@ -30,7 +30,7 @@ const OauthLoginContainer = styled.div`
    margin-top: 5%;
    .oauth-box {
       display: flex;
-      margin: 1% 0;
+      margin: 2% 0;
       border: 1px solid var(--third-color4);
       border-radius: 5px;
       padding: 0;

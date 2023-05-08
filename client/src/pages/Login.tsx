@@ -44,9 +44,9 @@ const FormContainer = styled.div`
    position: relative;
    flex-direction: column;
    align-items: center;
-   width: 650px;
-   height: 70%;
-   padding-top: 3%;
+   width: 550px;
+   height: 600px;
+   padding-top: 5%;
    background-color: var(--second-color1);
    box-shadow: 2px 3px 5px 0;
    border-radius: 10px;
@@ -54,7 +54,7 @@ const FormContainer = styled.div`
       color: var(--third-color4);
       font-size: 40px;
       font-weight: 900;
-      margin: 50px 0;
+      margin: 30px 0;
       letter-spacing: 5px;
    }
 `;
