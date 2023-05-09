@@ -21,7 +21,12 @@ function FindId() {
       if (inputRef.current !== null) inputRef.current.focus();
    }, []);
 
-   const onSubmit: SubmitHandler<SocialNum> = (data) => console.log(data);
+   const onSubmit: SubmitHandler<SocialNum> = (data) => {
+      // 아이디 찾기 요청 함수자리
+      // 아이디 찾기 성공시 modal 창으로 아이디 띄워주기
+      // 아이디 찾기 실패시 실패 modal 창 띄우기
+      console.log(data);
+   };
 
    return (
       <FindIdContainer onSubmit={handleSubmit(onSubmit)}>

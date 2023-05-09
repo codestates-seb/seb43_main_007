@@ -23,8 +23,12 @@ function FindPassword() {
       if (inputRef.current !== null) inputRef.current.focus();
    }, []);
 
-   const onSubmit: SubmitHandler<FindPasswordType> = (data) =>
+   const onSubmit: SubmitHandler<FindPasswordType> = (data) => {
+      // 비밀번호 찾기 요청 함수자리
+      // 비밀번호 찾기 성공시 modal 창으로 비밀번호 띄워주기
+      // 비밀번호 찾기 실패시 실패 modal 창 띄우기
       console.log(data);
+   };
 
    const questionList = [
       "내가 졸업한 초등학교는?",
@@ -127,6 +131,9 @@ const FindPasswordContainer = styled.form`
          width: 70%;
          color: red;
          font-size: var(--font-small);
+      }
+      #question {
+         cursor: pointer;
       }
    }
    .submit {

@@ -23,7 +23,12 @@ function LoginForm() {
       if (inputRef.current !== null) inputRef.current.focus();
    }, []);
 
-   const onSubmit: SubmitHandler<LoginTypes> = (data) => console.log(data);
+   const onSubmit: SubmitHandler<LoginTypes> = (data) => {
+      // 로그인 요청 함수 자리
+      // 로그인시 home화면으로 navigate
+      // 로그인 실패시 modal창으로 로그인실패 에러 메시지 띄우기
+      console.log(data);
+   };
 
    return (
       <LoginFormContainer onSubmit={handleSubmit(onSubmit)}>
