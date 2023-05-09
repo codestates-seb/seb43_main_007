@@ -1,8 +1,9 @@
 import styled from "styled-components";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import logo from "../../assets/img/logo2.png";
 import validFunction from "../../util/signinValidFunc";
+import FailModal from "./FailModal";
 
 interface LoginTypes {
    email: string;
@@ -15,6 +16,11 @@ function LoginForm() {
       handleSubmit,
       formState: { errors },
    } = useForm<LoginTypes>();
+   const [isFailModalOpen, setIsFailModalOpen] = useState(false);
+   const [failMessage, setFailMessage] = useState({
+      text1: "로그인에 실패했습니다.",
+      text2: "아이디와 비밀번호를 확인해주세요.",
+   });
 
    // 페이지 입장할 때 첫 input에 focus
    const inputRef = useRef<HTMLInputElement | null>(null);
@@ -27,6 +33,20 @@ function LoginForm() {
       // 로그인 요청 함수 자리
       // 로그인시 home화면으로 navigate
       // 로그인 실패시 modal창으로 로그인실패 에러 메시지 띄우기
+
+      // 서버와 통신이 원활하지 않을 때
+      // setFailMessage({
+      //    text1: "서버와 통신이 원활하지 않습니다.",
+      //    text2: "다시 시도해 주세요.",
+      // });
+      // setIsFailModalOpen(true);
+
+      // 아이디 비번이 잘못됐을 때
+      setFailMessage({
+         text1: "로그인에 실패했습니다.",
+         text2: "아이디와 비밀번호를 확인해주세요.",
+      });
+      setIsFailModalOpen(true);
       console.log(data);
    };
 
@@ -69,6 +89,11 @@ function LoginForm() {
          <button type="submit" className="submit">
             LOGIN
          </button>
+         <FailModal
+            isOpen={isFailModalOpen}
+            setIsOpen={setIsFailModalOpen}
+            message={failMessage}
+         />
       </LoginFormContainer>
    );
 }
