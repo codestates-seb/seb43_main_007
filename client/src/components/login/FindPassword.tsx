@@ -1,7 +1,8 @@
 import styled from "styled-components";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import validFunction from "../../util/signinValidFunc";
+import LoginModal from "./LoginModal";
 
 interface FindPasswordType {
    email: string;
@@ -15,6 +16,11 @@ function FindPassword() {
       handleSubmit,
       formState: { errors },
    } = useForm<FindPasswordType>();
+   const [isModalOpen, setIsModalOpen] = useState(false);
+   const [message, setMessage] = useState({
+      text1: "로그인에 실패했습니다.",
+      text2: "아이디와 비밀번호를 확인해주세요.",
+   });
 
    // 페이지 입장할 때 첫 input에 focus
    const inputRef = useRef<HTMLInputElement | null>(null);
@@ -26,7 +32,23 @@ function FindPassword() {
    const onSubmit: SubmitHandler<FindPasswordType> = (data) => {
       // 비밀번호 찾기 요청 함수자리
       // 비밀번호 찾기 성공시 modal 창으로 비밀번호 띄워주기
+      setMessage({
+         text1: "회원님의 비밀번호는",
+         text2: "qwer1234 입니다.",
+      });
+      setIsModalOpen(true);
       // 비밀번호 찾기 실패시 실패 modal 창 띄우기
+      // setMessage({
+      //    text1: "기입하신 정보가 잘못되었습니다.",
+      //    text2: "다시 한번 확인해주세요.",
+      // });
+      // setIsModalOpen(true);
+      // 서버와 통신이 원활하지 않을 때
+      // setMessage({
+      //    text1: "서버와 통신이 원활하지 않습니다.",
+      //    text2: "다시 시도해 주세요.",
+      // });
+      // setIsModalOpen(true);
       console.log(data);
    };
 
@@ -92,6 +114,11 @@ function FindPassword() {
          <button className="submit" type="submit">
             비밀번호 찾기
          </button>
+         <LoginModal
+            isOpen={isModalOpen}
+            setIsOpen={setIsModalOpen}
+            message={message}
+         />
       </FindPasswordContainer>
    );
 }

@@ -1,7 +1,8 @@
 import styled from "styled-components";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import validFunction from "../../util/signinValidFunc";
+import LoginModal from "./LoginModal";
 
 interface SocialNum {
    socialNumber: string;
@@ -13,6 +14,11 @@ function FindId() {
       handleSubmit,
       formState: { errors },
    } = useForm<SocialNum>();
+   const [isModalOpen, setIsModalOpen] = useState(false);
+   const [message, setMessage] = useState({
+      text1: "",
+      text2: "",
+   });
 
    // 페이지 입장할 때 첫 input에 focus
    const inputRef = useRef<HTMLInputElement | null>(null);
@@ -24,7 +30,23 @@ function FindId() {
    const onSubmit: SubmitHandler<SocialNum> = (data) => {
       // 아이디 찾기 요청 함수자리
       // 아이디 찾기 성공시 modal 창으로 아이디 띄워주기
+      setMessage({
+         text1: "회원님의 아이디는",
+         text2: "data@google.com 입니다.",
+      });
+      setIsModalOpen(true);
       // 아이디 찾기 실패시 실패 modal 창 띄우기
+      // setMessage({
+      //    text1: "등록된 아이디가",
+      //    text2: "존재하지 않습니다.",
+      // });
+      // setIsModalOpen(true);
+      // 서버와 통신이 원활하지 않을 때
+      // setMessage({
+      //    text1: "서버와 통신이 원활하지 않습니다.",
+      //    text2: "다시 시도해 주세요.",
+      // });
+      // setIsModalOpen(true);
       console.log(data);
    };
 
@@ -52,6 +74,11 @@ function FindId() {
          <button className="submit" type="submit">
             아이디 찾기
          </button>
+         <LoginModal
+            isOpen={isModalOpen}
+            setIsOpen={setIsModalOpen}
+            message={message}
+         />
       </FindIdContainer>
    );
 }
