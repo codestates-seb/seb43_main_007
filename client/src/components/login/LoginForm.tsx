@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { useEffect, useRef } from "react";
 import logo from "../../assets/img/logo2.png";
 import validFunction from "../../util/signinValidFunc";
 
@@ -14,6 +15,14 @@ function LoginForm() {
       handleSubmit,
       formState: { errors },
    } = useForm<LoginTypes>();
+
+   // 페이지 입장할 때 첫 input에 focus
+   const inputRef = useRef<HTMLInputElement | null>(null);
+   const { ref } = register("email");
+   useEffect(() => {
+      if (inputRef.current !== null) inputRef.current.focus();
+   }, []);
+
    const onSubmit: SubmitHandler<LoginTypes> = (data) => console.log(data);
 
    return (
@@ -27,6 +36,10 @@ function LoginForm() {
                   required: true,
                   validate: validFunction.validEmail,
                })}
+               ref={(e) => {
+                  ref(e);
+                  inputRef.current = e;
+               }}
             />
             {errors.email && (
                <span className="error-message">

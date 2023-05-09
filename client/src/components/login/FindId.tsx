@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { useEffect, useRef } from "react";
 import validFunction from "../../util/signinValidFunc";
 
 interface SocialNum {
@@ -12,6 +13,14 @@ function FindId() {
       handleSubmit,
       formState: { errors },
    } = useForm<SocialNum>();
+
+   // 페이지 입장할 때 첫 input에 focus
+   const inputRef = useRef<HTMLInputElement | null>(null);
+   const { ref } = register("socialNumber");
+   useEffect(() => {
+      if (inputRef.current !== null) inputRef.current.focus();
+   }, []);
+
    const onSubmit: SubmitHandler<SocialNum> = (data) => console.log(data);
 
    return (
@@ -24,6 +33,10 @@ function FindId() {
                   required: true,
                   validate: validFunction.validSocialNumber,
                })}
+               ref={(e) => {
+                  ref(e);
+                  inputRef.current = e;
+               }}
             />
             {errors.socialNumber && (
                <span className="error-message">
@@ -58,7 +71,6 @@ const FindIdContainer = styled.form`
    .input-box {
       display: flex;
       flex-direction: column;
-      justify-content: center;
       align-items: center;
       width: 100%;
       height: 50px;
@@ -67,6 +79,8 @@ const FindIdContainer = styled.form`
          height: 30px;
          margin-bottom: 1%;
          font-size: var(--font-base);
+         border-radius: 5px;
+         border: 1px solid var(--third-color2);
       }
       .error-message {
          display: inline-block;
@@ -77,7 +91,7 @@ const FindIdContainer = styled.form`
    }
    .submit {
       width: 70%;
-      height: 30px;
+      height: 40px;
       margin-top: 5%;
       font-size: var(--font-base);
       color: white;
