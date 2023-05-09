@@ -14,7 +14,6 @@ function App() {
                <NavbarSearch />
                <Home />
             </div>
-
             <div className="footer">
                <Footer />
             </div>
