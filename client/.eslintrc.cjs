@@ -30,6 +30,7 @@ module.exports = {
             labelAttributes: ["htmlFor"],
             controlComponents: ["input"],
          },
-      ]
+      ],
+      "no-nested-ternary": "off",
    },
 };

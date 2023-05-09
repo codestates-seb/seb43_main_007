@@ -17,8 +17,10 @@ export default function TitleValue({
    };
 
    return (
-      <li role="button" onClick={ValueClick}>
-         {value}
+      <li>
+         <button type="button" onClick={ValueClick}>
+            {value}
+         </button>
       </li>
    );
 }
