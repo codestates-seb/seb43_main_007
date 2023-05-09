@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import FindId from "./FindId";
+import FindPassword from "./FindPassword";
 
 interface Props {
    isOpen: boolean;
@@ -35,7 +36,7 @@ function FindModal({ isOpen, setIsOpen, curTab, setCurTab }: Props) {
                         비밀번호 찾기
                      </button>
                   </div>
-                  <FindId />
+                  {curTab === "id" ? <FindId /> : <FindPassword />}
                </ModalView>
             </ModalBackdrop>
          ) : null}
