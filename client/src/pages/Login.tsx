@@ -46,7 +46,7 @@ const FormContainer = styled.div`
    align-items: center;
    width: 550px;
    height: 600px;
-   padding-top: 5%;
+   padding-top: 3%;
    background-color: var(--second-color1);
    box-shadow: 2px 3px 5px 0;
    border-radius: 10px;

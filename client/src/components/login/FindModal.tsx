@@ -96,10 +96,10 @@ const ModalView = styled.div`
          border-color: var(--third-color4);
       }
       .id {
-         border-width: 0 1px 1px 0;
+         border-width: 0 0.3px 0.3px 0;
       }
       .password {
-         border-width: 0 0 1px 1px;
+         border-width: 0 0 0.3px 0.3px;
       }
       .active {
          background-color: var(--second-color1);

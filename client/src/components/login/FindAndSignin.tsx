@@ -59,7 +59,11 @@ const FindAndSigninContainer = styled.div`
          transition-duration: 0.2s;
       }
    }
+   .box:first-child {
+      border-radius: 3px 0 0 3px;
+   }
    .box:last-child {
       border-right: 0px;
+      border-radius: 0 3px 3px 0;
    }
 `;

@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { useForm, SubmitHandler } from "react-hook-form";
 import logo from "../../assets/img/logo2.png";
+import validFunction from "../../util/signinValidFunc";
 
 interface LoginTypes {
    email: string;
@@ -24,6 +25,7 @@ function LoginForm() {
                className="email-input"
                {...register("email", {
                   required: true,
+                  validate: validFunction.validEmail,
                })}
             />
             {errors.email && (
@@ -39,6 +41,7 @@ function LoginForm() {
                className="password-input"
                {...register("password", {
                   required: true,
+                  validate: validFunction.validPassword,
                })}
             />
             {errors.password && (
