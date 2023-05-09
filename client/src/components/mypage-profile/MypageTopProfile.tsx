@@ -8,6 +8,9 @@ function MypageTopProfile() {
    const profilePhoto = useSelector(
       (state: RootState) => state.profilePhoto.photo
    );
+   const profileNickname = useSelector(
+      (state: RootState) => state.profileNickname.nickname
+   );
    return (
       <TopProfileContainer>
          <ProfileBox>
@@ -17,7 +20,7 @@ function MypageTopProfile() {
                height="150"
                width="150"
             />
-            <span className="user-name">냥이</span>
+            <span className="user-name">{profileNickname || "냥이"}</span>
          </ProfileBox>
          <Membership>
             <img

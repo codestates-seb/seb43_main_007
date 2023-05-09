@@ -5,12 +5,14 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import validFunc from "../../util/signinValidFunc";
 import { setPhoto } from "../../reducers/ProfilePhotoSlice";
 import { SigninTypes } from "../signin/SigninTypes";
+import { setNickname } from "../../reducers/ProfileNicknameSlice";
 
 function EditProfile() {
    const {
       register,
       handleSubmit,
       formState: { errors, isValid },
+      watch,
    } = useForm<SigninTypes>({
       mode: "onChange",
       criteriaMode: "all",
@@ -18,6 +20,8 @@ function EditProfile() {
          NickName: "",
       },
    });
+   const currentNickname = watch("NickName");
+
    const onSubmit: SubmitHandler<SigninTypes> = (data) => console.log(data);
 
    const dispatch = useDispatch();
@@ -36,6 +40,10 @@ function EditProfile() {
          };
          reader.readAsDataURL(file);
       }
+   };
+
+   const handleSave = () => {
+      dispatch(setNickname(currentNickname));
    };
 
    const handleDelete = () => {
@@ -61,7 +69,11 @@ function EditProfile() {
                            "닉네임은 10자 이하여야 합니다.",
                      })}
                   />
-                  <DefaultButton type="submit" disabled={!isValid}>
+                  <DefaultButton
+                     type="submit"
+                     onClick={handleSave}
+                     disabled={!isValid}
+                  >
                      저장
                   </DefaultButton>
                </InputButtonContainer>
