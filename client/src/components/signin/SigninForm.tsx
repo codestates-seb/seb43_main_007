@@ -4,7 +4,7 @@ import SigninInput from "./SigninInput";
 import { SigninTypes } from "./SigninTypes";
 import SigninQuestion from "./SigninQuestion";
 import SigninOauth from "./SigninOauth";
-import validFunc from "./signinValidFunc";
+import validFunc from "../../util/signinValidFunc";
 import logo from "../../assets/img/logo2.png";
 
 interface InputContents {
