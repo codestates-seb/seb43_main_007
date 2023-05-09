@@ -17,6 +17,10 @@ import java.util.stream.Collectors;
 public interface BoardMapper{
     Board boardDtoToBoard(BoardDto.Post boardDto);
 
+    Board boardPutDtoToBoard(BoardDto.Put boardPutDto);
+    BoardDto.Response boardToBoardResponse(Board response);
+
+
 
 //    default Board boardDtoToBoard(BoardDto.Post boardDto){
 //        Board board = new Board();

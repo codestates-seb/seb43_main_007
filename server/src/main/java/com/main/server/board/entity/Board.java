@@ -5,6 +5,9 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -24,8 +27,11 @@ public class Board {
     @Lob
     private String content;
 
+    @Column()
+    private String address;
+
     @Column(nullable = false)
-    private Timestamp createdAt = new Timestamp(new Date().getTime());
+    private LocalDateTime now = LocalDateTime.now();
 
 
 //    private Long like;
