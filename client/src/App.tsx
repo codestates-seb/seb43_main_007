@@ -1,9 +1,11 @@
 import { BrowserRouter } from "react-router-dom";
 import styled from "styled-components";
 import GlobalStyles from "./style/GlobalStyle";
+import MypageProfile from "./pages/MypageProfile";
 import Home from "./pages/Home";
 import Footer from "./components/footer/Footer";
 import NavbarSearch from "./components/NavBar";
+import Signin from "./pages/Signin";
 
 function App() {
    return (
@@ -12,7 +14,7 @@ function App() {
             <GlobalStyles />
             <div className="nav">
                <NavbarSearch />
-               <Home />
+               <MypageProfile />
             </div>
             <div className="footer">
                <Footer />
