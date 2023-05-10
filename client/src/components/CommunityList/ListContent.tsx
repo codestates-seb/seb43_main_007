@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { RiSeedlingLine, RiSeedlingFill } from "react-icons/ri";
 import { BsPin, BsPinFill } from "react-icons/bs";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
-import type { ListDataProps } from "./listTypes";
+import type { ListDataProps } from "./Listtypes";
 import logo1 from "../../assets/logo1.png";
 
 function ListContent({ datas }: { datas: ListDataProps }) {
@@ -133,6 +133,10 @@ const DivContent = styled.div`
    .div-title {
       width: 500px;
 
+      div {
+         font-size: var(--font-large);
+      }
+
       .editer {
          width: 90px;
          height: 20px;
@@ -147,6 +151,9 @@ const DivContent = styled.div`
       justify-content: space-between;
       align-items: center;
 
+      font-size: 12px;
+      color: #6b728e;
+
       height: 60px;
    }
    .div-createdAt {
@@ -154,6 +161,9 @@ const DivContent = styled.div`
       flex-direction: column;
       justify-content: space-between;
       align-items: center;
+
+      font-size: 12px;
+      color: #6b728e;
 
       height: 60px;
    }
