@@ -2,7 +2,7 @@ import {
    createStyles,
    Navbar,
    TextInput,
-   Code,
+   // Code,
    UnstyledButton,
    Badge,
    Text,
@@ -13,15 +13,16 @@ import {
 } from "@mantine/core";
 import {
    IconBulb,
-   IconUser,
-   IconCheckbox,
+   // IconUser,
+   // IconCheckbox,
    IconSearch,
    IconPlus,
-   IconSelector,
+   // IconSelector,
 } from "@tabler/icons-react";
 import styled from "styled-components";
 import { useState } from "react";
 import logo from "../assets/img/logo1.png";
+
 
 const links = [
    { icon: IconBulb, label: "Home" },
@@ -75,7 +76,9 @@ function NavbarSearch() {
    };
 
    // 버튼 클릭시 값을 콘솔에 저장하는 함수(ajax요청으로 활용)
-   const searchClickHandler = () => {
+   const searchClickHandler = (event: React.FormEvent<HTMLButtonElement>) => {
+      event.preventDefault();
+
       console.log(search);
    };
 
@@ -94,7 +97,7 @@ function NavbarSearch() {
             </ProfileDiv>
          </Navbar.Section>
 
-         <SearchDiv>
+         <SearchForm>
             <label htmlFor="search-bar">
                <TextInput
                   id="search-bar"
@@ -107,13 +110,13 @@ function NavbarSearch() {
                />
             </label>
             <button
-               type="button"
+               type="submit"
                className={classes.searchCode}
                onClick={searchClickHandler}
             >
                검색
             </button>
-         </SearchDiv>
+         </SearchForm>
 
          <Navbar.Section className={classes.section}>
             <div className={classes.mainLinks}>{mainLinks}</div>
@@ -147,7 +150,7 @@ const ProfileDiv = styled.div`
    }
 `;
 
-const SearchDiv = styled.div`
+const SearchForm = styled.form`
    position: relative;
 
    button {

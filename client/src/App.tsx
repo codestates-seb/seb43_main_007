@@ -1,6 +1,7 @@
 import { BrowserRouter } from "react-router-dom";
 import styled from "styled-components";
 import GlobalStyles from "./style/GlobalStyle";
+import CommunityList from "./pages/CommunityList";
 import MypageProfile from "./pages/MypageProfile";
 import Home from "./pages/Home";
 import Footer from "./components/footer/Footer";
@@ -9,6 +10,7 @@ import Signin from "./pages/Signin";
 
 function App() {
    return (
+
       <Container>
          <BrowserRouter>
             <GlobalStyles />

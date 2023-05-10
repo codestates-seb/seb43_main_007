@@ -32,5 +32,6 @@ module.exports = {
             controlComponents: ["input"],
          },
       ],
+      "no-nested-ternary": "off",
    },
 };
