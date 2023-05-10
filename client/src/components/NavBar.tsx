@@ -21,7 +21,8 @@ import {
 } from "@tabler/icons-react";
 import styled from "styled-components";
 import { useState } from "react";
-import logo from "../assets/logo1.png";
+import logo from "../assets/img/logo1.png";
+
 
 const links = [
    { icon: IconBulb, label: "Home" },
