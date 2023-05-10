@@ -7,36 +7,30 @@ import Pagination from "./Pagination";
 import type { ListDataProps } from "./listTypes";
 
 function ListContents() {
-   const limit = 10;
-   const [page, setPage] = useState(1);
-   const offset = (page - 1) * limit;
-
-   const postsData = (posts: ListDataProps[]): ListDataProps[] => {
-      if (posts) {
-         const result = posts.slice(offset, offset + limit);
-         console.log(result);
-         return result;
-      }
-      return posts;
-   };
+   const [curPage, setCurPage] = useState(1);
+   const totalCount = data.length;
+   const size = 10;
+   const totalPage = Math.ceil(totalCount / size);
+   const pageCount = 5;
+   const offset = (curPage - 1) * size;
 
    return (
       <DivContainer>
          <div>
             <ul>
-               {postsData(data).map((el: ListDataProps) => (
-                  <DivContent key={el.id}>
-                     <ListContent datas={el} />
-                  </DivContent>
+               {data.slice(offset, offset + size).map((el: ListDataProps) => (
+                  <ListContent key={el.id} datas={el} />
                ))}
             </ul>
          </div>
          <DivPagination>
             <Pagination
-               limit={limit}
-               totalPosts={data.length}
-               page={page}
-               setPage={setPage}
+               curPage={curPage}
+               setCurPage={setCurPage}
+               totalPage={totalPage}
+               totalCount={totalCount}
+               size={size}
+               pageCount={pageCount}
             />
          </DivPagination>
       </DivContainer>
@@ -51,17 +45,6 @@ const DivContainer = styled.div`
    > div > ul {
       padding: 0px;
    }
-`;
-
-const DivContent = styled.div`
-   display: flex;
-   align-items: center;
-
-   border-bottom: 1px solid black;
-   height: 80px;
-   width: 100%;
-
-   margin: 30px 0px 30px 0px;
 `;
 
 const DivPagination = styled.div`

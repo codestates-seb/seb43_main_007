@@ -1,5 +1,6 @@
 import { useRef, useState } from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
+import { BiUpArrowCircle, BiDownArrowCircle } from "react-icons/bi";
 import useDetectClose from "../../hooks/useDetectClose";
 import TitleValue from "./TitleValue";
 // import { postTodos } from "../../api/axios";
@@ -64,13 +65,14 @@ function ListSearch() {
       <DivContainer>
          <DivContent>
             <DivSearch>
+               {/* 드롭다운 */}
                <DivDropdown ref={dropDownRef}>
                   <input
                      value={title}
                      type="button"
                      // onClick={() => setIsOpen(!isOpen)}
                   />
-                  <Menu>
+                  <Menu isOpen={isOpen}>
                      {isOpen && (
                         <ul>
                            {titlesList.map((el, idx) => (
@@ -87,11 +89,14 @@ function ListSearch() {
                   </Menu>
                   {isOpen ? (
                      <button type="button" onClick={dropDownHandler}>
-                        ▴
+                        <BiUpArrowCircle size="25" onClick={dropDownHandler} />
                      </button>
                   ) : (
                      <button type="button" onClick={dropDownHandler}>
-                        ▾
+                        <BiDownArrowCircle
+                           size="25"
+                           onClick={dropDownHandler}
+                        />
                      </button>
                   )}
                </DivDropdown>
@@ -138,7 +143,7 @@ const DivContent = styled.div`
 const DivSearch = styled.div`
    display: flex;
    align-items: center;
-   border: 1px solid black;
+   border: 3px solid #064420;
    border-radius: 5px;
    width: 70%;
    height: 45px;
@@ -154,11 +159,12 @@ const DivSearch = styled.div`
       width: 80%;
 
       > input {
+         text-align: left;
          height: 30px;
-         width: 90%;
+         width: 500px;
          border: 0;
          background-color: transparent;
-         margin-right: 20px;
+         margin-right: 60px;
 
          outline: none;
       }
@@ -167,16 +173,16 @@ const DivSearch = styled.div`
          position: absolute;
          top: 6px;
          margin-top: 0px;
-         margin-right: 10px;
+         margin-right: 5px;
          right: 0px;
          border-radius: 4px;
-
+         width: 70px;
          height: 30px;
 
          border: 0;
          background-color: transparent;
          :hover {
-            background-color: red;
+            background-color: #feffde;
             cursor: pointer;
          }
       }
@@ -202,7 +208,11 @@ const DivCreateText = styled.div`
 `;
 
 const DivDropdown = styled.div`
-   border-right: 1px solid black;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+
+   border-right: 3px solid #064420;
    margin: 0px 0px 0px 5px;
    width: 30%;
 
@@ -213,37 +223,54 @@ const DivDropdown = styled.div`
       background-color: transparent;
    }
    > button {
-      width: 20px;
+      width: 40px;
       border: 0;
       background-color: transparent;
 
       cursor: pointer;
+
+      > svg {
+         pointer-events: none;
+      }
    }
 `;
 
-const Menu = styled.div`
-   /* display: flex;
-   justify-content: center;
-   align-items: center;
-   text-align: center; */
+const Menu = styled.div<{ isOpen: boolean }>`
+   ${({ isOpen }) =>
+      isOpen &&
+      css`
+         /* border: 1px solid black; */
+         border-top: none;
+         height: 70px;
+         width: 150px;
 
-   /* border: 1px solid black;
-   width: 150px; */
+         background-color: #e4efe7;
 
-   position: absolute;
-   display: flex;
-   height: 50px;
+         position: absolute;
+         display: flex;
 
-   top: 50px;
-   left: 0px;
+         top: 44px;
+         left: 0px;
 
-   border-radius: 5px;
+         border-radius: 0px 0px 5px 5px;
+
+         @keyframes dropdown {
+            0% {
+               transform: translateY(-10%);
+            }
+            100% {
+               transform: translateY(0);
+            }
+         }
+         animation: dropdown 0.4s ease;
+      `};
+
    button {
       border: 0;
       background-color: transparent;
 
       :hover {
-         background-color: gray;
+         background-color: #fdfaf6;
          cursor: pointer;
       }
    }

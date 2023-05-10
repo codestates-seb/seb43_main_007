@@ -1,11 +1,5 @@
 import { useState } from "react";
 import styled from "styled-components";
-import {
-   faThumbtack,
-   faHeart,
-   faSeedling,
-} from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { RiSeedlingLine, RiSeedlingFill } from "react-icons/ri";
 import { BsPin, BsPinFill } from "react-icons/bs";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
@@ -19,6 +13,8 @@ function ListContent({ datas }: { datas: ListDataProps }) {
    const [isEditerPick, setIsEditerPick] = useState(false);
    // 고정 유무(리덕스 툴킷으로 관리?)
    const [isFixPin, setIsFixPin] = useState(false);
+   const [isFixPinNumber, setIsFixPinNumber] = useState(0);
+   console.log(isFixPinNumber);
    // 좋아요 유무
    const [isLike, setIsLike] = useState(false);
    // 즐겨찾기(북마크) 유무
@@ -29,85 +25,101 @@ function ListContent({ datas }: { datas: ListDataProps }) {
    };
 
    return (
-      <Li>
-         <DivContainer>
-            {/* 썸네일 */}
-            <div className="div-img">
-               <img src={logo1} alt="로고이미지" style={{ width: "70px" }} />
-            </div>
-            {/* 에디터픽 + 제목 */}
-            <div className="div-title">
-               {isEditerPick ? (
-                  <div className="editer">{`Editer's Pick`}</div>
-               ) : null}
-               <div>{datas.title}</div>
-            </div>
-            {/* 고정 */}
-            <div className="div-author">
-               {isManager ? (
-                  isFixPin ? (
-                     <DivImg>
+      <DivContainer isFixPin={isFixPin}>
+         <Li>
+            <DivContent>
+               {/* 썸네일 */}
+               <div className="div-img">
+                  <img src={logo1} alt="로고이미지" style={{ width: "70px" }} />
+               </div>
+               {/* 에디터픽 + 제목 */}
+               <div className="div-title">
+                  {isEditerPick ? (
+                     <div className="editer">{`Editer's Pick`}</div>
+                  ) : null}
+                  <div>{datas.title}</div>
+               </div>
+               {/* 고정 */}
+               <div className="div-author">
+                  {isManager ? (
+                     isFixPin ? (
+                        <DivImg>
+                           <BsPinFill size="25" color="green" />
+                        </DivImg>
+                     ) : (
+                        <DivImg>
+                           <BsPin size="25" />
+                        </DivImg>
+                     )
+                  ) : isFixPin ? (
+                     <DivImg onClick={pinFixClickHandler}>
                         <BsPinFill size="25" color="green" />
                      </DivImg>
                   ) : (
-                     <DivImg>
+                     <DivImg onClick={pinFixClickHandler}>
                         <BsPin size="25" />
                      </DivImg>
-                  )
-               ) : isFixPin ? (
-                  <DivImg onClick={pinFixClickHandler}>
-                     <BsPinFill size="25" color="green" />
+                  )}
+                  <DivAuthor>
+                     <span>
+                        <img
+                           src={logo1}
+                           alt="로고이미지"
+                           style={{ width: "30px" }}
+                        />
+                     </span>
+                     <span>{datas.author}</span>
+                  </DivAuthor>
+               </div>
+               {/* 좋아요 + 북마크 */}
+               <div className="div-createdAt">
+                  <DivImg>
+                     <button type="button" onClick={() => setIsLike(!isLike)}>
+                        {isLike ? (
+                           <AiFillHeart size="25" color="red" />
+                        ) : (
+                           <AiOutlineHeart size="25" />
+                        )}
+                     </button>
+                     <button
+                        type="button"
+                        onClick={() => setIsBookMark(!isBookMark)}
+                     >
+                        {isBookMark ? (
+                           <RiSeedlingFill size="25" color="green" />
+                        ) : (
+                           <RiSeedlingLine size="25" />
+                        )}
+                     </button>
                   </DivImg>
-               ) : (
-                  <DivImg onClick={pinFixClickHandler}>
-                     <BsPin size="25" />
-                  </DivImg>
-               )}
-               <DivAuthor>
-                  <span>
-                     <img
-                        src={logo1}
-                        alt="로고이미지"
-                        style={{ width: "30px" }}
-                     />
-                  </span>
-                  <span>{datas.author}</span>
-               </DivAuthor>
-            </div>
-            {/* 좋아요 + 북마크 */}
-            <div className="div-createdAt">
-               <DivImg>
-                  <button type="button" onClick={() => setIsLike(!isLike)}>
-                     {isLike ? (
-                        <AiFillHeart size="25" color="red" />
-                     ) : (
-                        <AiOutlineHeart size="25" />
-                     )}
-                  </button>
-                  <button
-                     type="button"
-                     onClick={() => setIsBookMark(!isBookMark)}
-                  >
-                     {isBookMark ? (
-                        <RiSeedlingFill size="25" color="green" />
-                     ) : (
-                        <RiSeedlingLine size="25" />
-                     )}
-                  </button>
-               </DivImg>
-               <div>{datas.createdAt}</div>
-            </div>
-         </DivContainer>
-      </Li>
+                  <div>{datas.createdAt}</div>
+               </div>
+            </DivContent>
+         </Li>
+      </DivContainer>
    );
 }
 
 export default ListContent;
+
+const DivContainer = styled.div<{ isFixPin: boolean }>`
+   display: flex;
+   align-items: center;
+
+   border-bottom: 1px solid black;
+   height: 80px;
+   width: 100%;
+
+   margin: 30px 0px 30px 0px;
+
+   background-color: ${({ isFixPin }) => (isFixPin ? "#feffde" : "null")};
+`;
+
 const Li = styled.li`
    width: 100%;
 `;
 
-const DivContainer = styled.div`
+const DivContent = styled.div`
    display: flex;
    align-items: center;
    justify-content: space-between;
