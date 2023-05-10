@@ -7,6 +7,7 @@ import Home from "./Home";
 import Navbar from "../components/NavBar";
 import Signin from "./Signin";
 import Login from "./Login";
+import PostDetail from "./PostDetail";
 
 function RoutingPage() {
    const { pathname } = useLocation();
@@ -24,6 +25,7 @@ function RoutingPage() {
             <Route path="/communitylist" element={<CommunityList />} />
             <Route path="/signin" element={<Signin />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/post" element={<PostDetail />} />
          </Routes>
       </Container>
    );
