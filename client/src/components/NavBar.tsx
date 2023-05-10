@@ -21,8 +21,8 @@ import {
 } from "@tabler/icons-react";
 import styled from "styled-components";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import logo from "../assets/img/logo1.png";
-
 
 const links = [
    { icon: IconBulb, label: "Home" },
@@ -31,12 +31,12 @@ const links = [
 ];
 
 const collections = [
-   { emoji: "👍", label: "전체" },
-   { emoji: "👍", label: "카페" },
-   { emoji: "👍", label: "리필 스테이션" },
-   { emoji: "👍", label: "식당" },
-   { emoji: "👍", label: "식료품" },
-   { emoji: "👍", label: "전기차" },
+   { emoji: "👍", label: "전체", path: "/communitylist" },
+   { emoji: "👍", label: "카페", path: "/home" },
+   { emoji: "👍", label: "리필 스테이션", path: "/home" },
+   { emoji: "👍", label: "식당", path: "/home" },
+   { emoji: "👍", label: "식료품", path: "/home" },
+   { emoji: "👍", label: "전기차", path: "/home" },
 ];
 
 function NavbarSearch() {
@@ -44,22 +44,23 @@ function NavbarSearch() {
    const [search, setSearch] = useState("");
 
    const mainLinks = links.map((link) => (
-      <UnstyledButton key={link.label} className={classes.mainLink}>
-         <div className={classes.mainLinkInner}>
-            <link.icon
-               size={20}
-               className={classes.mainLinkIcon}
-               stroke={1.5}
-            />
-            <span>{link.label}</span>
-         </div>
-      </UnstyledButton>
+      <Link to="/" key={link.label}>
+         <UnstyledButton className={classes.mainLink}>
+            <div className={classes.mainLinkInner}>
+               <link.icon
+                  size={20}
+                  className={classes.mainLinkIcon}
+                  stroke={1.5}
+               />
+               <span>{link.label}</span>
+            </div>
+         </UnstyledButton>
+      </Link>
    ));
 
    const collectionLinks = collections.map((collection) => (
-      <a
-         href="/"
-         onClick={(event) => event.preventDefault()}
+      <Link
+         to={collection.path}
          key={collection.label}
          className={classes.collectionLink}
       >
@@ -67,7 +68,7 @@ function NavbarSearch() {
             {collection.emoji}
          </span>{" "}
          {collection.label}
-      </a>
+      </Link>
    ));
 
    // 검색창 값 상태 저장하는 함수
@@ -167,6 +168,8 @@ const SearchForm = styled.form`
 // mantine CSS
 const useStyles = createStyles((theme) => ({
    navbar: {
+      position: "fixed",
+      top: 0,
       paddingTop: 0,
    },
 

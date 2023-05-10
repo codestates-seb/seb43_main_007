@@ -21,7 +21,7 @@ export default MypageProfile;
 
 export const MypageProfileContainer = styled.div`
    width: 1080px;
-   height: 100vh;
+   /* height: 100%; */
    padding-left: 16px;
    padding-top: 16px;
 `;
