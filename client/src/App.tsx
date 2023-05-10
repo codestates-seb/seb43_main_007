@@ -28,6 +28,7 @@ export default App;
 
 const Container = styled.div`
    position: relative;
+   width: 100%;
    .nav {
       display: flex;
    }
