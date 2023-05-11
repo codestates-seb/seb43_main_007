@@ -15,7 +15,7 @@ function RoutingPage() {
    const { pathname } = useLocation();
    const [condition, setCondition] = useState(true);
    useEffect(() => {
-      if (pathname === "/signin" || pathname === "/login") setCondition(false);
+      if (pathname === "/signup" || pathname === "/login") setCondition(false);
       else setCondition(true);
    }, [pathname]);
    return (
@@ -27,7 +27,7 @@ function RoutingPage() {
             <Route path="/bookmark" element={<MypageBookmark />} />
             <Route path="/communitylist" element={<CommunityList />} />
             <Route path="/createpost" element={<CreatePost />} />
-            <Route path="/signin" element={<Signup />} />
+            <Route path="/signup" element={<Signup />} />
             <Route path="/login" element={<Login />} />
          </Routes>
       </Container>

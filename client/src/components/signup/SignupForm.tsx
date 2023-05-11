@@ -3,7 +3,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import SignupInput from "./SignupInput";
 import { SignupTypes } from "./SignupTypes";
 import SignupQuestion from "./SignupQuestion";
-import SignupOauth from "./SigninOauth";
+import SignupOauth from "./SignupOauth";
 import validFunc from "../../util/signinValidFunc";
 import logo from "../../assets/img/logo2.png";
 
