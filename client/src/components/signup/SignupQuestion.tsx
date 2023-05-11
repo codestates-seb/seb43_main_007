@@ -43,7 +43,7 @@ const SignupQuestionContainer = styled.div`
    display: flex;
    flex-direction: column;
    width: 70%;
-   height: 50px;
+   height: 60px;
    margin-bottom: 10px;
    color: var(--first-color4);
    .contents-label {

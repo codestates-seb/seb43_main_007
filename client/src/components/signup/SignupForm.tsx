@@ -21,7 +21,11 @@ function SignupForm() {
       getValues,
       formState: { errors },
    } = useForm<SignupTypes>();
-   const onSubmit: SubmitHandler<SignupTypes> = (data) => console.log(data);
+   const onSubmit: SubmitHandler<SignupTypes> = (data) => {
+      // 성공시 로그인
+      // 실패시 ?
+      console.log(data);
+   };
 
    const contentsArr: InputContents[] = [
       {
@@ -109,7 +113,7 @@ const SignupFormContainer = styled.form`
    align-items: center;
    justify-content: center;
    width: 550px;
-   height: 680px;
+   height: 750px;
    padding-top: 5%;
    background-color: var(--second-color1);
    box-shadow: 2px 3px 5px 0;
