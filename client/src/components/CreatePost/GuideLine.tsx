@@ -7,8 +7,9 @@ function GuideLine() {
          <div>
             작성 글이 여러 사람의 추천을 받아 관리자에 의해 채택 되면 메인화면에
             게시됩니다.
+            <br /> 채택된 글 작성자에게는 이메일이 발송됩니다.
             <br />
-            채택된 글 작성자에게는 이메일이 발송됩니다.
+            <br />
          </div>
          <ol>
             글 작성시 유의사항
@@ -28,7 +29,6 @@ const DivContainer = styled.div`
    flex-direction: column;
    justify-content: center;
    background-color: yellow;
-   margin: 16px 0px 0px 16px;
    width: 100%;
    height: 20%;
 
