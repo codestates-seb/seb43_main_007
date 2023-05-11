@@ -14,9 +14,9 @@ public class BoardTag {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long boardTagId;
 
-//    @ManyToOne
-//    @JoinColumn(name = "BOARD_ID")
-//    private Board board;
+    @ManyToOne
+    @JoinColumn(name = "BOARD_ID")
+    private Board board;
 
     @ManyToOne
     @JoinColumn(name = "TAG_ID")

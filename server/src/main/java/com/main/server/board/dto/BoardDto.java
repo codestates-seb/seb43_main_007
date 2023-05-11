@@ -26,7 +26,7 @@ public class BoardDto {
         private String content;
 
         private String address;
-//        private List<Tag> tags;
+//        private List<BoardTag> tags;
 
     }
     @Getter
@@ -48,16 +48,26 @@ public class BoardDto {
     @Getter
     @AllArgsConstructor
     public static class Response{
+
+        private Long boardId;
         private String title;
         private String content;
         private String address;
         private LocalDateTime now;
+
+        // @@@@@@@@@@@@@@@@@@@
 
         private String photo;
 
         private int like;
 
         private int bookmark;
+
+        private String nickName;
+        private String userPhoto;
+
+
+
 
 
 //        private List<Tag> tags;

@@ -19,6 +19,7 @@ public interface BoardMapper{
     Board boardDtoToBoard(BoardDto.Post boardDto);
 
     Board boardPutDtoToBoard(BoardDto.Put boardPutDto);
+
     default BoardDto.Response boardToBoardResponse(Board response){
             if ( response == null ) {
                 return null;
@@ -28,18 +29,20 @@ public interface BoardMapper{
             String content = null;
             String address = null;
             LocalDateTime now = null;
+            long boardId = 0;
 
-
+            boardId = response.getBoardId();
             title = response.getTitle();
             content = response.getContent();
             address = response.getAddress();
             now = response.getNow();
 
-            String photo = "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fbu2jlU%2FbtsdeghMv6W%2F9r6Ft7XKr98DN2DJLVLQC0%2Fimg.png";
-
+            String photo = "http://www.planet-times.com/Files/320/Images/202206/2022060332507773.jpg";
+            String nickName = "InGeon";
+            String userPhoto = "https://upload.wikimedia.org/wikipedia/ko/thumb/8/81/Spongebob_4795.jpg/345px-Spongebob_4795.jpg";
             int like = 0;
             int bookmark = 1;
-            BoardDto.Response response1 = new BoardDto.Response( title, content, address, now, photo, like, bookmark );
+            BoardDto.Response response1 = new BoardDto.Response( boardId, title, content, address, now, photo, like, bookmark, nickName, userPhoto );
 
             return response1;
         }
