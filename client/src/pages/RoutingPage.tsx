@@ -7,7 +7,6 @@ import Home from "./Home";
 import Navbar from "../components/NavBar";
 import Signin from "./Signin";
 import Login from "./Login";
-import Footer from "../components/footer/Footer";
 
 function RoutingPage() {
    const { pathname } = useLocation();
