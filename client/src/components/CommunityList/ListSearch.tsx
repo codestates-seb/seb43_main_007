@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 import styled, { css } from "styled-components";
 import { BiUpArrowCircle, BiDownArrowCircle } from "react-icons/bi";
+import { Link } from "react-router-dom";
 import useDetectClose from "../../hooks/useDetectClose";
 import TitleValue from "./TitleValue";
 // import { postTodos } from "../../api/axios";
@@ -112,9 +113,11 @@ function ListSearch() {
                   </button>
                </div>
             </DivSearch>
-            <DivCreateText>
-               <button type="button">글쓰기</button>
-            </DivCreateText>
+            <Link to="/createpost">
+               <DivCreateText>
+                  <button type="button">글쓰기</button>
+               </DivCreateText>
+            </Link>
          </DivContent>
       </DivContainer>
    );
@@ -182,7 +185,8 @@ const DivSearch = styled.div`
          border: 0;
          background-color: transparent;
          :hover {
-            background-color: #feffde;
+            background-color: var(--first-color4);
+            color: white;
             cursor: pointer;
          }
       }
@@ -198,9 +202,15 @@ const DivCreateText = styled.div`
    border-radius: 4px;
    background-color: var(--third-color2);
 
+   :hover {
+      background-color: var(--first-color4);
+   }
+
    > button {
       width: 100%;
       height: 100%;
+      color: white;
+      cursor: pointer;
 
       border: 0;
       background-color: transparent;

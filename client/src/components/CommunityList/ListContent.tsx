@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { RiSeedlingLine, RiSeedlingFill } from "react-icons/ri";
 import { BsPin, BsPinFill } from "react-icons/bs";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
-import type { ListDataProps } from "./Listtypes";
+import type { ListDataProps } from "./listtypes";
 import logo1 from "../../assets/logo1.png";
 
 function ListContent({ datas }: { datas: ListDataProps }) {
@@ -35,7 +35,7 @@ function ListContent({ datas }: { datas: ListDataProps }) {
                {/* 에디터픽 + 제목 */}
                <div className="div-title">
                   {isEditerPick ? (
-                     <div className="editer">{`Editer's Pick`}</div>
+                     <DivEditerPick className="editer">{`Editer's Pick`}</DivEditerPick>
                   ) : null}
                   <div>{datas.title}</div>
                </div>
@@ -136,14 +136,6 @@ const DivContent = styled.div`
       div {
          font-size: var(--font-large);
       }
-
-      .editer {
-         width: 90px;
-         height: 20px;
-         border-radius: 5px;
-         background-color: #e0ede4;
-         color: #083c1f;
-      }
    }
    .div-author {
       display: flex;
@@ -167,6 +159,14 @@ const DivContent = styled.div`
 
       height: 60px;
    }
+`;
+
+const DivEditerPick = styled.div`
+   width: 100px;
+   height: 20px;
+   border-radius: 5px;
+   background-color: #e0ede4;
+   color: #083c1f;
 `;
 
 const DivAuthor = styled.div`
