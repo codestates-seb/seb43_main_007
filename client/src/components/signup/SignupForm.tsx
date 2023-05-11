@@ -1,27 +1,27 @@
 import styled from "styled-components";
 import { useForm, SubmitHandler } from "react-hook-form";
-import SigninInput from "./SigninInput";
-import { SigninTypes } from "./SigninTypes";
-import SigninQuestion from "./SigninQuestion";
-import SigninOauth from "./SigninOauth";
+import SignupInput from "./SignupInput";
+import { SignupTypes } from "./SignupTypes";
+import SignupQuestion from "./SignupQuestion";
+import SignupOauth from "./SigninOauth";
 import validFunc from "../../util/signinValidFunc";
 import logo from "../../assets/img/logo2.png";
 
 interface InputContents {
    labelName: string;
-   contents: keyof SigninTypes;
+   contents: keyof SignupTypes;
    errorMessage: string;
    validFunction: (v: string) => boolean;
 }
 
-function SigninForm() {
+function SignupForm() {
    const {
       register,
       handleSubmit,
       getValues,
       formState: { errors },
-   } = useForm<SigninTypes>();
-   const onSubmit: SubmitHandler<SigninTypes> = (data) => console.log(data);
+   } = useForm<SignupTypes>();
+   const onSubmit: SubmitHandler<SignupTypes> = (data) => console.log(data);
 
    const contentsArr: InputContents[] = [
       {
@@ -69,12 +69,12 @@ function SigninForm() {
    ];
 
    return (
-      <SigninFormContainer onSubmit={handleSubmit(onSubmit)}>
+      <SignupFormContainer onSubmit={handleSubmit(onSubmit)}>
          <img className="logo" src={logo} alt="logo" />
          {contentsArr.map((el) => {
             if (el.contents === "question") {
                return (
-                  <SigninQuestion
+                  <SignupQuestion
                      key={el.contents}
                      register={register}
                      {...el}
@@ -82,7 +82,7 @@ function SigninForm() {
                );
             }
             return (
-               <SigninInput
+               <SignupInput
                   key={el.contents}
                   register={register}
                   errors={errors}
@@ -95,14 +95,14 @@ function SigninForm() {
          <button type="submit" className="submit-button">
             회원가입
          </button>
-         <SigninOauth />
-      </SigninFormContainer>
+         <SignupOauth />
+      </SignupFormContainer>
    );
 }
 
-export default SigninForm;
+export default SignupForm;
 
-const SigninFormContainer = styled.form`
+const SignupFormContainer = styled.form`
    display: flex;
    position: relative;
    flex-direction: column;

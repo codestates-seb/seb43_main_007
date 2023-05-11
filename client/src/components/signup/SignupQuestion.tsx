@@ -1,14 +1,14 @@
 import styled from "styled-components";
 import { UseFormRegister } from "react-hook-form";
-import { SigninTypes } from "./SigninTypes";
+import { SignupTypes } from "./SignupTypes";
 
 interface Props {
-   register: UseFormRegister<SigninTypes>;
+   register: UseFormRegister<SignupTypes>;
    labelName: string;
-   contents: keyof SigninTypes;
+   contents: keyof SignupTypes;
 }
 
-function SigninQuestion({ register, labelName, contents }: Props) {
+function SignupQuestion({ register, labelName, contents }: Props) {
    const questionList = [
       "내가 졸업한 초등학교는?",
       "내 별명은?",
@@ -16,7 +16,7 @@ function SigninQuestion({ register, labelName, contents }: Props) {
       "내가 가장 자주먹는 커피메뉴는?",
    ];
    return (
-      <SigninQuestionContainer>
+      <SignupQuestionContainer>
          <label htmlFor={`input-${contents}`} className="contents-label">
             {labelName}
          </label>
@@ -33,13 +33,13 @@ function SigninQuestion({ register, labelName, contents }: Props) {
                );
             })}
          </select>
-      </SigninQuestionContainer>
+      </SignupQuestionContainer>
    );
 }
 
-export default SigninQuestion;
+export default SignupQuestion;
 
-const SigninQuestionContainer = styled.div`
+const SignupQuestionContainer = styled.div`
    display: flex;
    flex-direction: column;
    width: 70%;
