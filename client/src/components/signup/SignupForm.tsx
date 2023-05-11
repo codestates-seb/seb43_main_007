@@ -6,6 +6,7 @@ import SignupQuestion from "./SignupQuestion";
 import SignupOauth from "./SignupOauth";
 import validFunc from "../../util/signinValidFunc";
 import logo from "../../assets/img/logo2.png";
+import { SignupPost } from "../../api/axios";
 
 interface InputContents {
    labelName: string;
@@ -21,9 +22,13 @@ function SignupForm() {
       getValues,
       formState: { errors },
    } = useForm<SignupTypes>();
-   const onSubmit: SubmitHandler<SignupTypes> = (data) => {
-      // 성공시 로그인
+   const onSubmit: SubmitHandler<SignupTypes> = async (data) => {
+      const response = await SignupPost(data);
+      // 성공시 로그인페이지로
+      // if(성공) navigate('/');
       // 실패시 ?
+      // 1.아이디, 닉네임 중복 실패
+      // 2.네크워크 오류
       console.log(data);
    };
 
@@ -127,7 +132,7 @@ const SignupFormContainer = styled.form`
       transform: translate(-50%, 0);
    }
    .submit-button {
-      width: 350px;
+      width: 70%;
       height: 40px;
       font-size: var(--font-large);
       border-radius: 1000px;
