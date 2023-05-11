@@ -51,7 +51,8 @@ public class BoardController {
     @GetMapping()
     public ResponseEntity getAllBoard(@RequestParam(name = "page", defaultValue = "0") int page
             ,@PageableDefault(sort = "boardId", direction = Sort.Direction.DESC) Pageable pageable){
-        pageable = pageable.withPage(page-1);
+        if(page>0) page--;
+        pageable = pageable.withPage(page);
 
         Page<Board> boards= boardService.getAllBoard(pageable);
 

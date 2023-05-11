@@ -51,8 +51,14 @@ public class BoardDto {
         private String title;
         private String content;
         private String address;
-
         private LocalDateTime now;
+
+        private String photo;
+
+        private int like;
+
+        private int bookmark;
+
 
 //        private List<Tag> tags;
 
