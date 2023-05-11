@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import styled from "styled-components";
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import CommunityList from "./CommunityList";
 import MypageProfile from "./MypageProfile";
 import Home from "./Home";
@@ -8,6 +8,8 @@ import Navbar from "../components/NavBar";
 import Signin from "./Signin";
 import Login from "./Login";
 import PostDetail from "./PostDetail";
+import CreatePost from "./CreatePost";
+import MypageBookmark from "./MypageBookmark";
 
 function RoutingPage() {
    const { pathname } = useLocation();
@@ -22,7 +24,9 @@ function RoutingPage() {
          <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/myprofile" element={<MypageProfile />} />
+            <Route path="/bookmark" element={<MypageBookmark />} />
             <Route path="/communitylist" element={<CommunityList />} />
+            <Route path="/createpost" element={<CreatePost />} />
             <Route path="/signin" element={<Signin />} />
             <Route path="/login" element={<Login />} />
             <Route path="/post" element={<PostDetail />} />

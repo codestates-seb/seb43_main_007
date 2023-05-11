@@ -16,9 +16,9 @@ function PostTitle() {
                <button type="submit" className="pick-btn">
                   채택
                </button>
-               <BsPin style={{ cursor: "pointer" }} />
-               <AiOutlineHeart style={{ cursor: "pointer" }} />
-               <RiSeedlingLine style={{ cursor: "pointer" }} />
+               <BsPin size={23} style={{ cursor: "pointer" }} />
+               <AiOutlineHeart size={23} style={{ cursor: "pointer" }} />
+               <RiSeedlingLine size={23} style={{ cursor: "pointer" }} />
             </MarkContainer>
          </TopTitleContainer>
          <BottomTitleContainer>
@@ -52,23 +52,25 @@ export const TopTitleContainer = styled.div`
    display: flex;
    justify-content: space-between;
    align-items: center;
-   margin-bottom: 10px;
+   margin-bottom: 15px;
 `;
 
 export const TitleBadgeContainer = styled.div`
    display: flex;
+   
+   .post-title {
+      font-size: 18px;
+      margin: 0;
+   }
 `;
 
 export const MarkContainer = styled.div`
    display: flex;
    justify-content: space-between;
-   font-size: 20px;
    width: 130px;
 
    .pick-btn {
       font-size: 12px;
-      height: 20px;
-      width: 40px;
       border: 1px solid #c4dccb;
       color: var(--first-color4);
       background-color: transparent;

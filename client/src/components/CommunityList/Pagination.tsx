@@ -1,5 +1,19 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { useState } from "react";
+
+type PropsT = {
+   setCurPage: React.Dispatch<React.SetStateAction<number>>;
+   curPage: number;
+   totalPage: number;
+   totalCount: number;
+   size: number;
+   pageCount: number;
+};
+
+type ActiveT = {
+   i: number;
+   curPage: number;
+};
 
 function Pagination({
    setCurPage,
@@ -21,31 +35,31 @@ function Pagination({
       const arr = [];
       for (let i = firstNum; i <= lastNum; i += 1) {
          arr.push(
-            <button
+            <PgBtn
                type="button"
                key={i}
                onClick={() => setCurPage(i)}
-               // i={i}
-               // curPage={curPage}
+               i={i}
+               curPage={curPage}
             >
                {i}
-            </button>
+            </PgBtn>
          );
       }
       return arr;
    };
 
    return (
-      <div>
-         <button
+      <>
+         <SideBtn
             type="button"
             onClick={() => setPageGroup(pageGroup - 1)}
             disabled={firstNum === 1}
          >
             &lt;
-         </button>
+         </SideBtn>
          {pagination()}
-         <button
+         <SideBtn
             type="button"
             onClick={() => {
                setPageGroup(pageGroup + 1);
@@ -53,9 +67,63 @@ function Pagination({
             disabled={lastNum === totalPage}
          >
             &gt;
-         </button>
-      </div>
+         </SideBtn>
+      </>
    );
 }
 
 export default Pagination;
+
+const Button = styled.button`
+   /* border-radius: 50px;
+   width: 50px;
+   height: 50px;
+
+   border: 0;
+   background-color: transparent;
+
+   :hover {
+      cursor: pointer;
+      color: white;
+      background-color: var(--first-color4);
+   } */
+   border: none;
+   border-radius: 50px;
+   width: 50px;
+   height: 50px;
+   padding: 8px;
+   margin: 0;
+   background: white;
+   color: black;
+   font-size: 1rem;
+   &:hover {
+      color: white;
+      background: var(--first-color4);
+      cursor: pointer;
+      transform: translateY(-2px);
+   }
+   @media screen and (max-width: 480px) {
+      padding: 6px;
+      font-size: 0.8rem;
+   }
+`;
+
+const SideBtn = styled(Button)`
+   &[disabled] {
+      background: #e7e5e5;
+      cursor: revert;
+      transform: revert;
+   }
+`;
+
+const PgBtn = styled(Button)<ActiveT>`
+   ${(props) =>
+      props.i === props.curPage &&
+      css`
+         color: white;
+         background-color: var(--first-color4);
+         font-weight: bold;
+         cursor: revert;
+         transform: revert;
+      `}
+`;
