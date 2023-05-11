@@ -3,6 +3,7 @@ package com.main.server.exception;
 import lombok.Getter;
 
 public enum ExceptionCode {
+    BOARD_NOT_FOUND(404, "Board not found"),
     MEMBER_NOT_FOUND(404, "Member not found"),
     MEMBER_EXISTS(409, "Member exists"),
     PASSWORD_NOT_SAME(404, "Password not same"),
