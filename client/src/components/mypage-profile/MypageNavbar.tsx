@@ -23,9 +23,9 @@ function MypageNavbar() {
             북마크
          </Link>
          <Link
-            to="/profile"
+            to="/myprofile"
             className={`nav ${
-               location.pathname === "/profile" ? "selected" : ""
+               location.pathname === "/myprofile" ? "selected" : ""
             }`}
          >
             내 정보

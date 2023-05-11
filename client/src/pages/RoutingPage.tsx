@@ -7,6 +7,7 @@ import Navbar from "../components/NavBar";
 import Signin from "./Signin";
 import Login from "./Login";
 import Footer from "../components/footer/Footer";
+import MypageBookmark from "./MypageBookmark";
 
 function RoutingPage() {
    const condition = true;
@@ -16,6 +17,7 @@ function RoutingPage() {
          <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/myprofile" element={<MypageProfile />} />
+            <Route path="/bookmark" element={<MypageBookmark />} />
             <Route path="/communitylist" element={<CommunityList />} />
             <Route path="/signin" element={<Signin />} />
             <Route path="/login" element={<Login />} />
