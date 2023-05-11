@@ -40,6 +40,7 @@ const GlobalStyles = createGlobalStyle`
         --font-base: 15px;
         --font-small: 10px;
     }
+    ${reset}
     *{
         box-sizing: border-box;
     }

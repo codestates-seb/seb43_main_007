@@ -4,7 +4,7 @@ import { RiSeedlingLine, RiSeedlingFill } from "react-icons/ri";
 import { BsPin, BsPinFill } from "react-icons/bs";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import type { ListDataProps } from "./Listtypes";
-import logo1 from "../../assets/logo1.png";
+import logo1 from "../../assets/img/logo1.png";
 
 function ListContent({ datas }: { datas: ListDataProps }) {
    // 관리자(매니저)인지 (로컬에서 관리?)
