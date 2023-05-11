@@ -1,5 +1,6 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import styled from "styled-components";
+import { useState, useEffect } from "react";
 import CommunityList from "./CommunityList";
 import MypageProfile from "./MypageProfile";
 import Home from "./Home";
@@ -10,7 +11,12 @@ import Footer from "../components/footer/Footer";
 import MypageBookmark from "./MypageBookmark";
 
 function RoutingPage() {
-   const condition = true;
+   const { pathname } = useLocation();
+   const [condition, setCondition] = useState(true);
+   useEffect(() => {
+      if (pathname === "/signin" || pathname === "/login") setCondition(false);
+      else setCondition(true);
+   }, [pathname]);
    return (
       <Container>
          <div className="nav">{condition ? <Navbar /> : null}</div>

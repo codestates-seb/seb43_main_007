@@ -22,7 +22,9 @@ import {
 import styled from "styled-components";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import logo from "../assets/img/logo1.png";
+import { useSelector } from "react-redux";
+import userprofile from "../assets/img/userprofile.png";
+import { RootState } from "../store/store";
 
 const links = [
    { icon: IconBulb, label: "Home" },
@@ -43,8 +45,15 @@ function NavbarSearch() {
    const { classes } = useStyles();
    const [search, setSearch] = useState("");
 
+   const profilePhoto = useSelector(
+      (state: RootState) => state.profilePhoto.photo
+   );
+   const profileNickname = useSelector(
+      (state: RootState) => state.profileNickname.nickname
+   );
+
    const mainLinks = links.map((link) => (
-      <Link to="/" key={link.label}>
+      <Link to="/" key={link.label} style={{ textDecoration: "none" }}>
          <UnstyledButton className={classes.mainLink}>
             <div className={classes.mainLinkInner}>
                <link.icon
@@ -63,6 +72,7 @@ function NavbarSearch() {
          to={collection.path}
          key={collection.label}
          className={classes.collectionLink}
+         style={{ textDecoration: "none" }}
       >
          <span style={{ marginRight: rem(9), fontSize: rem(16) }}>
             {collection.emoji}
@@ -92,10 +102,24 @@ function NavbarSearch() {
          className={classes.navbar}
       >
          <Navbar.Section className={classes.section}>
-            <ProfileDiv>
-               <img src={logo} alt="로고이미지" style={{ width: "70px" }} />
-               <div>이세영</div>
-            </ProfileDiv>
+            <Link
+               to="/myprofile"
+               style={{ textDecoration: "none", color: "black" }}
+            >
+               <ProfileDiv>
+                  <img
+                     src={profilePhoto || userprofile}
+                     alt="프로필이미지"
+                     style={{
+                        width: "50px",
+                        height: "50px",
+                        borderRadius: "50%",
+                        marginRight: "10px",
+                     }}
+                  />
+                  <div>{profileNickname || "냥이"}</div>
+               </ProfileDiv>
+            </Link>
          </Navbar.Section>
 
          <SearchForm>
