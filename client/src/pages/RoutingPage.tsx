@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import styled from "styled-components";
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import CommunityList from "./CommunityList";
 import MypageProfile from "./MypageProfile";
 import Home from "./Home";

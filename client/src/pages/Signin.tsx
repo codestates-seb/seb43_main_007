@@ -16,5 +16,6 @@ const SigninContainer = styled.div`
    justify-content: center;
    align-items: center;
    width: 100%;
-   height: 100vh;
+   height: 100%;
+   margin-left: -150px; // navbar 자리 채우기
 `;
