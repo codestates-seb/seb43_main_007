@@ -29,7 +29,7 @@ export const loginPost = async (req: LoginTypes) => {
 // 회원가입 요청
 export const SignupPost = async (req: SignupTypes) => {
    try {
-      const { data } = await request.post("/signup", req);
+      const { data } = await request.post("api/members", req);
       console.log("성공");
       console.log(data);
       return data;

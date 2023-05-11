@@ -35,7 +35,7 @@ function SignupForm() {
    const contentsArr: InputContents[] = [
       {
          labelName: "닉네임",
-         contents: "NickName",
+         contents: "nickname",
          errorMessage: "닉네임은 10자 이하입니다.",
          validFunction: validFunc.validNickName,
       },
@@ -59,7 +59,7 @@ function SignupForm() {
       },
       {
          labelName: "본인인증 주민번호",
-         contents: "SocialNumber",
+         contents: "RRN",
          errorMessage: "주민번호 형식에 맞게 작성해주세요",
          validFunction: validFunc.validSocialNumber,
       },

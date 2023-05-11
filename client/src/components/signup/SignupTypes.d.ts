@@ -1,9 +1,9 @@
 export interface SignupTypes {
-   NickName: string;
+   nickname: string;
    email: string;
    password: string;
    passwordConfirm: string;
-   SocialNumber: string;
+   RRN: string;
    question: string;
    answer: string;
 }
