@@ -27,6 +27,21 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
+	//Mapper
+	implementation 'org.mapstruct:mapstruct:1.4.2.Final'
+	annotationProcessor 'org.mapstruct:mapstruct-processor:1.4.2.Final'
+
+	//Mysql
+	implementation 'mysql:mysql-connector-java:8.0.27'
+
+	//
+	implementation 'com.amazonaws:aws-java-sdk-s3:1.11.1000' //S3에 이미지 저장
+	implementation 'org.springframework.boot:spring-boot-starter-security' //스프링 시큐리티
+	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'  // Oauth2
+	implementation 'io.jsonwebtoken:jjwt-api:0.11.5' //JWT
+	runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5' //JWT
+	runtimeOnly    'io.jsonwebtoken:jjwt-jackson:0.11.5' //JWT
+
 
 }
 
