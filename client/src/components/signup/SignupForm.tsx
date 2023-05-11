@@ -6,7 +6,7 @@ import SignupQuestion from "./SignupQuestion";
 import SignupOauth from "./SignupOauth";
 import validFunc from "../../util/signinValidFunc";
 import logo from "../../assets/img/logo2.png";
-import { SignupPost } from "../../api/axios";
+import { signupPost } from "../../api/axios";
 
 interface InputContents {
    labelName: string;
@@ -23,7 +23,7 @@ function SignupForm() {
       formState: { errors },
    } = useForm<SignupTypes>();
    const onSubmit: SubmitHandler<SignupTypes> = async (data) => {
-      const response = await SignupPost(data);
+      const response = await signupPost(data);
       // 성공시 로그인페이지로
       // if(성공) navigate('/');
       // 실패시 ?
