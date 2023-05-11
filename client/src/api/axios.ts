@@ -1,13 +1,9 @@
 import { request } from "./create";
 
-// todo 데이터에 값 추가하기 post메소드
-export const postTodos = async (title: string, content: string) => {
+// 목록페이지 데이터 get요청
+export const listData = async (title: string, content: string) => {
    try {
-      const { data } = await request.post("boards", {
-         title,
-         content,
-      });
-      // getTodoData();
+      const { data } = await request.get("boards");
       return data;
    } catch (error) {
       console.log(error);

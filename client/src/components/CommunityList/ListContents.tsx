@@ -4,7 +4,7 @@ import ListContent from "./ListContent";
 import data from "./dumyData";
 
 import Pagination from "./Pagination";
-import type { ListDataProps } from "./listTypes";
+import type { ListDataProps } from "./Listtypes";
 
 function ListContents() {
    const [curPage, setCurPage] = useState(1);
@@ -48,7 +48,9 @@ const DivContainer = styled.div`
 `;
 
 const DivPagination = styled.div`
-   border: 1px solid red;
+   display: flex;
+   align-items: center;
+   justify-content: center;
    height: 50px;
 `;
 

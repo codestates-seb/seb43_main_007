@@ -8,7 +8,9 @@ import Navbar from "../components/NavBar";
 import Signin from "./Signin";
 import Login from "./Login";
 import Footer from "../components/footer/Footer";
+import CreatePost from "./CreatePost";
 import MypageBookmark from "./MypageBookmark";
+
 
 function RoutingPage() {
    const { pathname } = useLocation();
@@ -25,6 +27,7 @@ function RoutingPage() {
             <Route path="/myprofile" element={<MypageProfile />} />
             <Route path="/bookmark" element={<MypageBookmark />} />
             <Route path="/communitylist" element={<CommunityList />} />
+            <Route path="/createpost" element={<CreatePost />} />
             <Route path="/signin" element={<Signin />} />
             <Route path="/login" element={<Login />} />
          </Routes>
