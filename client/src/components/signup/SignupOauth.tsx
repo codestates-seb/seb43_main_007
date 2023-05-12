@@ -2,9 +2,9 @@ import styled from "styled-components";
 import googleIcon from "../../assets/img/google-icon.png";
 import githubIcon from "../../assets/img/github-icon.png";
 
-function SigninOauth() {
+function SignupOauth() {
    return (
-      <SigninOauthContainer>
+      <SignupOauthContainer>
          <span className="sns-text">SNS로 회원가입 해보세요!</span>
          <div className="oauth-box">
             <button className="oauth-button" type="button">
@@ -22,13 +22,13 @@ function SigninOauth() {
                />
             </button>
          </div>
-      </SigninOauthContainer>
+      </SignupOauthContainer>
    );
 }
 
-export default SigninOauth;
+export default SignupOauth;
 
-const SigninOauthContainer = styled.div`
+const SignupOauthContainer = styled.div`
    display: flex;
    flex-direction: column;
    align-items: center;

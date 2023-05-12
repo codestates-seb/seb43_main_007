@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { useForm, SubmitHandler } from "react-hook-form";
 import validFunc from "../../util/signinValidFunc";
 import { setPhoto } from "../../reducers/ProfilePhotoSlice";
-import { SigninTypes } from "../signin/SigninTypes";
+import { SignupTypes } from "../signup/SignupTypes";
 import { setNickname } from "../../reducers/ProfileNicknameSlice";
 
 function EditProfile() {
@@ -13,7 +13,7 @@ function EditProfile() {
       handleSubmit,
       formState: { errors, isValid },
       watch,
-   } = useForm<SigninTypes>({
+   } = useForm<SignupTypes>({
       mode: "onChange",
       criteriaMode: "all",
       defaultValues: {
@@ -22,7 +22,7 @@ function EditProfile() {
    });
    const currentNickname = watch("NickName");
 
-   const onSubmit: SubmitHandler<SigninTypes> = (data) => console.log(data);
+   const onSubmit: SubmitHandler<SignupTypes> = (data) => console.log(data);
 
    const dispatch = useDispatch();
    const [fileName, setFileName] = useState("");
