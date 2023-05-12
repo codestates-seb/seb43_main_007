@@ -33,8 +33,6 @@
     "@tiptap/extension-link": "^2.0.3",
     "@tiptap/react": "^2.0.3",
     "@tiptap/starter-kit": "^2.0.3",
-    "@toast-ui/editor": "^3.2.2",
-    "@toast-ui/react-editor": "^3.2.3",
     "@types/react-icons": "^3.0.0",
     "@types/react-router": "^5.1.20",
     "@vitejs/plugin-react": "^4.0.0",

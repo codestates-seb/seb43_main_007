@@ -1,12 +1,10 @@
 import styled from "styled-components";
 import GuideLine from "../components/CreatePost/GuideLine";
-import TextEditor from "../components/CreatePost/TextEditor";
 
 function CreatePost() {
    return (
       <DivContainer>
          <GuideLine />
-         <TextEditor />
       </DivContainer>
    );
 }
