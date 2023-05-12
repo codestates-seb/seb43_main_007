@@ -19,6 +19,8 @@ const validPassword = (password: string) => {
 
 const validSocialNumber = (socialNumber: string) => {
    // 주민번호 유효한지 확인
+   if (Number.isNaN(Number(socialNumber))) return false;
+   if (socialNumber.length > 13) return false;
    const valid =
       /\d{2}([0]\d|[1][0-2])([0][1-9]|[1-2]\d|[3][0-1])[-]*[1-4]\d{6}/.test(
          socialNumber

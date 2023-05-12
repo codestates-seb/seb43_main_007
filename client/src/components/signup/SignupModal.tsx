@@ -11,6 +11,7 @@ function SignupModal({ isOpen, setIsOpen, message }: Props) {
    const navigate = useNavigate();
    const closeModalHandler = () => {
       setIsOpen(false);
+      // 성공 modal 이면 확인 누를때 로그인 페이지로 이동
       if (message.text1 === "회원가입에") navigate("/login");
    };
    return (

@@ -34,9 +34,9 @@ const contentsArr: InputContents[] = [
       validFunction: () => true,
    },
    {
-      labelName: "본인인증 주민번호",
+      labelName: "본인인증 주민번호(숫자만 입력)",
       contents: "RRN",
-      errorMessage: "주민번호 형식에 맞게 작성해주세요",
+      errorMessage: "주민번호 형식에 맞게 숫자만 작성해주세요",
       validFunction: validFunc.validSocialNumber,
    },
    {
