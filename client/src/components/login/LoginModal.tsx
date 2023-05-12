@@ -6,7 +6,7 @@ interface Props {
    message: { text1: string; text2: string };
 }
 
-function FailModal({ isOpen, setIsOpen, message }: Props) {
+function LoginModal({ isOpen, setIsOpen, message }: Props) {
    const closeModalHandler = () => {
       setIsOpen(false);
    };
@@ -31,7 +31,7 @@ function FailModal({ isOpen, setIsOpen, message }: Props) {
    );
 }
 
-export default FailModal;
+export default LoginModal;
 
 const ModalContainer = styled.div`
    display: flex;

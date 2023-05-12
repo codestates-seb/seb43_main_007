@@ -1,32 +1,41 @@
 import styled from "styled-components";
 import { useForm, SubmitHandler } from "react-hook-form";
-import SigninInput from "./SigninInput";
-import { SigninTypes } from "./SigninTypes";
-import SigninQuestion from "./SigninQuestion";
-import SigninOauth from "./SigninOauth";
+import SignupInput from "./SignupInput";
+import { SignupTypes } from "./SignupTypes";
+import SignupQuestion from "./SignupQuestion";
+import SignupOauth from "./SignupOauth";
 import validFunc from "../../util/signinValidFunc";
 import logo from "../../assets/img/logo2.png";
+import { signupPost } from "../../api/axios";
 
 interface InputContents {
    labelName: string;
-   contents: keyof SigninTypes;
+   contents: keyof SignupTypes;
    errorMessage: string;
    validFunction: (v: string) => boolean;
 }
 
-function SigninForm() {
+function SignupForm() {
    const {
       register,
       handleSubmit,
       getValues,
       formState: { errors },
-   } = useForm<SigninTypes>();
-   const onSubmit: SubmitHandler<SigninTypes> = (data) => console.log(data);
+   } = useForm<SignupTypes>();
+   const onSubmit: SubmitHandler<SignupTypes> = async (data) => {
+      const response = await signupPost(data);
+      // 성공시 로그인페이지로
+      // if(성공) navigate('/');
+      // 실패시 ?
+      // 1.아이디, 닉네임 중복 실패
+      // 2.네크워크 오류
+      console.log(data);
+   };
 
    const contentsArr: InputContents[] = [
       {
          labelName: "닉네임",
-         contents: "NickName",
+         contents: "nickname",
          errorMessage: "닉네임은 10자 이하입니다.",
          validFunction: validFunc.validNickName,
       },
@@ -50,7 +59,7 @@ function SigninForm() {
       },
       {
          labelName: "본인인증 주민번호",
-         contents: "SocialNumber",
+         contents: "RRN",
          errorMessage: "주민번호 형식에 맞게 작성해주세요",
          validFunction: validFunc.validSocialNumber,
       },
@@ -69,12 +78,12 @@ function SigninForm() {
    ];
 
    return (
-      <SigninFormContainer onSubmit={handleSubmit(onSubmit)}>
+      <SignupFormContainer onSubmit={handleSubmit(onSubmit)}>
          <img className="logo" src={logo} alt="logo" />
          {contentsArr.map((el) => {
             if (el.contents === "question") {
                return (
-                  <SigninQuestion
+                  <SignupQuestion
                      key={el.contents}
                      register={register}
                      {...el}
@@ -82,7 +91,7 @@ function SigninForm() {
                );
             }
             return (
-               <SigninInput
+               <SignupInput
                   key={el.contents}
                   register={register}
                   errors={errors}
@@ -95,21 +104,21 @@ function SigninForm() {
          <button type="submit" className="submit-button">
             회원가입
          </button>
-         <SigninOauth />
-      </SigninFormContainer>
+         <SignupOauth />
+      </SignupFormContainer>
    );
 }
 
-export default SigninForm;
+export default SignupForm;
 
-const SigninFormContainer = styled.form`
+const SignupFormContainer = styled.form`
    display: flex;
    position: relative;
    flex-direction: column;
    align-items: center;
    justify-content: center;
    width: 550px;
-   height: 680px;
+   height: 750px;
    padding-top: 5%;
    background-color: var(--second-color1);
    box-shadow: 2px 3px 5px 0;
@@ -123,7 +132,7 @@ const SigninFormContainer = styled.form`
       transform: translate(-50%, 0);
    }
    .submit-button {
-      width: 350px;
+      width: 70%;
       height: 40px;
       font-size: var(--font-large);
       border-radius: 1000px;

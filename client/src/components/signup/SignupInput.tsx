@@ -4,19 +4,19 @@ import {
    FieldErrors,
    UseFormGetValues,
 } from "react-hook-form";
-import { SigninTypes } from "./SigninTypes";
+import { SignupTypes } from "./SignupTypes";
 
 interface Props {
-   register: UseFormRegister<SigninTypes>;
-   getValues: UseFormGetValues<SigninTypes>;
+   register: UseFormRegister<SignupTypes>;
+   getValues: UseFormGetValues<SignupTypes>;
    labelName: string;
-   contents: keyof SigninTypes;
-   errors: FieldErrors<SigninTypes>;
+   contents: keyof SignupTypes;
+   errors: FieldErrors<SignupTypes>;
    errorMessage: string;
    validFunction: (v1: string) => boolean;
 }
 
-function SigninInput({
+function SignupInput({
    register,
    labelName,
    getValues,
@@ -32,7 +32,7 @@ function SigninInput({
    };
 
    return (
-      <SigninInputContainer>
+      <SignupInputContainer>
          <label htmlFor={`input-${contents}`} className="contents-label">
             {labelName}
          </label>
@@ -54,17 +54,17 @@ function SigninInput({
          {errors[contents] && (
             <span className="error-message">{errorMessage}</span>
          )}
-      </SigninInputContainer>
+      </SignupInputContainer>
    );
 }
 
-export default SigninInput;
+export default SignupInput;
 
-const SigninInputContainer = styled.div`
+const SignupInputContainer = styled.div`
    display: flex;
    flex-direction: column;
    width: 70%;
-   height: 50px;
+   height: 60px;
    margin-bottom: 10px;
    color: var(--first-color4);
    .contents-label {
