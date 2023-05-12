@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { useState } from "react";
 import LoginForm from "../components/login/LoginForm";
-import FindAndSignin from "../components/login/FindAndSignin";
+import FindAndSignin from "../components/login/FindAndSignup";
 import OauthLogin from "../components/login/OauthLogin";
 import FindModal from "../components/login/FindModal";
 

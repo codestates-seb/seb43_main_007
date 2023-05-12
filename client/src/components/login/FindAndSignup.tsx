@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 interface Props {
@@ -5,7 +6,8 @@ interface Props {
    setCurTab: React.Dispatch<React.SetStateAction<"id" | "password">>;
 }
 
-function FindAndSignin({ setIsOpen, setCurTab }: Props) {
+function FindAndSignup({ setIsOpen, setCurTab }: Props) {
+   const navigate = useNavigate();
    const handleIdFindModal = () => {
       setCurTab("id");
       setIsOpen(true);
@@ -15,8 +17,12 @@ function FindAndSignin({ setIsOpen, setCurTab }: Props) {
       setIsOpen(true);
    };
    return (
-      <FindAndSigninContainer>
-         <button type="button" className="box">
+      <FindAndSignupContainer>
+         <button
+            type="button"
+            className="box"
+            onClick={() => navigate("/signup")}
+         >
             회원가입
          </button>
          <button type="button" className="box" onClick={handleIdFindModal}>
@@ -29,13 +35,13 @@ function FindAndSignin({ setIsOpen, setCurTab }: Props) {
          >
             비밀번호 찾기
          </button>
-      </FindAndSigninContainer>
+      </FindAndSignupContainer>
    );
 }
 
-export default FindAndSignin;
+export default FindAndSignup;
 
-const FindAndSigninContainer = styled.div`
+const FindAndSignupContainer = styled.div`
    display: flex;
    justify-content: center;
    height: 30px;

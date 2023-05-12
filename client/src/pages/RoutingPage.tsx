@@ -5,7 +5,7 @@ import CommunityList from "./CommunityList";
 import MypageProfile from "./MypageProfile";
 import Home from "./Home";
 import Navbar from "../components/NavBar";
-import Signin from "./Signin";
+import Signup from "./Signup";
 import Login from "./Login";
 import PostDetail from "./PostDetail";
 import CreatePost from "./CreatePost";
@@ -15,7 +15,7 @@ function RoutingPage() {
    const { pathname } = useLocation();
    const [condition, setCondition] = useState(true);
    useEffect(() => {
-      if (pathname === "/signin" || pathname === "/login") setCondition(false);
+      if (pathname === "/signup" || pathname === "/login") setCondition(false);
       else setCondition(true);
    }, [pathname]);
    return (
@@ -27,7 +27,7 @@ function RoutingPage() {
             <Route path="/bookmark" element={<MypageBookmark />} />
             <Route path="/communitylist" element={<CommunityList />} />
             <Route path="/createpost" element={<CreatePost />} />
-            <Route path="/signin" element={<Signin />} />
+            <Route path="/signup" element={<Signup />} />
             <Route path="/login" element={<Login />} />
             <Route path="/post" element={<PostDetail />} />
          </Routes>
