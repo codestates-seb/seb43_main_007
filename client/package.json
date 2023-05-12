@@ -47,6 +47,8 @@
     "react-hook-form": "^7.43.9",
     "react-icon": "^1.0.0",
     "react-icons": "^4.8.0",
+    //텍스트 에디터
+    "react-quill": "^2.0.0",
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.11.1",
     "styled-components": "^5.3.10",

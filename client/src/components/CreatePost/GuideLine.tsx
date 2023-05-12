@@ -29,8 +29,6 @@ const DivContainer = styled.div`
    flex-direction: column;
    justify-content: center;
    background-color: yellow;
-   width: 100%;
-   height: 20%;
 
    .guide {
       font-size: 25px;

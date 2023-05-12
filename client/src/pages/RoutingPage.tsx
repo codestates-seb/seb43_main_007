@@ -8,7 +8,7 @@ import Navbar from "../components/NavBar";
 import Signup from "./Signup";
 import Login from "./Login";
 import PostDetail from "./PostDetail";
-import CreatePost from "./CreatePost";
+import CreatePostPage from "./CreatePostPage";
 import MypageBookmark from "./MypageBookmark";
 
 function RoutingPage() {
@@ -26,7 +26,7 @@ function RoutingPage() {
             <Route path="/myprofile" element={<MypageProfile />} />
             <Route path="/bookmark" element={<MypageBookmark />} />
             <Route path="/communitylist" element={<CommunityList />} />
-            <Route path="/createpost" element={<CreatePost />} />
+            <Route path="/createpost" element={<CreatePostPage />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/login" element={<Login />} />
             <Route path="/post" element={<PostDetail />} />
