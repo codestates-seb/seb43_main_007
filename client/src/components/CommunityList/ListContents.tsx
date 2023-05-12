@@ -1,37 +1,50 @@
 import styled from "styled-components";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ListContent from "./ListContent";
-import data from "./dumyData";
-
 import Pagination from "./Pagination";
-import type { ListDataProps } from "./Listtypes";
+import type { PageInfo, ListData } from "./listtypes";
+import { listData } from "../../api/axios";
+// import data from "./dumyData";
 
 function ListContents() {
-   const [curPage, setCurPage] = useState(1);
-   const totalCount = data.length;
-   const size = 10;
-   const totalPage = Math.ceil(totalCount / size);
-   const pageCount = 5;
-   const offset = (curPage - 1) * size;
+   // api로 가져온 데이터들
+   const [datas, setDatas] = useState<ListData[]>([]);
+   const [pageInfo, setPageInfo] = useState<PageInfo>();
+
+   // // 페이지 네이션 필요한 상태 변수들
+   const [curPage, setCurPage] = useState(1); // 현재 페이지
+   const totalPage = pageInfo?.totalPages; // 전체 페이지
+   const limit = 5; // 한화면 페이지 보일 수 페이지 5개 보임
+
+   // list목록페이지 데이터 get요청
+   const listDatas = async () => {
+      const data = await listData(curPage);
+      setDatas(data.data);
+      setPageInfo(data.pageInfo);
+   };
+
+   useEffect(() => {
+      listDatas();
+   }, [curPage]);
 
    return (
       <DivContainer>
          <div>
             <ul>
-               {data.slice(offset, offset + size).map((el: ListDataProps) => (
-                  <ListContent key={el.id} datas={el} />
+               {datas.map((el: ListData) => (
+                  <ListContent key={el.boardId} userDatas={el} />
                ))}
             </ul>
          </div>
          <DivPagination>
-            <Pagination
-               curPage={curPage}
-               setCurPage={setCurPage}
-               totalPage={totalPage}
-               totalCount={totalCount}
-               size={size}
-               pageCount={pageCount}
-            />
+            {totalPage && (
+               <Pagination
+                  totalPage={totalPage}
+                  limit={limit}
+                  curPage={curPage}
+                  setCurPage={setCurPage}
+               />
+            )}
          </DivPagination>
       </DivContainer>
    );

@@ -3,10 +3,10 @@ import styled from "styled-components";
 import { RiSeedlingLine, RiSeedlingFill } from "react-icons/ri";
 import { BsPin, BsPinFill } from "react-icons/bs";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
-import type { ListDataProps } from "./Listtypes";
+import type { ListData } from "./listtypes";
 import logo1 from "../../assets/img/logo1.png";
 
-function ListContent({ datas }: { datas: ListDataProps }) {
+function ListContent({ userDatas }: { userDatas: ListData }) {
    // 관리자(매니저)인지 (로컬에서 관리?)
    const [isManager, setIsManager] = useState(false);
    // 에디터 픽 유무(리덕스 관리?)-리덕스 툴킷으로 로컬할 수 있는거 찾아보기
@@ -14,14 +14,32 @@ function ListContent({ datas }: { datas: ListDataProps }) {
    // 고정 유무(리덕스 툴킷으로 관리?)
    const [isFixPin, setIsFixPin] = useState(false);
    const [isFixPinNumber, setIsFixPinNumber] = useState(0);
-   console.log(isFixPinNumber);
    // 좋아요 유무
-   const [isLike, setIsLike] = useState(false);
+   const [isLike, setIsLike] = useState(userDatas.like);
    // 즐겨찾기(북마크) 유무
-   const [isBookMark, setIsBookMark] = useState(false);
+   const [isBookMark, setIsBookMark] = useState(userDatas.bookmark);
 
+   // 고정 클릭 이벤트
    const pinFixClickHandler = () => {
       setIsFixPin(!isFixPin);
+   };
+
+   // 좋아요 클릭 이벤트
+   const likeClickHandler = () => {
+      if (isLike === 0) {
+         setIsLike(1);
+      } else if (isLike === 1) {
+         setIsLike(0);
+      }
+   };
+
+   // 북마크 클릭 이벤트
+   const bookMarkClickHandler = () => {
+      if (isBookMark === 0) {
+         setIsBookMark(1);
+      } else if (isBookMark === 1) {
+         setIsBookMark(0);
+      }
    };
 
    return (
@@ -37,9 +55,9 @@ function ListContent({ datas }: { datas: ListDataProps }) {
                   {isEditerPick ? (
                      <DivEditerPick className="editer">{`Editer's Pick`}</DivEditerPick>
                   ) : null}
-                  <div>{datas.title}</div>
+                  <div>{userDatas.title}</div>
                </div>
-               {/* 고정 */}
+               {/* 프로필+이름 / 고정 */}
                <div className="div-author">
                   {isManager ? (
                      isFixPin ? (
@@ -60,6 +78,7 @@ function ListContent({ datas }: { datas: ListDataProps }) {
                         <BsPin size="25" />
                      </DivImg>
                   )}
+                  {/* 프로필+이름 */}
                   <DivAuthor>
                      <span>
                         <img
@@ -68,23 +87,20 @@ function ListContent({ datas }: { datas: ListDataProps }) {
                            style={{ width: "30px" }}
                         />
                      </span>
-                     <span>{datas.author}</span>
+                     <span>{userDatas.nickName}</span>
                   </DivAuthor>
                </div>
-               {/* 좋아요 + 북마크 */}
+               {/* 날짜 / 좋아요 + 북마크 */}
                <div className="div-createdAt">
                   <DivImg>
-                     <button type="button" onClick={() => setIsLike(!isLike)}>
+                     <button type="button" onClick={likeClickHandler}>
                         {isLike ? (
                            <AiFillHeart size="25" color="red" />
                         ) : (
                            <AiOutlineHeart size="25" />
                         )}
                      </button>
-                     <button
-                        type="button"
-                        onClick={() => setIsBookMark(!isBookMark)}
-                     >
+                     <button type="button" onClick={bookMarkClickHandler}>
                         {isBookMark ? (
                            <RiSeedlingFill size="25" color="green" />
                         ) : (
@@ -92,7 +108,8 @@ function ListContent({ datas }: { datas: ListDataProps }) {
                         )}
                      </button>
                   </DivImg>
-                  <div>{datas.createdAt}</div>
+                  {/* 날짜 */}
+                  <div>{userDatas.now}</div>
                </div>
             </DivContent>
          </Li>
