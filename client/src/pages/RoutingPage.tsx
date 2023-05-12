@@ -7,7 +7,7 @@ import Home from "./Home";
 import Navbar from "../components/NavBar";
 import Signup from "./Signup";
 import Login from "./Login";
-import Footer from "../components/footer/Footer";
+import PostDetail from "./PostDetail";
 import CreatePost from "./CreatePost";
 import MypageBookmark from "./MypageBookmark";
 
@@ -29,6 +29,7 @@ function RoutingPage() {
             <Route path="/createpost" element={<CreatePost />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/post" element={<PostDetail />} />
          </Routes>
       </Container>
    );
