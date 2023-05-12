@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { RiSeedlingLine, RiSeedlingFill } from "react-icons/ri";
 import { BsPin, BsPinFill } from "react-icons/bs";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
-import type { ListDataProps } from "./listtypes";
+import type { ListDataProps } from "./Listtypes";
 import logo1 from "../../assets/logo1.png";
 
 function ListContent({ datas }: { datas: ListDataProps }) {
