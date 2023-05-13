@@ -17,8 +17,7 @@ function MypageTopProfile() {
             <img
                src={profilePhoto || userprofile}
                alt="user-profile"
-               height="150"
-               width="150"
+               className="user-photo"
             />
             <span className="user-name">{profileNickname || "냥이"}</span>
          </ProfileBox>
@@ -26,8 +25,7 @@ function MypageTopProfile() {
             <img
                src={membership}
                alt="membership-status"
-               height="100"
-               width="70"
+               className="membership-img"
             />
             <span className="membership-title">새싹 멤버</span>
          </Membership>
@@ -45,6 +43,11 @@ export const TopProfileContainer = styled.div`
 export const ProfileBox = styled.div`
    display: flex;
    align-items: center;
+
+   .user-photo {
+      height: 150px;
+      width: 150px;
+   }
 
    .user-name {
       font-size: 24px;
@@ -68,5 +71,10 @@ export const Membership = styled.div`
       font-size: 12px;
       color: var(--dark-gray);
       margin: 5px 0;
+   }
+
+   .membership-img {
+      height: 100px;
+      width: 70px;
    }
 `;
