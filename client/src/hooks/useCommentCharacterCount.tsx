@@ -2,7 +2,7 @@ import { useState, ChangeEvent } from "react";
 import {
    CommentCharacterCountProps,
    CommentCharacterCountReturn,
-} from "../components/postdetail/PostDetailTypes";
+} from "../components/postdetail/postDetailTypes";
 
 const useCommentCharacterCount = ({
    maxLength,

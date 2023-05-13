@@ -1,4 +1,4 @@
-import { CreateReplyProps } from "./PostDetailTypes";
+import { CreateReplyProps } from "./postDetailTypes";
 import useCommentCharacterCount from "../../hooks/useCommentCharacterCount";
 import { CreateCommentContainer, CommentInputBox } from "./CreateComment";
 import { DefaultButton } from "../mypage-profile/EditProfile";

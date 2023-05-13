@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { CommentProps } from "./PostDetailTypes";
+import { CommentProps } from "./postDetailTypes";
 import CreateReply from "./CreateReply";
 
 function Comment({
