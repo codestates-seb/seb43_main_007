@@ -1,6 +1,6 @@
 import { useForm, SubmitHandler } from "react-hook-form";
 import validFunc from "../../util/signinValidFunc";
-import { PasswordChangeForm } from "./ProfileTypes";
+import { PasswordChangeForm } from "./profileTypes";
 import {
    ProfileEditContainer,
    TitleBox,
