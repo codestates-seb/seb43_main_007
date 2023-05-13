@@ -13,8 +13,10 @@ export default CreatePost;
 
 const DivContainer = styled.div`
    display: flex;
-   justify-content: center;
+   flex-direction: column;
+   /* justify-content: center; */
+   margin: 16px 0px 0px 16px;
    width: 100%;
    height: 100vh;
-   border: 1px solid black;
+   /* border: 1px solid black; */
 `;

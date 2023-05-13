@@ -3,12 +3,9 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { useEffect, useRef, useState } from "react";
 import logo from "../../assets/img/logo2.png";
 import validFunction from "../../util/signinValidFunc";
-import FailModal from "./LoginModal";
-
-interface LoginTypes {
-   email: string;
-   password: string;
-}
+import LoginModal from "./LoginModal";
+import { LoginTypes } from "./LoginType";
+import { listData, loginPost } from "../../api/axios";
 
 function LoginForm() {
    const {
@@ -29,11 +26,20 @@ function LoginForm() {
       if (inputRef.current !== null) inputRef.current.focus();
    }, []);
 
-   const onSubmit: SubmitHandler<LoginTypes> = (data) => {
+   const onSubmit: SubmitHandler<LoginTypes> = async (data) => {
       // 로그인 요청 함수 자리
       // 로그인시 home화면으로 navigate
+      const response = await loginPost(data);
+      // access 토큰 저장, memberid 저장, 로그인상태 변경
+      // if(성공시) {
+      //   로그인 상태 변경
+      //   access 토큰은 세션 스토리지에 저장?
+      //   refresh 토큰은?
+      //   home으로 이동
+      // }
 
       // 로그인 실패시 modal창으로 로그인실패 에러 메시지 띄우기
+
       // 서버와 통신이 원활하지 않을 때
       // setFailMessage({
       //    text1: "서버와 통신이 원활하지 않습니다.",
@@ -42,12 +48,12 @@ function LoginForm() {
       // setIsFailModalOpen(true);
 
       // 아이디 비번이 잘못됐을 때
-      setFailMessage({
-         text1: "로그인에 실패했습니다.",
-         text2: "아이디와 비밀번호를 확인해주세요.",
-      });
-      setIsFailModalOpen(true);
-      console.log(data);
+      // setFailMessage({
+      //    text1: "로그인에 실패했습니다.",
+      //    text2: "아이디와 비밀번호를 확인해주세요.",
+      // });
+      // setIsFailModalOpen(true);
+      // console.log(data);
    };
 
    return (
@@ -89,7 +95,7 @@ function LoginForm() {
          <button type="submit" className="submit">
             LOGIN
          </button>
-         <FailModal
+         <LoginModal
             isOpen={isFailModalOpen}
             setIsOpen={setIsFailModalOpen}
             message={failMessage}

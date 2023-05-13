@@ -1,17 +1,17 @@
 import styled from "styled-components";
-import SigninForm from "../components/signin/SigninForm";
+import SignupForm from "../components/signup/SignupForm";
 
-function Signin() {
+function Signup() {
    return (
-      <SigninContainer>
-         <SigninForm />
-      </SigninContainer>
+      <SignupContainer>
+         <SignupForm />
+      </SignupContainer>
    );
 }
 
-export default Signin;
+export default Signup;
 
-const SigninContainer = styled.div`
+const SignupContainer = styled.div`
    display: flex;
    justify-content: center;
    align-items: center;
