@@ -1,12 +1,13 @@
 import styled from "styled-components";
 import BookmarkItem from "./BookmarkItem";
+import { dummyBookmark } from "./dummyBookmark";
 
 function BookmarkBox() {
-   const dataArr = [1, 2, 3, 4, 5, 6];
+   const manyDummy = [...dummyBookmark, ...dummyBookmark];
    return (
       <BookmarkBoxContainer>
-         {dataArr.map((el) => {
-            return <BookmarkItem key={el} />;
+         {manyDummy.map((data) => {
+            return <BookmarkItem key={data.questionId} data={data} />;
          })}
       </BookmarkBoxContainer>
    );
@@ -18,7 +19,7 @@ const BookmarkBoxContainer = styled.div`
    display: flex;
    flex-wrap: wrap;
    justify-content: space-around;
-   align-items: center;
+   margin-top: 10%;
    height: 800px;
    padding: 10px;
 `;

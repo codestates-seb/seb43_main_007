@@ -2,28 +2,27 @@ import styled from "styled-components";
 import { AiFillHeart } from "react-icons/ai";
 import thumbnail from "../../assets/img/logo1.png";
 import background from "../../assets/img/leafmemo.png";
+import { DummyType } from "./dummyBookmark";
 
-function BookmarkItem() {
+function BookmarkItem({ data }: { data: DummyType }) {
+   const parsedDate = new Date(data.createdAt).toLocaleString("ko-kr");
+   const previewBody = data.content.replace(/(<([^>]+)>)/gi, "").trim();
    return (
       <BookmarkItemContainer>
          <div className="img-box">
             <img className="thumbnail" src={thumbnail} alt="thumbnail" />
          </div>
          <div className="contents-box">
-            <h1 className="contents-title">제목 자리입니다.</h1>
-            <p className="contents-body">
-               본문입니다. 본문은 3~4줄 정도에서 자를 예정입니다. 얼마나 적어야
-               3줄이 될까요.. 이거 근데 데이터 get요청을 어떤식으로 하는게
-               좋을까요?
-            </p>
+            <h1 className="contents-title">{data.title}</h1>
+            <p className="contents-body">{previewBody}</p>
          </div>
          <div className="item-footer">
-            <span className="author">작성자</span>
+            <span className="author">{data.author}</span>
             <div className="like">
                <AiFillHeart />
-               <span>50</span>
+               <span>{data.like}</span>
             </div>
-            <span>2023 04/27</span>
+            <span>{parsedDate}</span>
          </div>
       </BookmarkItemContainer>
    );
@@ -70,6 +69,11 @@ const BookmarkItemContainer = styled.div`
       }
       .contents-body {
          font-size: var(--font-base);
+         display: -webkit-box;
+         -webkit-box-orient: vertical;
+         -webkit-line-clamp: 4;
+         overflow: hidden;
+         word-break: break-all;
       }
    }
    .item-footer {
