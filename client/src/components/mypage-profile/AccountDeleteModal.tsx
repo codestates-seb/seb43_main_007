@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { AccountDeleteModalProps } from "./ProfileTypes";
+import { AccountDeleteModalProps } from "./profileTypes";
 
 function AccountDeleteModal({ open, close }: AccountDeleteModalProps) {
    return (
