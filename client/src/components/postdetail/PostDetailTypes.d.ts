@@ -3,7 +3,7 @@ export interface PostDeleteModalProps {
    close: () => void;
 }
 
-interface CommentProps {
+export interface CommentProps {
    comment: {
       postId: number;
       commentId: number;
@@ -13,18 +13,23 @@ interface CommentProps {
       createdAt: string;
       responseTo: number | string;
    };
+   handleReplySubmit: (content: string) => void;
+   handleReplyClick: (commentId: number | null) => void;
+   isReplySelected: boolean;
 }
 
-interface ReplyFormProps {
+export interface CreateReplyProps {
    onSubmit: (content: string) => void;
+   onCancel: () => void;
 }
 
-interface CommentCharacterCountProps {
+export interface CommentCharacterCountProps {
    maxLength: number;
 }
 
-interface CommentCharacterCountReturn {
+export interface CommentCharacterCountReturn {
    value: string;
    characterCount: number;
    handleChange: (event: ChangeEvent<HTMLTextAreaElement>) => void;
+   clearValue: () => void;
 }

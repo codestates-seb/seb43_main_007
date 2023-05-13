@@ -14,7 +14,12 @@ const useCommentCharacterCount = ({
       const inputValue = event.target.value.slice(0, maxLength);
       setValue(inputValue);
    };
-   return { value, characterCount, handleChange };
+
+   const clearValue = () => {
+      setValue("");
+   };
+
+   return { value, characterCount, handleChange, clearValue };
 };
 
 export default useCommentCharacterCount;

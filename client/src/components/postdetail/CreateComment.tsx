@@ -31,6 +31,7 @@ export default CreateComment;
 
 export const CreateCommentContainer = styled.div`
    background-color: var(--first-color2);
+   border-bottom: 1px solid #dfdfdf;
    padding: 15px;
    display: flex;
    align-items: center;

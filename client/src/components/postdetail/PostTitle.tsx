@@ -57,7 +57,7 @@ export const TopTitleContainer = styled.div`
 
 export const TitleBadgeContainer = styled.div`
    display: flex;
-   
+
    .post-title {
       font-size: 18px;
       margin: 0;
