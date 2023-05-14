@@ -117,8 +117,9 @@ const DropdownBody = styled.div`
    display: flex;
    justify-content: space-between;
    align-items: center;
+   height: 40px;
    padding: 9px 14px;
-   border: 2px solid #d2d2d2;
+   border: 1px solid #d2d2d2;
 `;
 
 const DropdownSelect = styled.p`
@@ -129,7 +130,9 @@ const DropdownMenu = styled.ul<any>`
    display: ${(props) => (props.isActive ? `block` : `none`)};
    width: 400px;
    background-color: white;
-   /* position: absolute; */
+   position: absolute;
+   // 에디터를 가리기 위해 순서를 앞으로
+   z-index: 1;
    border: 2px solid #f4acbb;
 `;
 

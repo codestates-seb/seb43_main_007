@@ -1,11 +1,17 @@
-import { useState, useRef, useMemo } from "react";
+import { useRef, useMemo } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import axios from "axios";
 import styled from "styled-components";
 
-function QuillTextEditor() {
-   const [value, setValue] = useState(""); // 에디터 내용을 저장하는 상태변수
+type EditorProps = {
+   value: string;
+   setValue: (a: string) => void;
+};
+
+function QuillTextEditor({ value, setValue }: EditorProps) {
+   // function QuillTextEditor() {
+   // const [value, setValue] = useState(""); // 에디터 내용을 저장하는 상태변수
    const quillRef = useRef<any | null>(); // 에디터 접근을 위한 ref
 
    // 에디터에서 이미지 클릭시 발동되는 이벤트 핸들러 함수
