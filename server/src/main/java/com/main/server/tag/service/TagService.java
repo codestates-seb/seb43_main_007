@@ -15,9 +15,4 @@ import java.util.Optional;
 public class TagService {
     private final TagRepository tagRepository;
 
-    public void createTag(Tag tag){
-        System.out.println("check tag");
-        Tag optionalTag = tagRepository.findByTagName(tag.getTagName());
-        if(optionalTag == null) tagRepository.save(tag);
-    }
 }

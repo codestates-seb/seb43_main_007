@@ -21,4 +21,11 @@ public class Tag {
     @OneToMany(mappedBy = "tag")
     private List<BoardTag> boardTags = new ArrayList<>();
 
+    public void addBoardTag(BoardTag boardTag) {
+        this.boardTags.add(boardTag);
+        if (boardTag.getTag() != this) {
+            boardTag.addTag(this);
+        }
+    }
+
 }
