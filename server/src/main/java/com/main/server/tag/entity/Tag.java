@@ -20,4 +20,5 @@ public class Tag {
 
     @OneToMany(mappedBy = "tag")
     private List<BoardTag> boardTags = new ArrayList<>();
+
 }

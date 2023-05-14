@@ -35,7 +35,7 @@ dependencies {
 	implementation 'mysql:mysql-connector-java:8.0.27'
 
 	//
-	implementation 'com.amazonaws:aws-java-sdk-s3:1.11.1000' //S3에 이미지 저장
+	implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE' //S3에 이미지 저장
 	implementation 'org.springframework.boot:spring-boot-starter-security' //스프링 시큐리티
 	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'  // Oauth2
 	implementation 'io.jsonwebtoken:jjwt-api:0.11.5' //JWT
