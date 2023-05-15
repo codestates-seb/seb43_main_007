@@ -62,12 +62,12 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         //Access Token은 클라이언트 측에서 백엔드 애플리케이션 측에 요청을 보낼 때마다
         //request header에 추가해서 클라이언트 측의 자격(로그인 되었는지)을 증명하는 데 사용
-        String result = "{\"accessToken\" : \"" + accessToken + "\"}";
-        response.setStatus(200);
-        response.getWriter().write(result);
+//        String result = "{\"accessToken\" : \"" + accessToken + "\"}";
+//        response.setStatus(200);
+//        response.getWriter().write(result);
 
-        //response.setHeader("Authorization","Bearer "+ accessToken);
-        //response.setHeader("memberId", String.valueOf(member.getMemberId()));
+        response.setHeader("Authorization","Bearer "+ accessToken);
+        response.setHeader("memberId", String.valueOf(member.getMemberId()));
         //response.setHeader("nickname",String.valueOf(member.getNickname()));
 
         this.getSuccessHandler().onAuthenticationSuccess(request, response, authResult);

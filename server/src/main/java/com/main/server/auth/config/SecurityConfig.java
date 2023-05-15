@@ -47,9 +47,7 @@ public class SecurityConfig { //OAuth2 로그인을 처리하기 위한 필수 �
 //    private final OAuth2MemberDetailService oAuth2MemberDetailService;
     //TODO : OAuth2UserSuccessHandler 클래스 만든 후 di 하나 더
 
-    public SecurityConfig(JwtTokenizer jwtTokenizer,
-                          MemberDetailService memberDetailService
-                          ) {
+    public SecurityConfig(JwtTokenizer jwtTokenizer, MemberDetailService memberDetailService) {
         this.jwtTokenizer = jwtTokenizer;
         this.memberDetailService = memberDetailService;
     }
@@ -114,6 +112,7 @@ public class SecurityConfig { //OAuth2 로그인을 처리하기 위한 필수 �
 
             JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(authenticationManager, jwtTokenizer);
             jwtAuthenticationFilter.setFilterProcessesUrl("members/login");
+
             //TODO : 성공핸들러, 실패핸들러 추가작성 (handler 패키지 추가)
 
             JwtVerificationFilter jwtVerificationFilter = new JwtVerificationFilter(jwtTokenizer, memberDetailService);
