@@ -9,8 +9,6 @@ import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotEmpty;
-import java.sql.Timestamp;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -26,7 +24,7 @@ public class BoardDto {
         private String content;
 
         private String address;
-//        private List<BoardTag> tags;
+        private List<BoardTagDto.Add> tagNames;
 
     }
     @Getter
@@ -55,7 +53,6 @@ public class BoardDto {
         private String address;
         private LocalDateTime now;
 
-        // @@@@@@@@@@@@@@@@@@@
 
         private String photo;
 
@@ -65,12 +62,7 @@ public class BoardDto {
 
         private String nickName;
         private String userPhoto;
-
-
-
-
-
-//        private List<Tag> tags;
+        private List<BoardTagDto.Response> tags;
 
     }
 }
