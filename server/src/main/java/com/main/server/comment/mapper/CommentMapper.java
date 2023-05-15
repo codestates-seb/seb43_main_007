@@ -13,9 +13,16 @@ import java.time.LocalDateTime;
 public interface CommentMapper {
 
    // default Comment commentDtoToComment(CommentDto.Post commentDto){
-        //TODO. 댓글 등록
+   CommentDto.Response commentToCommentPostDto(Comment comment);
+    //엔티티를 디티오로 변환할꺼야
+    Comment commentPostDtoToComment2(CommentDto.Post commentDto);
 
-    };
+    Comment commentPutDtoToComment(CommentDto.Put commentDto);
+
+    CommentDto.Response CommentToCommentPutDto(Comment comment);
+
+
+}
 
 
 

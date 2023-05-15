@@ -1,5 +1,6 @@
 package com.main.server.comment.service;
 
+import com.main.server.board.entity.Board;
 import com.main.server.comment.dto.CommentDto;
 import com.main.server.comment.entity.Comment;
 import com.main.server.comment.mapper.CommentMapper;
@@ -12,7 +13,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.Optional;
-@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
+
 @Service
 public class CommentService {
 
@@ -24,42 +25,51 @@ public class CommentService {
     private CommentMapper commentMapper;
 
 
-    //   public CommentService(CommentRepository commentRepository) {//생성자 만들기
-    //        this.commentRepository = commentRepository;
-    //    }
-   public void createComment(CommentDto.Post reqComment){
-       Comment comment = new Comment();
-       comment.setContent(reqComment.getContent());
-       comment.setMemberId(reqComment.getMemberId());
+    public CommentService(CommentRepository commentRepository, CommentMapper commentMapper) {//생성자 만들기
+        this.commentRepository = commentRepository;
+        this.commentMapper = commentMapper;
+    }
 
-       commentRepository.save(comment);
-   }
+    public Comment createComment(Comment comment) { //댓글을 생성된걸 받는거
+
+        return commentRepository.save(comment); //컨트롤러로객체반환 받은걸 다시 프론트에 반환
+
+    }
+
 
     // 댓글 수정
-    public void updateComment(CommentDto.Put reqComment){
-        Optional<Comment> comment = commentRepository.findById(reqComment.getCommentId());
-        //findById 를 통해 디비에서 댓글을 가져옴
-        //Optional 은 만약 디비에 해당 댓글이 없을 경우 orElse() 를 사용해서 null을 넣어줌.
-        comment.orElse(null);
+    //
 
-        // 내용 바꿔주기
-        comment.get().setContent(reqComment.getContent());
+    //Optional<Comment> comment = commentRepository.findById(reqComment.getCommentId());
+    //findById 를 통해 디비에서 댓글을 가져옴
+    //Optional 은 만약 디비에 해당 댓글이 없을 경우 orElse() 를 사용해서 null을 넣어줌.
+    //comment.orElse(null);
 
-        // Comment엔티티가 Optional 타입이기 때문에 get()을 통해 가져온다.
-        commentRepository.save(comment.get());
+    public Comment updateComment(Comment comment) {
+        Optional<Comment> originComment = commentRepository.findById(comment.getCommentId());//아이디 잘못넘어왔으면 널 리턴되는데, 프로그램 멈춤을 막히 위해 옵셔널 오리진가지고 왔고
+
+        Optional.ofNullable(comment.getContent())
+                .ifPresent(content->originComment.get().setContent(content));
+
+        return commentRepository.save(originComment.get());
     }
+
+
+    // 내용 바꿔주기
+
 
     //디비에서 에러가 났을때 다시 롤백해주는 기능
     @Transactional
     public void deleteComment(long commentId) {
-      //  Optional<Comment> comment = commentRepository.findById(commentId);
-      //  commentRepository.delete(comment.get());
+        //  Optional<Comment> comment = commentRepository.findById(commentId);
+        //  commentRepository.delete(comment.get());
 
-           commentRepository.deleteById(commentId);
+        commentRepository.deleteById(commentId);
         //}
     }
 
 
 }
+
 
 
