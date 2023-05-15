@@ -57,13 +57,6 @@ public class MemberDto {
         private String passwordConfirm;
     }
 
-    @Getter
-    @Setter
-    @AllArgsConstructor
-    public static class PatchProfileImage {
-        private long memberId;
-        private MultipartFile file;
-    }
 
     @Getter
     @Setter
@@ -78,7 +71,6 @@ public class MemberDto {
     @Getter
     @AllArgsConstructor
     public static class findIdDto {
-        private long memberId;
         private String RRNConfirm;
     }
 

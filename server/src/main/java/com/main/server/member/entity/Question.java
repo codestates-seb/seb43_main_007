@@ -5,7 +5,7 @@ import lombok.Getter;
 @Getter
 public enum Question { //회원등록시 필요한 질문답변에서 질문
 
-    QUESTION1("질문 예시 1"),
+    QUESTION1("내가 졸업한 초등학교는?"),
     QUESTION2("질문 예시 2 앞의 q1q2는 알아보기 쉽게 바꿀것");
 
 

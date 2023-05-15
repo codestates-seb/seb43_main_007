@@ -10,7 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+<<<<<<< HEAD
 
+=======
+>>>>>>> b110f0a (Feat : s3서비스 추가, 설정파일 변경)
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -18,7 +21,10 @@ import java.io.IOException;
 @Service
 @Slf4j
 public class StorageService {
+<<<<<<< HEAD
 
+=======
+>>>>>>> b110f0a (Feat : s3서비스 추가, 설정파일 변경)
     @Value("${application.bucket.name}")
     private String bucketName;
 
@@ -26,6 +32,7 @@ public class StorageService {
     private AmazonS3 s3Client;
 
 
+<<<<<<< HEAD
     public String uploadFile(MultipartFile file) {
         File fileObj = convertMultiPartFileToFile(file);
         String name = fileObj.getName();
@@ -56,6 +63,17 @@ public class StorageService {
 
 
     private File convertMultiPartFileToFile(MultipartFile file) {
+=======
+    public String uploadFile(MultipartFile file, Long memberId) {
+        File fileObj = convertMultiPartFileToFile(file);
+        String fileName =  Long.toString(memberId);
+        s3Client.putObject(new PutObjectRequest(bucketName, fileName, fileObj));
+        fileObj.delete();
+        return s3Client.getUrl(bucketName, Long.toString(memberId)).toString();
+    }
+
+    static private File convertMultiPartFileToFile(MultipartFile file) {
+>>>>>>> b110f0a (Feat : s3서비스 추가, 설정파일 변경)
         File convertedFile = new File(file.getOriginalFilename());
         try (FileOutputStream fos = new FileOutputStream(convertedFile)) {
             fos.write(file.getBytes());
@@ -64,4 +82,8 @@ public class StorageService {
         }
         return convertedFile;
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> b110f0a (Feat : s3서비스 추가, 설정파일 변경)

@@ -1,0 +1,45 @@
+spring:
+#  datasource:
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql://database-mainproject.c9z9cyblbfz0.ap-northeast-2.rds.amazonaws.com:13306/mainProject?useSSL=false&characterEncoding=UTF-8&serverTimezone=UTC
+#    username: admin
+#    password: ak420217!
+
+
+  h2:
+    console:
+      enabled: true
+      path: /h2
+  datasource:
+    url: jdbc:h2:mem:test
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+mail:
+    address:
+      admin: admin@gmail.com
+jwt:
+    key: ${JWT_SECRET_KEY}
+    access-token-expiration-minutes: 40
+    refresh-token-expiration-minutes: 420
+cloud:
+  aws:
+    credentials:
+      accessKey: AKIARYXXXMMJAZ54QEJA
+      secretKey: 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
+    region:
+      static: ap-northeast-2
+    stack:
+      auto: false
+
+application:
+  bucket:
+    name: mainplestory
+
+#구글 아디 비번 추가해야함
+

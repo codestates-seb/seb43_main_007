@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
@@ -66,9 +67,8 @@ public class MemberController {
     //mem007
     @PatchMapping("api/members/image/{member-id}")
     public ResponseEntity patchMemberImage(@PathVariable("member-id") @Positive long memberId,
-                                           @RequestBody MemberDto.PatchProfileImage memberImagePatchDto) throws IOException {
-        memberImagePatchDto.setMemberId(memberId);
-        Member patchMember = memberService.updateProfileImage(memberImagePatchDto);
+                                           @RequestParam(value = "file") MultipartFile file) throws IOException {
+        Member patchMember = memberService.updateProfileImage(memberId, file);
 
         URI location = UriCreator.createUri(MEMBER_DEFAULT_URL, patchMember.getMemberId());
         return ResponseEntity.created(location).build();
@@ -82,28 +82,31 @@ public class MemberController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    //mem012 답변 보여주기
-    @GetMapping("api/members/question/{member-id}")
-    public ResponseEntity getMemberAnswer(@PathVariable("member-id") @Positive long memberId) {
-        String memberQuestion = memberService.findMemberQuestion(memberId);
-        SingleResponseDto<String> response = new SingleResponseDto<>(memberQuestion);
+
+
+    //mem012 새 패스워드 보여주기
+    @GetMapping("api/members/password")
+    public ResponseEntity getMemberPassword(@RequestParam("email") String email,
+                                            @RequestParam("question") String question,
+                                            @RequestParam("answer") String answer) {
+        String memberPassword = memberService.findMemberPassword(email, question, answer);
+        SingleResponseDto<String> response = new SingleResponseDto<>(memberPassword);
 
         return ResponseEntity.ok(response);
     }
+    
+    //mem013 아이디 보여드릴게
+    @GetMapping("api/members/id")
+    public ResponseEntity getMemberId(@RequestParam("RRNConfirm") String RRNConfirm) {
+        String memberEmail = memberService.findMemberEmail(RRNConfirm);
 
-    //mem012 새 패스워드 보여주기
-    @GetMapping("api/members/password/{member-id}")
-    public ResponseEntity getMemberPassword(@PathVariable("member-id") @Positive long memberId,
-                                            @RequestBody MemberDto.findPasswordDto findPasswordDto) {
-        findPasswordDto.setMemberId(memberId);
-        String memberPassword = memberService.findMemberPassword(findPasswordDto);
-        SingleResponseDto<String> response = new SingleResponseDto<>(memberPassword);
+        SingleResponseDto<String> response = new SingleResponseDto<>(memberEmail);
 
         return ResponseEntity.ok(response);
     }
 
     //마이페이지 get요청
-    @GetMapping("/mebers/mypage/{member-id}")
+    @GetMapping("api/members/mypage/{member-id}")
     public ResponseEntity getMemberMyPage(@Positive @PathVariable("member-id") long memberId) {
         return new ResponseEntity<>(memberMapper.memberToMyPageDto(memberService.findMember(memberId)), HttpStatus.OK);
     }
