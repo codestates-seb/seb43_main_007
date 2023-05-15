@@ -36,7 +36,7 @@ const BookmarkItemContainer = styled.div`
    align-items: center;
    width: 300px;
    height: 350px;
-   /* background-color: beige; */
+   margin: 15px;
    background-image: linear-gradient(
          rgba(254, 255, 222, 0.1),
          rgba(221, 255, 188, 0.1)
