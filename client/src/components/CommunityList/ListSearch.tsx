@@ -18,7 +18,6 @@ function ListSearch() {
    // 드롭다운 버튼 클릭 함수
    const dropDownHandler = () => {
       setIsOpen(!isOpen);
-      // postTodos("몰라", "a아아아");
    };
 
    // 검색창 데이터값 가져오는 핸들러 함수
@@ -38,30 +37,7 @@ function ListSearch() {
          searchSubmitHandler();
       }
    };
-   // const loginAxios = () => {
-   //    axios.defaults.withCredentials = true;
-   //    axios
-   //       .post(
-   //          "http://ec2-13-125-39-247.ap-northeast-2.compute.amazonaws.com:8080/auth/login",
-   //          {
-   //             title: "aws test",
-   //             content: "aws test",
-   //          },
-   //          {
-   //             headers: {
-   //                "Content-Type": "application/json",
-   //                "Access-Control-Allow-Origin": "http://localhost:5173",
-   //                "Access-Control-Allow-Headers":
-   //                   "Origin, X-Requested-With, Content-Type, Accept",
-   //             },
-   //          }
-   //       )
-   //       .then((response) => console.log(response))
-   //       .catch((err) => {
-   //          /* 응답이 안될때 로그인 상태 변경 / 콘솔 오류코드 */
-   //          console.log(err);
-   //       });
-   // };
+  
    return (
       <DivContainer>
          <DivContent>

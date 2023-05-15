@@ -5,6 +5,7 @@ import { BsPin, BsPinFill } from "react-icons/bs";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import type { ListData } from "./listtypes";
 import logo1 from "../../assets/img/logo1.png";
+import { likeBookMarkPatch } from "../../api/axios";
 
 function ListContent({ userDatas }: { userDatas: ListData }) {
    // 관리자(매니저)인지 (로컬에서 관리?)
@@ -26,19 +27,31 @@ function ListContent({ userDatas }: { userDatas: ListData }) {
 
    // 좋아요 클릭 이벤트
    const likeClickHandler = () => {
+      const req = {
+         memberId: 1,
+         boardId: userDatas.boardId,
+      };
       if (isLike === 0) {
          setIsLike(1);
+         likeBookMarkPatch("like", req);
       } else if (isLike === 1) {
          setIsLike(0);
+         likeBookMarkPatch("like", req);
       }
    };
 
    // 북마크 클릭 이벤트
    const bookMarkClickHandler = () => {
+      const req = {
+         memberId: 1,
+         boardId: userDatas.boardId,
+      };
       if (isBookMark === 0) {
          setIsBookMark(1);
+         likeBookMarkPatch("bookmark", req);
       } else if (isBookMark === 1) {
          setIsBookMark(0);
+         likeBookMarkPatch("bookmark", req);
       }
    };
 
@@ -109,7 +122,7 @@ function ListContent({ userDatas }: { userDatas: ListData }) {
                      </button>
                   </DivImg>
                   {/* 날짜 */}
-                  <div>{userDatas.now}</div>
+                  <div>{userDatas.now.slice(0, 10)}</div>
                </div>
             </DivContent>
          </Li>

@@ -3,6 +3,7 @@ import PostTitle from "../components/postdetail/PostTitle";
 import PostContent from "../components/postdetail/PostContent";
 import PostButtons from "../components/postdetail/PostButtons";
 import CreateComment from "../components/postdetail/CreateComment";
+import CommentList from "../components/postdetail/CommentList";
 
 function PostDetail() {
    return (
@@ -10,7 +11,8 @@ function PostDetail() {
          <PostTitle />
          <PostContent />
          <PostButtons />
-         <CreateComment/>
+         <CreateComment />
+         <CommentList />
       </PostDetailContainer>
    );
 }

@@ -17,10 +17,10 @@ function EditProfile() {
       mode: "onChange",
       criteriaMode: "all",
       defaultValues: {
-         NickName: "",
+         nickname: "",
       },
    });
-   const currentNickname = watch("NickName");
+   const currentNickname = watch("nickname");
 
    const onSubmit: SubmitHandler<SignupTypes> = (data) => console.log(data);
 
@@ -62,7 +62,7 @@ function EditProfile() {
                      id="nickname"
                      type="text"
                      placeholder="한글 및 영어, 숫자 10자 이내"
-                     {...register("NickName", {
+                     {...register("nickname", {
                         required: true,
                         validate: (value) =>
                            validFunc.validNickName(value) ||
@@ -77,8 +77,8 @@ function EditProfile() {
                      저장
                   </DefaultButton>
                </InputButtonContainer>
-               {errors.NickName && (
-                  <p className="error-msg">{errors.NickName.message}</p>
+               {errors.nickname && (
+                  <p className="error-msg">{errors.nickname.message}</p>
                )}
             </SubsectionBox>
             <SubsectionBox>

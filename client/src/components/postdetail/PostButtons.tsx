@@ -15,14 +15,22 @@ function PostButtons() {
    return (
       <PostButtonContainer>
          <EditDeleteContainer>
-            <button type="button">수정</button>
+            <button className="postdetail-btn" type="button">
+               수정
+            </button>
             <span className="separator">|</span>
-            <button type="submit" onClick={openModal}>
+            <button
+               className="postdetail-btn"
+               type="submit"
+               onClick={openModal}
+            >
                삭제
             </button>
             <PostDeleteModal open={modalOpen} close={closeModal} />
          </EditDeleteContainer>
-         <button type="button">목록으로</button>
+         <button className="postdetail-btn" type="button">
+            목록으로
+         </button>
       </PostButtonContainer>
    );
 }
@@ -36,7 +44,7 @@ export const PostButtonContainer = styled.div`
    justify-content: space-between;
    font-size: 13px;
 
-   button {
+   .postdetail-btn {
       color: #787878;
       border: none;
       background-color: transparent;
