@@ -26,6 +26,11 @@ public class JwtTokenizer {
     private String secretKey;
 
     @Getter
+    @Value("${jwt.access-token-expiration-minutes}")
+    private int accessTokenExpirationMinutes;
+
+
+    @Getter
     @Value("${jwt.refresh-token-expiration-minutes}") //JWT 생성 시 필요한 정보이며, 해당 정보는 application.yml 파일에서 로드
     private int refreshTokenExpirationsMinutes;
 
