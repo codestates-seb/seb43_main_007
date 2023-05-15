@@ -37,8 +37,9 @@ Comment { //엔티티의 역할? 테이블 설계
         @Column
         private Timestamp createdAt = new Timestamp(new Date().getTime());
 
-        @Column(name = "board_id")
+       @Column(name = "board_id")
         private Long boardId;
+       //커밋아 되어라
 
         // @Column(name = "parent_comment_id")
         //  private Integer parentCommentId;  // 부모 댓글 ID
