@@ -24,8 +24,9 @@ import java.net.URI;
 @Slf4j
 @Validated
 @Transactional
+@RequestMapping("/members")
 public class MemberController {
-    private final static String MEMBER_DEFAULT_URL = "api/members";
+    private final static String MEMBER_DEFAULT_URL = "/members";
     private final MemberService memberService;
     private final MemberMapper memberMapper;
 
@@ -34,7 +35,7 @@ public class MemberController {
         this.memberMapper = memberMapper;
     }
     //mem001
-    @PostMapping("api/members")
+    @PostMapping
     public ResponseEntity postMember(@Valid @RequestBody MemberDto.Post memberPostDto) {
         Member createMember = memberService.createMember(memberPostDto);
         URI location = UriCreator.createUri(MEMBER_DEFAULT_URL, createMember.getMemberId());
@@ -43,7 +44,7 @@ public class MemberController {
     }
 
     //mem005
-    @PatchMapping("api/members/nickname/{member-id}")
+    @PatchMapping("/nickname/{member-id}")
     public ResponseEntity patchMemberNickname(@PathVariable("member-id") @Positive long memberId,
                                                @RequestBody MemberDto.PatchNickname memberNicknamePatchDto) {
         memberNicknamePatchDto.setMemberId(memberId);
@@ -54,7 +55,7 @@ public class MemberController {
     }
 
     //mem006
-    @PatchMapping("api/members/password/{member-id}")
+    @PatchMapping("/password/{member-id}")
     public ResponseEntity patchMemberPassword(@PathVariable("member-id") @Positive long memberId,
                                               @RequestBody MemberDto.PatchPassword memberPasswordPatchDto) {
         memberPasswordPatchDto.setMemberId(memberId);
@@ -65,7 +66,7 @@ public class MemberController {
     }
 
     //mem007
-    @PatchMapping("api/members/image/{member-id}")
+    @PatchMapping("/image/{member-id}")
     public ResponseEntity patchMemberImage(@PathVariable("member-id") @Positive long memberId,
                                            @RequestParam(value = "file") MultipartFile file) throws IOException {
         Member patchMember = memberService.updateProfileImage(memberId, file);
@@ -75,7 +76,7 @@ public class MemberController {
     }
 
     //mem009
-    @DeleteMapping("api/members/{member-id}")
+    @DeleteMapping("/{member-id}")
     public ResponseEntity deleteMember(@PathVariable("member-id") @Positive long memberId) {
         memberService.deleteMember(memberId);
 
@@ -85,7 +86,7 @@ public class MemberController {
 
 
     //mem012 새 패스워드 보여주기
-    @GetMapping("api/members/password")
+    @GetMapping("/password")
     public ResponseEntity getMemberPassword(@RequestParam("email") String email,
                                             @RequestParam("question") String question,
                                             @RequestParam("answer") String answer) {
@@ -96,7 +97,7 @@ public class MemberController {
     }
     
     //mem013 아이디 보여드릴게
-    @GetMapping("api/members/id")
+    @GetMapping("/id")
     public ResponseEntity getMemberId(@RequestParam("RRNConfirm") String RRNConfirm) {
         String memberEmail = memberService.findMemberEmail(RRNConfirm);
 
@@ -106,7 +107,7 @@ public class MemberController {
     }
 
     //마이페이지 get요청
-    @GetMapping("api/members/mypage/{member-id}")
+    @GetMapping("/mypage/{member-id}")
     public ResponseEntity getMemberMyPage(@Positive @PathVariable("member-id") long memberId) {
         return new ResponseEntity<>(memberMapper.memberToMyPageDto(memberService.findMember(memberId)), HttpStatus.OK);
     }
