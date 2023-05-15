@@ -8,7 +8,13 @@ function BookmarkBox() {
    const manyDummy = new Array(11).fill([...dummyBookmark]).flat();
    const totalDataCount = manyDummy.length;
    const [currentPage, setCurrentPage] = useState(1);
-   const currentItems = manyDummy.slice((currentPage - 1) * 6, currentPage * 6);
+   // 페이지당 item 개수
+   const limitItems = 6;
+   // 페이지당 item limitItems만큼 렌더링
+   const currentItems = manyDummy.slice(
+      (currentPage - 1) * limitItems,
+      currentPage * limitItems
+   );
    return (
       <BookmarkBoxContainer>
          {currentItems.map((data) => {
@@ -23,6 +29,7 @@ function BookmarkBox() {
             totalDataCount={totalDataCount}
             currentPage={currentPage}
             setCurrentPage={setCurrentPage}
+            limitItems={limitItems}
          />
       </BookmarkBoxContainer>
    );

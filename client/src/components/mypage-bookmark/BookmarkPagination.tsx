@@ -4,19 +4,23 @@ interface Props {
    totalDataCount: number;
    currentPage: number;
    setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
+   limitItems: number;
 }
 
 function BookmarkPagination({
    totalDataCount,
    currentPage,
    setCurrentPage,
+   limitItems,
 }: Props) {
-   const limitItems = 6;
+   // 총 페이지 수
    const maxPages = Math.ceil(totalDataCount / limitItems);
+   // 버튼 렌더링할 임시 배열
    const pageButtons = Array(5).fill(0);
+   // 버튼클릭시 currentPage 변경, 스크롤 북마크 상단으로
    const handleButtonClick = (num: number) => {
       setCurrentPage(num);
-      window.scrollTo(0, 0);
+      window.scrollTo(0, 200);
    };
    return (
       <BookmarkPaginationContainer>
@@ -30,8 +34,6 @@ function BookmarkPagination({
          </button>
          {pageButtons.map((_, i) => {
             let key = i;
-            if (maxPages > 5 && currentPage >= maxPages - 2)
-               key = i + maxPages - 2 - currentPage;
             if (currentPage >= 4) key = i + currentPage - 3;
             if (key + 1 > maxPages) return null;
             return (

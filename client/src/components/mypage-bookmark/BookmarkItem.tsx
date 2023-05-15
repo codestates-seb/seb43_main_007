@@ -5,7 +5,9 @@ import background from "../../assets/img/leafmemo.png";
 import { DummyType } from "./dummyBookmark";
 
 function BookmarkItem({ data }: { data: DummyType }) {
+   // 생성날짜 보기좋게 파싱
    const parsedDate = new Date(data.createdAt).toLocaleString("ko-kr");
+   // 내용에서 html 태그 제외하고 글자만 빼오기
    const previewBody = data.content.replace(/(<([^>]+)>)/gi, "").trim();
    return (
       <BookmarkItemContainer>
