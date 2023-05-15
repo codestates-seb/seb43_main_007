@@ -1,28 +1,25 @@
 import styled from "styled-components";
-import { ChangeEvent, useState } from "react";
+import useCommentCharacterCount from "../../hooks/useCommentCharacterCount";
 import { DefaultButton } from "../mypage-profile/EditProfile";
 
 function CreateComment() {
-   const [inputValue, setInputValue] = useState("");
    const maxLength = 300;
-   const letterCount = inputValue.length;
+   const { value, characterCount, handleChange } = useCommentCharacterCount({
+      maxLength,
+   });
 
-   const handleInput = (e: ChangeEvent<HTMLTextAreaElement>) => {
-      const value = e.target.value.slice(0, maxLength);
-      setInputValue(value);
-   };
    return (
       <CreateCommentContainer>
          <CommentInputBox>
             <p className="letter-count">
-               {letterCount}/{maxLength}
+               {characterCount}/{maxLength}
             </p>
             <textarea
                className="create-comment"
                placeholder="댓글을 입력해주세요."
                maxLength={maxLength}
-               value={inputValue}
-               onChange={handleInput}
+               value={value}
+               onChange={handleChange}
             />
          </CommentInputBox>
          <DefaultButton>등록</DefaultButton>
@@ -34,6 +31,7 @@ export default CreateComment;
 
 export const CreateCommentContainer = styled.div`
    background-color: var(--first-color2);
+   border-bottom: 1px solid #dfdfdf;
    padding: 15px;
    display: flex;
    align-items: center;

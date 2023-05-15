@@ -1,4 +1,4 @@
-import { PostDeleteModalProps } from "./PostDetailTypes";
+import { PostDeleteModalProps } from "./postDetailTypes";
 import {
    ModalContainer,
    ModalContentBox,
