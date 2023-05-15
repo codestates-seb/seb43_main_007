@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { RiSeedlingLine, RiSeedlingFill } from "react-icons/ri";
 import { BsPin, BsPinFill } from "react-icons/bs";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
-import type { ListData } from "./listtypes";
+import type { ListData } from "./listTypes";
 import logo1 from "../../assets/img/logo1.png";
 import { likeBookMarkPatch } from "../../api/axios";
 
@@ -61,7 +61,11 @@ function ListContent({ userDatas }: { userDatas: ListData }) {
             <DivContent>
                {/* 썸네일 */}
                <div className="div-img">
-                  <img src={logo1} alt="로고이미지" style={{ width: "70px" }} />
+                  <img
+                     src={`${userDatas.photo}`}
+                     alt="로고이미지"
+                     style={{ width: "70px" }}
+                  />
                </div>
                {/* 에디터픽 + 제목 */}
                <div className="div-title">
@@ -95,7 +99,7 @@ function ListContent({ userDatas }: { userDatas: ListData }) {
                   <DivAuthor>
                      <span>
                         <img
-                           src={logo1}
+                           src={`${userDatas.userPhoto}`}
                            alt="로고이미지"
                            style={{ width: "30px" }}
                         />
