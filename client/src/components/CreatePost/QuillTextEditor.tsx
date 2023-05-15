@@ -3,6 +3,7 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import axios from "axios";
 import styled from "styled-components";
+import { editorImgPost } from "../../api/axios";
 
 type EditorProps = {
    value: string;
@@ -28,27 +29,46 @@ function QuillTextEditor({ value, setValue }: EditorProps) {
       // input에 변화가 생긴다면 => 이미지를 선택
       input.addEventListener("change", async () => {
          console.log("체인지 이벤트 발동");
-         const file = input.files[0];
-         // multer에 맞는 형식으로 데이터를 만들어준다.
-         const formData = new FormData();
-         formData.append("img", file); // formData는 key-value구조(img-key/file-value)
-         // 백엔드 multer라우터에 이미지를 보낸다.
-         try {
-            // 백엔드에서 정해준 uri넣어줘야함
-            const result = await axios.post("uri", formData);
-            // 백엔드가 보내주는 주소로 받으면 됨
-            const IMG_URL = result.data.url;
-            console.log(IMG_URL);
+         const img = input.files[0];
 
-            const editor = quillRef.current.getEditor(); // 에디터 객체 가져오기
-            const range = editor.getSelection(); // 현재 에디터 커서 위치값을 가져오기
+         // --------------- formData형식으로 만들어서 보내줬는데 오류가 생겼다.
+         // --------------- 파일 자체로 넘겨줬더니 해결이 돼서 넘어갔다 (왜 이러는지 다음에 확인을 해보자(백엔드 설정 관련?))
+         // // multer에 맞는 형식으로 데이터를 만들어준다.
+         // const formData = new FormData();
+         // console.log(formData);
+         // formData.append("file", img); // formData는 key-value구조(img-key/file-value)
+         // // 백엔드 multer라우터에 이미지를 보낸다.
+         // const file = formData.get("file");
 
-            // 가져온 위치에 이미지를 삽입하기
-            editor.insertEmbed(range.index, "image", IMG_URL);
-         } catch (error) {
-            console.log("이미지 넣기 실패");
-            console.log(error);
-         }
+         // 밑 try/catch부분을 axios 요청으로 코드를 뺀후 파람을 넘겨서 함수 실행.
+         editorImgPost(img, quillRef);
+
+         // try {
+         //    // 백엔드에서 정해준 uri넣어줘야함
+         //    const result = await axios.post(
+         //       "http://ec2-43-200-182-192.ap-northeast-2.compute.amazonaws.com:8080/boards/photo",
+         //       {
+         //          file: img,
+         //       },
+         //       {
+         //          headers: {
+         //             "Content-Type": "multipart/form-data",
+         //          },
+         //       }
+         //    );
+         //    // 백엔드가 보내주는 주소로 받으면 됨
+         //    const IMG_URL = result.data;
+         //    console.log("이미지 성공");
+
+         //    const editor = quillRef.current.getEditor(); // 에디터 객체 가져오기
+         //    const range = editor.getSelection(); // 현재 에디터 커서 위치값을 가져오기
+
+         //    // 가져온 위치에 이미지를 삽입하기
+         //    editor.insertEmbed(range.index, "image", IMG_URL);
+         // } catch (error) {
+         //    console.log("이미지 넣기 실패");
+         //    console.log(error);
+         // }
       });
    };
 

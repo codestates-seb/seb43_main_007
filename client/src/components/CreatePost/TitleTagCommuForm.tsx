@@ -2,11 +2,18 @@ import styled from "styled-components";
 import CommuDropDown from "./CommuDropDown";
 
 type CommuProps = {
+   item: string;
+   setItem: (a: string) => void;
    setTitle: (a: string) => void;
    setAddress: (a: string) => void;
 };
 
-function TitleTagCommuForm({ setTitle, setAddress }: CommuProps) {
+function TitleTagCommuForm({
+   item,
+   setItem,
+   setTitle,
+   setAddress,
+}: CommuProps) {
    // 제목입력 값 핸들러
    const titleValueHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
       setTitle(event.target.value);
@@ -20,7 +27,7 @@ function TitleTagCommuForm({ setTitle, setAddress }: CommuProps) {
       <div>
          <DivContent>
             <div className="community">커뮤니티</div>
-            <CommuDropDown />
+            <CommuDropDown item={item} setItem={setItem} />
          </DivContent>
          <DivContent>
             <div className="title-div">제목</div>

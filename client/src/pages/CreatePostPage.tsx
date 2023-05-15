@@ -1,5 +1,7 @@
 import styled from "styled-components";
 import { useState } from "react";
+import { useNavigate } from "react-router";
+import { createPost } from "../api/axios";
 import GuideLine from "../components/CreatePost/GuideLine";
 import QuillTextEditor from "../components/CreatePost/QuillTextEditor";
 import TitleTagCommuForm from "../components/CreatePost/TitleTagCommuForm";
@@ -9,14 +11,19 @@ function CreatePost() {
    const [title, setTitle] = useState("");
    // 주소 상태 변경 함수
    const [address, setAddress] = useState("");
-   const [value, setValue] = useState(""); // 에디터 내용을 저장하는 상태변수
+   // 에디터 내용을 저장하는 상태변수
+   const [value, setValue] = useState("");
+   // 커뮤니티 값을 가져오는 상태변수
+   const [item, setItem] = useState("");
 
+   // 네비게이터 생성
+   const navigate = useNavigate();
    const createPostSubmit = (event: React.FormEvent<HTMLFormElement>) => {
       event.preventDefault();
-      console.log("된다");
-      console.log(title);
-      console.log(address);
-      console.log(value);
+      console.log("등록 버튼 눌름");
+
+      createPost(title, address, value, "");
+      navigate("/communitylist");
    };
 
    return (
@@ -25,7 +32,12 @@ function CreatePost() {
             <GuideLine />
          </div>
          <div>
-            <TitleTagCommuForm setTitle={setTitle} setAddress={setAddress} />
+            <TitleTagCommuForm
+               item={item}
+               setItem={setItem}
+               setTitle={setTitle}
+               setAddress={setAddress}
+            />
             <QuillTextEditor setValue={setValue} value={value} />
          </div>
          <div className="button-div">
