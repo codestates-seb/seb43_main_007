@@ -5,7 +5,7 @@ import logo from "../../assets/img/logo2.png";
 import validFunction from "../../util/signinValidFunc";
 import LoginModal from "./LoginModal";
 import { LoginTypes } from "./LoginType";
-import { listData, loginPost } from "../../api/axios";
+import { loginPost } from "../../api/axios";
 
 function LoginForm() {
    const {
@@ -33,8 +33,8 @@ function LoginForm() {
       // access 토큰 저장, memberid 저장, 로그인상태 변경
       // if(성공시) {
       //   로그인 상태 변경
-      //   access 토큰은 세션 스토리지에 저장?
-      //   refresh 토큰은?
+      //   memberID 전역상태 설정
+      //   access 토큰은 쿠키에저장
       //   home으로 이동
       // }
 

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { LoginTypes } from "../components/login/LoginType";
+import { LoginTypes, FindPasswordType } from "../components/login/LoginType";
 import { SignupTypes } from "../components/signup/SignupTypes";
 import { request } from "./create";
 
@@ -63,5 +63,32 @@ export const getUserProfile = async () => {
       console.log("실패");
       console.error(error);
       return null;
+   }
+};
+
+// 아이디 찾기 요청
+export const findId = async (rrn: string) => {
+   try {
+      const { data } = await request.get(`members/id?RRNConfirm=${rrn}`);
+      console.log("성공");
+      console.log(data);
+      return data;
+   } catch (error) {
+      console.log("실패");
+      return error;
+   }
+};
+
+// 비밀번호 찾기 요청
+export const findPassword = async (params: FindPasswordType) => {
+   const paramsUrl = new URLSearchParams(params).toString();
+   try {
+      const { data } = await request.get(`members/password?${paramsUrl}`);
+      console.log("성공");
+      console.log(data);
+      return data;
+   } catch (error) {
+      console.log("실패");
+      return error;
    }
 };
