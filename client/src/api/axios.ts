@@ -14,6 +14,18 @@ export const listData = async (curPage: number) => {
    }
 };
 
+// 목록페이지 좋아요 patch요청
+export const likeBookMarkPatch = async (endPoint, req) => {
+   try {
+      const data = await request.patch(`boards/${endPoint}`, req);
+      console.log("요청 성공");
+      console.log(data);
+   } catch (error) {
+      console.log("요청 실패");
+      console.log(error);
+   }
+};
+
 // 로그인 요청
 export const loginPost = async (req: LoginTypes) => {
    try {
