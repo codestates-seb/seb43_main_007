@@ -49,6 +49,7 @@ public class BoardController {
 
     @PostMapping("/photo")
     public String postPhoto(@RequestParam(value = "file") MultipartFile file){
+
         return service.uploadFile(file);
     }
 
