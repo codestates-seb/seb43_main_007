@@ -83,7 +83,6 @@ const DropdownBody = styled.div`
    align-items: center;
    height: 40px;
    padding: 9px 14px;
-   border: 1px solid #d2d2d2;
 `;
 
 const DropdownSelect = styled.p`

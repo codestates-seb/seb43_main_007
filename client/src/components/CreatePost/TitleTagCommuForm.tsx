@@ -41,7 +41,7 @@ function TitleTagCommuForm({
             <CommuDropDown item={item} setItem={setItem} />
          </DivContentCommu>
          <DivContent>
-            <div className="title-div">제목</div>
+            <div className="title-div title-red">제목</div>
             <input
                className="title-input"
                type="text"
@@ -50,7 +50,7 @@ function TitleTagCommuForm({
             />
          </DivContent>
          <DivContent>
-            <div className="address-div">주소</div>
+            <div className="address-div address-red">주소</div>
             <input
                className="address-input"
                type="text"

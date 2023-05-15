@@ -55,7 +55,6 @@ export const editorImgPost = async (img: any, quillRef) => {
 };
 
 // 글생성 post요청
-
 export const createPost = async (
    title: string,
    address: string,

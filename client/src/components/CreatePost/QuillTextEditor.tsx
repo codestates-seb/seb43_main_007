@@ -1,16 +1,16 @@
 import { useRef, useMemo } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import axios from "axios";
 import styled from "styled-components";
 import { editorImgPost } from "../../api/axios";
 
 type EditorProps = {
    value: string;
    setValue: (a: string) => void;
+   setIsImg: (a: boolean) => void;
 };
 
-function QuillTextEditor({ value, setValue }: EditorProps) {
+function QuillTextEditor({ value, setValue, setIsImg }: EditorProps) {
    // function QuillTextEditor() {
    // const [value, setValue] = useState(""); // 에디터 내용을 저장하는 상태변수
    const quillRef = useRef<any | null>(); // 에디터 접근을 위한 ref
@@ -30,7 +30,10 @@ function QuillTextEditor({ value, setValue }: EditorProps) {
       input.addEventListener("change", async () => {
          console.log("체인지 이벤트 발동");
          const img = input.files[0];
-         console.log(img);
+         if (img) {
+            setIsImg(true);
+            console.log("이미지가 있네");
+         }
 
          // // --------------- formData형식으로 만들어서 보내줬는데 오류가 생겼다.
          // // --------------- 파일 자체로 넘겨줬더니 해결이 돼서 넘어갔다 (왜 이러는지 다음에 확인을 해보자(백엔드 설정 관련?))
@@ -136,6 +139,24 @@ function QuillTextEditor({ value, setValue }: EditorProps) {
       };
    }, []);
 
+   // toolbar에 사용되는 tool format
+   const formats = [
+      "header",
+      "font",
+      "align",
+      "bold",
+      "italic",
+      "underline",
+      "strike",
+      "blockquote",
+      "list",
+      "link",
+      "image",
+      "clean",
+      "color",
+      "background",
+   ];
+
    return (
       <EditorDiv>
          <ReactQuill
@@ -144,6 +165,7 @@ function QuillTextEditor({ value, setValue }: EditorProps) {
             value={value}
             onChange={setValue}
             modules={modules}
+            formats={formats}
             placeholder="내용을 입력해주세요."
          />
       </EditorDiv>
