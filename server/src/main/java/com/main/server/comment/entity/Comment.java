@@ -5,8 +5,10 @@ import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
+import java.time.LocalDateTime;
+import java.sql.Timestamp;
+import java.util.Date;
 @Entity
 @Builder
 @NoArgsConstructor
@@ -18,7 +20,8 @@ import java.time.LocalDateTime;
 //@ToString
 //@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Table(name = "comments")
-public class Comment { //엔티티의 역할? 테이블 설계
+public class
+Comment { //엔티티의 역할? 테이블 설계
         @Id //식별자
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         @Column(name = "comment_id")
@@ -31,10 +34,8 @@ public class Comment { //엔티티의 역할? 테이블 설계
         private Long memberId;
 
 
-        @Column(name = "created_date", nullable = false, updatable = false)
-        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
-        @CreatedDate
-        private LocalDateTime createdAt;
+        @Column
+        private Timestamp createdAt = new Timestamp(new Date().getTime());
 
         @Column(name = "board_id")
         private Long boardId;
@@ -42,7 +43,7 @@ public class Comment { //엔티티의 역할? 테이블 설계
         // @Column(name = "parent_comment_id")
         //  private Integer parentCommentId;  // 부모 댓글 ID
 
-        public Comment(long commentId, String content, long memberId, LocalDateTime createdAt, long boardId, long parentCommentId) {
+        public Comment(long commentId, String content, long memberId, long boardId, long parentCommentId) {
                 this.commentId = commentId;
                 this.content = content;
                 this.memberId = memberId;

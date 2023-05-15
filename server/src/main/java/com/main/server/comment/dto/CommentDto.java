@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Date;
 
@@ -20,16 +21,17 @@ public class CommentDto { //서비스는 엔티티에서 받아온 애를 직접
     private long commentId; //댓글식별자  자동으로 생성이 되는거여서 필요없음
     private String content; //댓글내용
     private long memberId; //댓글작성자 그 회원의 진짜 아이디 닉네임이 안필요 누가 썼는지 뭐라고 썼는지 어느 게시글에서 썼는지
-    private LocalDateTime createdAt;  //등록일
+    private Timestamp createdAt;  //등록일
     private long boardId;
     private long parentCommentId;
 
 
-    @Data
-    public static class Post {
+    @Getter
+    @Setter
+    public  static class Post {
         private String content;
-        private Long memberId;
-        private LocalDateTime createdAt;
+        private Long memberId; //멤버를 식별하기 위함
+
     }
 
     @Getter
@@ -37,22 +39,18 @@ public class CommentDto { //서비스는 엔티티에서 받아온 애를 직접
     @AllArgsConstructor
     public static class Put {
 
-        @Length(min = 10, message = "내용은 10자 이상 작성하셔야 합니다.")
+        @Length(min = 3, message = "내용은 3자 이상 작성하셔야 합니다.")
         private String content;
 
         private Long commentId;
 
-        //todo. JPA LocalDateTime 자동 Update
-        private LocalDateTime createdAt;
-
-
     }
 
-    @Getter
+    @Getter @Setter
     @AllArgsConstructor
-    public static class Response {
+    public static class   Response { //닉네임,사진 추가
         private String content;
-        private LocalDateTime createdAt;
+        private Timestamp createdAt;
 
     }
 }

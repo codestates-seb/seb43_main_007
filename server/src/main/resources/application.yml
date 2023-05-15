@@ -1,9 +1,9 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://database-mainproject.c9z9cyblbfz0.ap-northeast-2.rds.amazonaws.com:13306/mainProject?useSSL=false&characterEncoding=UTF-8&serverTimezone=UTC
-    username: admin
-    password: ak420217!
+    url: jdbc:mysql://localhost:3306/test?serverTimezone=Asia/Seoul
+    username: root
+    password: rladbswl1044!
   jpa:
     hibernate:
       ddl-auto: create-drop
@@ -11,5 +11,10 @@ spring:
     properties:
       hibernate:
         format_sql: true
-
-
+mail:
+  address:
+    admin: admin@gmail.com
+jwt:
+  key: ${JWT_SECRET_KEY}
+  access-token-expiration-minutes: 40
+  refresh-token-expiration-minutes: 420
