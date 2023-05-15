@@ -55,19 +55,25 @@ export const editorImgPost = async (img: any, quillRef) => {
 };
 
 // 글생성 post요청
+
 export const createPost = async (
    title: string,
    address: string,
    content: string,
-   tagName: string
+   tagList: { tagName: string }[],
+   navigate: any
 ) => {
    try {
       const data = await request.post("/boards", {
          title,
          address,
          content,
-         tagNames: [{ tagName }],
+         tagNames: tagList,
       });
+
+      if (data.status === 201 || data.status === 200) {
+         navigate("/communitylist");
+      }
    } catch (error) {
       console.log("글 작성 생성 오류");
       console.log(error);

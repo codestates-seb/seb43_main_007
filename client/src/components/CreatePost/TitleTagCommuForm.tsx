@@ -1,11 +1,20 @@
 import styled from "styled-components";
 import CommuDropDown from "./CommuDropDown";
+import TagBox from "./TagBox";
 
 type CommuProps = {
    item: string;
    setItem: (a: string) => void;
    setTitle: (a: string) => void;
    setAddress: (a: string) => void;
+   tagList: { tagName: string }[];
+   setTagList: React.Dispatch<
+      React.SetStateAction<
+         {
+            tagName: string;
+         }[]
+      >
+   >;
 };
 
 function TitleTagCommuForm({
@@ -13,6 +22,8 @@ function TitleTagCommuForm({
    setItem,
    setTitle,
    setAddress,
+   tagList,
+   setTagList,
 }: CommuProps) {
    // 제목입력 값 핸들러
    const titleValueHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -25,10 +36,10 @@ function TitleTagCommuForm({
 
    return (
       <div>
-         <DivContent>
+         <DivContentCommu>
             <div className="community">커뮤니티</div>
             <CommuDropDown item={item} setItem={setItem} />
-         </DivContent>
+         </DivContentCommu>
          <DivContent>
             <div className="title-div">제목</div>
             <input
@@ -47,17 +58,37 @@ function TitleTagCommuForm({
                placeholder="주소를 입력하세요."
             />
          </DivContent>
+         <TagBox tagList={tagList} setTagList={setTagList} />
       </div>
    );
 }
 
 export default TitleTagCommuForm;
 
+const DivContentCommu = styled.div`
+   display: flex;
+   align-items: center;
+   height: 40px;
+   width: 500px;
+   font-size: var(--font-base);
+   border: 1px solid #d2d2d2;
+
+   .community {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100px;
+      height: 40px;
+      border-right: 1px solid #d2d2d2;
+   }
+`;
+
 const DivContent = styled.div`
    display: flex;
    align-items: center;
    height: 40px;
    font-size: var(--font-base);
+   border: 1px solid #d2d2d2;
 
    .title-div,
    .address-div,
@@ -67,13 +98,17 @@ const DivContent = styled.div`
       justify-content: center;
       width: 100px;
       height: 40px;
-      border: 1px solid #d2d2d2;
+      border-right: 1px solid #d2d2d2;
    }
    .title-input,
    .address-input {
+      background: transparent;
+      border: none;
+      outline: none;
+      cursor: text;
+
       width: 600px;
       height: 40px;
       padding: 9px 14px;
-      border: 1px solid #d2d2d2;
    }
 `;

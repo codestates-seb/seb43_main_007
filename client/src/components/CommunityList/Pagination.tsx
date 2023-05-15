@@ -39,9 +39,9 @@ function Pagination({ setCurPage, curPage, totalPage, limit }: PropsT) {
       } else if (curPage % limit === 0) {
          setCurrentPageArray(totalPageArray[Math.floor(curPage / limit) - 1]);
       } else {
-         console.log("해당안됨");
+         // 이부분을 넣어줘야지 마지막 페이지 가는 버튼을 누를때 마지막 페이지가 현재페이지로 인식이 된다.
+         // 없으면 밑에 페이지가 이동을 안함(목록만 바뀐다.)
          setCurrentPageArray(totalPageArray[Math.floor(curPage / limit)]);
-         console.log(currentPageArray);
       }
    }, [curPage, totalPageArray]);
 
