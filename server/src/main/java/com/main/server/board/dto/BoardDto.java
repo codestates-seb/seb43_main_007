@@ -24,6 +24,8 @@ public class BoardDto {
         private String content;
 
         private String address;
+
+        private String category;
         private List<BoardTagDto.Add> tagNames;
 
     }

@@ -10,6 +10,7 @@ import com.main.server.tag.repository.TagRepository;
 import com.main.server.tag.service.TagService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -38,9 +39,33 @@ public class BoardService {
         return findVerifiedBoard(boardId);
     }
 
-    public Page<Board> getAllBoard(Pageable pageable) {
+    public Page<Board> getAllBoard(Pageable pageable, String cate, String title, String content) {
+
         Page<Board> boards = boardRepository.findAll(pageable);
-        return boards;
+        if(!cate.equals("") && (!title.equals("") && !content.equals(""))) { // 타이틀+컨텐츠 검색
+            Page<Board> filteredBoards = boards.stream()
+                    .filter(board -> board.getCategory().equals(cate))
+                    .filter(board -> board.getTitle().contains(title) || board.getContent().contains(content))
+                    .collect(Collectors.collectingAndThen(Collectors.toList(),
+                            list -> new PageImpl<>(list, pageable, boards.getTotalElements())));
+            return filteredBoards;
+        }else if(!cate.equals("")) { // 타이틀 or 컨텐츠 검색
+            Page<Board> filteredBoards = boards.stream()
+                    .filter(board -> board.getCategory().equals(cate))
+                    .filter(board -> board.getTitle().contains(title))
+                    .filter(board -> board.getContent().contains(content))
+                    .collect(Collectors.collectingAndThen(Collectors.toList(),
+                            list -> new PageImpl<>(list, pageable, boards.getTotalElements())));
+            return filteredBoards;
+        }else{ // Nav바 타이틀+컨텐츠 검색
+            Page<Board> filteredBoards = boards.stream()
+                    .filter(board -> board.getTitle().contains(title) || board.getContent().contains(content))
+                    .collect(Collectors.collectingAndThen(Collectors.toList(),
+                            list -> new PageImpl<>(list, pageable, boards.getTotalElements())));
+            return filteredBoards;
+
+        }
+//        return boards;
     }
 
     public Board putBoard(Board board) {

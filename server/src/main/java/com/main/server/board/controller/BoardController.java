@@ -53,26 +53,27 @@ public class BoardController {
         return service.uploadFile(file);
     }
 
-//    @GetMapping("/{boardId}")
-//    public ResponseEntity getBoard(@PathVariable("boardId") @Positive long boardId){
-//        Board response = boardService.getBoard(boardId);
-//
-//        return new ResponseEntity<>(boardMapper.boardToBoardResponse(response), HttpStatus.OK);
-//    }
 
     @GetMapping("/{boardId}")
-    public void getsBoard(@PathVariable("boardId") @Positive String boardId){
+    public ResponseEntity getBoard(@PathVariable("boardId") @Positive long boardId){
+        Board response = boardService.getBoard(boardId);
 
-        System.out.println(boardId);
+        return new ResponseEntity<>(boardMapper.boardToBoardResponse(response), HttpStatus.OK);
     }
 
     @GetMapping()
-    public ResponseEntity getAllBoard(@RequestParam(name = "page", defaultValue = "0") int page
+    public ResponseEntity getAllBoard( @RequestParam(name = "cate", required = false) String cate,
+                                       @RequestParam(name = "title", required = false) String title,
+                                       @RequestParam(name = "content", required = false) String content
+            ,@RequestParam(name = "page", defaultValue = "0") int page
             ,@PageableDefault(sort = "boardId", direction = Sort.Direction.DESC) Pageable pageable){
         if(page>0) page--;
         pageable = pageable.withPage(page);
+        if(cate==null) cate = "";
+        if(title==null) title = "";
+        if(content==null) content = "";
 
-        Page<Board> boards= boardService.getAllBoard(pageable);
+        Page<Board> boards= boardService.getAllBoard(pageable, cate, title, content);
 
 
         List<Board> boardList = boards.getContent();

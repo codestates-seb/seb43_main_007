@@ -31,6 +31,8 @@ public interface BoardMapper{
                 })
                 .collect(Collectors.toList());
 
+        board.setCategory(post.getCategory());
+        board.setAddress(post.getAddress());
         board.setTitle( post.getTitle() );
         board.setContent( post.getContent() );
         board.setBoardTag(boardTags);
