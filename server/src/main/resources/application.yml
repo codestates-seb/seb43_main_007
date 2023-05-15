@@ -27,16 +27,6 @@ jwt:
     key: ${JWT_SECRET_KEY}
     access-token-expiration-minutes: 40
     refresh-token-expiration-minutes: 420
-cloud:
-  aws:
-    credentials:
-      accessKey: AKIARYXXXMMJAZ54QEJA
-      secretKey: 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
-    region:
-      static: ap-northeast-2
-    stack:
-      auto: false
-
 application:
   bucket:
     name: mainplestory
