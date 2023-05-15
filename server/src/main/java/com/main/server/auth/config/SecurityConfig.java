@@ -2,6 +2,7 @@ package com.main.server.auth.config;
 
 import com.main.server.auth.filter.JwtAuthenticationFilter;
 import com.main.server.auth.filter.JwtVerificationFilter;
+import com.main.server.auth.handler.OAuth2UserSuccessHandler;
 import com.main.server.auth.jwt.JwtTokenizer;
 import com.main.server.auth.userservice.MemberDetailService;
 import com.main.server.auth.userservice.OAuth2MemberDetailService;
@@ -34,22 +35,28 @@ import java.util.List;
 public class SecurityConfig { //OAuth2 로그인을 처리하기 위한 필수 구성을 포함함.
 
 
-//    //     Google OAuth2 클라이언트 ID와 클라이언트 비밀번호
-//    @Value("${spring.security.oauth2.client.registration.google.clientId}")
-//    private String clientId;
-//
-//    @Value("${spring.security.oauth2.client.registration.google.clientSecret}")
-//    private String clientSecret;
+    //     Google OAuth2 클라이언트 ID와 클라이언트 비밀번호
+    @Value("${spring.security.oauth2.client.registration.google.clientId}")
+    private String clientId;
+
+    @Value("${spring.security.oauth2.client.registration.google.clientSecret}")
+    private String clientSecret;
 
     //DI
     private final JwtTokenizer jwtTokenizer;
     private final MemberDetailService memberDetailService;
-//    private final OAuth2MemberDetailService oAuth2MemberDetailService;
+    private final OAuth2MemberDetailService oAuth2MemberDetailService;
     //TODO : OAuth2UserSuccessHandler 클래스 만든 후 di 하나 더
+    private OAuth2UserSuccessHandler oAuth2UserSuccessHandler;
 
-    public SecurityConfig(JwtTokenizer jwtTokenizer, MemberDetailService memberDetailService) {
+    public SecurityConfig(JwtTokenizer jwtTokenizer,
+                          MemberDetailService memberDetailService,
+                          OAuth2MemberDetailService oAuth2MemberDetailService,
+                          OAuth2UserSuccessHandler oAuth2UserSuccessHandler) {
         this.jwtTokenizer = jwtTokenizer;
         this.memberDetailService = memberDetailService;
+        this.oAuth2MemberDetailService = oAuth2MemberDetailService;
+        this.oAuth2UserSuccessHandler = oAuth2UserSuccessHandler;
     }
 
     //여기가 핵심
@@ -73,10 +80,10 @@ public class SecurityConfig { //OAuth2 로그인을 처리하기 위한 필수 �
                 .apply(new CustomFilterConfigurer())
                 .and()
                 .authorizeHttpRequests(authorize -> authorize
-                        .anyRequest().permitAll());
-                //.oauth2Login()
-                //.successHandler() 오어스 멤버석세스핸들러
-                //.userInfoEndpoint().userService(oAuth2MemberDetailService); //후처리
+                        .anyRequest().permitAll())
+                .oauth2Login()
+                .successHandler(oAuth2UserSuccessHandler) //오어스 멤버석세스핸들러
+                .userInfoEndpoint().userService(oAuth2MemberDetailService); //후처리
         return http.build();
     }
 
