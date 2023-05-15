@@ -6,8 +6,8 @@ import MypageNavbar from "../components/mypage-profile/MypageNavbar";
 import EditProfile from "../components/mypage-profile/EditProfile";
 import ChangePassoword from "../components/mypage-profile/ChangePassoword";
 import DeleteAccount from "../components/mypage-profile/DeleteAccount";
-import { setPhoto } from "../reducers/ProfilePhotoSlice";
-import { setNickname } from "../reducers/ProfileNicknameSlice";
+import { setPhoto } from "../reducers/profilePhotoSlice";
+import { setNickname } from "../reducers/profileNicknameSlice";
 import { getUserProfile } from "../api/axios";
 
 function MypageProfile() {

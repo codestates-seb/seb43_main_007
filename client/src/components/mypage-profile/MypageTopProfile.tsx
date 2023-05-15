@@ -19,7 +19,7 @@ function MypageTopProfile() {
                alt="user-profile"
                className="user-photo"
             />
-            <span className="user-name">{profileNickname || "냥이"}</span>
+            <span className="user-name">{profileNickname}</span>
          </ProfileBox>
          <Membership>
             <img

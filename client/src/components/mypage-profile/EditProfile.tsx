@@ -1,11 +1,13 @@
 import styled from "styled-components";
 import { ChangeEvent, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { RootState } from "../../store/store";
 import validFunc from "../../util/signinValidFunc";
-import { setPhoto } from "../../reducers/ProfilePhotoSlice";
+import { setPhoto } from "../../reducers/profilePhotoSlice";
 import { SignupTypes } from "../signup/SignupTypes";
-import { setNickname } from "../../reducers/ProfileNicknameSlice";
+import { setNickname } from "../../reducers/profileNicknameSlice";
+import { updateNickname } from "../../api/axios";
 
 function EditProfile() {
    const {
@@ -42,8 +44,22 @@ function EditProfile() {
       }
    };
 
+   const [serverError, setServerError] = useState<string | null>(null);
+
+   const memberId = useSelector((state: RootState) => state.memberId);
+
    const handleSave = () => {
-      dispatch(setNickname(currentNickname));
+      updateNickname(memberId, currentNickname)
+         .then(() => {
+            dispatch(setNickname(currentNickname));
+            setServerError(null);
+         })
+         .catch((error) => {
+            console.error("닉네임 변경에 실패하였습니다.", error);
+            if (error.message === "닉네임 중복") {
+               setServerError("중복된 닉네임입니다.");
+            }
+         });
    };
 
    const handleDelete = () => {
@@ -80,6 +96,7 @@ function EditProfile() {
                {errors.nickname && (
                   <p className="error-msg">{errors.nickname.message}</p>
                )}
+               {serverError && <p className="error-msg">{serverError}</p>}
             </SubsectionBox>
             <SubsectionBox>
                <label htmlFor="profile-pic">프로필 사진</label>

@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { LoginTypes } from "../components/login/LoginType";
 import { SignupTypes } from "../components/signup/SignupTypes";
 import { request } from "./create";
@@ -62,6 +62,28 @@ export const getUserProfile = async () => {
    } catch (error) {
       console.log("실패");
       console.error(error);
+      return null;
+   }
+};
+
+// 닉네임 변경
+export const updateNickname = async (memberId: number, newNickname: string) => {
+   try {
+      const { data } = await request.patch(
+         `/api/members/nickname/${memberId}`,
+         {
+            memberId,
+            newNickname,
+         }
+      );
+      console.log("닉네임 변경 성공");
+      return data;
+   } catch (error) {
+      const axiosError = error as AxiosError;
+      console.log("닉네임 변경 실패", axiosError);
+      if (axiosError.response && axiosError.response.status === 400) {
+         throw new Error("닉네임 중복");
+      }
       return null;
    }
 };
