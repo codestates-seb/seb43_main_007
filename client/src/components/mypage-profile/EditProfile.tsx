@@ -7,9 +7,10 @@ import validFunc from "../../util/signinValidFunc";
 import { setPhoto } from "../../reducers/profilePhotoSlice";
 import { SignupTypes } from "../signup/SignupTypes";
 import { setNickname } from "../../reducers/profileNicknameSlice";
-import { updateNickname } from "../../api/axios";
+import { updateNickname, updateUserProfilePhoto } from "../../api/axios";
 
 function EditProfile() {
+   // useForm setup
    const {
       register,
       handleSubmit,
@@ -22,31 +23,50 @@ function EditProfile() {
          nickname: "",
       },
    });
-   const currentNickname = watch("nickname");
 
-   const onSubmit: SubmitHandler<SignupTypes> = (data) => console.log(data);
-
+   // Redux dispatch
    const dispatch = useDispatch();
+
+   // State variables
+   const [serverError, setServerError] = useState<string | null>(null);
    const [fileName, setFileName] = useState("");
+   const [prevPhoto, setPrevPhoto] = useState("");
+
+   // Redux selector
+   const memberId = useSelector((state: RootState) => state.memberId);
+   const currentPhoto = useSelector(
+      (state: RootState) => state.profilePhoto.photo
+   );
+
+   // Handlers
+   const onSubmit: SubmitHandler<SignupTypes> = (data) => console.log(data);
+   const currentNickname = watch("nickname");
 
    const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
       const file = e.target.files?.[0];
       if (file) {
          setFileName(file.name);
+         setPrevPhoto(currentPhoto);
          const reader = new FileReader();
          reader.onload = (event) => {
             if (event.target) {
                const fileResult = event.target.result as string;
-               dispatch(setPhoto(fileResult));
+               setPrevPhoto(fileResult);
             }
          };
          reader.readAsDataURL(file);
+
+         updateUserProfilePhoto(memberId, file)
+            .then((data) => {
+               alert("프로필 사진이 성공적으로 변경되었습니다."); // 로컬에선 실패해도 뜨는 상태. 서버 연결 후 테스트 해봐야 함
+               dispatch(setPhoto(prevPhoto));
+            })
+            .catch((error) => {
+               console.error("프로필 사진 변경에 실패하였습니다.", error);
+               alert("프로필 사진 변경에 실패하였습니다. 다시 시도해주세요.");
+            });
       }
    };
-
-   const [serverError, setServerError] = useState<string | null>(null);
-
-   const memberId = useSelector((state: RootState) => state.memberId);
 
    const handleSave = () => {
       updateNickname(memberId, currentNickname)

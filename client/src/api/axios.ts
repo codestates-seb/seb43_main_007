@@ -87,3 +87,27 @@ export const updateNickname = async (memberId: number, newNickname: string) => {
       return null;
    }
 };
+
+// 프로필 사진 변경
+export const updateUserProfilePhoto = async (memberId: number, file: File) => {
+   try {
+      const formData = new FormData();
+      formData.append("file", file);
+
+      const { data } = await request.patch(
+         `/api/members/image/${memberId}`,
+         formData,
+         {
+            headers: {
+               "Content-Type": "multipart/form-data",
+            },
+         }
+      );
+      console.log("프로필 사진 변경 성공");
+      return data;
+   } catch (error) {
+      const axiosError = error as AxiosError;
+      console.log("프로필 사진 변경 실패", axiosError);
+      return null;
+   }
+};
