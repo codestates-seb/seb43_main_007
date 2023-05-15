@@ -36,8 +36,8 @@ public class Board {
 
 //    private Long like;
 
-//    @OneToMany(mappedBy = "board")
-//    private List<BoardTag> boardTag = new ArrayList<>();
+    @OneToMany(mappedBy = "board", cascade = CascadeType.REMOVE)
+    private List<BoardTag> boardTag = new ArrayList<>();
 
 
 

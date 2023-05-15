@@ -17,6 +17,7 @@ import com.main.server.exception.ExceptionCode;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Transactional
@@ -32,48 +33,41 @@ public class BoardService {
 
 
     public Board getBoard(long boardId) {
+
+
         return findVerifiedBoard(boardId);
     }
 
-    public Page<Board> getAllBoard(Pageable pageable){
+    public Page<Board> getAllBoard(Pageable pageable) {
         Page<Board> boards = boardRepository.findAll(pageable);
         return boards;
     }
 
-    public Board putBoard(Board board){
+    public Board putBoard(Board board) {
         Board originBoard = findVerifiedBoard(board.getBoardId());
         Optional.ofNullable(board.getContent())
-                .ifPresent(contnet->originBoard.setContent(contnet));
+                .ifPresent(contnet -> originBoard.setContent(contnet));
         Optional.ofNullable(board.getTitle())
-                .ifPresent(title->originBoard.setTitle(title));
+                .ifPresent(title -> originBoard.setTitle(title));
         Optional.ofNullable(board.getAddress())
-                .ifPresent(address->originBoard.setAddress(address));
+                .ifPresent(address -> originBoard.setAddress(address));
         return boardRepository.save(originBoard);
     }
 
-    public void deleteBoard(long boardId){
+    public void deleteBoard(long boardId) {
         boardRepository.delete(findVerifiedBoard(boardId));
     }
 
     public Board createBoard(Board board) {
-//        board.setLike(0L);
-//        for(BoardTag x : board.getBoardTag()){
-//
-//            tagService.createTag(x.getTag());
-//        }
+        for (BoardTag boardTag : board.getBoardTag()) {
+            boardTag.setBoard(board);
+        }
 
-        board = boardRepository.save(board);
-//        createBoardTag(board);
-        return board;
+        putInformationForTag(board);
+
+        return boardRepository.save(board);
     }
 
-    //    private void createBoardTag(Board board){
-//        for(BoardTag x : board.getBoardTag()){
-//            x.setBoard(board);
-//            x.setTag(tagRepository.findByTagName(x.getTag().getTagName()));
-//            boardTagRepository.save(x);
-//        }
-//    }
     @Transactional(readOnly = true)
     public Board findVerifiedBoard(long answerId) {
         Optional<Board> optionalBoard =
@@ -82,5 +76,32 @@ public class BoardService {
                 optionalBoard.orElseThrow(() ->
                         new BusinessLogicException(ExceptionCode.BOARD_NOT_FOUND));
         return findBoard;
+    }
+
+
+    private void putInformationForTag(Board board) {
+
+        List<BoardTag> boardTags = board.getBoardTag();
+
+        List<BoardTag> boardTagList = boardTags.stream()
+                .map(boardTag -> {
+                    Tag tag;
+                    Optional<Tag> optionalTag = tagRepository.findByTagName(boardTag.getTag().getTagName());
+                    if (optionalTag.isEmpty()) {
+                        tag = tagRepository.save(boardTag.getTag());
+                    } else {
+                        tag = optionalTag.get();
+                        boardTag.setTag(tag);
+                    }
+                    tag.addBoardTag(boardTag);
+                    return boardTag;
+                })
+                .collect(Collectors.toList());
+
+        boardTags.stream()
+                .map(boardTagRepository::save)
+                .collect(Collectors.toList());
+
+        board.setBoardTag(boardTagList);
     }
 }

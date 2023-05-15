@@ -1,6 +1,7 @@
 package com.main.server.board.mapper;
 
 import com.main.server.board.dto.BoardDto;
+import com.main.server.board.dto.BoardTagDto;
 import com.main.server.board.entity.Board;
 import com.main.server.board.entity.BoardTag;
 import com.main.server.tag.entity.Tag;
@@ -16,7 +17,26 @@ import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface BoardMapper{
-    Board boardDtoToBoard(BoardDto.Post boardDto);
+    default Board boardDtoToBoard(BoardDto.Post post){
+        Board board = new Board();
+
+
+        List<BoardTag> boardTags = post.getTagNames().stream()
+                .map(boardTagDto -> {
+                    BoardTag boardTag = new BoardTag();
+                    Tag tag = new Tag();
+                    tag.setTagName(boardTagDto.getTagName());
+                    boardTag.setTag(tag);
+                    return boardTag;
+                })
+                .collect(Collectors.toList());
+
+        board.setTitle( post.getTitle() );
+        board.setContent( post.getContent() );
+        board.setBoardTag(boardTags);
+
+        return board;
+    }
 
     Board boardPutDtoToBoard(BoardDto.Put boardPutDto);
 
@@ -31,6 +51,7 @@ public interface BoardMapper{
             LocalDateTime now = null;
             long boardId = 0;
 
+
             boardId = response.getBoardId();
             title = response.getTitle();
             content = response.getContent();
@@ -42,7 +63,12 @@ public interface BoardMapper{
             String userPhoto = "https://upload.wikimedia.org/wikipedia/ko/thumb/8/81/Spongebob_4795.jpg/345px-Spongebob_4795.jpg";
             int like = 0;
             int bookmark = 1;
-            BoardDto.Response response1 = new BoardDto.Response( boardId, title, content, address, now, photo, like, bookmark, nickName, userPhoto );
+            List<BoardTag> list = response.getBoardTag();
+            List<BoardTagDto.Response> responsesTag = new ArrayList<>();
+            for(BoardTag x : list){
+                responsesTag.add(new BoardTagDto.Response(x.getTag().getTagId(), x.getTag().getTagName()));
+            }
+            BoardDto.Response response1 = new BoardDto.Response( boardId, title, content, address, now, photo, like, bookmark, nickName, userPhoto, responsesTag );
 
             return response1;
         }

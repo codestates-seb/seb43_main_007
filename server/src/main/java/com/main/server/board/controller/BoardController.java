@@ -1,5 +1,7 @@
 package com.main.server.board.controller;
 
+import com.amazonaws.services.s3.AmazonS3;
+import com.main.server.awsS3.StorageService;
 import com.main.server.board.dto.BoardDto;
 import com.main.server.board.entity.Board;
 import com.main.server.board.mapper.BoardMapper;
@@ -17,6 +19,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
@@ -34,6 +37,9 @@ public class BoardController {
 
     private final BoardService boardService;
 
+    private final StorageService service;
+    private final AmazonS3 s3Client;
+
     @PostMapping()
     public ResponseEntity postBoard(@RequestBody @Valid BoardDto.Post boardPostDto){
         Board board = boardService.createBoard(boardMapper.boardDtoToBoard(boardPostDto));
@@ -41,11 +47,23 @@ public class BoardController {
         return ResponseEntity.created(location).build();
     }
 
-    @GetMapping("/{boardId}")
-    public ResponseEntity getBoard(@PathVariable("boardId") @Positive long boardId){
-        Board response = boardService.getBoard(boardId);
+    @PostMapping("/photo")
+    public String postPhoto(@RequestParam(value = "file") MultipartFile file){
 
-        return new ResponseEntity<>(boardMapper.boardToBoardResponse(response), HttpStatus.OK);
+        return service.uploadFile(file);
+    }
+
+//    @GetMapping("/{boardId}")
+//    public ResponseEntity getBoard(@PathVariable("boardId") @Positive long boardId){
+//        Board response = boardService.getBoard(boardId);
+//
+//        return new ResponseEntity<>(boardMapper.boardToBoardResponse(response), HttpStatus.OK);
+//    }
+
+    @GetMapping("/{boardId}")
+    public void getsBoard(@PathVariable("boardId") @Positive String boardId){
+
+        System.out.println(boardId);
     }
 
     @GetMapping()
