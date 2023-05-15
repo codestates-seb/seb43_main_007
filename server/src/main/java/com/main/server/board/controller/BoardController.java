@@ -52,11 +52,17 @@ public class BoardController {
         return service.uploadFile(file);
     }
 
-    @GetMapping("/{boardId}")
-    public ResponseEntity getBoard(@PathVariable("boardId") @Positive long boardId){
-        Board response = boardService.getBoard(boardId);
+//    @GetMapping("/{boardId}")
+//    public ResponseEntity getBoard(@PathVariable("boardId") @Positive long boardId){
+//        Board response = boardService.getBoard(boardId);
+//
+//        return new ResponseEntity<>(boardMapper.boardToBoardResponse(response), HttpStatus.OK);
+//    }
 
-        return new ResponseEntity<>(boardMapper.boardToBoardResponse(response), HttpStatus.OK);
+    @GetMapping("/{boardId}")
+    public void getsBoard(@PathVariable("boardId") @Positive String boardId){
+
+        System.out.println(boardId);
     }
 
     @GetMapping()

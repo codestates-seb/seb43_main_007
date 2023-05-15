@@ -15,7 +15,7 @@ public interface CommentMapper {
    // default Comment commentDtoToComment(CommentDto.Post commentDto){
         //TODO. 댓글 등록
 
-    };
+    }
 
 
 
