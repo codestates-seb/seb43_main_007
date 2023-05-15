@@ -72,7 +72,6 @@ export const updateNickname = async (memberId: number, newNickname: string) => {
       const { data } = await request.patch(
          `/api/members/nickname/${memberId}`,
          {
-            memberId,
             newNickname,
          }
       );
@@ -81,10 +80,15 @@ export const updateNickname = async (memberId: number, newNickname: string) => {
    } catch (error) {
       const axiosError = error as AxiosError;
       console.log("닉네임 변경 실패", axiosError);
-      if (axiosError.response && axiosError.response.status === 400) {
-         throw new Error("닉네임 중복");
+      if (axiosError.response) {
+         const { status } = axiosError.response;
+         if (status === 400) {
+            throw new Error("닉네임 중복");
+         } else if (status === 404) {
+            throw new Error("서버 오류");
+         }
       }
-      return null;
+      throw new Error("닉네임 변경 실패");
    }
 };
 
@@ -109,5 +113,38 @@ export const updateUserProfilePhoto = async (memberId: number, file: File) => {
       const axiosError = error as AxiosError;
       console.log("프로필 사진 변경 실패", axiosError);
       return null;
+   }
+};
+
+// 비밀번호 변경
+export const updatePassword = async (
+   memberId: number,
+   nowPassword: string,
+   newPassword: string,
+   passwordConfirm: string
+) => {
+   try {
+      const { data } = await request.patch(
+         `/api/members/password/${memberId}`,
+         {
+            nowPassword,
+            newPassword,
+            passwordConfirm,
+         }
+      );
+      console.log("비밀번호 변경 성공");
+      return data;
+   } catch (error) {
+      const axiosError = error as AxiosError;
+      if (axiosError.response) {
+         const { status } = axiosError.response;
+         if (status === 400) {
+            throw new Error("현재 비밀번호 불일치");
+         } else if (status === 404) {
+            throw new Error("서버 오류");
+         }
+      }
+      console.log("비밀번호 변경 실패", axiosError);
+      throw new Error("비밀번호 변경 실패");
    }
 };
