@@ -1,21 +1,22 @@
 import styled from "styled-components";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { useState } from "react";
 import SignupInput from "./SignupInput";
 import { SignupTypes } from "./SignupTypes";
 import SignupQuestion from "./SignupQuestion";
 import SignupOauth from "./SignupOauth";
-import validFunc from "../../util/signinValidFunc";
 import logo from "../../assets/img/logo2.png";
 import { signupPost } from "../../api/axios";
-
-interface InputContents {
-   labelName: string;
-   contents: keyof SignupTypes;
-   errorMessage: string;
-   validFunction: (v: string) => boolean;
-}
+import SignupModal from "./SignupModal";
+import contentsArr from "./contentsArray";
+import getMessage from "./getMessage";
 
 function SignupForm() {
+   const [isModalOpen, setIsModalOpen] = useState(false);
+   const [message, setMessage] = useState({
+      text1: "",
+      text2: "",
+   });
    const {
       register,
       handleSubmit,
@@ -23,59 +24,20 @@ function SignupForm() {
       formState: { errors },
    } = useForm<SignupTypes>();
    const onSubmit: SubmitHandler<SignupTypes> = async (data) => {
+      // 더미 데이터
+      // const data2 = {
+      //    email: "kim222@naver.com",
+      //    password: "1234",
+      //    passwordConfirm: "1234",
+      //    RRN: "0000000000",
+      //    nickname: "닉",
+      //    question: "질문 예시 1",
+      //    answer: "그건 바로 나 이인건",
+      // };
       const response = await signupPost(data);
-      // 성공시 로그인페이지로
-      // if(성공) navigate('/');
-      // 실패시 ?
-      // 1.아이디, 닉네임 중복 실패
-      // 2.네크워크 오류
-      console.log(data);
+      // 성공, 실패 case에 따라 modal을 띄워주는 함수
+      getMessage(response, setMessage, setIsModalOpen);
    };
-
-   const contentsArr: InputContents[] = [
-      {
-         labelName: "닉네임",
-         contents: "nickname",
-         errorMessage: "닉네임은 10자 이하입니다.",
-         validFunction: validFunc.validNickName,
-      },
-      {
-         labelName: "이메일 아이디",
-         contents: "email",
-         errorMessage: "유효하지 않은 이메일 형식 입니다.",
-         validFunction: validFunc.validEmail,
-      },
-      {
-         labelName: "비밀번호",
-         contents: "password",
-         errorMessage: "비밀번호는 8자 이상 입니다.",
-         validFunction: validFunc.validPassword,
-      },
-      {
-         labelName: "비밀번호확인",
-         contents: "passwordConfirm",
-         errorMessage: "비밀번호와 일치하지 않습니다.",
-         validFunction: () => true,
-      },
-      {
-         labelName: "본인인증 주민번호",
-         contents: "RRN",
-         errorMessage: "주민번호 형식에 맞게 작성해주세요",
-         validFunction: validFunc.validSocialNumber,
-      },
-      {
-         labelName: "비밀번호 찾기용 질문",
-         contents: "question",
-         errorMessage: "",
-         validFunction: () => true,
-      },
-      {
-         labelName: "비밀번호 찾기용 답",
-         contents: "answer",
-         errorMessage: "확실해요?",
-         validFunction: validFunc.validAnswer,
-      },
-   ];
 
    return (
       <SignupFormContainer onSubmit={handleSubmit(onSubmit)}>
@@ -105,6 +67,11 @@ function SignupForm() {
             회원가입
          </button>
          <SignupOauth />
+         <SignupModal
+            isOpen={isModalOpen}
+            setIsOpen={setIsModalOpen}
+            message={message}
+         />
       </SignupFormContainer>
    );
 }
