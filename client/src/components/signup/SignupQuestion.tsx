@@ -10,7 +10,6 @@ interface Props {
 
 function SignupQuestion({ register, labelName, contents }: Props) {
    const questionList = [
-      "질문 예시 1",
       "내가 졸업한 초등학교는?",
       "내 별명은?",
       "내 보물 1호는?",
