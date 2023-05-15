@@ -45,7 +45,6 @@ function Pagination({ setCurPage, curPage, totalPage, limit }: PropsT) {
       }
    }, [curPage, totalPageArray]);
 
-   console.log(curPage);
    return (
       <>
          <SideBtn onClick={() => setCurPage(1)} disabled={curPage === 1}>
