@@ -249,6 +249,18 @@ export const resetUserProfilePhoto = async (memberId: number) => {
       });
       return data;
    } catch (error) {
-      console.log("프포필 사진 초기화 실패");
+      console.log("프로필 사진 초기화 실패");
+      return null;
+   }
+};
+
+// 회원 탈퇴
+export const deleteAccount = async (memberId: number) => {
+   try {
+      const { data } = await request.delete(`/members/${memberId}`);
+      return data;
+   } catch (error) {
+      console.log("회원탈퇴 실패");
+      return null;
    }
 };
