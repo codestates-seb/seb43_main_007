@@ -1,6 +1,7 @@
 package com.main.server.comment.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.main.server.member.entity.Member;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 
@@ -30,9 +31,10 @@ Comment { //엔티티의 역할? 테이블 설계
         @Column(name = "content")
         private String content;
 
-        @Column(name = "member_id")
-        private Long memberId;
 
+    @ManyToOne
+    @JoinColumn(name = "memberId")
+    private Member member;
 
         @Column
         private Timestamp createdAt = new Timestamp(new Date().getTime());
@@ -44,10 +46,10 @@ Comment { //엔티티의 역할? 테이블 설계
         // @Column(name = "parent_comment_id")
         //  private Integer parentCommentId;  // 부모 댓글 ID
 
-        public Comment(long commentId, String content, long memberId, long boardId, long parentCommentId) {
+        public Comment(long commentId, String content, Member member, long boardId, long parentCommentId) {
                 this.commentId = commentId;
                 this.content = content;
-                this.memberId = memberId;
+                this.member = member;
                 this.createdAt = createdAt;
                 this.boardId = boardId;
              //   this.parentCommentId = parentCommentId;
