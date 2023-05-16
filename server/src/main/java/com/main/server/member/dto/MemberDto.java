@@ -1,5 +1,9 @@
 package com.main.server.member.dto;
 
+import com.main.server.board.dto.BoardDto;
+import com.main.server.board.entity.Board;
+import com.main.server.comment.dto.CommentDto;
+import com.main.server.comment.entity.Comment;
 import com.main.server.member.entity.Member;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,6 +14,8 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.Comparator;
+import java.util.List;
 
 public class MemberDto {
 
@@ -57,13 +63,6 @@ public class MemberDto {
         private String passwordConfirm;
     }
 
-    @Getter
-    @Setter
-    @AllArgsConstructor
-    public static class PatchProfileImage {
-        private long memberId;
-        private MultipartFile file;
-    }
 
     @Getter
     @Setter
@@ -73,12 +72,13 @@ public class MemberDto {
         private long memberId;
         private String nickname;
         private String imageUrl;
+        private List<BoardDto.Response> boards;
+        private List<CommentDto.Response> comments;
     }
 
     @Getter
     @AllArgsConstructor
     public static class findIdDto {
-        private long memberId;
         private String RRNConfirm;
     }
 

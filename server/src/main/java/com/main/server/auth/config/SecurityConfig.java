@@ -2,12 +2,13 @@ package com.main.server.auth.config;
 
 import com.main.server.auth.filter.JwtAuthenticationFilter;
 import com.main.server.auth.filter.JwtVerificationFilter;
+import com.main.server.auth.handler.*;
 import com.main.server.auth.jwt.JwtTokenizer;
-import com.main.server.auth.userservice.MemberDetailService;
-import com.main.server.auth.userservice.OAuth2MemberDetailService;
+import com.main.server.auth.utils.CustomAuthorityUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -16,13 +17,14 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.oauth2.client.web.OAuth2LoginAuthenticationFilter;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import java.util.List;
+import java.util.Arrays;
+
+import static org.springframework.security.config.Customizer.withDefaults;
 
 // 이 클래스가 spring 구성 영역 구성을 담당하는 클래스임을 나타냄
 @Configuration
@@ -34,94 +36,85 @@ import java.util.List;
 public class SecurityConfig { //OAuth2 로그인을 처리하기 위한 필수 구성을 포함함.
 
 
-//    //     Google OAuth2 클라이언트 ID와 클라이언트 비밀번호
-//    @Value("${spring.security.oauth2.client.registration.google.clientId}")
-//    private String clientId;
-//
-//    @Value("${spring.security.oauth2.client.registration.google.clientSecret}")
-//    private String clientSecret;
+    //     Google OAuth2 클라이언트 ID와 클라이언트 비밀번호
+    @Value("${spring.security.oauth2.client.registration.google.clientId}")
+    private String clientId;
 
-    //DI
+    @Value("${spring.security.oauth2.client.registration.google.clientSecret}")
+    private String clientSecret;
+
     private final JwtTokenizer jwtTokenizer;
-    private final MemberDetailService memberDetailService;
-//    private final OAuth2MemberDetailService oAuth2MemberDetailService;
-    //TODO : OAuth2UserSuccessHandler 클래스 만든 후 di 하나 더
+    private final CustomAuthorityUtils authorityUtils;
 
     public SecurityConfig(JwtTokenizer jwtTokenizer,
-                          MemberDetailService memberDetailService
-                          ) {
+                          CustomAuthorityUtils authorityUtils) {
         this.jwtTokenizer = jwtTokenizer;
-        this.memberDetailService = memberDetailService;
+        this.authorityUtils = authorityUtils;
     }
 
-    //여기가 핵심
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                // clickjacking 공격 방지
                 .headers().frameOptions().sameOrigin()
-
-                //csrf 공격 방지
                 .and()
                 .csrf().disable()
+                //.cors(withDefaults())
                 .cors().configurationSource(corsConfigurationSource())
+                .and()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .formLogin().disable()
                 .httpBasic().disable()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .exceptionHandling()
+                .authenticationEntryPoint(new MemberAuthenticationEntryPoint())
+                .accessDeniedHandler(new MemberAccessDeniedHandler())
                 .and()
-
-                // JWT 인증 필터와 JWT 검증 필터를 등록
-                .apply(new CustomFilterConfigurer())
+                .apply(new CustomFilterConfigurer())   // 커스터마이징된 Configuration을 추가
                 .and()
                 .authorizeHttpRequests(authorize -> authorize
-                        .anyRequest().permitAll());
-                //.oauth2Login()
-                //.successHandler() 오어스 멤버석세스핸들러
-                //.userInfoEndpoint().userService(oAuth2MemberDetailService); //후처리
+                        .anyRequest().permitAll()
+                );
         return http.build();
     }
 
 
 
-    //암호화 패스워드 생성
     @Bean
     public PasswordEncoder passwordEncoder() {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
 
-    //cors설정 위해
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration corsConfiguration = new CorsConfiguration();
-
-
-        corsConfiguration.setAllowedOrigins(List.of("*")); //모든 출처 HTTP통신 허용
-        corsConfiguration.setAllowedHeaders(List.of("*"));
-        corsConfiguration.setAllowedMethods(List.of("POST", "GET", "PATCH", "DELETE"));
-
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(Arrays.asList("*"));
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PATCH", "DELETE", "PUT"));
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", corsConfiguration);
+        source.registerCorsConfiguration("/**", configuration);
         return source;
     }
 
 
-    //아래는 내가 작성한 AuthService와 Filter들을 사용해 커스텀필터를 만드는것.
+
+
+
+
+    // CustomFilterConfigurer는 우리가 구현한 필터들을 등록하는 역할
     public class CustomFilterConfigurer extends AbstractHttpConfigurer<CustomFilterConfigurer, HttpSecurity> {
         @Override
-        public void configure(HttpSecurity builder) throws Exception{
+        public void configure(HttpSecurity builder) throws Exception {
             AuthenticationManager authenticationManager = builder.getSharedObject(AuthenticationManager.class);
 
             JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(authenticationManager, jwtTokenizer);
             jwtAuthenticationFilter.setFilterProcessesUrl("members/login");
-            //TODO : 성공핸들러, 실패핸들러 추가작성 (handler 패키지 추가)
+            jwtAuthenticationFilter.setAuthenticationSuccessHandler(new UserAuthenticationSuccessHandler());//성공
+            jwtAuthenticationFilter.setAuthenticationFailureHandler(new UserAuthenticationFailureHandler());//실패
 
-            JwtVerificationFilter jwtVerificationFilter = new JwtVerificationFilter(jwtTokenizer, memberDetailService);
+            JwtVerificationFilter jwtVerificationFilter = new JwtVerificationFilter(jwtTokenizer, authorityUtils);
 
-            builder.addFilter(jwtAuthenticationFilter);
-            builder.addFilterAfter(jwtVerificationFilter, JwtAuthenticationFilter.class);
-            builder.addFilterAfter(jwtVerificationFilter, OAuth2LoginAuthenticationFilter.class);
-
+            builder
+                    .addFilter(jwtAuthenticationFilter)  // JwtAuthenticationFilter를 Spring Security Filter Chain에 추가
+                    .addFilterAfter(jwtVerificationFilter, JwtAuthenticationFilter.class);
         }
     }
 }

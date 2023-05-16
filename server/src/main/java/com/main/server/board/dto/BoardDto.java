@@ -17,6 +17,8 @@ public class BoardDto {
     @Getter
     @AllArgsConstructor
     public static class Post{
+        private long memberId;
+
         @NotEmpty(message = "제목을 작성해 주세요.")
         private String title;
         @NotEmpty(message = "내용을 작성해 주세요.")

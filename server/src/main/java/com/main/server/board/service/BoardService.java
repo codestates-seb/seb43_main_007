@@ -5,6 +5,8 @@ import com.main.server.board.entity.BoardTag;
 import com.main.server.board.repository.BoardRepository;
 import com.main.server.board.repository.BoardTagRepository;
 import com.main.server.exception.BusinessLogicException;
+import com.main.server.member.entity.Member;
+import com.main.server.member.service.MemberService;
 import com.main.server.tag.entity.Tag;
 import com.main.server.tag.repository.TagRepository;
 import com.main.server.tag.service.TagService;

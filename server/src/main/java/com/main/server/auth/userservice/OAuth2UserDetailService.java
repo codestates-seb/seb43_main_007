@@ -13,10 +13,10 @@ import java.util.Optional;
 
 @Slf4j
 @Component
-public class OAuth2MemberDetailService extends DefaultOAuth2UserService {
+public class OAuth2UserDetailService extends DefaultOAuth2UserService {
     private final MemberRepository memberRepository;
 
-    public OAuth2MemberDetailService(MemberRepository memberRepository) {
+    public OAuth2UserDetailService(MemberRepository memberRepository) {
         this.memberRepository = memberRepository;
     }
 

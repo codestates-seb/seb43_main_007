@@ -22,6 +22,7 @@ import java.util.Map;
 
 
 //로그인 인증을 처리(로그인 하는거랑, 로그인 후에 활동)
+// Username/Password 기반의 인증을 처리하기 위해 UsernamePasswordAuthenticationFilter를 확장해서 구현
 @Slf4j
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     private final AuthenticationManager authenticationManager;
@@ -32,70 +33,68 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         this.jwtTokenizer = jwtTokenizer;
     }
 
+    //메서드 내부에서 인증을 시도하는 로직을 구현
     @SneakyThrows
     @Override
-    //메서드 내부에서 인증을 시도하는 로직을 구현
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) {
-        ObjectMapper objectMapper = new ObjectMapper();
-        LoginDto loginDto = objectMapper.readValue(request.getInputStream(), LoginDto.class);
 
+        ObjectMapper objectMapper = new ObjectMapper();
+        //클라이언트에서 전송한 Username과 Password를 DTO 클래스로 역직렬화(Deserialization) 하기 위해 ObjectMapper 인스턴스를 생성
+
+        LoginDto loginDto = objectMapper.readValue(request.getInputStream(), LoginDto.class);
+        //ServletInputStream을 LoginDto 클래스의 객체로 역직렬화
+
+        //Username과 Password 정보를 포함한 UsernamePasswordAuthenticationToken을 생성
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(loginDto.getUsername(), loginDto.getPassword());
 
         return authenticationManager.authenticate(authenticationToken);
+        //UsernamePasswordAuthenticationToken을 AuthenticationManager에게 전달하면서 인증 처리를 위임
     }
 
-
-    //인증 성공 후 진행 매서드, accesstoken만 진행
-    // 사용자 정보를 바탕으로 accesstoken을 생성하고 json으로 응답.
+    // 인증에 성공할 경우 호출
     @Override
     protected void successfulAuthentication(HttpServletRequest request,
                                             HttpServletResponse response,
                                             FilterChain chain,
                                             Authentication authResult) throws ServletException, IOException {
-        Member member = (Member) authResult.getPrincipal();
-        //authResult.getPrincipal()로 Member 엔티티 클래스의 객체를 얻음. (인증된 사용자를 나타내는 객체)
+        Member member = (Member) authResult.getPrincipal();  
+        // authResult.getPrincipal()로 Member 엔티티 클래스의 객체 얻기
 
-        //토큰 두개 생성
-        String accessToken = delegateAccessToken(member);
+        String accessToken = delegateAccessToken(member);   //  Access Token을 생성
         //String refreshToken = delegateRefreshToken(member);
 
-        //Access Token은 클라이언트 측에서 백엔드 애플리케이션 측에 요청을 보낼 때마다
-        //request header에 추가해서 클라이언트 측의 자격(로그인 되었는지)을 증명하는 데 사용
-        String result = "{\"accessToken\" : \"" + accessToken + "\"}";
-        response.setStatus(200);
-        response.getWriter().write(result);
+        response.setHeader("Authorization", "Bearer " + accessToken);
+        //response header(Authorization)에 Access Token을 추가
+        //response.setHeader("Refresh", refreshToken);
 
-        //response.setHeader("Authorization","Bearer "+ accessToken);
-        //response.setHeader("memberId", String.valueOf(member.getMemberId()));
-        //response.setHeader("nickname",String.valueOf(member.getNickname()));
 
         this.getSuccessHandler().onAuthenticationSuccess(request, response, authResult);
 
 
     }
 
-    //이 클래스에서 사용할 프라이빗 매서드, Access Token과 Refresh Token을 생성하는 구체적인 로직
     private String delegateAccessToken(Member member) {
         Map<String, Object> claims = new HashMap<>();
-        claims.put("memberId", member.getMemberId());
+        claims.put("username", member.getEmail());
         claims.put("roles", member.getRoles());
-        claims.put("nickname", member.getNickname());
 
         String subject = member.getEmail();
-        Date expiration = jwtTokenizer.getTokenExpiration(jwtTokenizer.getRefreshTokenExpirationsMinutes());
-        String base64SecretKey = jwtTokenizer.encodeBase64SecretKey(jwtTokenizer.getSecretKey());
-        String accessToken = jwtTokenizer.generateAccessToken(claims, subject, expiration, base64SecretKey);
+        Date expiration = jwtTokenizer.getTokenExpiration(jwtTokenizer.getAccessTokenExpirationMinutes());
 
-        return "Bearer_" + accessToken;
+        String base64EncodedSecretKey = jwtTokenizer.encodeBase64SecretKey(jwtTokenizer.getSecretKey());
+
+        String accessToken = jwtTokenizer.generateAccessToken(claims, subject, expiration, base64EncodedSecretKey);
+
+        return accessToken;
     }
 
     private String delegateRefreshToken(Member member) {
         String subject = member.getEmail();
         Date expiration = jwtTokenizer.getTokenExpiration(jwtTokenizer.getRefreshTokenExpirationsMinutes());
-        String base64SecretKey = jwtTokenizer.encodeBase64SecretKey(jwtTokenizer.getSecretKey());
+        String base64EncodedSecretKey = jwtTokenizer.encodeBase64SecretKey(jwtTokenizer.getSecretKey());
 
-        String refreshToken = jwtTokenizer.generateRefreshToken(subject, expiration, base64SecretKey);
+        String refreshToken = jwtTokenizer.generateRefreshToken(subject, expiration, base64EncodedSecretKey);
 
         return refreshToken;
     }

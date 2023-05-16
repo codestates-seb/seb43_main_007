@@ -4,6 +4,7 @@ import com.main.server.board.dto.BoardDto;
 import com.main.server.board.dto.BoardTagDto;
 import com.main.server.board.entity.Board;
 import com.main.server.board.entity.BoardTag;
+import com.main.server.member.entity.Member;
 import com.main.server.tag.entity.Tag;
 import com.main.server.tag.service.TagService;
 import org.mapstruct.Mapper;
@@ -19,7 +20,9 @@ import java.util.stream.Collectors;
 public interface BoardMapper{
     default Board boardDtoToBoard(BoardDto.Post post){
         Board board = new Board();
-
+        Member member = new Member();
+        member.setMemberId(post.getMemberId());
+        board.setMember(member);
 
         List<BoardTag> boardTags = post.getTagNames().stream()
                 .map(boardTagDto -> {
