@@ -14,7 +14,7 @@ export const listData = async (curPage: number) => {
    }
 };
 
-// 목록페이지 좋아요 patch요청
+// 목록페이지 북마크-좋아요 patch요청
 export const likeBookMarkPatch = async (endPoint, req) => {
    try {
       const data = await request.patch(`boards/${endPoint}`, req);
@@ -22,6 +22,23 @@ export const likeBookMarkPatch = async (endPoint, req) => {
       console.log(data);
    } catch (error) {
       console.log("요청 실패");
+      console.log(error);
+   }
+};
+
+// 목록페이지(전체) 검색하기 get요청
+export const listSearchGet = async (
+   cate?: string,
+   title?: string,
+   content?: string
+) => {
+   //    네브바랑 전체페이지  "낚시" 검색시
+   // localhost:8080/boards?content=낚시&title=낚시
+   try {
+      console.log(`/boards?${cate}${title}${content}`);
+      const data = await axios.get(`/boards?${cate}${title}${content}`);
+      console.log(data);
+   } catch (error) {
       console.log(error);
    }
 };
@@ -136,6 +153,7 @@ export const findId = async (rrn: string) => {
 export const findPassword = async (params: FindPasswordType) => {
    const paramsUrl = new URLSearchParams(params).toString();
    try {
+      console.log(paramsUrl);
       const { data } = await request.get(`members/password?${paramsUrl}`);
       console.log("성공");
       console.log(data);

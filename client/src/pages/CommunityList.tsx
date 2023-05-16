@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import ListSearch from "../components/CommunityList/ListSearch";
-import ListContents from "../components/CommunityList/ListContents";
+import ListSearch from "../components/communityList/ListSearch";
+import ListContents from "../components/communityList/ListContents";
 
 function CommunityList() {
    return (

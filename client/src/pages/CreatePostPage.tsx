@@ -4,9 +4,9 @@ import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { createPost } from "../api/axios";
-import GuideLine from "../components/CreatePost/GuideLine";
-import QuillTextEditor from "../components/CreatePost/QuillTextEditor";
-import TitleTagCommuForm from "../components/CreatePost/TitleTagCommuForm";
+import GuideLine from "../components/createPost/GuideLine";
+import QuillTextEditor from "../components/createPost/QuillTextEditor";
+import TitleTagCommuForm from "../components/createPost/TitleTagCommuForm";
 
 // 남아 있는 숙제(후순위)
 // 1. 본문 유효성 글자수 기준이 애매하다(html 형식이라 html태그또한 글자로 인식)
@@ -40,19 +40,14 @@ function CreatePost() {
 
    const valid = () => {
       // 제목 - 주소 - 카테고리가 빈칸이면 false
-      if (title.length === 0 || address.length === 0 || item.length === 0) {
+      if (title.length === 0 || address.length === 0 || item.length === 0)
          return false;
-      }
 
       // html태그를 제외한 에디터 내용만 30자 이상
-      if (!(previewBody.length > 30)) {
-         return false;
-      }
+      if (!(previewBody.length > 30)) return false;
 
       // 이미지 여부
-      if (!isImg) {
-         return false;
-      }
+      if (!isImg) return false;
 
       return true;
    };

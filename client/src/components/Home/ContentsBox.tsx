@@ -16,7 +16,7 @@ const ContentsBoxContainer = styled.div`
    align-items: center;
    font-size: 50px;
    min-width: 700px;
-   height: 100%;
+   height: 95%;
    background-color: #d5d587;
    margin: 0 10px;
    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px,

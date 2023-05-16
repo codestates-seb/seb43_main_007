@@ -28,6 +28,7 @@ export default CarouselBox;
 
 const CarouselBoxContainer = styled.div<ContainerT>`
    display: flex;
+   align-items: center;
    transform: translateX(
       ${({ pickNumber }) => {
          return `${-630 - pickNumber * 720}px`;

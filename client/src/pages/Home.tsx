@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import HomeHeader from "../components/Home/HomeHeader";
-import EditerPick from "../components/Home/EditerPick";
+import HomeHeader from "../components/home/HomeHeader";
+import EditerPick from "../components/home/EditerPick";
 
 function Home() {
    return (
