@@ -1,53 +1,17 @@
-import { useCallback, useState, useRef } from "react";
+import { useCallback, useRef } from "react";
 import styled from "styled-components";
 import useDetectClose from "../../hooks/useDetectClose";
 
-function CommuDropDown() {
-   //    const [isActive, setIsActive] = useState(false);
-   //    const [item, setItem] = useState(null);
+type CommuDropProps = {
+   item: string;
+   setItem: (a: string) => void;
+};
 
-   //    const onActiveToggle = useCallback(() => {
-   //       setIsActive((prev) => !prev);
-   //       console.log("된건가?");
-   //    }, []);
-
-   //    const onSelectItem = useCallback((e) => {
-   //       const targetId = e.target.id;
-
-   //       if (targetId === "item_name") {
-   //          setItem(e.target.parentElement.innertText);
-   //       } else if (targetId === "item") {
-   //          setItem(e.target.innertText);
-   //       }
-
-   //       setIsActive((prev) => !prev);
-   //    }, []);
-
-   //    const dropdownItems = [
-   //       { id: 1, name: "카페" },
-   //       { id: 2, name: "식당" },
-   //       { id: 3, name: "전기자동차" },
-   //    ];
-
-   //    return (
-   //       <div>
-   //          <button type="button" onClick={onActiveToggle}>
-   //             {item ? <p>{item}</p> : <p>선택해주세요</p>}
-   //          </button>
-   //          {/* <ul isActive={isActive}> */}
-   //          <ul>
-   //             {dropdownItems.map((item) => {
-   //                <li id="item" key={item.id} onClick={onSelectItem}>
-   //                   <p id="item_name">{item.name}</p>;
-   //                </li>;
-   //             })}
-   //          </ul>
-   //       </div>
-   //    );
+function CommuDropDown({ item, setItem }: CommuDropProps) {
    const dropDownRef = useRef(null);
 
+   // 클릭 여부(open)
    const [isActive, setIsActive] = useDetectClose(dropDownRef, false);
-   const [item, setItem] = useState("");
 
    const onActiveToggle = useCallback(() => {
       setIsActive((prev: boolean) => !prev);
@@ -119,7 +83,6 @@ const DropdownBody = styled.div`
    align-items: center;
    height: 40px;
    padding: 9px 14px;
-   border: 1px solid #d2d2d2;
 `;
 
 const DropdownSelect = styled.p`

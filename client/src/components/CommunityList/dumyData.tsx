@@ -1,4 +1,4 @@
-import type { ListDataProps } from "./listtypes";
+import type { ListDataProps } from "./listTypes";
 
 const data: ListDataProps[] = [
    {
