@@ -22,6 +22,7 @@ public class PrincipalDetails extends Member implements UserDetails, OAuth2User 
 
 
 
+
     //MemberDatails
     public PrincipalDetails(Member member) {
         setMemberId(member.getMemberId());
