@@ -116,6 +116,13 @@ public class MemberService {
         return memberRepository.save(findMember);
     }
 
+    public Member deleteProfileImage(long memberId) {
+        Member findMember = findMember(memberId);
+        findMember.setProfileImageUrl(null);
+
+        return memberRepository.save(findMember);
+    }
+
 
 
     public void deleteMember(long memberId) { //mem 009

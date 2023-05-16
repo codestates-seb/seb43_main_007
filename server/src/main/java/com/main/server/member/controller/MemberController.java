@@ -17,6 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.parameters.P;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -91,6 +92,16 @@ public class MemberController {
         URI location = UriCreator.createUri(MEMBER_DEFAULT_URL, patchMember.getMemberId());
         return ResponseEntity.created(location).build();
     }
+
+    //프로필사진 삭제
+    @PatchMapping("/deleteimage/{member-id}")
+    public ResponseEntity patchMemberImageDelete(@PathVariable("member-id") long memberId) {
+        Member patchMember = memberService.deleteProfileImage(memberId);
+
+        URI location = UriCreator.createUri(MEMBER_DEFAULT_URL, patchMember.getMemberId());
+        return ResponseEntity.created(location).build();
+    }
+
 
     //mem009
     @DeleteMapping("/{member-id}")
