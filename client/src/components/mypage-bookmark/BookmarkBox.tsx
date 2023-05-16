@@ -41,7 +41,7 @@ const BookmarkBoxContainer = styled.div`
    display: flex;
    flex-wrap: wrap;
    justify-content: center;
-   margin-top: 10%;
-   height: 800px;
+   margin-top: 5%;
+   height: 1000px;
    padding: 10px;
 `;

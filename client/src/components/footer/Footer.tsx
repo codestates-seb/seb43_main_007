@@ -22,7 +22,7 @@ const FooterContainer = styled.div`
    height: 200px;
    padding: 0 50px;
    color: var(--third-color4);
-   z-index: 1;
+   z-index: 100;
    .logo {
       width: 220px;
    }
