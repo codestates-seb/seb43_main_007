@@ -1,6 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
-import profilePhotoReducer from "../reducers/ProfilePhotoSlice";
-import profileNicknameSlice from "../reducers/ProfileNicknameSlice";
+import profilePhotoReducer from "../reducers/profilePhotoSlice";
+import profileNicknameSlice from "../reducers/profileNicknameSlice";
 import memberIdSlice from "../reducers/memberIdSlice";
 
 const store = configureStore({

@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { LoginTypes, FindPasswordType } from "../components/login/LoginType";
 import { SignupTypes } from "../components/signup/SignupTypes";
 import { request } from "./create";
@@ -126,7 +126,7 @@ export const signupPost = async (req: SignupTypes): Promise<string> => {
 // 유저 프로필 사진, 닉네임 GET 요청
 export const getUserProfile = async () => {
    try {
-      const { data } = await request.get("/mebers/mypage/1"); // 나중에 수정
+      const { data } = await request.get("/members/mypage/1"); // 나중에 수정
       console.log("성공");
       return data;
    } catch (error) {
@@ -161,5 +161,82 @@ export const findPassword = async (params: FindPasswordType) => {
    } catch (error) {
       console.log("실패");
       return error;
+   }
+};
+
+// 닉네임 변경
+export const updateNickname = async (memberId: number, newNickname: string) => {
+   try {
+      const { data } = await request.patch(`/members/nickname/${memberId}`, {
+         newNickname,
+      });
+      console.log("닉네임 변경 성공");
+      return data;
+   } catch (error) {
+      const axiosError = error as AxiosError;
+      console.log("닉네임 변경 실패", axiosError);
+      if (axiosError.response) {
+         const { status } = axiosError.response;
+         if (status === 400) {
+            throw new Error("닉네임 중복");
+         } else if (status === 404) {
+            throw new Error("서버 오류");
+         }
+      }
+      throw new Error("닉네임 변경 실패");
+   }
+};
+
+// 프로필 사진 변경
+export const updateUserProfilePhoto = async (memberId: number, file: File) => {
+   try {
+      const formData = new FormData();
+      formData.append("file", file);
+
+      const { data } = await request.patch(
+         `/members/image/${memberId}`,
+         formData,
+         {
+            headers: {
+               "Content-Type": "multipart/form-data",
+            },
+         }
+      );
+      console.log("프로필 사진 변경 성공");
+      return data;
+   } catch (error) {
+      const axiosError = error as AxiosError;
+      console.log("프로필 사진 변경 실패", axiosError);
+      return null;
+   }
+};
+
+// 비밀번호 변경
+export const updatePassword = async (
+   memberId: number,
+   nowPassword: string,
+   newPassword: string,
+   passwordConfirm: string
+) => {
+   try {
+      const { data } = await request.patch(`/members/password/${memberId}`, {
+         nowPassword,
+         newPassword,
+         passwordConfirm,
+      });
+      console.log("비밀번호 변경 성공");
+      return data;
+   } catch (error) {
+      const axiosError = error as AxiosError;
+      if (axiosError.response) {
+         const { status } = axiosError.response;
+         if (status === 400) {
+            throw new Error("현재 비밀번호 불일치");
+         } else if (status === 404) {
+            throw new Error("서버 오류");
+         }
+      }
+      console.log("비밀번호 변경 실패", axiosError);
+      throw new Error("비밀번호 변경 실패");
    }
 };

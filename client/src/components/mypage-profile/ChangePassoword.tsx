@@ -1,4 +1,5 @@
 import { useForm, SubmitHandler } from "react-hook-form";
+import { useSelector } from "react-redux";
 import validFunc from "../../util/signinValidFunc";
 import { PasswordChangeForm } from "./profileTypes";
 import {
@@ -9,8 +10,16 @@ import {
    InputButtonContainer,
    DefaultButton,
 } from "./EditProfile";
+import { updatePassword } from "../../api/axios";
+import { RootState } from "../../store/store";
+import {
+   passwordChangeRetry,
+   passwordChangeSuccess,
+   serverError,
+} from "./profileToastify";
 
 function ChangePassoword() {
+   // useForm setup
    const {
       register,
       handleSubmit,
@@ -25,8 +34,26 @@ function ChangePassoword() {
          confirmPassword: "",
       },
    });
-   const onSubmit: SubmitHandler<PasswordChangeForm> = (data) =>
-      console.log(data);
+
+   const memberId = useSelector((state: RootState) => state.memberId);
+
+   // Handlers
+   const onSubmit: SubmitHandler<PasswordChangeForm> = (data) => handleChange();
+
+   const handleChange = () => {
+      const { currentPassword, newPassword, confirmPassword } = getValues();
+      updatePassword(memberId, currentPassword, newPassword, confirmPassword)
+         .then(() => {
+            passwordChangeSuccess();
+         })
+         .catch((error) => {
+            if (error.message === "현재 비밀번호 불일치") {
+               passwordChangeRetry();
+            } else if (error.message === "서버 오류") {
+               serverError();
+            }
+         });
+   };
 
    return (
       <ProfileEditContainer onSubmit={handleSubmit(onSubmit)}>
@@ -81,7 +108,11 @@ function ChangePassoword() {
                            "비밀번호가 일치하지 않습니다.",
                      })}
                   />
-                  <DefaultButton type="submit" disabled={!isValid}>
+                  <DefaultButton
+                     type="submit"
+                     disabled={!isValid}
+                     onClick={handleSubmit(handleChange)}
+                  >
                      변경
                   </DefaultButton>
                </InputButtonContainer>

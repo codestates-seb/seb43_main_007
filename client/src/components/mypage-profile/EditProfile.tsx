@@ -1,13 +1,23 @@
 import styled from "styled-components";
 import { ChangeEvent, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { RootState } from "../../store/store";
 import validFunc from "../../util/signinValidFunc";
-import { setPhoto } from "../../reducers/ProfilePhotoSlice";
+import { setPhoto, resetPhoto } from "../../reducers/profilePhotoSlice";
 import { SignupTypes } from "../signup/SignupTypes";
-import { setNickname } from "../../reducers/ProfileNicknameSlice";
+import { setNickname } from "../../reducers/profileNicknameSlice";
+import { updateNickname, updateUserProfilePhoto } from "../../api/axios";
+import {
+   nicknameChangeRetry,
+   nicknameChangeSuccess,
+   photoChangeError,
+   photoChangeSuccess,
+   serverError,
+} from "./profileToastify";
 
 function EditProfile() {
+   // useForm setup
    const {
       register,
       handleSubmit,
@@ -20,34 +30,68 @@ function EditProfile() {
          nickname: "",
       },
    });
-   const currentNickname = watch("nickname");
 
-   const onSubmit: SubmitHandler<SignupTypes> = (data) => console.log(data);
-
+   // Redux dispatch
    const dispatch = useDispatch();
+
+   // State variables
    const [fileName, setFileName] = useState("");
+   const [prevPhoto, setPrevPhoto] = useState("");
+
+   // Redux selector
+   const memberId = useSelector((state: RootState) => state.memberId);
+   const currentPhoto = useSelector(
+      (state: RootState) => state.profilePhoto.photo
+   );
+
+   // Handlers
+   const onSubmit: SubmitHandler<SignupTypes> = (data) => console.log(data);
+   const currentNickname = watch("nickname");
 
    const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
       const file = e.target.files?.[0];
       if (file) {
          setFileName(file.name);
+         setPrevPhoto(currentPhoto);
          const reader = new FileReader();
          reader.onload = (event) => {
             if (event.target) {
                const fileResult = event.target.result as string;
-               dispatch(setPhoto(fileResult));
+               setPrevPhoto(fileResult);
             }
          };
          reader.readAsDataURL(file);
+
+         updateUserProfilePhoto(memberId, file)
+            .then((data) => {
+               photoChangeSuccess(); // 로컬에선 실패해도 뜨는 상태. 서버 연결 후 테스트 해봐야 함
+               dispatch(setPhoto(prevPhoto));
+            })
+            .catch((error) => {
+               console.error("프로필 사진 변경에 실패하였습니다.", error);
+               photoChangeError();
+            });
       }
    };
 
    const handleSave = () => {
-      dispatch(setNickname(currentNickname));
+      updateNickname(memberId, currentNickname)
+         .then(() => {
+            dispatch(setNickname(currentNickname));
+            nicknameChangeSuccess();
+         })
+         .catch((error) => {
+            console.error("닉네임 변경에 실패하였습니다.", error);
+            if (error.message === "닉네임 중복") {
+               nicknameChangeRetry();
+            } else if (error.message === "서버 오류") {
+               serverError();
+            }
+         });
    };
 
    const handleDelete = () => {
-      dispatch(setPhoto(""));
+      dispatch(resetPhoto());
       setFileName("");
    };
 

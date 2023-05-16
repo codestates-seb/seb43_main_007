@@ -1,10 +1,11 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import userprofile from "../assets/img/userprofile.png";
 
 interface ProfilePhotoState {
    photo: string;
 }
 const initialState: ProfilePhotoState = {
-   photo: "",
+   photo: userprofile,
 };
 
 const profilePhotoSlice = createSlice({
@@ -14,9 +15,12 @@ const profilePhotoSlice = createSlice({
       setPhoto: (state, action: PayloadAction<string>) => {
          return { ...state, photo: action.payload };
       },
+      resetPhoto: (state) => {
+         return { ...state, photo: initialState.photo };
+      },
    },
 });
 
-export const { setPhoto } = profilePhotoSlice.actions;
+export const { setPhoto, resetPhoto } = profilePhotoSlice.actions;
 
 export default profilePhotoSlice.reducer;
