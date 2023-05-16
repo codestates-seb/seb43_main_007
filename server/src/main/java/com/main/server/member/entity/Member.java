@@ -1,5 +1,8 @@
 package com.main.server.member.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.main.server.board.entity.Board;
+import com.main.server.comment.entity.Comment;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -48,6 +51,14 @@ public class Member {
 
     @Column(nullable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
+    private List<Board> boards = new ArrayList<>();
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
+    private List<Comment> comments = new ArrayList<>();
 
     public Member(String email, String password, String nickname) {
         this.email = email;

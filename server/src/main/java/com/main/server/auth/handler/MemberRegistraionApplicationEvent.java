@@ -1,4 +1,4 @@
-package com.main.server.auth;
+package com.main.server.auth.handler;
 
 
 import com.main.server.member.entity.Member;

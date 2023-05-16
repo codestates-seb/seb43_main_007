@@ -1,5 +1,6 @@
 package com.main.server.board.entity;
 
+import com.main.server.member.entity.Member;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -32,6 +33,10 @@ public class Board {
 
     @Column(nullable = false)
     private LocalDateTime now = LocalDateTime.now();
+
+    @ManyToOne
+    @JoinColumn(name = "memberId")
+    private Member member;
 
 
 //    private Long like;
