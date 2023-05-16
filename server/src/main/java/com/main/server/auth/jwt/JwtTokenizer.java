@@ -22,7 +22,7 @@ import java.util.Map;
 @Component
 public class JwtTokenizer {
     @Getter
-    @Value("${JWT_SECRET_KEY}") //JWT 생성 시 필요한 정보이며, 해당 정보는 application.yml 파일에서 로드
+    @Value("${jwt.key}") //JWT 생성 시 필요한 정보이며, 해당 정보는 application.yml 파일에서 로드
     private String secretKey;
 
     @Getter
@@ -82,17 +82,13 @@ public class JwtTokenizer {
         return claims;
     }
 
-    public Map<String, Object> verifySignature(String jws, String base64EncodedSecretKey) { // JWT 검증
+    public void verifySignature(String jws, String base64EncodedSecretKey) {
         Key key = getKeyFromBase64EncodedKey(base64EncodedSecretKey);
 
-        try {
-            return Jwts.parserBuilder()
-                    .setSigningKey(key)
-                    .build()
-                    .parseClaimsJws(jws).getBody();
-        } catch (ExpiredJwtException e) {
-            throw new RuntimeException("Expired JWT");
-        }
+        Jwts.parserBuilder()
+                .setSigningKey(key)
+                .build()
+                .parseClaimsJws(jws);
     }
 
     public Date getTokenExpiration(int expirationMinutes) { //JWT의 만료 일시를 지정하기 위한 메서드로 JWT 생성 시 사용

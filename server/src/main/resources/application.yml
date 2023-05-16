@@ -4,7 +4,16 @@ spring:
   #    url: jdbc:mysql://database-mainproject.c9z9cyblbfz0.ap-northeast-2.rds.amazonaws.com:13306/mainProject?useSSL=false&characterEncoding=UTF-8&serverTimezone=UTC
   #    username: admin
   #    password: ak420217!
-
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            clientId: 1055433234406-e3lfq8tnp8tf55pcmv6eiu8rv45lqd9c.apps.googleusercontent.com
+            clientSecret: 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
+            scope:
+              - email
+              - profile
 
   h2:
     console:
@@ -27,7 +36,18 @@ jwt:
   key: ${JWT_SECRET_KEY}
   access-token-expiration-minutes: 40
   refresh-token-expiration-minutes: 420
+cloud:
+  aws:
+    credentials:
+      accessKey: AKIARYXXXMMJAZ54QEJA
+      secretKey: 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
+    region:
+      static: ap-northeast-2
+    stack:
+      auto: false
+application:
+  bucket:
+    name: mainplestory
 
 
 #구글 아디 비번 추가해야함
-# S3 클라우드 설정 추가해야함

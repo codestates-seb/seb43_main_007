@@ -1,7 +1,10 @@
 package com.main.server.auth.handler;
 
-import com.main.server.exception.ExceptionCode;
+import com.google.gson.Gson;
+import com.main.server.response.ErrorResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 
@@ -16,31 +19,18 @@ public class UserAuthenticationFailureHandler implements AuthenticationFailureHa
     @Override
     public void onAuthenticationFailure(HttpServletRequest request,
                                         HttpServletResponse response,
-                                        AuthenticationException exception) throws IOException, ServletException {
-        log.error(" Authentication failed : {}", exception.getMessage());
+                                        AuthenticationException exception) throws IOException {
+        // 인증 실패 시, 에러 로그를 기록하거나 error response를 전송할 수 있다.
+        log.error("# Authentication failed: {}", exception.getMessage());
 
-        response.setContentType("application/json");
-        response.setCharacterEncoding("utf-8");
-        response.setStatus(400);
-        String message = "";
-
-        if(exception.getMessage().equals("자격 증명에 실패하였습니다.")){
-            message = ExceptionCode.MEMBER_NOT_FOUND.getMessage();
-
-        }else if(exception.getMessage().equals("유효하지 않은 사용자입니다.")){
-            message = ExceptionCode.MEMBER_NOT_FOUND.getMessage();
-        }else{
-            message = ExceptionCode.MEMBER_NOT_FOUND.getMessage();
-        }
-
-        String result = "{\"status\" : \""+400+"\",\n\"message\": \"" +message +"\"\n}";
-        response.getWriter().write(result);
-
-
-
+        sendErrorResponse(response);
     }
 
-    private void sendErrorResponse(HttpServletResponse response) {
-
+    private void sendErrorResponse(HttpServletResponse response) throws IOException {
+        Gson gson = new Gson();
+        ErrorResponse errorResponse = ErrorResponse.of(HttpStatus.UNAUTHORIZED);
+        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+        response.setStatus(HttpStatus.UNAUTHORIZED.value());
+        response.getWriter().write(gson.toJson(errorResponse, ErrorResponse.class));
     }
 }

@@ -1,5 +1,6 @@
 package com.main.server.member.mapper;
 
+import com.main.server.board.mapper.BoardMapper;
 import com.main.server.member.dto.MemberDto;
 import com.main.server.member.entity.Member;
 import com.main.server.member.entity.Question;
@@ -42,7 +43,6 @@ public interface MemberMapper {
         myPageDto.setImageUrl(member.getProfileImageUrl());
         //myPageDto.setImageUrl("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTxVQ3SH6_tb5EWmT-QD-U939zONz67JbYFjkyPeij62Q&s");
         myPageDto.setNickname(member.getNickname());
-
         return myPageDto;
     }
 

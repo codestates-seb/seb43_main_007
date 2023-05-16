@@ -1,8 +1,9 @@
 package com.main.server.member.service;
 
-import com.main.server.auth.MemberRegistraionApplicationEvent;
+import com.main.server.auth.handler.MemberRegistraionApplicationEvent;
 import com.main.server.auth.utils.CustomAuthorityUtils;
 import com.main.server.awsS3.StorageService;
+import com.main.server.board.service.BoardService;
 import com.main.server.exception.BusinessLogicException;
 import com.main.server.exception.ExceptionCode;
 import com.main.server.member.dto.MemberDto;
@@ -11,9 +12,7 @@ import com.main.server.member.mapper.MemberMapper;
 import com.main.server.member.repository.MemberRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -51,8 +50,7 @@ public class MemberService {
         this.memberMapper = memberMapper;
     }
     
-    private final String bucketName = "mainplestory"; //TODO: S3 연결한 후 버킷네임 여기에 적어야지
-    
+
     public Member createMember(MemberDto.Post memberPostDto) { //mem 001
 
         //기존에 있는 회원인지 확인, 비밀번호와 비밀번호 확인이 일치하는지 확인, 닉네임 길이 괜찮은지, 닉네임 존재하는지 확인
