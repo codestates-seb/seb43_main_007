@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { useState, useEffect } from "react";
+import { useParams } from "react-router";
 import ListContent from "./ListContent";
 import Pagination from "./Pagination";
 import type { PageInfo, ListData } from "./listTypes";
@@ -7,6 +8,10 @@ import { listData } from "../../api/axios";
 // import data from "./dumyData";
 
 function ListContents() {
+   // useParms사용하여 값을 가져와서 api에 넣어준다.
+   // 라우팅페이지 파람 설정(/:파람) => Link to path걸어줄때 원하는 파람넣어주기(/파람) => 필요한 곳에서 useParams()값 가져오기
+   const { cate } = useParams();
+
    // api로 가져온 데이터들
    const [datas, setDatas] = useState<ListData[]>([]);
    const [pageInfo, setPageInfo] = useState<PageInfo>();
@@ -18,14 +23,24 @@ function ListContents() {
 
    // list목록페이지 데이터 get요청
    const listDatas = async () => {
-      const data = await listData(curPage);
-      setDatas(data.data);
-      setPageInfo(data.pageInfo);
+      if (cate === undefined) {
+         const data = await listData(``, curPage);
+         setDatas(data.data);
+         setPageInfo(data.pageInfo);
+      } else {
+         const data = await listData(`&cate=${cate}`, curPage);
+         setDatas(data.data);
+         setPageInfo(data.pageInfo);
+      }
    };
 
    useEffect(() => {
       listDatas();
-   }, [curPage]);
+   }, [curPage, cate]);
+
+   // useEffect(() => {
+   //    listDatas();
+   // }, [curPage]);
 
    return (
       <DivContainer>

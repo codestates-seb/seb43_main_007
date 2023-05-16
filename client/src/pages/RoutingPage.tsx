@@ -28,6 +28,7 @@ function RoutingPage() {
                <Route path="/myprofile" element={<MypageProfile />} />
                <Route path="/bookmark" element={<MypageBookmark />} />
                <Route path="/communitylist" element={<CommunityList />} />
+               <Route path="/communitylist/:cate" element={<CommunityList />} />
                <Route path="/createpost" element={<CreatePostPage />} />
                <Route path="/signup" element={<Signup />} />
                <Route path="/login" element={<Login />} />
