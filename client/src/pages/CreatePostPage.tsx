@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { useState } from "react";
 import { useNavigate } from "react-router";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { createPost } from "../api/axios";
 import GuideLine from "../components/CreatePost/GuideLine";
@@ -24,7 +24,6 @@ function CreatePost() {
    const [tagList, setTagList] = useState<{ tagName: string }[]>([]);
    // 에디터 내용을 저장하는 상태변수
    const [value, setValue] = useState("");
-   console.log(value);
 
    // ----------------유효성 검사를 위한 상태변수들
    const [isImg, setIsImg] = useState(false);
@@ -36,15 +35,21 @@ function CreatePost() {
    const notifySuccess = () => toast.success("글 생성!");
    const notifyError = () => toast.error("형식에 맞춰 작성해주세요.");
 
+   // 내용에서 html 태그 제외하고 글자만 빼오기(에디터 내용 유효성 검사)
+   const previewBody = value.replace(/(<([^>]+)>)/gi, "").trim();
+
    const valid = () => {
+      // 제목 - 주소 - 카테고리가 빈칸이면 false
       if (title.length === 0 || address.length === 0 || item.length === 0) {
          return false;
       }
 
-      if (!(value.length > 30)) {
+      // html태그를 제외한 에디터 내용만 30자 이상
+      if (!(previewBody.length > 30)) {
          return false;
       }
 
+      // 이미지 여부
       if (!isImg) {
          return false;
       }
@@ -60,7 +65,6 @@ function CreatePost() {
          notifySuccess();
          createPost(title, address, value, tagList, navigate);
       } else {
-         console.log("실패");
          notifyError();
       }
    };
@@ -94,10 +98,6 @@ function CreatePost() {
                등록
             </button>
          </DivButton>
-         <ToastContainer
-            position="top-right" // 알람 위치 지정
-            autoClose={3000} // 자동 off 시간
-         />
       </DivContainer>
    );
 }
