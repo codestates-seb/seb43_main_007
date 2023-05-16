@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { useState, useEffect } from "react";
 import ListContent from "./ListContent";
 import Pagination from "./Pagination";
-import type { PageInfo, ListData } from "./listtypes";
+import type { PageInfo, ListData } from "./listTypes";
 import { listData } from "../../api/axios";
 // import data from "./dumyData";
 
