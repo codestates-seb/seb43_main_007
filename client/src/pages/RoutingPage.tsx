@@ -51,5 +51,5 @@ const Container = styled.div`
 
 const MainBox = styled.div`
    display: flex;
-   min-height: 600px;
+   min-height: 100vh;
 `;
