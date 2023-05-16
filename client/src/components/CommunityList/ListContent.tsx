@@ -3,6 +3,8 @@ import styled from "styled-components";
 import { RiSeedlingLine, RiSeedlingFill } from "react-icons/ri";
 import { BsPin, BsPinFill } from "react-icons/bs";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "../../store/store";
 import type { ListData } from "./listTypes";
 import { likeBookMarkPatch } from "../../api/axios";
 
@@ -24,11 +26,15 @@ function ListContent({ userDatas }: { userDatas: ListData }) {
       setIsFixPin(!isFixPin);
    };
 
+   // --- 리덕스 store에서 가져온 멤버 id값
+   const memberId = useSelector((state: RootState) => state.memberId);
+   // console.log(memberId);
    // 좋아요 클릭 이벤트
    const likeClickHandler = () => {
       const req = {
-         memberId: 1,
+         memberId,
          boardId: userDatas.boardId,
+         boardLike: isLike,
       };
       if (isLike === 0) {
          setIsLike(1);

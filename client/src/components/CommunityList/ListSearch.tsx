@@ -2,11 +2,15 @@ import { useRef, useState } from "react";
 import styled, { css } from "styled-components";
 import { BiUpArrowCircle, BiDownArrowCircle } from "react-icons/bi";
 import { Link } from "react-router-dom";
+import { useParams } from "react-router";
 import useDetectClose from "../../hooks/useDetectClose";
 import TitleValue from "./TitleValue";
 import { listSearchGet } from "../../api/axios";
 
 function ListSearch() {
+   const { cate } = useParams();
+   // console.log(cate);
+
    const dropDownRef = useRef(null);
    // 드롭다운 상태
    const [title, setTitle] = useState("제목");
@@ -28,18 +32,38 @@ function ListSearch() {
    const searchSubmitHandler = () => {
       console.log(serach);
 
-      if (title === "제목") {
-         console.log("제목 실행?");
-         listSearchGet("", `title=${serach}`, "");
+      if (cate === undefined) {
+         if (title === "제목") {
+            console.log("제목 실행?");
+            listSearchGet(``, `title=${serach}`, "");
+         }
+         if (title === "내용") {
+            console.log("내용 실행?");
+            listSearchGet("", "", `content=${serach}`);
+         }
+         if (title === "제목+내용") {
+            console.log("제목+내용 실행?");
+            listSearchGet("", `title=${serach}&`, `content=${serach}`);
+         }
+      } else {
+         if (title === "제목") {
+            console.log("제목 실행?");
+            listSearchGet(`cate=${cate}&`, `title=${serach}`, "");
+         }
+         if (title === "내용") {
+            console.log("내용 실행?");
+            listSearchGet(`cate=${cate}&`, "", `content=${serach}`);
+         }
+         if (title === "제목+내용") {
+            console.log("제목+내용 실행?");
+            listSearchGet(
+               `cate=${cate}&`,
+               `title=${serach}&`,
+               `content=${serach}`
+            );
+         }
       }
-      if (title === "내용") {
-         console.log("내용 실행?");
-         listSearchGet("", "", `content=${serach}`);
-      }
-      if (title === "제목+내용") {
-         console.log("제목+내용 실행?");
-         listSearchGet("", `title=${serach}&`, `content=${serach}`);
-      }
+
       setSerach("");
    };
    const searchEnterHandler = (
