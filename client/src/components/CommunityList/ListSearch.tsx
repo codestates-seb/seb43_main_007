@@ -4,13 +4,14 @@ import { BiUpArrowCircle, BiDownArrowCircle } from "react-icons/bi";
 import { Link } from "react-router-dom";
 import useDetectClose from "../../hooks/useDetectClose";
 import TitleValue from "./TitleValue";
-// import { postTodos } from "../../api/axios";
+import { listSearchGet } from "../../api/axios";
 
 function ListSearch() {
    const dropDownRef = useRef(null);
    // 드롭다운 상태
    const [title, setTitle] = useState("제목");
    const titlesList = ["제목", "내용", "제목+내용"];
+
    // 검색창 상태
    const [serach, setSerach] = useState("");
    const [isOpen, setIsOpen] = useDetectClose(dropDownRef, false);
@@ -27,6 +28,18 @@ function ListSearch() {
    const searchSubmitHandler = () => {
       console.log(serach);
 
+      if (title === "제목") {
+         console.log("제목 실행?");
+         listSearchGet("", `title=${serach}`, "");
+      }
+      if (title === "내용") {
+         console.log("내용 실행?");
+         listSearchGet("", "", `content=${serach}`);
+      }
+      if (title === "제목+내용") {
+         console.log("제목+내용 실행?");
+         listSearchGet("", `title=${serach}&`, `content=${serach}`);
+      }
       setSerach("");
    };
    const searchEnterHandler = (
@@ -37,7 +50,7 @@ function ListSearch() {
          searchSubmitHandler();
       }
    };
-  
+
    return (
       <DivContainer>
          <DivContent>
