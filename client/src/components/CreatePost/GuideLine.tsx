@@ -14,10 +14,11 @@ function GuideLine() {
          <ol>
             글 작성시 유의사항
             <li className="li-text-style">
-               1. 이미지 혹은 주소가 삽입되어야 글을 게시할 수 있습니다.
+               1. 커뮤니티를 꼭 정해주세요! 그리고 제목과 주소, 이미지가
+               삽입되어야 글을 게시할 수 있습니다.
             </li>
             <li className="li-text-style">
-               2. 본문은 20자 이상 작성해야 합니다.
+               2. 본문은 30자 이상 작성해야 합니다.
             </li>
             <li className="li-text-style">
                3. 글이 채택되면 수정할 수 없습니다.

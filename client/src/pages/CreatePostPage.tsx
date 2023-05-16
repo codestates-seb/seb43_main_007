@@ -40,19 +40,14 @@ function CreatePost() {
 
    const valid = () => {
       // 제목 - 주소 - 카테고리가 빈칸이면 false
-      if (title.length === 0 || address.length === 0 || item.length === 0) {
+      if (title.length === 0 || address.length === 0 || item.length === 0)
          return false;
-      }
 
       // html태그를 제외한 에디터 내용만 30자 이상
-      if (!(previewBody.length > 30)) {
-         return false;
-      }
+      if (!(previewBody.length > 30)) return false;
 
       // 이미지 여부
-      if (!isImg) {
-         return false;
-      }
+      if (!isImg) return false;
 
       return true;
    };

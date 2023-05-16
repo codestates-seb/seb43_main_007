@@ -72,6 +72,7 @@ const TagContainer = styled.div`
    display: flex;
    align-items: center;
    height: 40px;
+   width: 100%;
    font-size: var(--font-base);
    border: 1px solid #d2d2d2;
 
@@ -91,7 +92,7 @@ const TagInput = styled.input`
    outline: none;
    cursor: text;
 
-   width: 600px;
+   width: 130px;
    height: 40px;
    padding: 9px 14px;
 `;
