@@ -1,10 +1,5 @@
-<<<<<<< HEAD
 import axios, { AxiosError } from "axios";
-import { LoginTypes } from "../components/login/LoginType";
-=======
-import axios from "axios";
 import { LoginTypes, FindPasswordType } from "../components/login/LoginType";
->>>>>>> FE-dev
 import { SignupTypes } from "../components/signup/SignupTypes";
 import { request } from "./create";
 

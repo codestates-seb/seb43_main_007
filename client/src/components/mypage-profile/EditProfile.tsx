@@ -8,6 +8,13 @@ import { setPhoto } from "../../reducers/profilePhotoSlice";
 import { SignupTypes } from "../signup/SignupTypes";
 import { setNickname } from "../../reducers/profileNicknameSlice";
 import { updateNickname, updateUserProfilePhoto } from "../../api/axios";
+import {
+   nicknameChangeRetry,
+   nicknameChangeSuccess,
+   photoChangeError,
+   photoChangeSuccess,
+   serverError,
+} from "./profileToastify";
 
 function EditProfile() {
    // useForm setup
@@ -28,7 +35,6 @@ function EditProfile() {
    const dispatch = useDispatch();
 
    // State variables
-   const [serverError, setServerError] = useState<string | null>(null);
    const [fileName, setFileName] = useState("");
    const [prevPhoto, setPrevPhoto] = useState("");
 
@@ -58,12 +64,12 @@ function EditProfile() {
 
          updateUserProfilePhoto(memberId, file)
             .then((data) => {
-               alert("프로필 사진이 성공적으로 변경되었습니다."); // 로컬에선 실패해도 뜨는 상태. 서버 연결 후 테스트 해봐야 함
+               photoChangeSuccess(); // 로컬에선 실패해도 뜨는 상태. 서버 연결 후 테스트 해봐야 함
                dispatch(setPhoto(prevPhoto));
             })
             .catch((error) => {
                console.error("프로필 사진 변경에 실패하였습니다.", error);
-               alert("프로필 사진 변경에 실패하였습니다. 다시 시도해주세요.");
+               photoChangeError();
             });
       }
    };
@@ -72,12 +78,14 @@ function EditProfile() {
       updateNickname(memberId, currentNickname)
          .then(() => {
             dispatch(setNickname(currentNickname));
-            setServerError(null);
+            nicknameChangeSuccess();
          })
          .catch((error) => {
             console.error("닉네임 변경에 실패하였습니다.", error);
             if (error.message === "닉네임 중복") {
-               setServerError("중복된 닉네임입니다.");
+               nicknameChangeRetry();
+            } else if (error.message === "서버 오류") {
+               serverError();
             }
          });
    };
@@ -116,7 +124,6 @@ function EditProfile() {
                {errors.nickname && (
                   <p className="error-msg">{errors.nickname.message}</p>
                )}
-               {serverError && <p className="error-msg">{serverError}</p>}
             </SubsectionBox>
             <SubsectionBox>
                <label htmlFor="profile-pic">프로필 사진</label>

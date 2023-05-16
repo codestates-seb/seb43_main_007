@@ -12,6 +12,11 @@ import {
 } from "./EditProfile";
 import { updatePassword } from "../../api/axios";
 import { RootState } from "../../store/store";
+import {
+   passwordChangeRetry,
+   passwordChangeSuccess,
+   serverError,
+} from "./profileToastify";
 
 function ChangePassoword() {
    // useForm setup
@@ -39,15 +44,13 @@ function ChangePassoword() {
       const { currentPassword, newPassword, confirmPassword } = getValues();
       updatePassword(memberId, currentPassword, newPassword, confirmPassword)
          .then(() => {
-            alert("비밀번호가 성공적으로 변경되었습니다.");
+            passwordChangeSuccess();
          })
          .catch((error) => {
             if (error.message === "현재 비밀번호 불일치") {
-               alert("현재 비밀번호가 일치하지 않습니다.");
+               passwordChangeRetry();
             } else if (error.message === "서버 오류") {
-               alert("서버에서 오류가 발생했습니다.");
-            } else {
-               alert("비밀번호 변경에 실패하였습니다. 다시 시도해주세요.");
+               serverError();
             }
          });
    };
