@@ -109,7 +109,7 @@ export const signupPost = async (req: SignupTypes): Promise<string> => {
 // 유저 프로필 사진, 닉네임 GET 요청
 export const getUserProfile = async () => {
    try {
-      const { data } = await request.get("/mebers/mypage/1"); // 나중에 수정
+      const { data } = await request.get("/members/mypage/1"); // 나중에 수정
       console.log("성공");
       return data;
    } catch (error) {
@@ -149,12 +149,9 @@ export const findPassword = async (params: FindPasswordType) => {
 // 닉네임 변경
 export const updateNickname = async (memberId: number, newNickname: string) => {
    try {
-      const { data } = await request.patch(
-         `/api/members/nickname/${memberId}`,
-         {
-            newNickname,
-         }
-      );
+      const { data } = await request.patch(`/members/nickname/${memberId}`, {
+         newNickname,
+      });
       console.log("닉네임 변경 성공");
       return data;
    } catch (error) {
@@ -179,7 +176,7 @@ export const updateUserProfilePhoto = async (memberId: number, file: File) => {
       formData.append("file", file);
 
       const { data } = await request.patch(
-         `/api/members/image/${memberId}`,
+         `/members/image/${memberId}`,
          formData,
          {
             headers: {
@@ -204,14 +201,11 @@ export const updatePassword = async (
    passwordConfirm: string
 ) => {
    try {
-      const { data } = await request.patch(
-         `/api/members/password/${memberId}`,
-         {
-            nowPassword,
-            newPassword,
-            passwordConfirm,
-         }
-      );
+      const { data } = await request.patch(`/members/password/${memberId}`, {
+         nowPassword,
+         newPassword,
+         passwordConfirm,
+      });
       console.log("비밀번호 변경 성공");
       return data;
    } catch (error) {

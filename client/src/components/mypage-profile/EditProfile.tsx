@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { RootState } from "../../store/store";
 import validFunc from "../../util/signinValidFunc";
-import { setPhoto } from "../../reducers/profilePhotoSlice";
+import { setPhoto, resetPhoto } from "../../reducers/profilePhotoSlice";
 import { SignupTypes } from "../signup/SignupTypes";
 import { setNickname } from "../../reducers/profileNicknameSlice";
 import { updateNickname, updateUserProfilePhoto } from "../../api/axios";
@@ -91,7 +91,7 @@ function EditProfile() {
    };
 
    const handleDelete = () => {
-      dispatch(setPhoto(""));
+      dispatch(resetPhoto());
       setFileName("");
    };
 
