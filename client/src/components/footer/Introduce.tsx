@@ -40,14 +40,15 @@ const IntroduceContainer = styled.div`
       flex-direction: column;
       justify-content: center;
       width: 390px;
-      margin: 0 15px;
+      margin: 0 10px;
       .intro-title {
-         font-size: 25px;
+         font-size: 20px;
          text-align: center;
-         margin-bottom: 20px;
+         margin-bottom: 10px;
       }
       .indivi-box {
          display: flex;
+         justify-content: center;
       }
    }
 `;
