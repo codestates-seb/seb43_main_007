@@ -4,7 +4,6 @@ import { RiSeedlingLine, RiSeedlingFill } from "react-icons/ri";
 import { BsPin, BsPinFill } from "react-icons/bs";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import type { ListData } from "./listTypes";
-import logo1 from "../../assets/img/logo1.png";
 import { likeBookMarkPatch } from "../../api/axios";
 
 function ListContent({ userDatas }: { userDatas: ListData }) {
