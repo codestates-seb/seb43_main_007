@@ -3,19 +3,25 @@ export interface PostDeleteModalProps {
    close: () => void;
 }
 
-export interface CommentProps {
-   comment: {
-      postId: number;
+export interface CommentType {
+   boardId: number;
+   commentId: number;
+   nickname: string;
+   picture: string;
+   content: string;
+   createdAt: string;
+   parent?: {
       commentId: number;
-      nickname: string;
-      picture: string;
-      content: string;
-      createdAt: string;
-      responseTo: number | string;
    };
-   handleReplySubmit: (content: string) => void;
+   replies?: CommentType[];
+}
+
+export interface CommentProps {
+   comment: CommentType;
+   handleReplySubmit: (commentId: number, content: string) => void;
    handleReplyClick: (commentId: number | null) => void;
    isReplySelected: boolean;
+   selectedCommentId: number | null;
 }
 
 export interface CreateReplyProps {
@@ -32,4 +38,8 @@ export interface CommentCharacterCountReturn {
    characterCount: number;
    handleChange: (event: ChangeEvent<HTMLTextAreaElement>) => void;
    clearValue: () => void;
+}
+
+export interface ReplyProps {
+   comment: CommentType;
 }
