@@ -3,10 +3,8 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { useEffect, useRef, useState } from "react";
 import validFunction from "../../util/signinValidFunc";
 import LoginModal from "./LoginModal";
-
-interface SocialNum {
-   socialNumber: string;
-}
+import { findId } from "../../api/axios";
+import { SocialNum } from "./LoginType";
 
 function FindId() {
    const {
@@ -22,19 +20,20 @@ function FindId() {
 
    // 페이지 입장할 때 첫 input에 focus
    const inputRef = useRef<HTMLInputElement | null>(null);
-   const { ref } = register("socialNumber");
+   const { ref } = register("RRNConfirm");
    useEffect(() => {
       if (inputRef.current !== null) inputRef.current.focus();
    }, []);
 
-   const onSubmit: SubmitHandler<SocialNum> = (data) => {
+   const onSubmit: SubmitHandler<SocialNum> = async (data) => {
       // 아이디 찾기 요청 함수자리
       // 아이디 찾기 성공시 modal 창으로 아이디 띄워주기
-      setMessage({
-         text1: "회원님의 아이디는",
-         text2: "data@google.com 입니다.",
-      });
-      setIsModalOpen(true);
+      const response = await findId(data.RRNConfirm);
+      // setMessage({
+      //    text1: "회원님의 아이디는",
+      //    text2: "data@google.com 입니다.",
+      // });
+      // setIsModalOpen(true);
       // 아이디 찾기 실패시 실패 modal 창 띄우기
       // setMessage({
       //    text1: "등록된 아이디가",
@@ -47,7 +46,7 @@ function FindId() {
       //    text2: "다시 시도해 주세요.",
       // });
       // setIsModalOpen(true);
-      console.log(data);
+      console.log(response);
    };
 
    return (
@@ -56,7 +55,7 @@ function FindId() {
          <div className="input-box">
             <input
                className="social-number-input"
-               {...register("socialNumber", {
+               {...register("RRNConfirm", {
                   required: true,
                   validate: validFunction.validSocialNumber,
                })}
@@ -65,7 +64,7 @@ function FindId() {
                   inputRef.current = e;
                }}
             />
-            {errors.socialNumber && (
+            {errors.RRNConfirm && (
                <span className="error-message">
                   주민등록번호 형식으로 입력해주세요
                </span>

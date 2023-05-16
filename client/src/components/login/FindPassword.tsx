@@ -3,12 +3,8 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { useEffect, useRef, useState } from "react";
 import validFunction from "../../util/signinValidFunc";
 import LoginModal from "./LoginModal";
-
-interface FindPasswordType {
-   email: string;
-   question: string;
-   answer: string;
-}
+import { findPassword } from "../../api/axios";
+import { FindPasswordType } from "./LoginType";
 
 function FindPassword() {
    const {
@@ -29,9 +25,10 @@ function FindPassword() {
       if (inputRef.current !== null) inputRef.current.focus();
    }, []);
 
-   const onSubmit: SubmitHandler<FindPasswordType> = (data) => {
+   const onSubmit: SubmitHandler<FindPasswordType> = async (data) => {
       // 비밀번호 찾기 요청 함수자리
       // 비밀번호 찾기 성공시 modal 창으로 비밀번호 띄워주기
+      const response = await findPassword(data);
       setMessage({
          text1: "회원님의 비밀번호는",
          text2: "qwer1234 입니다.",
@@ -49,7 +46,7 @@ function FindPassword() {
       //    text2: "다시 시도해 주세요.",
       // });
       // setIsModalOpen(true);
-      console.log(data);
+      console.log(response);
    };
 
    const questionList = [
