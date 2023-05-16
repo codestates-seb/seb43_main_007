@@ -1,13 +1,36 @@
 import styled from "styled-components";
+import { useState } from "react";
 import BookmarkItem from "./BookmarkItem";
+import { dummyBookmark } from "./dummyBookmark";
+import BookmarkPagination from "./BookmarkPagination";
 
 function BookmarkBox() {
-   const dataArr = [1, 2, 3, 4, 5, 6];
+   const manyDummy = new Array(11).fill([...dummyBookmark]).flat();
+   const totalDataCount = manyDummy.length;
+   const [currentPage, setCurrentPage] = useState(1);
+   // 페이지당 item 개수
+   const limitItems = 6;
+   // 페이지당 item limitItems만큼 렌더링
+   const currentItems = manyDummy.slice(
+      (currentPage - 1) * limitItems,
+      currentPage * limitItems
+   );
    return (
       <BookmarkBoxContainer>
-         {dataArr.map((el) => {
-            return <BookmarkItem key={el} />;
+         {currentItems.map((data) => {
+            return (
+               <BookmarkItem
+                  key={data.questionId * Math.random()}
+                  data={data}
+               />
+            );
          })}
+         <BookmarkPagination
+            totalDataCount={totalDataCount}
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+            limitItems={limitItems}
+         />
       </BookmarkBoxContainer>
    );
 }
@@ -17,8 +40,8 @@ export default BookmarkBox;
 const BookmarkBoxContainer = styled.div`
    display: flex;
    flex-wrap: wrap;
-   justify-content: space-around;
-   align-items: center;
+   justify-content: center;
+   margin-top: 10%;
    height: 800px;
    padding: 10px;
 `;
