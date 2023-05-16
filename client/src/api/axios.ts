@@ -240,3 +240,15 @@ export const updatePassword = async (
       throw new Error("비밀번호 변경 실패");
    }
 };
+
+// 프로필 사진 초기화
+export const resetUserProfilePhoto = async (memberId: number) => {
+   try {
+      const { data } = await request.patch(`/members/deleteimage/${memberId}`, {
+         memberId,
+      });
+      return data;
+   } catch (error) {
+      console.log("프포필 사진 초기화 실패");
+   }
+};
