@@ -16,6 +16,5 @@ const SignupContainer = styled.div`
    justify-content: center;
    align-items: center;
    width: 100%;
-   height: 100%;
-   margin-left: -150px; // navbar 자리 채우기
+   height: 120%;
 `;

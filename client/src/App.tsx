@@ -2,7 +2,6 @@ import styled from "styled-components";
 import { BrowserRouter } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import GlobalStyles from "./style/GlobalStyle";
-import Footer from "./components/footer/Footer";
 import RoutingPage from "./pages/RoutingPage";
 
 function App() {
@@ -16,19 +15,14 @@ function App() {
             <GlobalStyles />
             <RoutingPage />
          </BrowserRouter>
-         <div className="footer">
-            <Footer />
-         </div>
       </Container>
    );
 }
 
 export default App;
 const Container = styled.div`
-   position: relative;
+   display: flex;
+   justify-content: center;
+   align-items: center;
    width: 100%;
-   .footer {
-      display: flex;
-      /* flex-direction: column; */
-   }
 `;

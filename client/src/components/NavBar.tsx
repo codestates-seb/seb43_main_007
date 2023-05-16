@@ -96,7 +96,7 @@ function NavbarSearch() {
    return (
       <Navbar
          // 네비게이션 높이 넓이 조절
-         height={700}
+         height={800}
          width={{ sm: 300 }}
          p="md"
          className={classes.navbar}
@@ -192,9 +192,11 @@ const SearchForm = styled.form`
 // mantine CSS
 const useStyles = createStyles((theme) => ({
    navbar: {
-      position: "fixed",
+      position: "sticky",
       top: 0,
+      left: 0,
       paddingTop: 0,
+      zIndex: 10,
    },
 
    section: {

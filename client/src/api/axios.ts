@@ -136,6 +136,7 @@ export const findId = async (rrn: string) => {
 export const findPassword = async (params: FindPasswordType) => {
    const paramsUrl = new URLSearchParams(params).toString();
    try {
+      console.log(paramsUrl);
       const { data } = await request.get(`members/password?${paramsUrl}`);
       console.log("성공");
       console.log(data);

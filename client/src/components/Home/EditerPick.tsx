@@ -39,7 +39,7 @@ const EditerPickContainer = styled.div`
    display: flex;
    position: relative;
    width: 900px;
-   height: 800px;
+   height: 900px;
    background-color: beige;
    margin-top: 20px;
    overflow: hidden;
