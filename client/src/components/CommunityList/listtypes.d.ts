@@ -19,7 +19,7 @@
 export type Likereq = {
    memberId: number;
    boardId: number;
-   boardLike: number;
+   boardLike?: number;
 };
 
 export type PageInfo = {

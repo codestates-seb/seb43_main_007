@@ -9,11 +9,16 @@ import { serverError, postSuccess } from "../util/toastify";
 export const listData = async (
    curPage: number,
    memberId: string,
-   cate?: string
+   cate?: string,
+   title?: string,
+   content?: string
 ) => {
    try {
+      console.log(cate);
+      console.log(cate);
+      console.log(`boards${memberId}?page=${curPage}${cate}${title}${content}`);
       const { data } = await request.get(
-         `boards${memberId}?page=${curPage}${cate}`
+         `boards${memberId}?page=${curPage}${cate}${title}${content}`
       );
       console.log(data);
       return data;
@@ -23,10 +28,10 @@ export const listData = async (
    }
 };
 
-// 목록페이지 북마크-좋아요 patch요청
-export const likeBookMarkPatch = async (endPoint: string, req: Likereq) => {
+// 목록페이지 좋아요 patch요청
+export const likePatch = async (req: Likereq) => {
    try {
-      const data = await request.patch(`boards/${endPoint}`, req);
+      const data = await request.patch(`/boards/like`, req);
       console.log("요청 성공");
       console.log(data);
    } catch (error) {
@@ -35,22 +40,14 @@ export const likeBookMarkPatch = async (endPoint: string, req: Likereq) => {
    }
 };
 
-// 목록페이지(전체) 검색하기 get요청
-export const listSearchGet = async (
-   memberId: string,
-   cate?: string,
-   title?: string,
-   content?: string
-) => {
+// 목록페이지 북마크 post요청
+export const bookMarkPost = async (req: Likereq) => {
    try {
-      const { data } = await request.get(
-         `boards${memberId}?${cate}${title}${content}`
-      );
+      console.log(req);
+      const data = await request.post("/bookmark", req);
       console.log(data);
-      return data;
    } catch (error) {
       console.log(error);
-      throw error;
    }
 };
 
