@@ -1,11 +1,6 @@
 import styled from "styled-components";
-import icon1 from "../../assets/img/icon1.png";
-import icon2 from "../../assets/img/icon2.png";
-import icon3 from "../../assets/img/icon3.png";
-import icon4 from "../../assets/img/icon4.png";
-import icon5 from "../../assets/img/icon5.png";
-import icon6 from "../../assets/img/icon6.png";
 import IndividualIntro from "./IndividualIntro";
+import { feMember, beMember } from "./memberInfo";
 
 function Introduce() {
    return (
@@ -13,17 +8,17 @@ function Introduce() {
          <div className="intro-box">
             <span className="intro-title">Front-End</span>
             <div className="indivi-box">
-               <IndividualIntro name="주효진(팀장)" img={icon1} />
-               <IndividualIntro name="이세영" img={icon2} />
-               <IndividualIntro name="김수현" img={icon3} />
+               {feMember.map((member) => {
+                  return <IndividualIntro key={member.name} {...member} />;
+               })}
             </div>
          </div>
          <div className="intro-box">
             <span className="intro-title">Back-End</span>
             <div className="indivi-box">
-               <IndividualIntro name="천찬웅(팀장)" img={icon4} />
-               <IndividualIntro name="이인건" img={icon5} />
-               <IndividualIntro name="김윤지" img={icon6} />
+               {beMember.map((member) => {
+                  return <IndividualIntro key={member.name} {...member} />;
+               })}
             </div>
          </div>
       </IntroduceContainer>
