@@ -1,23 +1,30 @@
-import axios, { AxiosError } from "axios";
-import { toast } from "react-toastify";
+import { AxiosError } from "axios";
 import { LoginTypes, FindPasswordType } from "../components/login/LoginType";
 import { SignupTypes } from "../components/signup/SignupTypes";
 import { request } from "./create";
+import { Likereq } from "../components/communityList/listTypes";
+import { serverError, postSuccess } from "../util/toastify";
 
 // 목록페이지 데이터 get요청
-export const listData = async (cate?: string, curPage: number) => {
+export const listData = async (
+   curPage: number,
+   memberId: string,
+   cate?: string
+) => {
    try {
-      console.log(`boards/?page=${curPage}${cate}`);
-      const { data } = await request.get(`boards?page=${curPage}${cate}`);
+      const { data } = await request.get(
+         `boards${memberId}?page=${curPage}${cate}`
+      );
       console.log(data);
       return data;
    } catch (error) {
       console.log(error);
+      throw error;
    }
 };
 
 // 목록페이지 북마크-좋아요 patch요청
-export const likeBookMarkPatch = async (endPoint, req) => {
+export const likeBookMarkPatch = async (endPoint: string, req: Likereq) => {
    try {
       const data = await request.patch(`boards/${endPoint}`, req);
       console.log("요청 성공");
@@ -30,18 +37,20 @@ export const likeBookMarkPatch = async (endPoint, req) => {
 
 // 목록페이지(전체) 검색하기 get요청
 export const listSearchGet = async (
+   memberId: string,
    cate?: string,
    title?: string,
    content?: string
 ) => {
-   //    네브바랑 전체페이지  "낚시" 검색시
-   // localhost:8080/boards?content=낚시&title=낚시
    try {
-      console.log(`/boards?${cate}${title}${content}`);
-      const data = await axios.get(`/boards?${cate}${title}${content}`);
+      const { data } = await request.get(
+         `boards${memberId}?${cate}${title}${content}`
+      );
       console.log(data);
+      return data;
    } catch (error) {
       console.log(error);
+      throw error;
    }
 };
 
@@ -76,6 +85,7 @@ export const editorImgPost = async (img: any, quillRef) => {
 // 글생성 post요청
 export const createPost = async (
    memberId: number,
+   category: string,
    title: string,
    address: string,
    content: string,
@@ -85,6 +95,7 @@ export const createPost = async (
    try {
       const data = await request.post("/boards", {
          memberId,
+         category,
          title,
          address,
          content,
@@ -92,12 +103,21 @@ export const createPost = async (
       });
 
       if (data.status === 201 || data.status === 200) {
-         toast.success("글 생성!");
+         postSuccess();
          navigate("/communitylist");
       }
    } catch (error) {
-      toast.error("서버 오류입니다. 잠시후 다시 시도해주세요.");
+      serverError();
       console.log("글 작성 생성 오류");
+      console.log(error);
+   }
+};
+
+export const myPageMyPost = async (memberId: number) => {
+   try {
+      const data = await request.get(`/members/boards/${memberId}`);
+   } catch (error) {
+      serverError();
       console.log(error);
    }
 };

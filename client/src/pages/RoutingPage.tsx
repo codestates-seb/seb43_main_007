@@ -11,6 +11,7 @@ import PostDetail from "./PostDetail";
 import CreatePostPage from "./CreatePostPage";
 import MypageBookmark from "./MypageBookmark";
 import Footer from "../components/footer/Footer";
+import MypageMylist from "./MypageMypost";
 
 function RoutingPage() {
    const { pathname } = useLocation();
@@ -27,6 +28,7 @@ function RoutingPage() {
                <Route path="/" element={<Home />} />
                <Route path="/myprofile" element={<MypageProfile />} />
                <Route path="/bookmark" element={<MypageBookmark />} />
+               <Route path="/mypost" element={<MypageMylist />} />
                <Route path="/communitylist" element={<CommunityList />} />
                <Route path="/communitylist/:cate" element={<CommunityList />} />
                <Route path="/createpost" element={<CreatePostPage />} />

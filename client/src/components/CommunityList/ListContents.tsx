@@ -1,10 +1,13 @@
 import styled from "styled-components";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router";
+import { useSelector } from "react-redux";
 import ListContent from "./ListContent";
 import Pagination from "./Pagination";
 import type { PageInfo, ListData } from "./listTypes";
 import { listData } from "../../api/axios";
+import { RootState } from "../../store/store";
+import ListSearch from "./ListSearch";
 // import data from "./dumyData";
 
 function ListContents() {
@@ -21,14 +24,18 @@ function ListContents() {
    const totalPage = pageInfo?.totalPages; // 전체 페이지
    const limit = 5; // 한화면 페이지 보일 수 페이지 5개 보임
 
+   // 멤버 아이디 리덕스에서 가져오기
+   // 비회원 일때는 멤버 아이디 0으로 => 로그인 되면 그 회원 아이디로 바뀌는 로직이다.(로그인에서 처리해줌)
+   const memberId = useSelector((state: RootState) => state.memberId);
+
    // list목록페이지 데이터 get요청
    const listDatas = async () => {
       if (cate === undefined) {
-         const data = await listData(``, curPage);
+         const data = await listData(curPage, `/${memberId}`, ``);
          setDatas(data.data);
          setPageInfo(data.pageInfo);
       } else {
-         const data = await listData(`&cate=${cate}`, curPage);
+         const data = await listData(curPage, `/${memberId}`, `&cate=${cate}`);
          setDatas(data.data);
          setPageInfo(data.pageInfo);
       }
@@ -38,12 +45,9 @@ function ListContents() {
       listDatas();
    }, [curPage, cate]);
 
-   // useEffect(() => {
-   //    listDatas();
-   // }, [curPage]);
-
    return (
       <DivContainer>
+         <ListSearch setDatas={setDatas} setPageInfo={setPageInfo} />
          <div>
             <ul>
                {datas.map((el: ListData) => (
