@@ -3,7 +3,7 @@ import { BiLeftArrow, BiRightArrow } from "react-icons/bi";
 import { useState } from "react";
 import CarouselBox from "./CarouselBox";
 import { prevHandler, nextHandler } from "./carouselHandler";
-import { ArgsArr } from "./homeTypes";
+import { CarouselHandlerArgsType } from "./homeTypes";
 
 function EditerPick() {
    const [pickNumber, setPickNumber] = useState(1);
@@ -11,7 +11,7 @@ function EditerPick() {
    const [carouselTransition, setCarouselTransition] = useState(
       "transform 0.5s ease-in-out"
    );
-   const argsArr: ArgsArr = [
+   const argsArr: CarouselHandlerArgsType = [
       pickNumber,
       setPickNumber,
       setCarouselTransition,

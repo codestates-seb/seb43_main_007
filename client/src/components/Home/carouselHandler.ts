@@ -1,7 +1,7 @@
-import { ArgsArr } from "./homeTypes";
+import { CarouselHandlerArgsType } from "./homeTypes";
 
 interface PageHandler {
-   (argsArr: ArgsArr): void;
+   (argsArr: CarouselHandlerArgsType): void;
 }
 
 export const prevHandler: PageHandler = (argsArr) => {
