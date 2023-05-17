@@ -71,6 +71,10 @@ export interface Content {
    content: string;
 }
 
+export interface Address {
+   address: string | null;
+}
+
 export interface Tags {
    tagId: number;
    tagName: string;

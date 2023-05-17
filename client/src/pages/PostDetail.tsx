@@ -9,6 +9,7 @@ import CreateComment from "../components/postdetail/CreateComment";
 import CommentList from "../components/postdetail/CommentList";
 import { getPostData } from "../api/axios";
 import { Post } from "../components/postdetail/postDetailTypes";
+import PostAddress from "../components/postdetail/PostAddress";
 
 function PostDetail() {
    const params = useParams();
@@ -38,6 +39,7 @@ function PostDetail() {
             nickName={post.nickName}
             userPhoto={post.userPhoto}
          />
+         <PostAddress address={post.address} />
          <PostContent content={post.content} />
          <PostTags tags={post.tags} />
          <PostButtons />
