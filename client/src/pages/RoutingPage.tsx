@@ -21,8 +21,8 @@ function RoutingPage() {
    }, [pathname]);
    return (
       <Container>
+         {condition ? <Navbar /> : null}
          <MainBox>
-            {condition ? <Navbar /> : null}
             <Routes>
                <Route path="/" element={<Home />} />
                <Route path="/myprofile" element={<MypageProfile />} />
@@ -52,5 +52,6 @@ const Container = styled.div`
 
 const MainBox = styled.div`
    display: flex;
+   margin-left: 300px;
    min-height: 100vh;
 `;
