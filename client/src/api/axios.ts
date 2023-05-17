@@ -289,3 +289,14 @@ export const deleteAccount = async (memberId: number) => {
       return null;
    }
 };
+
+// 게시글 상세 조회
+export const getPostData = async (boardId: number) => {
+   try {
+      const { data } = await request.get(`/boards/board/${boardId}`);
+      return data;
+   } catch (error) {
+      console.log(error);
+      return null;
+   }
+};
