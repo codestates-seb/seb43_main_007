@@ -2,15 +2,22 @@ import styled from "styled-components";
 import { RiSeedlingLine, RiSeedlingFill } from "react-icons/ri";
 import { BsPin, BsPinFill } from "react-icons/bs";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
-import userprofile from "../../assets/img/userprofile.png";
+import { PostTitleProps } from "./postDetailTypes";
 
-function PostTitle() {
+function PostTitle({
+   title,
+   now,
+   like,
+   bookmark,
+   nickName,
+   userPhoto,
+}: PostTitleProps) {
    return (
       <PostTitleContainer>
          <TopTitleContainer>
             <TitleBadgeContainer>
                {/* Editor's pick 컴포넌트 - 세영님 */}
-               <h1 className="post-title">그린그루브 경북대점을 추천합니다!</h1>
+               <h1 className="post-title">{title}</h1>
             </TitleBadgeContainer>
             <MarkContainer>
                <button type="submit" className="pick-btn">
@@ -24,7 +31,7 @@ function PostTitle() {
          <BottomTitleContainer>
             <AuthorDateContainer>
                <img
-                  src={userprofile}
+                  src={userPhoto}
                   className="author-img"
                   alt="author-img"
                   style={{
@@ -33,7 +40,9 @@ function PostTitle() {
                      borderRadius: "50%",
                   }}
                />
-               <span className="author-date">냥이 | 2023.05.03 20:15:35</span>
+               <span className="author-date">
+                  {nickName} | {now}
+               </span>
             </AuthorDateContainer>
             <span className="likes-comments">좋아요 153 | 댓글 3</span>
          </BottomTitleContainer>
