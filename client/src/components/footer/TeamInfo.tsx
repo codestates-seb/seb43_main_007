@@ -4,8 +4,6 @@ import githubIcon from "../../assets/img/github-icon.png";
 function TeamInfo() {
    return (
       <TeamInfoContainer>
-         <span className="text project-name">나만의 친환경</span>
-         <span className="text team-name">Team. 메인플스토리</span>
          <a
             className="icon-box"
             href="https://github.com/codestates-seb/seb43_main_007"
@@ -14,6 +12,8 @@ function TeamInfo() {
          >
             <img className="icon" src={githubIcon} alt="team-icon" />
          </a>
+         <span className="text project-name">나만의 친환경</span>
+         <span className="text team-name">Team. 메인플스토리</span>
       </TeamInfoContainer>
    );
 }
@@ -29,6 +29,7 @@ const TeamInfoContainer = styled.div`
       width: 100%;
       display: flex;
       justify-content: center;
+      margin-bottom: 5px;
       .icon {
          width: 30px;
          height: 30px;
