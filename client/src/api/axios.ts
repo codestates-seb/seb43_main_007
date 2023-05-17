@@ -3,9 +3,10 @@ import { toast } from "react-toastify";
 import { LoginTypes, FindPasswordType } from "../components/login/LoginType";
 import { SignupTypes } from "../components/signup/SignupTypes";
 import { request } from "./create";
+import { Likereq } from "../components/communityList/listTypes";
 
 // 목록페이지 데이터 get요청
-export const listData = async (cate?: string, curPage: number) => {
+export const listData = async (curPage: number, cate?: string) => {
    try {
       console.log(`boards/?page=${curPage}${cate}`);
       const { data } = await request.get(`boards?page=${curPage}${cate}`);
@@ -13,11 +14,12 @@ export const listData = async (cate?: string, curPage: number) => {
       return data;
    } catch (error) {
       console.log(error);
+      throw error;
    }
 };
 
 // 목록페이지 북마크-좋아요 patch요청
-export const likeBookMarkPatch = async (endPoint, req) => {
+export const likeBookMarkPatch = async (endPoint: string, req: Likereq) => {
    try {
       const data = await request.patch(`boards/${endPoint}`, req);
       console.log("요청 성공");

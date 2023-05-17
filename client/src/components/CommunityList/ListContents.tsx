@@ -24,11 +24,11 @@ function ListContents() {
    // list목록페이지 데이터 get요청
    const listDatas = async () => {
       if (cate === undefined) {
-         const data = await listData(``, curPage);
+         const data = await listData(curPage, ``);
          setDatas(data.data);
          setPageInfo(data.pageInfo);
       } else {
-         const data = await listData(`&cate=${cate}`, curPage);
+         const data = await listData(curPage, `&cate=${cate}`);
          setDatas(data.data);
          setPageInfo(data.pageInfo);
       }
