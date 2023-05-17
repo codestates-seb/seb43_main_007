@@ -3,11 +3,21 @@ import styled, { css } from "styled-components";
 import { BiUpArrowCircle, BiDownArrowCircle } from "react-icons/bi";
 import { Link } from "react-router-dom";
 import { useParams } from "react-router";
+import { useDispatch, useSelector } from "react-redux";
 import useDetectClose from "../../hooks/useDetectClose";
 import TitleValue from "./TitleValue";
 import { listSearchGet } from "../../api/axios";
+import { RootState } from "../../store/store";
+import { setMemberId } from "../../reducers/memberIdSlice";
+import { ListData, PageInfo } from "./listTypes";
 
-function ListSearch() {
+type SearchProps = {
+   setDatas: (a: ListData[]) => void;
+   setPageInfo: (a: PageInfo | undefined) => void;
+};
+
+// 프롭으로 상태변경 함수를 넘겨서 검색후 get데이터를 부모로 넘겨준다.
+function ListSearch({ setDatas, setPageInfo }: SearchProps) {
    const { cate } = useParams();
    // console.log(cate);
 
@@ -29,39 +39,73 @@ function ListSearch() {
    const searchHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
       setSerach(event.target.value);
    };
-   const searchSubmitHandler = () => {
-      console.log(serach);
 
+   const dispatch = useDispatch();
+   dispatch(setMemberId(1));
+   const memberId = useSelector((state: RootState) => state.memberId);
+
+   const searchSubmitHandler = async () => {
+      console.log(serach);
+      let data;
       if (cate === undefined) {
          if (title === "제목") {
             console.log("제목 실행?");
-            listSearchGet(``, `title=${serach}`, "");
+            data = await listSearchGet(
+               `/${memberId}`,
+               ``,
+               `title=${serach}`,
+               ""
+            );
          }
          if (title === "내용") {
             console.log("내용 실행?");
-            listSearchGet("", "", `content=${serach}`);
+            data = await listSearchGet(
+               `/${memberId}`,
+               "",
+               "",
+               `content=${serach}`
+            );
          }
          if (title === "제목+내용") {
             console.log("제목+내용 실행?");
-            listSearchGet("", `title=${serach}&`, `content=${serach}`);
+            data = await listSearchGet(
+               `/${memberId}`,
+               "",
+               `title=${serach}&`,
+               `content=${serach}`
+            );
          }
       } else {
          if (title === "제목") {
             console.log("제목 실행?");
-            listSearchGet(`cate=${cate}&`, `title=${serach}`, "");
+            data = await listSearchGet(
+               `/${memberId}`,
+               `cate=${cate}&`,
+               `title=${serach}`,
+               ""
+            );
          }
          if (title === "내용") {
             console.log("내용 실행?");
-            listSearchGet(`cate=${cate}&`, "", `content=${serach}`);
+            data = await listSearchGet(
+               `/${memberId}`,
+               `cate=${cate}&`,
+               "",
+               `content=${serach}`
+            );
          }
          if (title === "제목+내용") {
             console.log("제목+내용 실행?");
-            listSearchGet(
+            data = await listSearchGet(
+               `/${memberId}`,
                `cate=${cate}&`,
                `title=${serach}&`,
                `content=${serach}`
             );
          }
+         // 검색하면 새로운 데이터가 담길 수 있게함
+         setDatas(data.data);
+         setPageInfo(data.pageInfo);
       }
 
       setSerach("");
