@@ -1,7 +1,6 @@
 package com.main.server.auth.handler;
 
 import com.main.server.auth.utils.ErrorResponder;
-import com.main.server.response.ErrorResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.AuthenticationException;
@@ -15,10 +14,9 @@ import java.io.IOException;
 
 @Slf4j
 @Component
-//인증 과정에서 AuthenticationException 발생하면 ErrorResponse를 생성해서 클라이언트에게 전송
 public class MemberAuthenticationEntryPoint implements AuthenticationEntryPoint {
     @Override
-    public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws ServletException, IOException {
+    public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
         Exception exception = (Exception) request.getAttribute("exception");
         ErrorResponder.sendErrorResponse(response, HttpStatus.UNAUTHORIZED);
 
@@ -30,4 +28,3 @@ public class MemberAuthenticationEntryPoint implements AuthenticationEntryPoint 
         log.warn("Unauthorized error happened: {}", message);
     }
 }
-
