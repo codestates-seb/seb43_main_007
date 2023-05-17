@@ -47,7 +47,6 @@ function FindPassword() {
          });
       }
       setIsModalOpen(true);
-      console.log(response);
    };
 
    const questionList = [
