@@ -1,8 +1,12 @@
 package com.main.server.auth.config;
 
+
 import com.main.server.auth.filter.JwtAuthenticationFilter;
 import com.main.server.auth.filter.JwtVerificationFilter;
-import com.main.server.auth.handler.*;
+import com.main.server.auth.handler.MemberAccessDeniedHandler;
+import com.main.server.auth.handler.MemberAuthenticationEntryPoint;
+import com.main.server.auth.handler.MemberAuthenticationFailureHandler;
+import com.main.server.auth.handler.MemberAuthenticationSuccessHandler;
 import com.main.server.auth.jwt.JwtTokenizer;
 import com.main.server.auth.utils.CustomAuthorityUtils;
 import org.springframework.beans.factory.annotation.Value;
@@ -26,28 +30,13 @@ import java.util.Arrays;
 
 import static org.springframework.security.config.Customizer.withDefaults;
 
-// 이 클래스가 spring 구성 영역 구성을 담당하는 클래스임을 나타냄
 @Configuration
-// spring security를 사용하기위한 필수 구성을 활성화함.
-@EnableWebSecurity
-// 메소드 단위로 권한 검사를 하기 위해 사용됨. prepostenabled =true로 되면 메소드 단위로
-// preauthorize및 postauthorize 애노테이션을 사용하여 권한 검사를 할 수 있음.
-@EnableGlobalMethodSecurity(prePostEnabled = true)
-public class SecurityConfig { //OAuth2 로그인을 처리하기 위한 필수 구성을 포함함.
-
-
-    //     Google OAuth2 클라이언트 ID와 클라이언트 비밀번호
-    @Value("${spring.security.oauth2.client.registration.google.clientId}")
-    private String clientId;
-
-    @Value("${spring.security.oauth2.client.registration.google.clientSecret}")
-    private String clientSecret;
+public class SecurityConfiguration {
 
     private final JwtTokenizer jwtTokenizer;
     private final CustomAuthorityUtils authorityUtils;
 
-    public SecurityConfig(JwtTokenizer jwtTokenizer,
-                          CustomAuthorityUtils authorityUtils) {
+    public SecurityConfiguration(JwtTokenizer jwtTokenizer, CustomAuthorityUtils authorityUtils) {
         this.jwtTokenizer = jwtTokenizer;
         this.authorityUtils = authorityUtils;
     }
@@ -59,22 +48,31 @@ public class SecurityConfig { //OAuth2 로그인을 처리하기 위한 필수 �
                 .and()
                 .csrf().disable()
                 .cors(withDefaults())
+                .cors().configurationSource(corsConfigurationSource())
+                .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .formLogin().disable()
                 .httpBasic().disable()
-                .apply(new CustomFilterConfigurer())   // 커스터마이징된 Configuration을 추가
+                .exceptionHandling()
+                .authenticationEntryPoint(new MemberAuthenticationEntryPoint())
+                .accessDeniedHandler(new MemberAccessDeniedHandler())
+                .and()
+                .apply(new CustomFilterConfigurer())
                 .and()
                 .authorizeHttpRequests(authorize -> authorize
+                        //.antMatchers(HttpMethod.POST, "/boards/check/**").hasRole("ADMIN")
+                        //.antMatchers(HttpMethod.POST, "/boards/pin/**").hasRole("ADMIN")
+                        //.antMatchers(HttpMethod.GET, "/members/**").hasAnyRole("USER", "ADMIN")
+                        //바로 윗줄 생각. 멤버 겟 마이페이지 이런건 로그인 되어있어야하니 헤더에 Authorization 추가해야함.
+                        //admin 전용 뭐 추가할거잇스면 여기에 추가
                         .anyRequest().permitAll()
                 );
         return http.build();
     }
 
-
-
     @Bean
-    public PasswordEncoder passwordEncoder() {
+    public PasswordEncoder passwordEncoder() { //memberService에서 DI 받아 사용
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
 
@@ -82,32 +80,28 @@ public class SecurityConfig { //OAuth2 로그인을 처리하기 위한 필수 �
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(Arrays.asList("*"));
-        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PATCH", "DELETE", "PUT"));
+        // TODO:나중에 요청 받을 url 아래처럼 조정, 지금은 서버 띄운거랑, 로컬이랑 둘 다 작동해야 하므로 위와 같이 설정.
+        //configuration.addAllowedOrigin("http://localhost:8080");
+        configuration.setAllowedMethods(Arrays.asList("GET","POST", "PATCH", "DELETE", "PUT"));
+
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;
     }
 
-
-
-
-
-
-    // CustomFilterConfigurer는 우리가 구현한 필터들을 등록하는 역할
-    public class CustomFilterConfigurer extends AbstractHttpConfigurer<CustomFilterConfigurer, HttpSecurity> {
+    public class CustomFilterConfigurer extends AbstractHttpConfigurer<CustomFilterConfigurer, HttpSecurity> {  // (2-1)
         @Override
-        public void configure(HttpSecurity builder) throws Exception {
-            AuthenticationManager authenticationManager = builder.getSharedObject(AuthenticationManager.class);
+        public void configure(HttpSecurity builder) throws Exception {  // (2-2)
+            AuthenticationManager authenticationManager = builder.getSharedObject(AuthenticationManager.class);  // (2-3)
 
-            JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(authenticationManager, jwtTokenizer);
-            jwtAuthenticationFilter.setFilterProcessesUrl("members/login");
-            jwtAuthenticationFilter.setAuthenticationSuccessHandler(new UserAuthenticationSuccessHandler());//성공
-            jwtAuthenticationFilter.setAuthenticationFailureHandler(new UserAuthenticationFailureHandler());//실패
+            JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(authenticationManager, jwtTokenizer);  // (2-4)
+            jwtAuthenticationFilter.setFilterProcessesUrl("/members/login");          // (2-5)
+            jwtAuthenticationFilter.setAuthenticationSuccessHandler(new MemberAuthenticationSuccessHandler());
+            jwtAuthenticationFilter.setAuthenticationFailureHandler(new MemberAuthenticationFailureHandler());
 
             JwtVerificationFilter jwtVerificationFilter = new JwtVerificationFilter(jwtTokenizer, authorityUtils);
 
-            builder
-                    .addFilter(jwtAuthenticationFilter)  // JwtAuthenticationFilter를 Spring Security Filter Chain에 추가
+            builder.addFilter(jwtAuthenticationFilter)
                     .addFilterAfter(jwtVerificationFilter, JwtAuthenticationFilter.class);
         }
     }

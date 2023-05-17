@@ -1,11 +1,10 @@
-package com.main.server.auth.userservice;
+package com.main.server.auth.service;
 
 import com.main.server.auth.utils.CustomAuthorityUtils;
 import com.main.server.exception.BusinessLogicException;
 import com.main.server.exception.ExceptionCode;
 import com.main.server.member.entity.Member;
 import com.main.server.member.repository.MemberRepository;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -15,15 +14,12 @@ import org.springframework.stereotype.Component;
 import java.util.Collection;
 import java.util.Optional;
 
-//사용자의 크리덴셜을 조회한 후, 조회한 크리덴셜을 AuthenticationManager에게 전달하는 Custom UserDetailsService를 구현
-@Slf4j
 @Component
-public class UserDetailService implements UserDetailsService {
+public class MemberDetailService implements UserDetailsService {
     private final MemberRepository memberRepository;
     private final CustomAuthorityUtils authorityUtils;
 
-    public UserDetailService(MemberRepository memberRepository,
-                             CustomAuthorityUtils authorityUtils) {
+    public MemberDetailService(MemberRepository memberRepository, CustomAuthorityUtils authorityUtils) {
         this.memberRepository = memberRepository;
         this.authorityUtils = authorityUtils;
     }
@@ -33,28 +29,30 @@ public class UserDetailService implements UserDetailsService {
         Optional<Member> optionalMember = memberRepository.findByEmail(username);
         Member findMember = optionalMember.orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
 
-        return new HelloUserDetails(findMember);
-        //return new PrincipalDetails(findMember);
+        return new MemberDetails(findMember);  // (1) 개선된 부분
     }
 
-    private final class HelloUserDetails extends Member implements UserDetails {
-        HelloUserDetails(Member member) {
+    //MemberDetails 클래스 추가
+    //UserDetails 인터페이스를 구현하고 있고 또한 Member 엔티티 클래스를 상속.
+    //이렇게 구성하면 데이터베이스에서 조회한 회원 정보를 Spring Security의 User 정보로 변환하는 과정과
+    //User의 권한 정보를 생성하는 과정을 캡슐화
+    private final class MemberDetails extends Member implements UserDetails {
+        MemberDetails(Member member) {
             setMemberId(member.getMemberId());
             setNickname(member.getNickname());
             setEmail(member.getEmail());
             setPassword(member.getPassword());
-            setRoles(member.getRoles());
-            setAnswer(member.getAnswer());
-            setBoards(member.getBoards());
-            setComments(member.getComments());
             setProfileImageUrl(member.getProfileImageUrl());
+            setAnswer(member.getAnswer());
             setQuestion(member.getQuestion());
+            setComments(member.getComments());
+            setBoards(member.getBoards());
             setRRN(member.getRRN());
+            setRoles(member.getRoles());
         }
 
         @Override
         public Collection<? extends GrantedAuthority> getAuthorities() {
-            // DB에 저장된 Role 정보로 User 권한 목록 생성
             return authorityUtils.createAuthorities(this.getRoles());
         }
 
