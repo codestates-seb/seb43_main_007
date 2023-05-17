@@ -13,11 +13,11 @@ interface ContainerT {
 
 function CarouselBox({ pickNumber, carouselTransition }: Props) {
    const parseArr = [
-      editorPickDummyContents[0],
-      editorPickDummyContents[0],
+      editorPickDummyContents[4],
+      editorPickDummyContents[4],
       ...editorPickDummyContents,
-      editorPickDummyContents[4],
-      editorPickDummyContents[4],
+      editorPickDummyContents[0],
+      editorPickDummyContents[0],
    ];
    return (
       <CarouselBoxContainer
