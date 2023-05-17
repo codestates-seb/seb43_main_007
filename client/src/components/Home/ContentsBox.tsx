@@ -1,11 +1,16 @@
 import styled from "styled-components";
+import { EditorPickContentType } from "./editorPickDummyContents";
 
-interface Props {
-   content: number;
-}
-
-function ContentsBox({ content }: Props) {
-   return <ContentsBoxContainer>여기에 글 넣기{content}</ContentsBoxContainer>;
+function ContentsBox({ post }: { post: EditorPickContentType }) {
+   return (
+      <ContentsBoxContainer>
+         <h2>{post.title}</h2>
+         <div>
+            <span>{post.author}</span>
+         </div>
+         <p>{post.content}</p>
+      </ContentsBoxContainer>
+   );
 }
 
 export default ContentsBox;

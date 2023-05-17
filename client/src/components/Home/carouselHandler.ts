@@ -23,7 +23,7 @@ export const prevHandler: PageHandler = (argsArr) => {
    } else setPickNumber(curNumber - 1);
    setTimeout(() => {
       setDisabled(false);
-   }, 500);
+   }, 600);
 };
 export const nextHandler: PageHandler = (argsArr) => {
    const [pickNumber, setPickNumber, setCarouselTransition, setDisabled] =
@@ -44,5 +44,5 @@ export const nextHandler: PageHandler = (argsArr) => {
    } else setPickNumber(curNumber + 1);
    setTimeout(() => {
       setDisabled(false);
-   }, 500);
+   }, 600);
 };

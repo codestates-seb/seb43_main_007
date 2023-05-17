@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import ContentsBox from "./ContentsBox";
+import { editorPickDummyContents } from "./editorPickDummyContents";
 
 interface Props {
    pickNumber: number;
@@ -11,14 +12,20 @@ interface ContainerT {
 }
 
 function CarouselBox({ pickNumber, carouselTransition }: Props) {
-   const contentsArr = [-1, 0, 1, 2, 3, 4, 5, 6, 7];
+   const parseArr = [
+      editorPickDummyContents[0],
+      editorPickDummyContents[0],
+      ...editorPickDummyContents,
+      editorPickDummyContents[4],
+      editorPickDummyContents[4],
+   ];
    return (
       <CarouselBoxContainer
          pickNumber={pickNumber}
          carouselTransition={carouselTransition}
       >
-         {contentsArr.map((content) => {
-            return <ContentsBox key={content} content={content} />;
+         {parseArr.map((post) => {
+            return <ContentsBox key={post.title} post={post} />;
          })}
       </CarouselBoxContainer>
    );

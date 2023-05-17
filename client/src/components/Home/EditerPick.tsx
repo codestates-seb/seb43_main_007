@@ -19,16 +19,20 @@ function EditerPick() {
    ];
    return (
       <EditerPickContainer>
-         <button type="button" className="icon left" disabled={disabled}>
-            <BiLeftArrow onClick={() => prevHandler(argsArr)} />
-         </button>
+         {!disabled ? (
+            <button type="button" className="icon left">
+               <BiLeftArrow onClick={() => prevHandler(argsArr)} />
+            </button>
+         ) : null}
          <CarouselBox
             pickNumber={pickNumber}
             carouselTransition={carouselTransition}
          />
-         <button type="button" className="icon right" disabled={disabled}>
-            <BiRightArrow onClick={() => nextHandler(argsArr)} />
-         </button>
+         {!disabled ? (
+            <button type="button" className="icon right">
+               <BiRightArrow onClick={() => nextHandler(argsArr)} />
+            </button>
+         ) : null}
       </EditerPickContainer>
    );
 }
