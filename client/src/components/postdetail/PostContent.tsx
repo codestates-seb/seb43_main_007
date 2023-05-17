@@ -2,7 +2,9 @@ import styled from "styled-components";
 import { Content } from "./postDetailTypes";
 
 function PostContent({ content }: Content) {
-   return <PostContentContainer>{content}</PostContentContainer>;
+   return (
+      <PostContentContainer dangerouslySetInnerHTML={{ __html: content }} />
+   );
 }
 
 export default PostContent;
