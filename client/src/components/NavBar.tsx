@@ -34,11 +34,15 @@ const links = [
 
 const collections = [
    { emoji: "👍", label: "전체", path: "/communitylist" },
-   { emoji: "👍", label: "카페", path: "/home" },
-   { emoji: "👍", label: "리필 스테이션", path: "/home" },
-   { emoji: "👍", label: "식당", path: "/home" },
-   { emoji: "👍", label: "식료품", path: "/home" },
-   { emoji: "👍", label: "전기차", path: "/home" },
+   { emoji: "👍", label: "카페", path: "/communitylist/카페" },
+   {
+      emoji: "👍",
+      label: "리필 스테이션",
+      path: "/communitylist/리필스테이션",
+   },
+   { emoji: "👍", label: "식당", path: "/communitylist/식당" },
+   { emoji: "👍", label: "식료품", path: "/communitylist/식료품" },
+   { emoji: "👍", label: "전기차", path: "/communitylist/전기차" },
 ];
 
 function NavbarSearch() {

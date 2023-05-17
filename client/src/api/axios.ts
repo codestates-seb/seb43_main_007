@@ -1,12 +1,14 @@
 import axios, { AxiosError } from "axios";
+import { toast } from "react-toastify";
 import { LoginTypes, FindPasswordType } from "../components/login/LoginType";
 import { SignupTypes } from "../components/signup/SignupTypes";
 import { request } from "./create";
 
 // 목록페이지 데이터 get요청
-export const listData = async (curPage: number) => {
+export const listData = async (cate?: string, curPage: number) => {
    try {
-      const { data } = await request.get(`boards?page=${curPage}`);
+      console.log(`boards/?page=${curPage}${cate}`);
+      const { data } = await request.get(`boards?page=${curPage}${cate}`);
       console.log(data);
       return data;
    } catch (error) {
@@ -73,6 +75,7 @@ export const editorImgPost = async (img: any, quillRef) => {
 
 // 글생성 post요청
 export const createPost = async (
+   memberId: number,
    title: string,
    address: string,
    content: string,
@@ -81,6 +84,7 @@ export const createPost = async (
 ) => {
    try {
       const data = await request.post("/boards", {
+         memberId,
          title,
          address,
          content,
@@ -88,9 +92,11 @@ export const createPost = async (
       });
 
       if (data.status === 201 || data.status === 200) {
+         toast.success("글 생성!");
          navigate("/communitylist");
       }
    } catch (error) {
+      toast.error("서버 오류입니다. 잠시후 다시 시도해주세요.");
       console.log("글 작성 생성 오류");
       console.log(error);
    }
