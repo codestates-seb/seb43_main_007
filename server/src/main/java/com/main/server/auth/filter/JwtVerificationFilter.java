@@ -1,6 +1,5 @@
 package com.main.server.auth.filter;
 
-
 import com.main.server.auth.jwt.JwtTokenizer;
 import com.main.server.auth.utils.CustomAuthorityUtils;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -15,14 +14,15 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.security.SignatureException;
 import java.util.List;
 import java.util.Map;
 
-//request header에 포함된 JWT에 대해 검증 작업을 수행하는 JwtVerificationFilter의 코드
-public class JwtVerificationFilter extends OncePerRequestFilter {
+public class JwtVerificationFilter extends OncePerRequestFilter {  // (1)
     private final JwtTokenizer jwtTokenizer;
     private final CustomAuthorityUtils authorityUtils;
 
+    // (2)
     public JwtVerificationFilter(JwtTokenizer jwtTokenizer,
                                  CustomAuthorityUtils authorityUtils) {
         this.jwtTokenizer = jwtTokenizer;
@@ -30,7 +30,7 @@ public class JwtVerificationFilter extends OncePerRequestFilter {
     }
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException, ServletException, IOException {
         try {
             Map<String, Object> claims = verifyJws(request);
             setAuthenticationToContext(claims);
@@ -43,30 +43,26 @@ public class JwtVerificationFilter extends OncePerRequestFilter {
         filterChain.doFilter(request, response);
     }
 
-    
-    //이러이러한 조건이면 건너뛰어라
+    // (6)
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
-        String authorization = request.getHeader("Authorization");
+        String authorization = request.getHeader("Authorization");  // (6-1)
 
-        return authorization == null || !authorization.startsWith("Bearer");
+        return authorization == null || !authorization.startsWith("Bearer");  // (6-2)
     }
 
     private Map<String, Object> verifyJws(HttpServletRequest request) {
-        String jws = request.getHeader("Authorization").replace("Bearer ", "");
-        //request의 header에서 JWT를 얻고 있음.
-        String base64EncodedSecretKey = jwtTokenizer.encodeBase64SecretKey(jwtTokenizer.getSecretKey());
-        //  JWT 서명(Signature)을 검증하기 위한 Secret Key
-        Map<String, Object> claims = jwtTokenizer.getClaims(jws, base64EncodedSecretKey).getBody();
-        // JWT에서 Claims를 파싱
+        String jws = request.getHeader("Authorization").replace("Bearer ", ""); // (3-1)
+        String base64EncodedSecretKey = jwtTokenizer.encodeBase64SecretKey(jwtTokenizer.getSecretKey()); // (3-2)
+        Map<String, Object> claims = jwtTokenizer.getClaims(jws, base64EncodedSecretKey).getBody();   // (3-3)
 
         return claims;
     }
 
     private void setAuthenticationToContext(Map<String, Object> claims) {
-        String username = (String) claims.get("username");
-        List<GrantedAuthority> authorities = authorityUtils.createAuthorities((List)claims.get("roles"));
-        Authentication authentication = new UsernamePasswordAuthenticationToken(username, null, authorities);
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+        String username = (String) claims.get("username");   // (4-1)
+        List<GrantedAuthority> authorities = authorityUtils.createAuthorities((List)claims.get("roles"));  // (4-2)
+        Authentication authentication = new UsernamePasswordAuthenticationToken(username, null, authorities);  // (4-3)
+        SecurityContextHolder.getContext().setAuthentication(authentication); // (4-4)
     }
 }

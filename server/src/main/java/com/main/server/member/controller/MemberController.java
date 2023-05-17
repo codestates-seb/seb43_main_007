@@ -143,6 +143,7 @@ public class MemberController {
                         .map(board -> boardMapper.boardToBoardResponse(board))
                                 .collect(Collectors.toList());
         myPageDto.setBoards(boardResponse);
+
         List<CommentDto.Response> commentResponse = findMember.getComments().stream()
                         .map(comment -> commentMapper.CommentToCommentResponseDto(comment))
                                 .collect(Collectors.toList());

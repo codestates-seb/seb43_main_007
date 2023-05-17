@@ -1,9 +1,8 @@
 package com.main.server.member.service;
 
-import com.main.server.auth.handler.MemberRegistraionApplicationEvent;
+//import com.main.server.auth.handler.MemberRegistraionApplicationEvent;
 import com.main.server.auth.utils.CustomAuthorityUtils;
 import com.main.server.awsS3.StorageService;
-import com.main.server.board.service.BoardService;
 import com.main.server.exception.BusinessLogicException;
 import com.main.server.exception.ExceptionCode;
 import com.main.server.member.dto.MemberDto;
@@ -30,8 +29,8 @@ import java.util.Random;
 public class MemberService {
 
     private final MemberRepository memberRepository;
-    private final PasswordEncoder passwordEncoder;
     private final ApplicationEventPublisher publisher;
+    private final PasswordEncoder passwordEncoder;
     private final CustomAuthorityUtils authorityUtils;
     private final MemberMapper memberMapper;
     private final StorageService storageService;
@@ -43,8 +42,8 @@ public class MemberService {
                          StorageService storageService,
                          @Lazy MemberMapper memberMapper) {
         this.memberRepository = memberRepository;
-        this.passwordEncoder = passwordEncoder;
         this.publisher = publisher;
+        this.passwordEncoder = passwordEncoder;
         this.authorityUtils = authorityUtils;
         this.storageService = storageService;
         this.memberMapper = memberMapper;
@@ -72,7 +71,7 @@ public class MemberService {
 
         Member savedMember = memberRepository.save(member);
 
-        publisher.publishEvent(new MemberRegistraionApplicationEvent(this, savedMember));
+        //publisher.publishEvent(new MemberRegistraionApplicationEvent(this, savedMember));
         return savedMember;
     }
 
