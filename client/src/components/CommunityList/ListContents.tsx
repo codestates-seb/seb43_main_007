@@ -42,7 +42,6 @@ function ListContents() {
          const data = await listData(curPage, `/${memberId}`, ``, ``, ``);
          setDatas(data.data);
          setPageInfo(data.pageInfo);
-         console.log("이거 바로 실행하나?");
       } else {
          const data = await listData(
             curPage,
@@ -142,7 +141,7 @@ function ListContents() {
             title={title}
             searchSubmitHandler={searchSubmitHandler}
          />
-         <div>
+         <div className="postList-div">
             <ul>
                {datas.map((el: ListData) => (
                   <ListContent key={el.boardId} userDatas={el} />

@@ -4,6 +4,7 @@ import { RiSeedlingLine, RiSeedlingFill } from "react-icons/ri";
 import { BsPin, BsPinFill } from "react-icons/bs";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import { RootState } from "../../store/store";
 import type { ListData } from "./listTypes";
 import { likePatch, bookMarkPost } from "../../api/axios";
@@ -77,7 +78,9 @@ function ListContent({ userDatas }: { userDatas: ListData }) {
                   {isEditerPick ? (
                      <DivEditerPick className="editer">{`Editer's Pick`}</DivEditerPick>
                   ) : null}
-                  <div>{userDatas.title}</div>
+                  <Link to={`/post/${userDatas.boardId}`}>
+                     <span>{userDatas.title}</span>
+                  </Link>
                </div>
                {/* 프로필+이름 / 고정 */}
                <div className="div-author">
@@ -174,6 +177,15 @@ const DivContent = styled.div`
 
       div {
          font-size: var(--font-large);
+      }
+
+      a {
+         text-decoration: none;
+         color: black;
+         :hover {
+            color: var(--first-color4);
+            text-decoration: underline;
+         }
       }
    }
    .div-author {
