@@ -4,8 +4,11 @@ import com.main.server.board.entity.Board;
 import com.main.server.board.entity.BoardTag;
 import com.main.server.board.repository.BoardRepository;
 import com.main.server.board.repository.BoardTagRepository;
+import com.main.server.bookmark.entity.Bookmark;
+import com.main.server.bookmark.repository.BookmarkRepository;
 import com.main.server.exception.BusinessLogicException;
 import com.main.server.member.entity.Member;
+import com.main.server.member.repository.MemberRepository;
 import com.main.server.member.service.MemberService;
 import com.main.server.tag.entity.Tag;
 import com.main.server.tag.repository.TagRepository;
@@ -34,20 +37,34 @@ public class BoardService {
 
     private final TagRepository tagRepository;
 
-
+    private final MemberRepository memberRepository;
+    private final BookmarkRepository bookmarkRepository;
     public Board getBoard(long boardId) {
 
 
         return findVerifiedBoard(boardId);
     }
+    public int checkBookmark(long memberId, long boardId){
+        Optional<Member> member = memberRepository.findById(memberId);
+        if(member.isPresent()){
+            Optional<Bookmark> bookmark = bookmarkRepository.findByMemberAndBoardId(member.get(), boardId);
+            if(bookmark.isPresent()){
+                return 1;
+            }else{
+                return 0;
+            }
+        }
+        return 0;
+    }
 
-    public Page<Board> getAllBoard(Pageable pageable, String cate, String title, String content) {
+    public Page<Board> getAllBoard(Pageable pageable, String cate, String title, String content, long memberId) {
 
         Page<Board> boards = boardRepository.findAll(pageable);
         if(!cate.equals("") && (!title.equals("") && !content.equals(""))) { // 타이틀+컨텐츠 검색
             Page<Board> filteredBoards = boards.stream()
                     .filter(board -> board.getCategory().equals(cate))
                     .filter(board -> board.getTitle().contains(title) || board.getContent().contains(content))
+                    .peek(board -> board.setBookmark(checkBookmark(memberId, board.getBoardId())))
                     .collect(Collectors.collectingAndThen(Collectors.toList(),
                             list -> new PageImpl<>(list, pageable, boards.getTotalElements())));
             return filteredBoards;
@@ -56,12 +73,14 @@ public class BoardService {
                     .filter(board -> board.getCategory().equals(cate))
                     .filter(board -> board.getTitle().contains(title))
                     .filter(board -> board.getContent().contains(content))
+                    .peek(board -> board.setBookmark(checkBookmark(memberId, board.getBoardId())))
                     .collect(Collectors.collectingAndThen(Collectors.toList(),
                             list -> new PageImpl<>(list, pageable, boards.getTotalElements())));
             return filteredBoards;
         }else{ // Nav바 타이틀+컨텐츠 검색
             Page<Board> filteredBoards = boards.stream()
                     .filter(board -> board.getTitle().contains(title) || board.getContent().contains(content))
+                    .peek(board -> board.setBookmark(checkBookmark(memberId, board.getBoardId())))
                     .collect(Collectors.collectingAndThen(Collectors.toList(),
                             list -> new PageImpl<>(list, pageable, boards.getTotalElements())));
             return filteredBoards;

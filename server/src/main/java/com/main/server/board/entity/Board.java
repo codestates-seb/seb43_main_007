@@ -42,6 +42,8 @@ public class Board {
     private Member member;
 
 
+    @Column()
+    private int bookmark;
 //    private Long like;
 
     @OneToMany(mappedBy = "board", cascade = CascadeType.REMOVE)

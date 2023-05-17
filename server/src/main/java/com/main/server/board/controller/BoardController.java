@@ -41,56 +41,56 @@ public class BoardController {
     private final AmazonS3 s3Client;
 
     @PostMapping()
-    public ResponseEntity postBoard(@RequestBody @Valid BoardDto.Post boardPostDto){
+    public ResponseEntity postBoard(@RequestBody @Valid BoardDto.Post boardPostDto) {
         Board board = boardService.createBoard(boardMapper.boardDtoToBoard(boardPostDto));
         URI location = UriCreator.createUri("/boards", board.getBoardId());
         return ResponseEntity.created(location).build();
     }
 
     @PostMapping("/photo")
-    public String postPhoto(@RequestParam(value = "file") MultipartFile file){
+    public String postPhoto(@RequestParam(value = "file") MultipartFile file) {
 
         return service.uploadFile(file);
     }
 
 
-    @GetMapping("/{boardId}")
-    public ResponseEntity getBoard(@PathVariable("boardId") @Positive long boardId){
+    @GetMapping("/board/{boardId}")
+    public ResponseEntity getBoard(@PathVariable("boardId") @Positive long boardId) {
         Board response = boardService.getBoard(boardId);
 
         return new ResponseEntity<>(boardMapper.boardToBoardResponse(response), HttpStatus.OK);
     }
 
-    @GetMapping()
-    public ResponseEntity getAllBoard( @RequestParam(name = "cate", required = false) String cate,
-                                       @RequestParam(name = "title", required = false) String title,
-                                       @RequestParam(name = "content", required = false) String content
-            ,@RequestParam(name = "page", defaultValue = "0") int page
-            ,@PageableDefault(sort = "boardId", direction = Sort.Direction.DESC) Pageable pageable){
-        if(page>0) page--;
+    @GetMapping("/{memberId}")
+    public ResponseEntity getAllBoard( @PathVariable("memberId") @Positive long memberId,
+            @RequestParam(name = "cate", required = false) String cate,
+            @RequestParam(name = "title", required = false) String title,
+            @RequestParam(name = "content", required = false) String content
+            , @RequestParam(name = "page", defaultValue = "0") int page
+            , @PageableDefault(sort = "boardId", direction = Sort.Direction.DESC) Pageable pageable) {
+        if (page > 0) page--;
         pageable = pageable.withPage(page);
-        if(cate==null) cate = "";
-        if(title==null) title = "";
-        if(content==null) content = "";
+        if (cate == null) cate = "";
+        if (title == null) title = "";
+        if (content == null) content = "";
 
-        Page<Board> boards= boardService.getAllBoard(pageable, cate, title, content);
+        Page<Board> boards = boardService.getAllBoard(pageable, cate, title, content, memberId);
 
 
         List<Board> boardList = boards.getContent();
         List<BoardDto.Response> responses = boardList.stream().map(boardMapper::boardToBoardResponse).collect(Collectors.toList());
 
-        return new ResponseEntity<>( new MultiResponseDto<>(responses, boards),  HttpStatus.OK);
+        return new ResponseEntity<>(new MultiResponseDto<>(responses, boards), HttpStatus.OK);
     }
 
     @PutMapping("/{boardId}")
     public ResponseEntity putBoard(@PathVariable("boardId") long boardId,
-                                   @RequestBody @Valid BoardDto.Put boardPutDto){
+                                   @RequestBody @Valid BoardDto.Put boardPutDto) {
         boardPutDto.setBoardId(boardId);
         Board board = boardMapper.boardPutDtoToBoard(boardPutDto);
         Board response = boardService.putBoard(board);
         return new ResponseEntity<>(boardMapper.boardToBoardResponse(response), HttpStatus.OK);
     }
-
 
 
     @DeleteMapping("/{boardId}")

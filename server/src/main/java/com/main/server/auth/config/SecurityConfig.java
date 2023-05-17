@@ -58,17 +58,11 @@ public class SecurityConfig { //OAuth2 로그인을 처리하기 위한 필수 �
                 .headers().frameOptions().sameOrigin()
                 .and()
                 .csrf().disable()
-                //.cors(withDefaults())
-                .cors().configurationSource(corsConfigurationSource())
-                .and()
+                .cors(withDefaults())
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .formLogin().disable()
                 .httpBasic().disable()
-                .exceptionHandling()
-                .authenticationEntryPoint(new MemberAuthenticationEntryPoint())
-                .accessDeniedHandler(new MemberAccessDeniedHandler())
-                .and()
                 .apply(new CustomFilterConfigurer())   // 커스터마이징된 Configuration을 추가
                 .and()
                 .authorizeHttpRequests(authorize -> authorize

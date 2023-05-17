@@ -67,7 +67,7 @@ public interface BoardMapper{
             String nickName = "InGeon";
             String userPhoto = "https://upload.wikimedia.org/wikipedia/ko/thumb/8/81/Spongebob_4795.jpg/345px-Spongebob_4795.jpg";
             int like = 0;
-            int bookmark = 1;
+            int bookmark = response.getBookmark();
             List<BoardTag> list = response.getBoardTag();
             List<BoardTagDto.Response> responsesTag = new ArrayList<>();
             for(BoardTag x : list){

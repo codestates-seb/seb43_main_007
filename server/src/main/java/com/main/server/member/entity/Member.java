@@ -2,6 +2,7 @@ package com.main.server.member.entity;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.main.server.board.entity.Board;
+import com.main.server.bookmark.entity.Bookmark;
 import com.main.server.comment.entity.Comment;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -55,6 +56,10 @@ public class Member {
     @JsonManagedReference
     @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
     private List<Board> boards = new ArrayList<>();
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
+    private List<Bookmark> bookmarks = new ArrayList<>();
 
     @JsonManagedReference
     @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
