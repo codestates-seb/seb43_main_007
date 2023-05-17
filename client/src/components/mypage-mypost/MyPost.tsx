@@ -1,9 +1,13 @@
 import styled from "styled-components";
 
-function MyPost() {
+type MypostProps = {
+   title: string;
+};
+
+function MyPost({ title }: MypostProps) {
    return (
       <DivContainer>
-         <div>내가 쓴 글</div>
+         <div className="title-div">{title}</div>
       </DivContainer>
    );
 }
@@ -14,4 +18,9 @@ const DivContainer = styled.div`
    border: 1px solid red;
    width: 350px;
    height: 500px;
+   text-align: center;
+
+   .title-div {
+      font-size: 25px;
+   }
 `;

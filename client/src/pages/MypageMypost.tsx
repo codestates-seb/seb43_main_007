@@ -2,7 +2,6 @@ import styled from "styled-components";
 import MypageNavbar from "../components/mypage-profile/MypageNavbar";
 import MypageTopProfile from "../components/mypage-profile/MypageTopProfile";
 import MyPost from "../components/mypage-mypost/Mypost";
-import MyComments from "../components/mypage-mypost/MyComments";
 
 function MypageMypost() {
    return (
@@ -10,8 +9,8 @@ function MypageMypost() {
          <MypageTopProfile />
          <MypageNavbar />
          <DivContents>
-            <MyPost />
-            <MyComments />
+            <MyPost title="내가 쓴 글" />
+            <MyPost title="내가 쓴 댓글" />
          </DivContents>
       </MypageMypostContainer>
    );
