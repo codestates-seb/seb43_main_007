@@ -21,29 +21,7 @@ public class Like {
     @Column(name = "board_id")
     private Long boardId;
 
-    // 추가 필드 및 메소드 생략//
-//@Entity
-//@Table(name = "heart")
-//@Getter
-//@Setter
-//@Builder
-//@AllArgsConstructor
-//@NoArgsConstructor
-//public class Heart {
-//
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.AUTO)
-//    private Long id;
-//
-//    @Column(name = "campaign_id")
-//    @NonNull
-//    private String campaignId;
-//
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "user_id")
-//    @JsonIgnore
-//    private User user;
-//}
+
 
     }
 

@@ -23,22 +23,14 @@ public class LikeController { //이렇게 하려면 얘가 생성해야되는건
     @PostMapping
     public long like(@RequestBody @Valid LikeDto likeDto) {
 
-        long a = likeService.like(likeDto);
+        long a = likeService.like(likeDto); //라이크카운트리턴
         return a;
     }
 
 
-    //    @DeleteMapping
+    @DeleteMapping
     public long unlike(@RequestBody @Valid LikeDto likeDto) {
 
-        long a = likeService.unlike(likeDto);
-        return a;
-//    public ResponseEntity<LikeDto> unLike(@RequestBody @Valid LikeDto likeDto){
-//
-//        likeService.unLike(likeDto);
-//
-//        return new ResponseEntity<>(likeDto, HttpStatus.OK);
-//    }
-    }
-}
-
+        long b = likeService.unlike(likeDto); // 라이크카운트리턴
+        return b;
+    }   }
