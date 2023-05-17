@@ -7,7 +7,11 @@ import validFunc from "../../util/signinValidFunc";
 import { setPhoto, resetPhoto } from "../../reducers/profilePhotoSlice";
 import { SignupTypes } from "../signup/SignupTypes";
 import { setNickname } from "../../reducers/profileNicknameSlice";
-import { updateNickname, updateUserProfilePhoto } from "../../api/axios";
+import {
+   resetUserProfilePhoto,
+   updateNickname,
+   updateUserProfilePhoto,
+} from "../../api/axios";
 import {
    nicknameChangeRetry,
    nicknameChangeSuccess,
@@ -91,8 +95,15 @@ function EditProfile() {
    };
 
    const handleDelete = () => {
-      dispatch(resetPhoto());
-      setFileName("");
+      resetUserProfilePhoto(memberId)
+         .then(() => {
+            dispatch(resetPhoto());
+            setFileName("");
+         })
+         .catch((error) => {
+            console.error("프로필 사진 초기화에 실패하였습니다.", error);
+            photoChangeError();
+         });
    };
 
    return (
