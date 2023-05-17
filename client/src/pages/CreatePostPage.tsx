@@ -1,8 +1,6 @@
 import styled from "styled-components";
 import { useState } from "react";
 import { useNavigate } from "react-router";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { useSelector, useDispatch } from "react-redux";
 import { createPost } from "../api/axios";
 import GuideLine from "../components/createPost/GuideLine";
@@ -10,6 +8,7 @@ import QuillTextEditor from "../components/createPost/QuillTextEditor";
 import TitleTagCommuForm from "../components/createPost/TitleTagCommuForm";
 import { RootState } from "../store/store";
 import { setMemberId } from "../reducers/memberIdSlice";
+import { postError } from "../util/toastify";
 
 // 남아 있는 숙제(후순위)
 // 1. 본문 유효성 글자수 기준이 애매하다(html 형식이라 html태그또한 글자로 인식)
@@ -39,10 +38,6 @@ function CreatePost() {
    dispatch(setMemberId(1));
    const memberId = useSelector((state: RootState) => state.memberId);
 
-   // notify alert스타일하는 라이브러리
-   // const notifySuccess = () => toast.success("글 생성!");
-   const notifyError = () => toast.error("형식에 맞춰 작성해주세요.");
-
    // 내용에서 html 태그 제외하고 글자만 빼오기(에디터 내용 유효성 검사)
    const previewBody = value.replace(/(<([^>]+)>)/gi, "").trim();
 
@@ -66,9 +61,9 @@ function CreatePost() {
 
       if (isValid) {
          // notifySuccess();
-         createPost(memberId, title, address, value, tagList, navigate);
+         createPost(memberId, item, title, address, value, tagList, navigate);
       } else {
-         notifyError();
+         postError();
       }
    };
 

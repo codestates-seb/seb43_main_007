@@ -4,7 +4,7 @@ import { useNavigate } from "react-router";
 import { AccountDeleteModalProps } from "./profileTypes";
 import { RootState } from "../../store/store";
 import { deleteAccount } from "../../api/axios";
-import { serverError } from "./profileToastify";
+import { serverError } from "../../util/toastify";
 
 function AccountDeleteModal({ open, close }: AccountDeleteModalProps) {
    const navigate = useNavigate();

@@ -18,7 +18,7 @@ import {
    photoChangeError,
    photoChangeSuccess,
    serverError,
-} from "./profileToastify";
+} from "../../util/toastify";
 
 function EditProfile() {
    // useForm setup

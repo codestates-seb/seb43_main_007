@@ -22,6 +22,10 @@ const passwordChangeSuccess = () =>
 const passwordChangeRetry = () =>
    toast.error("현재 비밀번호가 올바르지 않습니다. 다시 입력해주세요.");
 
+const postSuccess = () => toast.success("글 생성!");
+
+const postError = () => toast.error("형식에 맞춰 작성해주세요.");
+
 export {
    nicknameChangeSuccess,
    nicknameChangeRetry,
@@ -30,4 +34,6 @@ export {
    photoChangeError,
    passwordChangeSuccess,
    passwordChangeRetry,
+   postSuccess,
+   postError,
 };
