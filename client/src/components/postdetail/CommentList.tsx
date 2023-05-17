@@ -1,15 +1,19 @@
 import styled from "styled-components";
 import { useState } from "react";
 import Comment from "./Comment";
-import dummyComments from "./dummyComments";
+import dummyComments from "./dummyCommentData";
+import groupCommentsAndReplies from "../../util/groupCommentsAndReplies";
 
 function CommentList() {
-   const [comments, setComments] = useState(dummyComments);
+   const [comments, setComments] = useState(
+      groupCommentsAndReplies(dummyComments)
+   );
    const [selectedCommentId, setSelectedCommentId] = useState<number | null>(
       null
    );
 
    const handleReplySubmit = (commentId: number, content: string) => {
+      console.log("handleReplySubmit called with:", { commentId, content });
       console.log("Reply content:", content);
    };
 
@@ -27,11 +31,12 @@ function CommentList() {
                   <Comment
                      key={comment.commentId}
                      comment={comment}
-                     handleReplySubmit={(content) =>
-                        handleReplySubmit(comment.commentId, content)
+                     handleReplySubmit={() =>
+                        handleReplySubmit(comment.commentId, comment.content)
                      }
                      handleReplyClick={handleReplyClick}
                      isReplySelected={isReplySelected}
+                     selectedCommentId={selectedCommentId}
                   />
                );
             })}
