@@ -2,12 +2,18 @@ import styled from "styled-components";
 
 type MypostProps = {
    title: string;
+   data: (string | number)[][];
 };
 
-function MyPost({ title }: MypostProps) {
+function MyPost({ title, data }: MypostProps) {
    return (
       <DivContainer>
          <div className="title-div">{title}</div>
+         <ul>
+            {data.map((el) => (
+               <li key={el[1]}>{el[0]}</li>
+            ))}
+         </ul>
       </DivContainer>
    );
 }

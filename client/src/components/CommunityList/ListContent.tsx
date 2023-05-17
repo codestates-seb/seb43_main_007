@@ -29,7 +29,7 @@ function ListContent({ userDatas }: { userDatas: ListData }) {
 
    // --- 리덕스 store에서 가져온 멤버 id값
    const memberId = useSelector((state: RootState) => state.memberId);
-   // console.log(memberId);
+
    // 좋아요 클릭 이벤트
    const likeClickHandler = () => {
       const req = {
