@@ -208,7 +208,7 @@ export const InputButtonContainer = styled.div`
       height: 32px;
       margin-right: 15px;
       font-size: 13px;
-      border: 1px solid #dfdfdf;
+      border: 1px solid var(--light-gray);
    }
 
    input:focus {
