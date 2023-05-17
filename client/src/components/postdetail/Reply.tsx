@@ -29,7 +29,7 @@ export default Reply;
 export const ReplyContainer = styled.li`
    width: 100%;
    padding: 10px 0 10px 15px;
-   border-bottom: 1px solid #dfdfdf;
+   border-bottom: 1px solid var(--light-gray);
 `;
 
 export const ReplyBox = styled.div`

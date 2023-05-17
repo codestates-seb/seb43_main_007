@@ -1,52 +1,26 @@
-import {
-   createStyles,
-   Navbar,
-   TextInput,
-   // Code,
-   UnstyledButton,
-   Badge,
-   Text,
-   Group,
-   ActionIcon,
-   Tooltip,
-   rem,
-} from "@mantine/core";
-import {
-   IconBulb,
-   // IconUser,
-   // IconCheckbox,
-   IconSearch,
-   IconPlus,
-   // IconSelector,
-} from "@tabler/icons-react";
 import styled from "styled-components";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { BiSearch, BiHomeAlt2 } from "react-icons/bi";
 import userprofile from "../assets/img/userprofile.png";
 import { RootState } from "../store/store";
-
-const links = [
-   { icon: IconBulb, label: "Home" },
-   //    { icon: IconCheckbox, label: "Tasks", notifications: 4 },
-   //    { icon: IconUser, label: "Contacts" },
-];
+import { DefaultButton } from "./mypage-profile/EditProfile";
 
 const collections = [
-   { emoji: "👍", label: "전체", path: "/communitylist" },
-   { emoji: "👍", label: "카페", path: "/communitylist/카페" },
+   { emoji: "🌳", label: "전체", path: "/communitylist" },
+   { emoji: "☕️", label: "카페", path: "/communitylist/카페" },
    {
-      emoji: "👍",
+      emoji: "⛽️",
       label: "리필 스테이션",
       path: "/communitylist/리필스테이션",
    },
-   { emoji: "👍", label: "식당", path: "/communitylist/식당" },
-   { emoji: "👍", label: "식료품", path: "/communitylist/식료품" },
-   { emoji: "👍", label: "전기차", path: "/communitylist/전기차" },
+   { emoji: "🍴", label: "식당", path: "/communitylist/식당" },
+   { emoji: "🍎", label: "식료품", path: "/communitylist/식료품" },
+   { emoji: "🚙 ", label: "전기차", path: "/communitylist/전기차" },
 ];
 
-function NavbarSearch() {
-   const { classes } = useStyles();
+function Navbar() {
    const [search, setSearch] = useState("");
 
    const profilePhoto = useSelector(
@@ -55,35 +29,6 @@ function NavbarSearch() {
    const profileNickname = useSelector(
       (state: RootState) => state.profileNickname.nickname
    );
-
-   const mainLinks = links.map((link) => (
-      <Link to="/" key={link.label} style={{ textDecoration: "none" }}>
-         <UnstyledButton className={classes.mainLink}>
-            <div className={classes.mainLinkInner}>
-               <link.icon
-                  size={20}
-                  className={classes.mainLinkIcon}
-                  stroke={1.5}
-               />
-               <span>{link.label}</span>
-            </div>
-         </UnstyledButton>
-      </Link>
-   ));
-
-   const collectionLinks = collections.map((collection) => (
-      <Link
-         to={collection.path}
-         key={collection.label}
-         className={classes.collectionLink}
-         style={{ textDecoration: "none" }}
-      >
-         <span style={{ marginRight: rem(9), fontSize: rem(16) }}>
-            {collection.emoji}
-         </span>{" "}
-         {collection.label}
-      </Link>
-   ));
 
    // 검색창 값 상태 저장하는 함수
    const searchInputHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -97,228 +42,162 @@ function NavbarSearch() {
       console.log(search);
    };
 
-   return (
-      <Navbar
-         // 네비게이션 높이 넓이 조절
-         height={800}
-         width={{ sm: 300 }}
-         p="md"
-         className={classes.navbar}
-      >
-         <Navbar.Section className={classes.section}>
-            <Link
-               to="/myprofile"
-               style={{ textDecoration: "none", color: "black" }}
-            >
-               <ProfileDiv>
-                  <img
-                     src={profilePhoto || userprofile}
-                     alt="프로필이미지"
-                     style={{
-                        width: "50px",
-                        height: "50px",
-                        borderRadius: "50%",
-                        marginRight: "10px",
-                     }}
-                  />
-                  <div>{profileNickname || "냥이"}</div>
-               </ProfileDiv>
-            </Link>
-         </Navbar.Section>
+   const collectionLinks = collections.map((collection) => (
+      <StyledLink to={collection.path} key={collection.label}>
+         <span className="collection-emoji">{collection.emoji}</span>
+         {collection.label}
+      </StyledLink>
+   ));
 
-         <SearchForm>
-            <label htmlFor="search-bar">
-               <TextInput
-                  id="search-bar"
+   return (
+      <NavbarContainer>
+         <NavProfileContainer to="/myprofile">
+            <img
+               src={profilePhoto || userprofile}
+               alt="프로필이미지"
+               className="nav-profile-img"
+            />
+            <div className="nav-profile-nickname">
+               {profileNickname || "냥이"}
+            </div>
+         </NavProfileContainer>
+         <Line />
+         <NavSearchContainer>
+            <div className="nav-searchbar">
+               <BiSearch className="search-icon" />
+               <input
                   type="text"
+                  className="nav-searchbar-input"
                   placeholder="Search"
-                  size="xs"
-                  icon={<IconSearch size="0.8rem" stroke={1.5} />}
-                  mb="sm"
                   onChange={searchInputHandler}
                />
-            </label>
-            <button
-               type="submit"
-               className={classes.searchCode}
-               onClick={searchClickHandler}
-            >
+            </div>
+            <SearchButton type="submit" onClick={searchClickHandler}>
                검색
-            </button>
-         </SearchForm>
-
-         <Navbar.Section className={classes.section}>
-            <div className={classes.mainLinks}>{mainLinks}</div>
-         </Navbar.Section>
-
-         <Navbar.Section className={classes.section}>
-            <Group className={classes.collectionsHeader} position="apart">
-               <Text size="xs" weight={500} color="dimmed">
-                  Community
-               </Text>
-               <Tooltip label="Create collection" withArrow position="right">
-                  <ActionIcon variant="default" size={18}>
-                     <IconPlus size="0.8rem" stroke={1.5} />
-                  </ActionIcon>
-               </Tooltip>
-            </Group>
-            <div className={classes.collections}>{collectionLinks}</div>
-         </Navbar.Section>
-      </Navbar>
+            </SearchButton>
+         </NavSearchContainer>
+         <StyledLink to="/">
+            <BiHomeAlt2 className="home-icon" />
+            <span>Home</span>
+         </StyledLink>
+         <Line />
+         <CommunityContainer>
+            <span className="community">Community</span>
+            <div>{collectionLinks}</div>
+         </CommunityContainer>
+      </NavbarContainer>
    );
 }
 
-// 스타일드 컴포넌트
-const ProfileDiv = styled.div`
-   display: flex;
-   justify-content: baseline;
+export default Navbar;
 
-   > div {
+export const NavbarContainer = styled.div`
+   position: fixed;
+   height: 100%;
+   z-index: 1;
+   padding: 16px;
+   width: 300px;
+   border-right: 1px solid #e9ecef;
+`;
+
+export const NavProfileContainer = styled(Link)`
+   display: flex;
+   align-items: center;
+   text-decoration: none;
+   color: black;
+
+   .nav-profile-img {
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      margin-right: 10px;
+   }
+`;
+
+export const Line = styled.div`
+   border-bottom: 1px solid #e9ecef;
+   margin: 10px -15px;
+`;
+
+export const NavSearchContainer = styled.div`
+   width: 100%;
+   display: flex;
+   justify-content: space-between;
+   margin-bottom: 10px;
+
+   .nav-searchbar {
+      border: 1px solid var(--light-gray);
+      height: 30px;
+      width: 80%;
+      padding: 5px;
+      display: flex;
+      justify-content: center;
+      z-index: 1;
       display: flex;
       align-items: center;
+      justify-content: flex-start;
+
+      .search-icon {
+         color: #868e96;
+         margin-right: 5px;
+      }
+   }
+
+   .nav-searchbar-input {
+      height: 100%;
+      width: 90%;
+      z-index: -1;
+      border: none;
+      font-size: 12px;
+
+      &::placeholder {
+         color: #868e96;
+      }
+
+      &:focus {
+         outline: none;
+      }
    }
 `;
 
-const SearchForm = styled.form`
-   position: relative;
+export const SearchButton = styled(DefaultButton)`
+   height: 30px;
+   width: 20%;
+   font-size: 12px;
+`;
 
-   button {
-      position: absolute;
-      top: 0;
-      margin-top: 2px;
-      right: 2px;
-      border-radius: 4px;
+export const StyledLink = styled(Link)`
+   text-decoration: none;
+   color: black;
+   font-size: 13px;
+   display: flex;
+   align-items: center;
+   height: 30px;
+   margin: 5px 0;
 
-      cursor: pointer;
+   &:hover {
+      background-color: #f8f9fa;
+      font-weight: 600;
+   }
+
+   .home-icon {
+      height: 15px;
+      width: 15px;
+      margin-right: 10px;
+   }
+
+   .collection-emoji {
+      margin-right: 10px;
    }
 `;
 
-// mantine CSS
-const useStyles = createStyles((theme) => ({
-   navbar: {
-      position: "sticky",
-      top: 0,
-      left: 0,
-      paddingTop: 0,
-      zIndex: 10,
-   },
+export const CommunityContainer = styled.div`
+   display: flex;
+   flex-direction: column;
 
-   section: {
-      marginLeft: `calc(${theme.spacing.md} * -1)`,
-      marginRight: `calc(${theme.spacing.md} * -1)`,
-      marginBottom: theme.spacing.md,
-
-      "&:not(:last-of-type)": {
-         borderBottom: `${rem(1)} solid ${
-            theme.colorScheme === "dark"
-               ? theme.colors.dark[4]
-               : theme.colors.gray[3]
-         }`,
-      },
-   },
-
-   searchCode: {
-      width: 50,
-      height: 25,
-      fontWeight: 700,
-      fontSize: rem(10),
-      backgroundColor:
-         theme.colorScheme === "dark"
-            ? theme.colors.dark[7]
-            : theme.colors.gray[0],
-      border: `${rem(1)} solid ${
-         theme.colorScheme === "dark"
-            ? theme.colors.dark[7]
-            : theme.colors.gray[2]
-      }`,
-
-      // 버튼 호버
-      "&:hover": {
-         backgroundColor: "#faf1e6",
-      },
-   },
-
-   mainLinks: {
-      paddingLeft: `calc(${theme.spacing.md} - ${theme.spacing.xs})`,
-      paddingRight: `calc(${theme.spacing.md} - ${theme.spacing.xs})`,
-      paddingBottom: theme.spacing.md,
-   },
-
-   mainLink: {
-      display: "flex",
-      alignItems: "center",
-      width: "100%",
-      fontSize: theme.fontSizes.xs,
-      padding: `${rem(8)} ${theme.spacing.xs}`,
-      borderRadius: theme.radius.sm,
-      fontWeight: 500,
-      color:
-         theme.colorScheme === "dark"
-            ? theme.colors.dark[0]
-            : theme.colors.gray[7],
-
-      "&:hover": {
-         backgroundColor:
-            theme.colorScheme === "dark"
-               ? theme.colors.dark[6]
-               : theme.colors.gray[0],
-         color: theme.colorScheme === "dark" ? theme.white : theme.black,
-      },
-   },
-
-   mainLinkInner: {
-      display: "flex",
-      alignItems: "center",
-      flex: 1,
-   },
-
-   mainLinkIcon: {
-      marginRight: theme.spacing.sm,
-      color:
-         theme.colorScheme === "dark"
-            ? theme.colors.dark[2]
-            : theme.colors.gray[6],
-   },
-
-   mainLinkBadge: {
-      padding: 0,
-      width: rem(20),
-      height: rem(20),
-      pointerEvents: "none",
-   },
-
-   collections: {
-      paddingLeft: `calc(${theme.spacing.md} - ${rem(6)})`,
-      paddingRight: `calc(${theme.spacing.md} - ${rem(6)})`,
-      paddingBottom: theme.spacing.md,
-   },
-
-   collectionsHeader: {
-      paddingLeft: `calc(${theme.spacing.md} + ${rem(2)})`,
-      paddingRight: theme.spacing.md,
-      marginBottom: rem(5),
-   },
-
-   collectionLink: {
-      display: "block",
-      padding: `${rem(8)} ${theme.spacing.xs}`,
-      textDecoration: "none",
-      borderRadius: theme.radius.sm,
-      fontSize: theme.fontSizes.xs,
-      color:
-         theme.colorScheme === "dark"
-            ? theme.colors.dark[0]
-            : theme.colors.gray[7],
-      lineHeight: 1,
-      fontWeight: 500,
-
-      "&:hover": {
-         backgroundColor:
-            theme.colorScheme === "dark"
-               ? theme.colors.dark[6]
-               : theme.colors.gray[0],
-         color: theme.colorScheme === "dark" ? theme.white : theme.black,
-      },
-   },
-}));
-export default NavbarSearch;
+   .community {
+      font-size: 13px;
+      color: #868e96;
+      margin-bottom: 10px;
+   }
+`;

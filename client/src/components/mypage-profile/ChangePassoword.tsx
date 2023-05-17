@@ -16,7 +16,7 @@ import {
    passwordChangeRetry,
    passwordChangeSuccess,
    serverError,
-} from "./profileToastify";
+} from "../../util/toastify";
 
 function ChangePassoword() {
    // useForm setup

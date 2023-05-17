@@ -43,3 +43,49 @@ export interface CommentCharacterCountReturn {
 export interface ReplyProps {
    comment: CommentType;
 }
+
+export interface Tag {
+   tagId: number;
+   tagName: string;
+}
+
+export interface Post {
+   boardId: number;
+   title: string;
+   content: string;
+   address: string | null;
+   now: string;
+   photo: string;
+   like: number;
+   bookmark: number;
+   nickName: string;
+   userPhoto: string;
+   tags: Tag[];
+}
+
+export interface MatchParams {
+   boardId: string;
+}
+
+export type PostDetailProps = RouteComponentProps<MatchParams>;
+
+export interface PostTitleProps {
+   title: string;
+   now: string;
+   like: number;
+   bookmark: number;
+   nickName: string;
+   userPhoto: string;
+}
+
+export interface Content {
+   content: string;
+}
+
+export interface Tags {
+   tagId: number;
+   tagName: string;
+}
+export interface PostTagProps {
+   tags: Tag[];
+}
