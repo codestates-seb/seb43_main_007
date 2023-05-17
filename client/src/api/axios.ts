@@ -300,3 +300,14 @@ export const getPostData = async (boardId: number) => {
       return null;
    }
 };
+
+// 게시글 삭제
+export const deletePost = async (boardId: number) => {
+   try {
+      const { data } = await request.delete(`/boards/board/${boardId}`);
+      return data;
+   } catch (error) {
+      console.log(error);
+      return null;
+   }
+};

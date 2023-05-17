@@ -1,6 +1,7 @@
 export interface PostDeleteModalProps {
    open: boolean;
    close: () => void;
+   handleDeletePost: () => void;
 }
 
 export interface CommentType {
@@ -81,4 +82,8 @@ export interface Tags {
 }
 export interface PostTagProps {
    tags: Tag[];
+}
+
+interface PostButtonsProps {
+   handleDeletePost: () => Promise<void>;
 }

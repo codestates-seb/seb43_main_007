@@ -6,14 +6,20 @@ import {
    CancelButton,
 } from "../mypage-profile/AccountDeleteModal";
 
-function PostDeleteModal({ open, close }: PostDeleteModalProps) {
+function PostDeleteModal({
+   open,
+   close,
+   handleDeletePost,
+}: PostDeleteModalProps) {
    return (
       <ModalContainer className={open ? "openModal" : "closeModal"}>
          <ModalContentBox>
             <h1>게시글 삭제</h1>
             <p>정말로 게시글을 삭제하시겠습니까?</p>
             <div className="button-container">
-               <DeleteButton>게시글 삭제</DeleteButton>
+               <DeleteButton onClick={handleDeletePost}>
+                  게시글 삭제
+               </DeleteButton>
                <CancelButton onClick={close}>취소</CancelButton>
             </div>
             {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
