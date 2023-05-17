@@ -119,7 +119,7 @@ export const loginPost = async (req: LoginTypes) => {
 // 회원가입 요청
 export const signupPost = async (req: SignupTypes): Promise<string> => {
    try {
-      await request.post("api/members", req);
+      await request.post("members", req);
       return "success";
    } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -146,12 +146,12 @@ export const getUserProfile = async () => {
 export const findId = async (rrn: string) => {
    try {
       const { data } = await request.get(`members/id?RRNConfirm=${rrn}`);
-      console.log("성공");
-      console.log(data);
       return data;
    } catch (error) {
-      console.log("실패");
-      return error;
+      if (axios.isAxiosError(error)) {
+         return error.response?.data.status;
+      }
+      return 0;
    }
 };
 
@@ -159,14 +159,13 @@ export const findId = async (rrn: string) => {
 export const findPassword = async (params: FindPasswordType) => {
    const paramsUrl = new URLSearchParams(params).toString();
    try {
-      console.log(paramsUrl);
       const { data } = await request.get(`members/password?${paramsUrl}`);
-      console.log("성공");
-      console.log(data);
       return data;
    } catch (error) {
-      console.log("실패");
-      return error;
+      if (axios.isAxiosError(error)) {
+         return error.response?.data.status;
+      }
+      return 0;
    }
 };
 
