@@ -26,32 +26,27 @@ function FindId() {
    }, []);
 
    const onSubmit: SubmitHandler<SocialNum> = async (data) => {
-      // 아이디 찾기 요청 함수자리
-      // 아이디 찾기 성공시 modal 창으로 아이디 띄워주기
-      try {
-         const response = await findId(data.RRNConfirm);
+      const response = await findId(data.RRNConfirm);
+      if (typeof response === "object") {
+         // 성공 메시지
          setMessage({
             text1: "회원님의 아이디는",
-            text2: `${response.email} 입니다.`,
+            text2: `${response.data} 입니다.`,
          });
-         setIsModalOpen(true);
-      } catch (error) {
-         // if(아이디찾기실패) {
-         // setMessage({
-         //    text1: "등록된 아이디가",
-         //    text2: "존재하지 않습니다.",
-         // });
-         // setIsModalOpen(true);
-         // }
-         // else {
-         // 서버와 통신이 원활하지 않을 때
-         // setMessage({
-         //    text1: "서버와 통신이 원활하지 않습니다.",
-         //    text2: "다시 시도해 주세요.",
-         // });
-         // setIsModalOpen(true);
-         // }
+      } else if (response === 400) {
+         // 아이디 찾기 실패
+         setMessage({
+            text1: "등록된 아이디가",
+            text2: "존재하지 않습니다.",
+         });
+      } else {
+         // 다른 오류
+         setMessage({
+            text1: "서버와 통신이 원활하지 않습니다.",
+            text2: "다시 시도해 주세요.",
+         });
       }
+      setIsModalOpen(true);
    };
 
    return (
