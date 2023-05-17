@@ -42,7 +42,7 @@ export default EditerPick;
 const EditerPickContainer = styled.div`
    display: flex;
    position: relative;
-   width: 900px;
+   width: 800px;
    height: 900px;
    background-color: beige;
    margin-top: 20px;
@@ -57,12 +57,12 @@ const EditerPickContainer = styled.div`
       cursor: pointer;
    }
    .left {
-      left: 0;
+      left: -5%;
       top: 50%;
       transform: translateY(-50%);
    }
    .right {
-      right: 0;
+      right: -5%;
       top: 50%;
       transform: translateY(-50%);
    }

@@ -13,10 +13,10 @@ interface ContainerT {
 
 function CarouselBox({ pickNumber, carouselTransition }: Props) {
    const parseArr = [
-      editorPickDummyContents[4],
-      editorPickDummyContents[4],
-      ...editorPickDummyContents,
       editorPickDummyContents[0],
+      editorPickDummyContents[5],
+      ...editorPickDummyContents.slice(1),
+      editorPickDummyContents[1],
       editorPickDummyContents[0],
    ];
    return (
@@ -24,8 +24,9 @@ function CarouselBox({ pickNumber, carouselTransition }: Props) {
          pickNumber={pickNumber}
          carouselTransition={carouselTransition}
       >
-         {parseArr.map((post) => {
-            return <ContentsBox key={post.title} post={post} />;
+         {parseArr.map((post, idx) => {
+            const key = idx;
+            return <ContentsBox key={key} post={post} id={key} />;
          })}
       </CarouselBoxContainer>
    );
@@ -38,7 +39,7 @@ const CarouselBoxContainer = styled.div<ContainerT>`
    align-items: center;
    transform: translateX(
       ${({ pickNumber }) => {
-         return `${-630 - pickNumber * 720}px`;
+         return `${-680 - pickNumber * 720}px`;
       }}
    ); //720px씩 넘기기
    transition: ${({ carouselTransition }) => carouselTransition};
