@@ -51,7 +51,7 @@ const EditerPickContainer = styled.div`
       display: flex;
       width: 800px;
       height: 900px;
-      background-color: beige;
+      background-color: transparent;
       margin-top: 20px;
       overflow: hidden;
    }

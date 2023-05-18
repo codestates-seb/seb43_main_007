@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import HomeHeader from "../components/home/HomeHeader";
 import EditerPick from "../components/home/EditerPick";
-import background from "../assets/img/leaf.png";
+import background from "../assets/img/home-background.jpg";
 
 function Home() {
    return (
@@ -19,7 +19,8 @@ const HomeContainer = styled.div`
    align-items: center;
    width: 1080px;
    background-image: url(${background});
-   background-size: 1080px;
+   background-size: 1080px 400px;
+   /* background-position: 0% 30%; */
    background-repeat: no-repeat;
    // 배경 투명도 조절
    &::before {
@@ -30,6 +31,6 @@ const HomeContainer = styled.div`
       left: 0px;
       right: 0px;
       bottom: 0px;
-      background-color: #fff;
+      /* background-color: #fff; */
    }
 `;
