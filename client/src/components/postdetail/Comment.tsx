@@ -52,6 +52,18 @@ function Comment({
             </CommentContent>
             <DateAndReplyButton>
                <span className="comment-createdAt">{comment.createdAt}</span>
+               <CommentButtonContainer>
+                  <button type="submit" className="comment-btn">
+                     수정
+                  </button>
+                  <span>|</span>
+                  <button
+                     type="submit"
+                     className="comment-btn comment-delete-btn"
+                  >
+                     삭제
+                  </button>
+               </CommentButtonContainer>
                <ReplyButton
                   onClick={() =>
                      handleReplyClick(
@@ -126,6 +138,23 @@ export const DateAndReplyButton = styled.div`
    font-size: 12px;
    width: 120px;
    margin-top: 3px;
+`;
+
+export const CommentButtonContainer = styled.div`
+   display: flex;
+   align-items: center;
+   margin-top: 5px;
+
+   .comment-btn {
+      border: none;
+      background-color: transparent;
+      font-size: 12px;
+      cursor: pointer;
+   }
+
+   .comment-delete-btn {
+      padding-right: 0;
+   }
 `;
 
 export const ReplyButton = styled.button`

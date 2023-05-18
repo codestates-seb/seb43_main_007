@@ -1,12 +1,10 @@
 import styled from "styled-components";
 
-export interface Tags {
-   tagId: number;
-   tagName: string;
-}
-
 export interface PostTagProps {
-   tags: Tags[];
+   tags: Array<{
+      tagId: number;
+      tagName: string;
+   }>;
 }
 
 function PostTags({ tags }: PostTagProps) {
