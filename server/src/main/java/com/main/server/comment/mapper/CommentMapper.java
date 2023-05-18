@@ -1,5 +1,6 @@
 package com.main.server.comment.mapper;
 
+import com.main.server.board.entity.Board;
 import com.main.server.comment.dto.CommentDto;
 import com.main.server.comment.entity.Comment;
 import com.main.server.member.entity.Member;
@@ -19,8 +20,10 @@ public interface CommentMapper {
     default Comment commentPostDtoToComment2(CommentDto.Post commentDto) {
         Comment comment = new Comment();
         Member member = new Member();
+
         member.setMemberId(commentDto.getMemberId());
 
+        comment.setBoardId(commentDto.getBoardId());
         comment.setContent(commentDto.getContent());
         comment.setMember(member);
 
@@ -32,6 +35,14 @@ public interface CommentMapper {
     CommentDto.Response CommentToCommentPutDto(Comment comment);
 
     CommentDto.Response CommentToCommentResponseDto(Comment comment);
+
+    default CommentDto.MyPageResponse commentToCommentMyPageDto(Comment comment) {
+        CommentDto.MyPageResponse myPageResponse = new CommentDto.MyPageResponse();
+        myPageResponse.setBoardId(comment.getBoardId());
+        myPageResponse.setContent(comment.getContent());
+
+        return myPageResponse;
+    }
 
 
 }
