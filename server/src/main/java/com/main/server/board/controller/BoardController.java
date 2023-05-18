@@ -73,7 +73,8 @@ public class BoardController {
             , @RequestParam(name = "page", defaultValue = "0") int page
             , @PageableDefault Pageable pageable) {
         if (page > 0) page--;
-        pageable  = PageRequest.of(page, 10, Sort.by("pin").descending());
+        Sort sort = Sort.by("pin").descending().and(Sort.by("boardId").descending());
+        pageable = PageRequest.of(page, 10, sort);
         // pin을 기준으로 우선순위 내림차순
         if (cate == null) cate = "";
         if (title == null) title = "";
