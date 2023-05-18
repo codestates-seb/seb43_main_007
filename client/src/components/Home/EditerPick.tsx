@@ -24,10 +24,12 @@ function EditerPick() {
                <BiLeftArrow onClick={() => prevHandler(argsArr)} />
             </button>
          ) : null}
-         <CarouselBox
-            pickNumber={pickNumber}
-            carouselTransition={carouselTransition}
-         />
+         <div className="carousel">
+            <CarouselBox
+               pickNumber={pickNumber}
+               carouselTransition={carouselTransition}
+            />
+         </div>
          {!disabled ? (
             <button type="button" className="icon right">
                <BiRightArrow onClick={() => nextHandler(argsArr)} />
@@ -41,12 +43,18 @@ export default EditerPick;
 
 const EditerPickContainer = styled.div`
    display: flex;
+   justify-content: center;
+   align-items: center;
    position: relative;
-   width: 800px;
-   height: 900px;
-   background-color: beige;
-   margin-top: 20px;
-   overflow: hidden;
+   width: 100%;
+   .carousel {
+      display: flex;
+      width: 800px;
+      height: 900px;
+      background-color: beige;
+      margin-top: 20px;
+      overflow: hidden;
+   }
    .icon {
       background-color: transparent;
       border: none;
@@ -57,12 +65,12 @@ const EditerPickContainer = styled.div`
       cursor: pointer;
    }
    .left {
-      left: -5%;
+      left: 5%;
       top: 50%;
       transform: translateY(-50%);
    }
    .right {
-      right: -5%;
+      right: 5%;
       top: 50%;
       transform: translateY(-50%);
    }
