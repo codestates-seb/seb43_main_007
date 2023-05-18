@@ -1,13 +1,21 @@
+import { useEffect, useState } from "react";
 import styled from "styled-components";
+import { dustGet } from "../../api/axios";
 
 function Weather() {
+   const [dust, setDust] = useState("");
+   useEffect(() => {
+      dustGet().then((res) =>
+         setDust(res.data.response.body.items[0].informGrade.slice(5, 7))
+      );
+   }, []);
    return (
       <WeatherContainer>
          <div className="icon">아이콘</div>
          <div className="contents">
             <span className="region">서울</span>
             <span className="dust">
-               미세먼지 : <span className="dust-condition">보통</span>
+               미세먼지 : <span className="dust-condition">{dust}</span>
             </span>
          </div>
       </WeatherContainer>
