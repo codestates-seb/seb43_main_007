@@ -4,9 +4,18 @@ import { BsPin, BsPinFill } from "react-icons/bs";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import { useSelector } from "react-redux";
 import { useState } from "react";
-import { PostTitleProps } from "./postDetailTypes";
 import { RootState } from "../../store/store";
 import { likePatch, bookMarkPost } from "../../api/axios";
+
+export interface PostTitleProps {
+   boardId: number;
+   title: string;
+   now: string;
+   like: number;
+   bookmark: number;
+   nickName: string;
+   userPhoto: string;
+}
 
 function PostTitle({
    boardId,

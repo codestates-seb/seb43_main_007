@@ -1,7 +1,27 @@
 import styled from "styled-components";
-import { CommentProps } from "./postDetailTypes";
 import CreateReply from "./CreateReply";
 import Reply from "./Reply";
+
+export interface CommentType {
+   boardId: number;
+   commentId: number;
+   nickname: string;
+   picture: string;
+   content: string;
+   createdAt: string;
+   parent?: {
+      commentId: number;
+   };
+   replies?: CommentType[];
+}
+
+export interface CommentProps {
+   comment: CommentType;
+   handleReplySubmit: (commentId: number, content: string) => void;
+   handleReplyClick: (commentId: number | null) => void;
+   isReplySelected: boolean;
+   selectedCommentId: number | null;
+}
 
 function Comment({
    comment,
@@ -21,7 +41,7 @@ function Comment({
                <AuthorInfo>
                   <img
                      src={comment.picture}
-                     alt="comment-author-img"
+                     alt="comment-author-profile"
                      className="comment-author-img"
                   />
                   <span className="comment-author">{comment.nickname}</span>

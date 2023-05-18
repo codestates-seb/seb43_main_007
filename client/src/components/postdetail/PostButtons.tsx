@@ -2,7 +2,11 @@ import styled from "styled-components";
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import PostDeleteModal from "./PostDeleteModal";
-import { PostButtonsProps } from "./postDetailTypes";
+
+export interface PostButtonsProps {
+   handleDeletePost: () => Promise<void>;
+   boardId: number;
+}
 
 function PostButtons({ handleDeletePost, boardId }: PostButtonsProps) {
    const [modalOpen, setModalOpen] = useState(false);

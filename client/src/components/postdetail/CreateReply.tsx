@@ -1,9 +1,13 @@
-import { CreateReplyProps } from "./postDetailTypes";
 import useCommentCharacterCount from "../../hooks/useCommentCharacterCount";
 import { CreateCommentContainer, CommentInputBox } from "./CreateComment";
 import { DefaultButton } from "../mypage-profile/EditProfile";
 
-function CreateReply({ onSubmit }: CreateReplyProps) {
+export interface CreateReplyProps {
+   onSubmit: (content: string) => void;
+   onCancel: () => void;
+}
+
+function CreateReply({ onSubmit, onCancel }: CreateReplyProps) {
    const maxLength = 300;
    const { value, characterCount, handleChange, clearValue } =
       useCommentCharacterCount({

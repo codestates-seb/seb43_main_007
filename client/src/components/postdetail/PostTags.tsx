@@ -1,5 +1,13 @@
 import styled from "styled-components";
-import { PostTagProps } from "./postDetailTypes";
+
+export interface Tags {
+   tagId: number;
+   tagName: string;
+}
+
+export interface PostTagProps {
+   tags: Tags[];
+}
 
 function PostTags({ tags }: PostTagProps) {
    return (
