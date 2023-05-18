@@ -43,7 +43,6 @@ export const likePatch = async (req: Likereq) => {
 // 목록페이지 북마크 post요청
 export const bookMarkPost = async (req: Likereq) => {
    try {
-      console.log(req);
       const data = await request.post("/bookmark", req);
       console.log(data);
    } catch (error) {
