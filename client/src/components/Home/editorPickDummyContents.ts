@@ -1,59 +1,85 @@
-export interface EditorPickContentType {
-   title: string;
-   content: string;
-   author: string;
-   createdAt: string;
-   address: string;
-   id: number;
-}
+import { Post } from "../postdetail/postDetailTypes";
 
-export const editorPickDummyContents: EditorPickContentType[] = [
+const editorPickDummyContents: Post[] = [
    {
+      boardId: 0,
       title: "",
       content: "",
-      author: "",
-      createdAt: "",
       address: "",
-      id: 0,
+      now: "",
+      photo: "",
+      like: 0,
+      bookmark: 0,
+      nickName: "",
+      userPhoto: "",
+      tags: [],
    },
    {
+      boardId: 1,
       title: "롯데타워",
-      content: "롯데타워에는 친환경 안하나?",
-      author: "롯데팬",
-      createdAt: "2023-05-16T01:02:17Z",
+      content:
+         "<p>친환경 카페 추천합니다. 채택글 테스트</p><p>친환경 카페 추천합니다. 채택글 테스트</p><p>친환경 카페 추천합니다. 채택글 테스트<img src='https://lh3.googleusercontent.com/p/AF1QipNHIHoAvXaC28eQSRIejAGeHzLz0auyenKogroB=s1360-w1360-h1020'></p><p>잘들어오나 안들어오나</p><p>123층 높이의 대규모 초고층 건물에 고급 호텔과 멋진 전망을 볼 수 있는 전망대가 있습니다.</p><p>주소: 서울특별시 송파구 올림픽로 300</p><p>롯데월드타워를 설계용역을 하면서 환경기술은 왜 빠졌을까 궁굼합니다.</p><p>환경기술은 말씀하신 쓰레기재활용을 포함해서 훨씬 더 포괄적인 환경에 대한 개념을 담고 있습니다. 예를 들자면 쓰레기에서 발생되는 폐열을 이용한</p>",
       address: "서울시 송파구 올림픽로 300",
-      id: 1,
+      now: "2023-05-16T01:02:17Z",
+      photo: "",
+      like: 0,
+      bookmark: 0,
+      nickName: "롯데팬",
+      userPhoto: "",
+      tags: [],
    },
    {
+      photo: "",
+      like: 0,
+      bookmark: 0,
+      userPhoto: "",
+      tags: [],
       title: "보틀라운지",
       content: "친환경 카페 공유합니다.",
-      author: "지나가던사람",
-      createdAt: "2023-05-16T01:02:17Z",
+      nickName: "지나가던사람",
+      now: "2023-05-16T01:02:17Z",
       address: "서울시 서대문구 홍연길 26",
-      id: 2,
+      boardId: 2,
    },
    {
       title: "창원의집",
       content: "창원 놀러오세요~",
-      author: "창원토박이",
-      createdAt: "2023-05-16T01:02:17Z",
+      nickName: "창원토박이",
+      now: "2023-05-16T01:02:17Z",
       address: "경상남도 창원시 의창구 사림로16번길 59",
-      id: 3,
+      boardId: 3,
+      photo: "",
+      like: 0,
+      bookmark: 0,
+      userPhoto: "",
+      tags: [],
    },
    {
       title: "사직 야구장",
       content: "가즈아~~~~~~~~~~",
-      author: "야구맨",
-      createdAt: "2023-05-16T01:02:17Z",
+      nickName: "야구맨",
+      now: "2023-05-16T01:02:17Z",
       address: "부산광역시 동래구 사직로 45",
-      id: 4,
+      boardId: 4,
+      photo: "",
+      like: 0,
+      bookmark: 0,
+      userPhoto: "",
+      tags: [],
    },
    {
       title: "경복궁",
       content: "그냥 경복궁",
-      author: "경복궁",
-      createdAt: "2023-05-16T01:02:17Z",
+      nickName: "경복궁",
+      now: "2023-05-16T01:02:17Z",
       address: "서울특별시 종로구 사직로 161",
-      id: 5,
+      boardId: 5,
+      photo: "",
+      like: 0,
+      bookmark: 0,
+      userPhoto: "",
+      tags: [],
    },
 ];
+
+export default editorPickDummyContents;
