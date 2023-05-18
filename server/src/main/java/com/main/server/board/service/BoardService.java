@@ -1,5 +1,7 @@
 package com.main.server.board.service;
 
+import com.main.server.Like.entity.Like;
+import com.main.server.Like.repository.LikeRepository;
 import com.main.server.board.entity.Board;
 import com.main.server.board.entity.BoardTag;
 import com.main.server.board.repository.BoardRepository;
@@ -10,6 +12,7 @@ import com.main.server.tag.repository.TagRepository;
 import com.main.server.tag.service.TagService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,6 +29,7 @@ public class BoardService {
 
     private final BoardRepository boardRepository;
     private final BoardTagRepository boardTagRepository;
+    private final LikeRepository likeRepository;
 
     private final TagService tagService;
 
@@ -40,7 +44,8 @@ public class BoardService {
 
     public Page<Board> getAllBoard(Pageable pageable) {
         Page<Board> boards = boardRepository.findAll(pageable);
-        return boards;
+        List<Board> updatedBoards = boards.getContent().stream().map(board -> c(board)).collect(Collectors.toList());
+        return new PageImpl<>(updatedBoards, pageable, boards.getTotalElements());
     }
 
     public Board putBoard(Board board) {
@@ -64,7 +69,7 @@ public class BoardService {
         }
 
         putInformationForTag(board);
-
+        board.setLikeCount(0L);
         return boardRepository.save(board);
     }
 
@@ -103,5 +108,19 @@ public class BoardService {
                 .collect(Collectors.toList());
 
         board.setBoardTag(boardTagList);
+    }
+    public Board c(Board board) {
+        long memberId = 1;
+        long boardId = board.getBoardId();
+
+        Optional<Like> like = likeRepository.findLikeByMemberIdAndBoardId(memberId, boardId);
+        if (like.isPresent()) {
+            board.setLikeCheck(1);
+        }else{
+        board.setLikeCheck(0);
+    }
+
+        return board;
+
     }
 }

@@ -36,24 +36,25 @@ Comment { //엔티티의 역할? 테이블 설계
     @JoinColumn(name = "memberId")
     private Member member;
 
-        @Column
-        private Timestamp createdAt = new Timestamp(new Date().getTime());
+    @Column
+    private Timestamp createdAt = new Timestamp(new Date().getTime());
 
-       @Column(name = "board_id")
-        private Long boardId;
-       //커밋아 되어라
+    @Column(name = "board_id")
+   // @OneToMany(mappedBy = "board", cascade = CascadeType.REMOVE)
+   // private List<Comment> comments = new ArrayList<>();
+    private Long boardId;
+
 
         // @Column(name = "parent_comment_id")
         //  private Integer parentCommentId;  // 부모 댓글 ID
 
-        public Comment(long commentId, String content, Member member, long boardId, long parentCommentId) {
-                this.commentId = commentId;
-                this.content = content;
-                this.member = member;
-                this.createdAt = createdAt;
-                this.boardId = boardId;
-             //   this.parentCommentId = parentCommentId;
-        }
+    public Comment(Long commentId, String content, Member member, Long boardId) {
+        this.commentId = commentId;
+        this.content = content;
+        this.member = member;
+        this.boardId = boardId;
+        //   this.parentCommentId = parentCommentId;
+    }
 
 }
 

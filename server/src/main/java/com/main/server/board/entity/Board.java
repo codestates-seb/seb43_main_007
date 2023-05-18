@@ -33,6 +33,10 @@ public class Board {
     @Column(nullable = false)
     private LocalDateTime now = LocalDateTime.now();
 
+    @Column()
+    private int likeCheck;
+    @Column()
+    private Long likeCount;
 
 //    private Long like;
 

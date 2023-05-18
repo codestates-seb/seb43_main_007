@@ -66,20 +66,36 @@ public class BoardController {
         System.out.println(boardId);
     }
 
-    @GetMapping()
-    public ResponseEntity getAllBoard(@RequestParam(name = "page", defaultValue = "0") int page
-            ,@PageableDefault(sort = "boardId", direction = Sort.Direction.DESC) Pageable pageable){
-        if(page>0) page--;
-        pageable = pageable.withPage(page);
+//    @GetMapping()
+//    public ResponseEntity getAllBoard(@RequestParam(name = "page", defaultValue = "0") int page
+//            ,@PageableDefault(sort = "boardId", direction = Sort.Direction.DESC) Pageable pageable){
+//        if(page>0) page--;
+//        pageable = pageable.withPage(page);
+//
+//        Page<Board> boards= boardService.getAllBoard(pageable);
+//
+//
+//        List<Board> boardList = boards.getContent();
+//        List<BoardDto.Response> responses = boardList.stream().map(boardMapper::boardToBoardResponse)
+//                .map(::c)
+//                .collect(Collectors.toList());
+//
+//        return new ResponseEntity<>( new MultiResponseDto<>(responses, boards),  HttpStatus.OK);
+//    }
+   @GetMapping()
+public ResponseEntity getAllBoard(@RequestParam(name = "page", defaultValue = "0") int page
+        , @PageableDefault(sort = "boardId", direction = Sort.Direction.DESC) Pageable pageable) {
+    if (page > 0) page--;
+    pageable = pageable.withPage(page);
 
-        Page<Board> boards= boardService.getAllBoard(pageable);
+    Page<Board> boards = boardService.getAllBoard(pageable);
 
 
-        List<Board> boardList = boards.getContent();
-        List<BoardDto.Response> responses = boardList.stream().map(boardMapper::boardToBoardResponse).collect(Collectors.toList());
+    List<Board> boardList = boards.getContent();
+    List<BoardDto.Response> responses = boardList.stream().map(boardMapper::boardToBoardResponse).collect(Collectors.toList());
 
-        return new ResponseEntity<>( new MultiResponseDto<>(responses, boards),  HttpStatus.OK);
-    }
+    return new ResponseEntity<>(new MultiResponseDto<>(responses, boards), HttpStatus.OK);
+}
 
     @PutMapping("/{boardId}")
     public ResponseEntity putBoard(@PathVariable("boardId") long boardId,
@@ -97,5 +113,6 @@ public class BoardController {
         boardService.deleteBoard(boardId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
 
 }
