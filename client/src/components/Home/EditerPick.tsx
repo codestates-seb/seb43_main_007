@@ -24,11 +24,14 @@ function EditerPick() {
                <BiLeftArrow onClick={() => prevHandler(argsArr)} />
             </button>
          ) : null}
-         <div className="carousel">
-            <CarouselBox
-               pickNumber={pickNumber}
-               carouselTransition={carouselTransition}
-            />
+         <div className="carousel-container">
+            <div className="carousel">
+               <CarouselBox
+                  pickNumber={pickNumber}
+                  carouselTransition={carouselTransition}
+               />
+            </div>
+            <div className="text-box">Editor&apos;s Pick!</div>
          </div>
          {!disabled ? (
             <button type="button" className="icon right">
@@ -47,13 +50,50 @@ const EditerPickContainer = styled.div`
    align-items: center;
    position: relative;
    width: 100%;
-   .carousel {
+   .carousel-container {
       display: flex;
       width: 800px;
       height: 900px;
       background-color: transparent;
+      position: relative;
       margin-top: 20px;
-      overflow: hidden;
+      .carousel {
+         display: flex;
+         overflow: hidden;
+         width: 800px;
+         height: 900px;
+         background-color: transparent;
+      }
+      .text-box {
+         display: flex;
+         justify-content: center;
+         align-items: center;
+         position: absolute;
+         font-size: 20px;
+         font-weight: bold;
+         color: black;
+         width: 20%;
+         height: 5%;
+         top: 30px;
+         left: 10px;
+         background-color: #fff;
+         transform: rotate(0.875turn);
+         border-radius: 10px;
+         border: solid 8px transparent;
+         border-radius: 0.8rem;
+         &:before {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            z-index: -1;
+            margin: -8px;
+            border-radius: inherit;
+            background: linear-gradient(to left, turquoise, greenyellow);
+         }
+      }
    }
    .icon {
       background-color: transparent;
