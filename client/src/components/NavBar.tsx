@@ -15,7 +15,7 @@ const collections = [
    { emoji: "☕️", label: "카페", path: "/communitylist/카페" },
    {
       emoji: "⛽️",
-      label: "리필 스테이션",
+      label: "리필스테이션",
       path: "/communitylist/리필스테이션",
    },
    { emoji: "🍴", label: "식당", path: "/communitylist/식당" },
