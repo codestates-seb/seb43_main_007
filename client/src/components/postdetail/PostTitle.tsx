@@ -12,6 +12,9 @@ function PostTitle({
    nickName,
    userPhoto,
 }: PostTitleProps) {
+   const postDate = now.slice(0, 10);
+   const postTime = now.slice(11, 19);
+
    return (
       <PostTitleContainer>
          <TopTitleContainer>
@@ -41,7 +44,7 @@ function PostTitle({
                   }}
                />
                <span className="author-date">
-                  {nickName} | {now}
+                  {nickName} | {postDate} {postTime}
                </span>
             </AuthorDateContainer>
             <span className="likes-comments">좋아요 153 | 댓글 3</span>

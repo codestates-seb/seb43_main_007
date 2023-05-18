@@ -34,7 +34,7 @@ function RoutingPage() {
                <Route path="/createpost" element={<CreatePostPage />} />
                <Route path="/signup" element={<Signup />} />
                <Route path="/login" element={<Login />} />
-               <Route path="/post" element={<PostDetail />} />
+               <Route path="/post/:boardId" element={<PostDetail />} />
             </Routes>
          </MainBox>
          {condition ? <Footer /> : null}

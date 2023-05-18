@@ -15,7 +15,7 @@ function PostButtons() {
    return (
       <PostButtonContainer>
          <EditDeleteContainer>
-            <button className="postdetail-btn" type="button">
+            <button className="postdetail-btn edit-btn" type="button">
                수정
             </button>
             <span className="separator">|</span>
@@ -50,6 +50,10 @@ export const PostButtonContainer = styled.div`
       background-color: transparent;
       font-size: 13px;
       cursor: pointer;
+   }
+
+   .edit-btn {
+      padding-left: 0;
    }
 `;
 

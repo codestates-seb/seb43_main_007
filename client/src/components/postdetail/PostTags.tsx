@@ -17,6 +17,7 @@ export const PostTagContainer = styled.div`
    margin-left: 15px;
    margin-bottom: 15px;
    display: flex;
+   align-items: center;
 `;
 
 export const Tag = styled.div`

@@ -44,11 +44,6 @@ export interface ReplyProps {
    comment: CommentType;
 }
 
-export interface Tag {
-   tagId: number;
-   tagName: string;
-}
-
 export interface Post {
    boardId: number;
    title: string;
@@ -63,12 +58,6 @@ export interface Post {
    tags: Tag[];
 }
 
-export interface MatchParams {
-   boardId: string;
-}
-
-export type PostDetailProps = RouteComponentProps<MatchParams>;
-
 export interface PostTitleProps {
    title: string;
    now: string;
@@ -80,6 +69,10 @@ export interface PostTitleProps {
 
 export interface Content {
    content: string;
+}
+
+export interface Address {
+   address: string | null;
 }
 
 export interface Tags {
