@@ -3,7 +3,7 @@ import { BiLeftArrow, BiRightArrow } from "react-icons/bi";
 import { useState } from "react";
 import CarouselBox from "./CarouselBox";
 import { prevHandler, nextHandler } from "./carouselHandler";
-import { ArgsArr } from "./homeTypes";
+import { CarouselHandlerArgsType } from "./homeTypes";
 
 function EditerPick() {
    const [pickNumber, setPickNumber] = useState(1);
@@ -11,7 +11,7 @@ function EditerPick() {
    const [carouselTransition, setCarouselTransition] = useState(
       "transform 0.5s ease-in-out"
    );
-   const argsArr: ArgsArr = [
+   const argsArr: CarouselHandlerArgsType = [
       pickNumber,
       setPickNumber,
       setCarouselTransition,
@@ -19,16 +19,22 @@ function EditerPick() {
    ];
    return (
       <EditerPickContainer>
-         <button type="button" className="icon left" disabled={disabled}>
-            <BiLeftArrow onClick={() => prevHandler(argsArr)} />
-         </button>
-         <CarouselBox
-            pickNumber={pickNumber}
-            carouselTransition={carouselTransition}
-         />
-         <button type="button" className="icon right" disabled={disabled}>
-            <BiRightArrow onClick={() => nextHandler(argsArr)} />
-         </button>
+         {!disabled ? (
+            <button type="button" className="icon left">
+               <BiLeftArrow onClick={() => prevHandler(argsArr)} />
+            </button>
+         ) : null}
+         <div className="carousel">
+            <CarouselBox
+               pickNumber={pickNumber}
+               carouselTransition={carouselTransition}
+            />
+         </div>
+         {!disabled ? (
+            <button type="button" className="icon right">
+               <BiRightArrow onClick={() => nextHandler(argsArr)} />
+            </button>
+         ) : null}
       </EditerPickContainer>
    );
 }
@@ -37,12 +43,18 @@ export default EditerPick;
 
 const EditerPickContainer = styled.div`
    display: flex;
+   justify-content: center;
+   align-items: center;
    position: relative;
-   width: 900px;
-   height: 900px;
-   background-color: beige;
-   margin-top: 20px;
-   overflow: hidden;
+   width: 100%;
+   .carousel {
+      display: flex;
+      width: 800px;
+      height: 900px;
+      background-color: beige;
+      margin-top: 20px;
+      overflow: hidden;
+   }
    .icon {
       background-color: transparent;
       border: none;
@@ -53,12 +65,12 @@ const EditerPickContainer = styled.div`
       cursor: pointer;
    }
    .left {
-      left: 0;
+      left: 5%;
       top: 50%;
       transform: translateY(-50%);
    }
    .right {
-      right: 0;
+      right: 5%;
       top: 50%;
       transform: translateY(-50%);
    }

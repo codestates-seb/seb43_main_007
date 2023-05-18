@@ -1,4 +1,4 @@
-export type ArgsArr = [
+export type CarouselHandlerArgsType = [
    pickNumber: number,
    setPickNumber: React.Dispatch<React.SetStateAction<number>>,
    setCarouselTransition: React.Dispatch<React.SetStateAction<string>>,
