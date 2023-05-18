@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import validFunction from "../../util/signinValidFunc";
 import LoginModal from "./LoginModal";
 import { findId } from "../../api/axios";
-import { SocialNum } from "./LoginType";
+import { SocialNum } from "./loginType";
 
 function FindId() {
    const {

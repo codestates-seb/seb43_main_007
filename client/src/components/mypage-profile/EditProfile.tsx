@@ -5,7 +5,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { RootState } from "../../store/store";
 import validFunc from "../../util/signinValidFunc";
 import { setPhoto, resetPhoto } from "../../reducers/profilePhotoSlice";
-import { SignupTypes } from "../signup/SignupTypes";
+import { SignupTypes } from "../signup/signupTypes";
 import { setNickname } from "../../reducers/profileNicknameSlice";
 import {
    resetUserProfilePhoto,

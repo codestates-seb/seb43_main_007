@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useState } from "react";
 import SignupInput from "./SignupInput";
-import { SignupTypes } from "./SignupTypes";
+import { SignupTypes } from "./signupTypes";
 import SignupQuestion from "./SignupQuestion";
 import SignupOauth from "./SignupOauth";
 import logo from "../../assets/img/logo2.png";

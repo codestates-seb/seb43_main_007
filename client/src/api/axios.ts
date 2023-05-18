@@ -1,6 +1,6 @@
 import { AxiosError } from "axios";
-import { LoginTypes, FindPasswordType } from "../components/login/LoginType";
-import { SignupTypes } from "../components/signup/SignupTypes";
+import { LoginTypes, FindPasswordType } from "../components/login/loginType";
+import { SignupTypes } from "../components/signup/signupTypes";
 import { request } from "./create";
 import { Likereq } from "../components/communityList/listTypes";
 import { serverError, postSuccess } from "../util/toastify";

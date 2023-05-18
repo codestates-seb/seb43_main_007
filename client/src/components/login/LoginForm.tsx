@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import logo from "../../assets/img/logo2.png";
 import validFunction from "../../util/signinValidFunc";
 import LoginModal from "./LoginModal";
-import { LoginTypes } from "./LoginType";
+import { LoginTypes } from "./loginType";
 import { loginPost } from "../../api/axios";
 import { RootState } from "../../store/store";
 import { setMemberId } from "../../reducers/memberIdSlice";

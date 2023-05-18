@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { UseFormRegister } from "react-hook-form";
-import { SignupTypes } from "./SignupTypes";
+import { SignupTypes } from "./signupTypes";
 
 interface Props {
    register: UseFormRegister<SignupTypes>;
