@@ -9,6 +9,7 @@ import com.main.server.auth.oauth.CustomOAuth2UserService;
 import com.main.server.auth.oauth.OAuth2UserFailureHandler;
 import com.main.server.auth.oauth.OAuth2UserSuccessHandler;
 import com.main.server.auth.utils.CustomAuthorityUtils;
+import com.main.server.member.repository.MemberRepository;
 import com.main.server.member.service.MemberService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -46,15 +47,18 @@ public class SecurityConfiguration {
     private final CustomAuthorityUtils authorityUtils;
     private final CustomOAuth2UserService customOAuth2UserService;
     private final CustomAuthorityUtils customAuthorityUtils;
+    private final MemberRepository memberRepository;
 
     public SecurityConfiguration(JwtTokenizer jwtTokenizer,
                                  CustomAuthorityUtils authorityUtils,
                                  CustomOAuth2UserService customOAuth2UserService,
-                                 CustomAuthorityUtils customAuthorityUtils) {
+                                 CustomAuthorityUtils customAuthorityUtils,
+                                 MemberRepository memberRepository) {
         this.jwtTokenizer = jwtTokenizer;
         this.authorityUtils = authorityUtils;
         this.customOAuth2UserService = customOAuth2UserService;
         this.customAuthorityUtils = customAuthorityUtils;
+        this.memberRepository = memberRepository;
     }
 
     @Bean
@@ -79,7 +83,6 @@ public class SecurityConfiguration {
 
                 .and()
                 .authorizeHttpRequests(authorize -> authorize
-                        .antMatchers(HttpMethod.GET, "/**").hasRole("ADMIN")
                         //.antMatchers(HttpMethod.POST, "/boards/check/**").hasRole("ADMIN")
                         //.antMatchers(HttpMethod.POST, "/boards/pin/**").hasRole("ADMIN")
                         //.antMatchers(HttpMethod.GET, "/members/**").hasAnyRole("USER", "ADMIN")
@@ -88,13 +91,10 @@ public class SecurityConfiguration {
                         .anyRequest().permitAll()
                 )
                 .oauth2Login().loginPage("/oauth2/authorization/google")
-                .successHandler(new OAuth2UserSuccessHandler(jwtTokenizer, customAuthorityUtils))
-                .failureHandler(new OAuth2UserFailureHandler())
-                //아래 빼고 되는듯?
+                .successHandler(new OAuth2UserSuccessHandler(jwtTokenizer, customAuthorityUtils, memberRepository))
+                .failureHandler(new OAuth2UserFailureHandler());
                 //.userInfoEndpoint().userService(customOAuth2UserService);
-                .userInfoEndpoint(userInfoEndpoint -> {
-                    userInfoEndpoint.userService(customOAuth2UserService);
-                });
+
         return http.build();
     }
 

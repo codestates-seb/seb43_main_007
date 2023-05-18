@@ -3,6 +3,7 @@ package com.main.server.auth.oauth;
 import com.main.server.auth.jwt.JwtTokenizer;
 import com.main.server.auth.utils.CustomAuthorityUtils;
 import com.main.server.member.entity.Member;
+import com.main.server.member.repository.MemberRepository;
 import com.main.server.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -30,6 +31,7 @@ public class OAuth2UserSuccessHandler extends SimpleUrlAuthenticationSuccessHand
 
     private final JwtTokenizer jwtTokenizer;
     private final CustomAuthorityUtils customAuthorityUtils;
+    private final MemberRepository memberRepository;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
@@ -50,6 +52,11 @@ public class OAuth2UserSuccessHandler extends SimpleUrlAuthenticationSuccessHand
         log.info("## 리다이렉트 -> {}", redirectURI);
         log.info("## 토큰: {}", accessToken);
         response.setHeader("Authentication", "Bearer_" + accessToken);
+        
+        log.info("##해당 멤버 저장 시작");
+        Member member = new Member(email, email.substring(0, email.indexOf("@")));
+        memberRepository.save(member);
+        log.info("##해당 멤버 저장 완료");
         getRedirectStrategy().sendRedirect(request, response, createURI(accessToken).toString());
 
     }
