@@ -1,9 +1,11 @@
-import { AxiosError } from "axios";
+import axios, { AxiosError } from "axios";
+import moment from "moment";
 import { LoginTypes, FindPasswordType } from "../components/login/loginType";
 import { SignupTypes } from "../components/signup/signupTypes";
 import { request } from "./create";
 import { Likereq } from "../components/communityList/listTypes";
 import { serverError, postSuccess } from "../util/toastify";
+import "moment/locale/ko";
 
 // 목록페이지 데이터 get요청
 export const listData = async (
@@ -306,4 +308,12 @@ export const deletePost = async (boardId: number) => {
       console.log(error);
       return null;
    }
+};
+
+// 미세먼지 api
+export const dustGet = () => {
+   const date = moment().format().slice(0, 10);
+   return axios.get(
+      `https://apis.data.go.kr/B552584/ArpltnInforInqireSvc/getMinuDustFrcstDspth?ServiceKey=oAXiA0oePa%2BP%2Bk1VTDFHEAhQIxxmEpHR8IUzzdpTMs%2F2R3Mrz%2B6lLbMtvJRalhcErJYe0eLBLWdxExozWDzlFQ%3D%3D&returnType=json&searchDate=${date}`
+   );
 };
