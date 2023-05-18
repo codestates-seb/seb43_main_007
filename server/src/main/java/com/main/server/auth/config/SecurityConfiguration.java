@@ -81,9 +81,9 @@ public class SecurityConfiguration {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(Arrays.asList("*"));
         // TODO:나중에 요청 받을 url 아래처럼 조정, 지금은 서버 띄운거랑, 로컬이랑 둘 다 작동해야 하므로 위와 같이 설정.
-        //configuration.addAllowedOrigin("http://localhost:8080");
-        configuration.setAllowedMethods(Arrays.asList("GET","POST", "PATCH", "DELETE", "PUT"));
 
+        configuration.setAllowedMethods(Arrays.asList("GET","POST", "PATCH", "DELETE", "PUT"));
+        configuration.setAllowedHeaders(Arrays.asList("Content-Type", "Authorization"));
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;

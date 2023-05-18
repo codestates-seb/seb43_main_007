@@ -14,9 +14,7 @@ import com.main.server.tag.entity.Tag;
 import com.main.server.tag.repository.TagRepository;
 import com.main.server.tag.service.TagService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.main.server.exception.ExceptionCode;
@@ -59,7 +57,7 @@ public class BoardService {
 
     public Page<Board> getAllBoard(Pageable pageable, String cate, String title, String content, long memberId) {
 
-        Page<Board> boards = boardRepository.findAll(pageable);
+        Page<Board> boards = boardRepository.findAllByOrderByPinDescBoardIdDesc(pageable);
         if(!cate.equals("") && (!title.equals("") && !content.equals(""))) { // 타이틀+컨텐츠 검색
             Page<Board> filteredBoards = boards.stream()
                     .filter(board -> board.getCategory().equals(cate))
@@ -99,6 +97,19 @@ public class BoardService {
                 .ifPresent(address -> originBoard.setAddress(address));
         return boardRepository.save(originBoard);
     }
+    public void cretatePin(long boardId) {
+        Optional<Board> board = boardRepository.findById(boardId);
+        if(board.isPresent()) {
+            Board boardDB = board.get();
+            if(boardDB.getPin()==1) {
+                boardDB.setPin(0);
+            }
+            else {
+                boardDB.setPin(1);
+            }
+            boardRepository.save(boardDB);
+        }
+    }
 
     public void deleteBoard(long boardId) {
         boardRepository.delete(findVerifiedBoard(boardId));
@@ -123,6 +134,7 @@ public class BoardService {
                         new BusinessLogicException(ExceptionCode.BOARD_NOT_FOUND));
         return findBoard;
     }
+
 
 
     private void putInformationForTag(Board board) {

@@ -35,6 +35,7 @@ public interface BoardMapper{
                 .collect(Collectors.toList());
 
         board.setCategory(post.getCategory());
+        board.setPin(0);
         board.setAddress(post.getAddress());
         board.setTitle( post.getTitle() );
         board.setContent( post.getContent() );
@@ -55,13 +56,16 @@ public interface BoardMapper{
             String address = null;
             LocalDateTime now = null;
             long boardId = 0;
+            String category = null;
+            int pin = 0;
 
-
+            category = response.getCategory();
             boardId = response.getBoardId();
             title = response.getTitle();
             content = response.getContent();
             address = response.getAddress();
             now = response.getNow();
+            pin = response.getPin();
 
             String photo = "http://www.planet-times.com/Files/320/Images/202206/2022060332507773.jpg";
             String nickName = "InGeon";
@@ -73,7 +77,7 @@ public interface BoardMapper{
             for(BoardTag x : list){
                 responsesTag.add(new BoardTagDto.Response(x.getTag().getTagId(), x.getTag().getTagName()));
             }
-            BoardDto.Response response1 = new BoardDto.Response( boardId, title, content, address, now, photo, like, bookmark, nickName, userPhoto, responsesTag );
+            BoardDto.Response response1 = new BoardDto.Response( boardId, title, content, address, now, photo, like, bookmark, nickName, userPhoto, category,pin,responsesTag );
 
             return response1;
         }

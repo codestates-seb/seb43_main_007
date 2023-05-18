@@ -16,11 +16,6 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-//@RequiredArgsConstructor
-//@Setter
-//@Getter
-//@ToString
-//@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Table(name = "comments")
 public class
 Comment { //엔티티의 역할? 테이블 설계
@@ -51,7 +46,6 @@ Comment { //엔티티의 역할? 테이블 설계
         this.commentId = commentId;
         this.content = content;
         this.member = member;
-        this.createdAt = createdAt;
         this.boardId = boardId;
         //   this.parentCommentId = parentCommentId;
     }

@@ -11,9 +11,7 @@ import com.main.server.dto.MultiResponseDto;
 import com.main.server.tag.entity.Tag;
 import com.main.server.utils.UriCreator;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -47,6 +45,12 @@ public class BoardController {
         return ResponseEntity.created(location).build();
     }
 
+    @PostMapping("/pin/{boardId}")
+    public ResponseEntity postPin(@PathVariable("boardId") @Positive long boardId) {
+        boardService.cretatePin(boardId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
     @PostMapping("/photo")
     public String postPhoto(@RequestParam(value = "file") MultipartFile file) {
 
@@ -67,9 +71,10 @@ public class BoardController {
             @RequestParam(name = "title", required = false) String title,
             @RequestParam(name = "content", required = false) String content
             , @RequestParam(name = "page", defaultValue = "0") int page
-            , @PageableDefault(sort = "boardId", direction = Sort.Direction.DESC) Pageable pageable) {
+            , @PageableDefault Pageable pageable) {
         if (page > 0) page--;
-        pageable = pageable.withPage(page);
+        pageable  = PageRequest.of(page, 10, Sort.by("pin").descending());
+        // pin을 기준으로 우선순위 내림차순
         if (cate == null) cate = "";
         if (title == null) title = "";
         if (content == null) content = "";

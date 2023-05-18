@@ -28,6 +28,7 @@ public class BoardDto {
         private String address;
 
         private String category;
+
         private List<BoardTagDto.Add> tagNames;
 
     }
@@ -66,6 +67,10 @@ public class BoardDto {
 
         private String nickName;
         private String userPhoto;
+
+        private String category;
+
+        private int pin;
         private List<BoardTagDto.Response> tags;
 
     }
