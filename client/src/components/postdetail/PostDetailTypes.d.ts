@@ -60,6 +60,7 @@ export interface Post {
 }
 
 export interface PostTitleProps {
+   boardId: number;
    title: string;
    now: string;
    like: number;
