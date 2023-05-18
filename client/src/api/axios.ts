@@ -278,8 +278,12 @@ export const resetUserProfilePhoto = async (memberId: number) => {
 // 회원 탈퇴
 export const deleteAccount = async (memberId: number) => {
    try {
-      const { data } = await request.delete(`/members/${memberId}`);
-      return data;
+      const response = await request.delete(`/members/${memberId}`);
+      if (response.status === 204) {
+         return "회원탈퇴 성공";
+      }
+      console.log("Unexpected status code:", response.status);
+      return null;
    } catch (error) {
       console.log("회원탈퇴 실패");
       return null;
@@ -300,8 +304,12 @@ export const getPostData = async (boardId: number) => {
 // 게시글 삭제
 export const deletePost = async (boardId: number) => {
    try {
-      const { data } = await request.delete(`/boards/board/${boardId}`);
-      return data;
+      const response = await request.delete(`/boards/${boardId}`);
+      if (response.status === 204) {
+         return "삭제 성공";
+      }
+      console.log("Unexpected status code:", response.status);
+      return null;
    } catch (error) {
       console.log(error);
       return null;
