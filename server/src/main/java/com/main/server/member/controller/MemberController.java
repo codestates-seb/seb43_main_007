@@ -144,8 +144,8 @@ public class MemberController {
                                 .collect(Collectors.toList());
         myPageDto.setBoards(boardResponse);
 
-        List<CommentDto.Response> commentResponse = findMember.getComments().stream()
-                        .map(comment -> commentMapper.CommentToCommentResponseDto(comment))
+        List<CommentDto.MyPageResponse> commentResponse = findMember.getComments().stream()
+                        .map(comment -> commentMapper.commentToCommentMyPageDto(comment))
                                 .collect(Collectors.toList());
         myPageDto.setComments(commentResponse);
         return new ResponseEntity<>(myPageDto, HttpStatus.OK);

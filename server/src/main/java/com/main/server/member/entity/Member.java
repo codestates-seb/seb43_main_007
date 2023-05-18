@@ -1,14 +1,15 @@
 package com.main.server.member.entity;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.main.server.audit.Auditable;
 import com.main.server.board.entity.Board;
 import com.main.server.comment.entity.Comment;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,16 +19,17 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 
-public class Member {
+public class Member extends Auditable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "member_id")
     private Long memberId;
 
     @Column(nullable = false, unique = true)
     private String email;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String password;
 
     @Column(nullable = false, unique = true)
@@ -60,9 +62,8 @@ public class Member {
     @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
     private List<Comment> comments = new ArrayList<>();
 
-    public Member(String email, String password, String nickname) {
+    public Member(String email, String nickname) {
         this.email = email;
-        this.password = password;
         this.nickname = nickname;
     }
 

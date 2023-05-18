@@ -73,7 +73,7 @@ public class MemberDto {
         private String nickname;
         private String imageUrl;
         private List<BoardDto.Response> boards;
-        private List<CommentDto.Response> comments;
+        private List<CommentDto.MyPageResponse> comments;
     }
 
     @Getter
