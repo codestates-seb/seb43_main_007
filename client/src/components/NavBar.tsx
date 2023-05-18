@@ -1,10 +1,13 @@
 import styled from "styled-components";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
 import { BiSearch, BiHomeAlt2 } from "react-icons/bi";
 import userprofile from "../assets/img/userprofile.png";
+import { getUserProfile } from "../api/axios";
 import { RootState } from "../store/store";
+import { setNickname } from "../reducers/profileNicknameSlice";
+import { setPhoto } from "../reducers/profilePhotoSlice";
 import { DefaultButton } from "./mypage-profile/EditProfile";
 
 const collections = [
@@ -29,6 +32,21 @@ function Navbar() {
    const profileNickname = useSelector(
       (state: RootState) => state.profileNickname.nickname
    );
+
+   const dispatch = useDispatch();
+
+   useEffect(() => {
+      getUserProfile()
+         .then((data) => {
+            if (data) {
+               dispatch(setNickname(data.nickname));
+               dispatch(setPhoto(data.imageUrl));
+            }
+         })
+         .catch((error) => {
+            console.error("실패", error);
+         });
+   }, [dispatch]);
 
    // 검색창 값 상태 저장하는 함수
    const searchInputHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -57,9 +75,7 @@ function Navbar() {
                alt="프로필이미지"
                className="nav-profile-img"
             />
-            <div className="nav-profile-nickname">
-               {profileNickname || "냥이"}
-            </div>
+            <div className="nav-profile-nickname">{profileNickname}</div>
          </NavProfileContainer>
          <Line />
          <NavSearchContainer>
