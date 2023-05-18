@@ -24,6 +24,8 @@ public interface CommentMapper {
         member.setMemberId(commentDto.getMemberId());
 
         comment.setBoardId(commentDto.getBoardId());
+
+
         comment.setContent(commentDto.getContent());
         comment.setMember(member);
 
@@ -35,6 +37,7 @@ public interface CommentMapper {
     CommentDto.Response CommentToCommentPutDto(Comment comment);
 
     CommentDto.Response CommentToCommentResponseDto(Comment comment);
+
 
     default CommentDto.MyPageResponse commentToCommentMyPageDto(Comment comment) {
         CommentDto.MyPageResponse myPageResponse = new CommentDto.MyPageResponse();

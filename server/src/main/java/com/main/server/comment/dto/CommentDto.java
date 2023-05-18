@@ -1,6 +1,11 @@
 package com.main.server.comment.dto;
 
+
 import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
 
 import java.sql.Timestamp;
@@ -52,6 +57,7 @@ public class CommentDto { //서비스는 엔티티에서 받아온 애를 직접
 
     }
 
+
     @Getter @Setter
     @NoArgsConstructor
     @AllArgsConstructor
@@ -60,6 +66,7 @@ public class CommentDto { //서비스는 엔티티에서 받아온 애를 직접
         private String content;
 
     }
+
 }
 
 

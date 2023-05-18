@@ -36,6 +36,7 @@ public class Board {
 
     @ManyToOne
     @JoinColumn(name = "member_Id")
+
     private Member member;
 
 
