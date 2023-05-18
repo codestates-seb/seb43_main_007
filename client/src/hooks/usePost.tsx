@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import { deletePost, getPostData } from "../api/axios";
-import { serverError } from "../util/toastify";
+import { postDeleteSuccess, serverError } from "../util/toastify";
 import { Post } from "../components/postdetail/postDetailTypes";
 
 const usePost = (boardId: string) => {
@@ -21,6 +21,7 @@ const usePost = (boardId: string) => {
       const response = await deletePost(parseInt(boardId, 10));
       if (response) {
          console.log("게시글 삭제");
+         postDeleteSuccess();
          navigate("/communitylist");
       } else {
          serverError();

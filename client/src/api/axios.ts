@@ -149,10 +149,10 @@ export const signupPost = async (req: SignupTypes): Promise<string> => {
 export const getUserProfile = async () => {
    try {
       const { data } = await request.get("/members/mypage/1"); // 나중에 수정
-      console.log("성공");
+      console.log("유저 프로필 사진, 닉네임 GET 성공");
       return data;
    } catch (error) {
-      console.log("실패");
+      console.log("유저 프로필 사진, 닉네임 GET 실패");
       console.error(error);
       return null;
    }
@@ -278,8 +278,12 @@ export const resetUserProfilePhoto = async (memberId: number) => {
 // 회원 탈퇴
 export const deleteAccount = async (memberId: number) => {
    try {
-      const { data } = await request.delete(`/members/${memberId}`);
-      return data;
+      const response = await request.delete(`/members/${memberId}`);
+      if (response.status === 204) {
+         return "회원탈퇴 성공";
+      }
+      console.log("Unexpected status code:", response.status);
+      return null;
    } catch (error) {
       console.log("회원탈퇴 실패");
       return null;
@@ -300,8 +304,12 @@ export const getPostData = async (boardId: number) => {
 // 게시글 삭제
 export const deletePost = async (boardId: number) => {
    try {
-      const { data } = await request.delete(`/boards/board/${boardId}`);
-      return data;
+      const response = await request.delete(`/boards/${boardId}`);
+      if (response.status === 204) {
+         return "게시글 삭제 성공";
+      }
+      console.log("Unexpected status code:", response.status);
+      return null;
    } catch (error) {
       console.log(error);
       return null;

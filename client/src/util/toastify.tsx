@@ -26,6 +26,8 @@ const postSuccess = () => toast.success("글 생성!");
 
 const postError = () => toast.error("형식에 맞춰 작성해주세요.");
 
+const postDeleteSuccess = () => toast.success("게시글이 삭제되었습니다.");
+
 export {
    nicknameChangeSuccess,
    nicknameChangeRetry,
@@ -36,4 +38,5 @@ export {
    passwordChangeRetry,
    postSuccess,
    postError,
+   postDeleteSuccess,
 };
