@@ -50,6 +50,16 @@ export const bookMarkPost = async (req: Likereq) => {
    }
 };
 
+// 목록페이지 핀고정 patch요청
+export const pinPost = async (boardId: number) => {
+   try {
+      console.log(`/boards/pin/${boardId}`);
+      const data = await request.post(`/boards/pin/${boardId}`);
+   } catch (error) {
+      console.log(error);
+   }
+};
+
 // quill에디터 이미지 post요청
 export const editorImgPost = async (img: any, quillRef) => {
    try {
