@@ -39,31 +39,8 @@ function MapBox({ data, id }: { data: string; id: number }) {
                      map,
                      position: coords,
                   });
-                  const content = "<span class ='info-title'>요기!</span>";
+                  marker.setMap(map);
 
-                  // 커스텀 오버레이가 표시될 위치입니다
-                  const position = new kakao.maps.LatLng(
-                     result[0].y,
-                     result[0].x
-                  );
-
-                  // 커스텀 오버레이를 생성합니다
-                  const customOverlay = new kakao.maps.CustomOverlay({
-                     position,
-                     content,
-                  });
-
-                  // 커스텀 오버레이를 지도에 표시합니다
-                  customOverlay.setMap(map, marker);
-
-                  // 인포윈도우로 장소에 대한 설명을 표시합니다
-                  // const infowindow = new kakao.maps.InfoWindow({
-                  //    content:
-                  //       '<div style="width:150px;text-align:center;padding:5px 0;">요기!</div>',
-                  // });
-                  // infowindow.open(map, marker);
-
-                  // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
                   map.setCenter(coords);
                }
             }
@@ -88,15 +65,5 @@ const MapBoxContainer = styled.div`
    .map {
       width: 300px;
       height: 300px;
-      .info-title {
-         display: block;
-         background: #50627f;
-         color: #fff;
-         text-align: center;
-         height: 24px;
-         line-height: 22px;
-         border-radius: 4px;
-         padding: 0px 10px;
-      }
    }
 `;
