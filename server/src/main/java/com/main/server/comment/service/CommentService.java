@@ -8,12 +8,15 @@ import com.main.server.comment.entity.Comment;
 import com.main.server.comment.mapper.CommentMapper;
 import com.main.server.comment.repository.CommentRepository;
 import com.main.server.exception.BusinessLogicException;
+import com.main.server.member.entity.Member;
+import com.main.server.member.service.MemberService;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -26,7 +29,6 @@ public class CommentService {
     @Autowired
     private CommentMapper commentMapper;
 
-
     public CommentService(CommentRepository commentRepository, CommentMapper commentMapper) {//생성자 만들기
         this.commentRepository = commentRepository;
         this.commentMapper = commentMapper;
@@ -37,7 +39,6 @@ public class CommentService {
         return commentRepository.save(comment); //컨트롤러로객체반환 받은걸 다시 프론트에 반환
 
     }
-
 
     // 댓글 수정
     //
