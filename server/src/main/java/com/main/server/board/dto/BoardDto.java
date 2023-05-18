@@ -53,6 +53,8 @@ public class BoardDto {
     public static class Response{
 
         private Long boardId;
+
+        private Long memberId;
         private String title;
         private String content;
         private String address;

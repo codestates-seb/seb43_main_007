@@ -58,30 +58,41 @@ public class BoardService {
     public Page<Board> getAllBoard(Pageable pageable, String cate, String title, String content, long memberId) {
 
         Page<Board> boards = boardRepository.findAllByOrderByPinDescBoardIdDesc(pageable);
-        if(!cate.equals("") && (!title.equals("") && !content.equals(""))) { // 타이틀+컨텐츠 검색
-            Page<Board> filteredBoards = boards.stream()
-                    .filter(board -> board.getCategory().equals(cate))
-                    .filter(board -> board.getTitle().contains(title) || board.getContent().contains(content))
-                    .peek(board -> board.setBookmark(checkBookmark(memberId, board.getBoardId())))
-                    .collect(Collectors.collectingAndThen(Collectors.toList(),
-                            list -> new PageImpl<>(list, pageable, boards.getTotalElements())));
-            return filteredBoards;
-        }else if(!cate.equals("")) { // 타이틀 or 컨텐츠 검색
-            Page<Board> filteredBoards = boards.stream()
-                    .filter(board -> board.getCategory().equals(cate))
-                    .filter(board -> board.getTitle().contains(title))
-                    .filter(board -> board.getContent().contains(content))
-                    .peek(board -> board.setBookmark(checkBookmark(memberId, board.getBoardId())))
-                    .collect(Collectors.collectingAndThen(Collectors.toList(),
-                            list -> new PageImpl<>(list, pageable, boards.getTotalElements())));
-            return filteredBoards;
-        }else{ // Nav바 타이틀+컨텐츠 검색
-            Page<Board> filteredBoards = boards.stream()
-                    .filter(board -> board.getTitle().contains(title) || board.getContent().contains(content))
-                    .peek(board -> board.setBookmark(checkBookmark(memberId, board.getBoardId())))
-                    .collect(Collectors.collectingAndThen(Collectors.toList(),
-                            list -> new PageImpl<>(list, pageable, boards.getTotalElements())));
-            return filteredBoards;
+        if(!cate.equals("")) { //카테고리만 입력
+            if(title.equals("") && content.equals("")){
+                Page<Board> filteredBoards1 = boardRepository.findByCategoryContaining(cate, pageable); // 카테 리스트
+                Page<Board> b = new PageImpl<>(filteredBoards1.toList(), pageable, filteredBoards1.getTotalElements());
+                return b;
+            }else if(!title.equals("") && content.equals("")) { // 카테고리+제목
+                Page<Board> filteredBoards2 = boardRepository.findByCategoryAndTitleContaining(cate, title, pageable);
+                Page<Board> b = new PageImpl<>(filteredBoards2.toList(), pageable, filteredBoards2.getTotalElements());
+                return b;
+            }else if(title.equals("") && !content.equals("")){ //카테고리+컨텐츠
+                Page<Board> filteredBoards3 = boardRepository.findByCategoryAndContentContaining(cate, content, pageable);
+                Page<Board> b = new PageImpl<>(filteredBoards3.toList(), pageable, filteredBoards3.getTotalElements());
+                return b;
+            }else{ //카테고리 + 컨텐츠 + 제목
+                Page<Board> filteredBoards4 = boardRepository.findByCategoryAndContentOrTitleContaining(cate, content,title, pageable);
+                Page<Board> b = new PageImpl<>(filteredBoards4.toList(), pageable, filteredBoards4.getTotalElements());
+                return b;
+            }
+        }else{
+            if(title.equals("") && content.equals("")){ // 전체게시글
+                Page<Board> b = new PageImpl<>(boards.toList(), pageable, boards.getTotalElements());
+                return b;
+            }else if(!title.equals("") && content.equals("")) { //제목
+                Page<Board> filteredBoards2 = boardRepository.findByCategoryOrTitleContaining(cate, title, pageable);
+                Page<Board> b = new PageImpl<>(filteredBoards2.toList(), pageable, filteredBoards2.getTotalElements());
+                return b;
+            }else if(title.equals("") && !content.equals("")){ //컨텐츠
+                Page<Board> filteredBoards3 = boardRepository.findByCategoryOrContentContaining(cate, content, pageable);
+                Page<Board> b = new PageImpl<>(filteredBoards3.toList(), pageable, filteredBoards3.getTotalElements());
+                return b;
+            }else{ //컨텐츠 + 제목
+                Page<Board> filteredBoards4 = boardRepository.findByCategoryOrContentOrTitleContaining(cate, content,title, pageable);
+                Page<Board> b = new PageImpl<>(filteredBoards4.toList(), pageable, filteredBoards4.getTotalElements());
+                return b;
+            }
 
         }
 //        return boards;

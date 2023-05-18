@@ -56,9 +56,11 @@ public interface BoardMapper{
             String address = null;
             LocalDateTime now = null;
             long boardId = 0;
+            long memberId = 0;
             String category = null;
             int pin = 0;
 
+            memberId = response.getMember().getMemberId();
             category = response.getCategory();
             boardId = response.getBoardId();
             title = response.getTitle();
@@ -77,7 +79,7 @@ public interface BoardMapper{
             for(BoardTag x : list){
                 responsesTag.add(new BoardTagDto.Response(x.getTag().getTagId(), x.getTag().getTagName()));
             }
-            BoardDto.Response response1 = new BoardDto.Response( boardId, title, content, address, now, photo, like, bookmark, nickName, userPhoto, category,pin,responsesTag );
+            BoardDto.Response response1 = new BoardDto.Response(boardId, memberId, title, content, address, now, photo, like, bookmark, nickName, userPhoto, category,pin,responsesTag );
 
             return response1;
         }
