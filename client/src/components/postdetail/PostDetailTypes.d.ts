@@ -85,6 +85,7 @@ export interface PostTagProps {
    tags: Tag[];
 }
 
-interface PostButtonsProps {
+export interface PostButtonsProps {
    handleDeletePost: () => Promise<void>;
+   boardId: number;
 }
