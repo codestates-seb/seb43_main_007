@@ -314,6 +314,8 @@ export const deletePost = async (boardId: number) => {
 export const dustGet = () => {
    const date = moment().format().slice(0, 10);
    return axios.get(
-      `https://apis.data.go.kr/B552584/ArpltnInforInqireSvc/getMinuDustFrcstDspth?ServiceKey=oAXiA0oePa%2BP%2Bk1VTDFHEAhQIxxmEpHR8IUzzdpTMs%2F2R3Mrz%2B6lLbMtvJRalhcErJYe0eLBLWdxExozWDzlFQ%3D%3D&returnType=json&searchDate=${date}`
+      `https://apis.data.go.kr/B552584/ArpltnInforInqireSvc/getMinuDustFrcstDspth?ServiceKey=${
+         import.meta.env.VITE_DUST_SERVICEKEY
+      }&returnType=json&searchDate=${date}`
    );
 };
