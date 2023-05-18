@@ -29,6 +29,7 @@ public interface MemberMapper {
 
     default Member memberNicknamePatchDtoToMember(MemberDto.PatchNickname memberNicknamePatchDto) { //mem005
         Member member = new Member();
+        member.setMemberId(memberNicknamePatchDto.getMemberId());
         member.setNickname(memberNicknamePatchDto.getNewNickname());
 
         return member;
