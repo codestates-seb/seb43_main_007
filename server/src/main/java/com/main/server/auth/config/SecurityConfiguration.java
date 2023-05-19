@@ -3,7 +3,10 @@ package com.main.server.auth.config;
 
 import com.main.server.auth.filter.JwtAuthenticationFilter;
 import com.main.server.auth.filter.JwtVerificationFilter;
-import com.main.server.auth.handler.*;
+import com.main.server.auth.handler.MemberAccessDeniedHandler;
+import com.main.server.auth.handler.MemberAuthenticationEntryPoint;
+import com.main.server.auth.handler.MemberAuthenticationFailureHandler;
+import com.main.server.auth.handler.MemberAuthenticationSuccessHandler;
 import com.main.server.auth.jwt.JwtTokenizer;
 import com.main.server.auth.mail.MailService;
 import com.main.server.auth.oauth.CustomOAuth2UserService;
@@ -11,6 +14,7 @@ import com.main.server.auth.oauth.OAuth2UserFailureHandler;
 import com.main.server.auth.oauth.OAuth2UserSuccessHandler;
 import com.main.server.auth.utils.CustomAuthorityUtils;
 import com.main.server.member.repository.MemberRepository;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -97,33 +101,6 @@ public class SecurityConfiguration {
 
         return http.build();
     }
-
-//    @Bean
-//    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-//        http
-//                .headers().frameOptions().disable()
-//                .and()
-//                .csrf().disable()
-//                .cors().configurationSource(corsConfigurationSource())
-//                .and()
-//                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-//                .and()
-//                .formLogin().disable()
-//                .httpBasic().disable()
-//                .exceptionHandling()
-//                .authenticationEntryPoint(new MemberAuthenticationEntryPoint())
-//                .accessDeniedHandler(new MemberAccessDeniedHandler())
-//                .and()
-//                .apply(new CustomFilterConfigurer1())
-//                .and()
-//                .logout().logoutSuccessUrl("/")
-//                .and()
-//                .authorizeHttpRequests(authorize -> authorize
-//                        .anyRequest().permitAll())
-//                .oauth2Login(oauth2 -> oauth2
-//                        .successHandler(new OAuth2UserSuccessHandler(jwtTokenizer, authorityUtils, memberService)));
-//        return http.build();
-//    }
 
     @Bean
     public PasswordEncoder passwordEncoder() { //memberService에서 DI 받아 사용

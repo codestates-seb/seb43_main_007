@@ -31,13 +31,29 @@ public class Board {
     @Column()
     private String address;
 
+    @Column()
+    private String category;
+
     @Column(nullable = false)
     private LocalDateTime now = LocalDateTime.now();
+
+
+    @Column()
+    private int likeCheck;
+    @Column()
+    private Long likeCount;
 
     @ManyToOne
     @JoinColumn(name = "member_id")
 
     private Member member;
+
+
+    @Column()
+    private int bookmark;
+
+    @Column()
+    private int pin;
 
 
 //    private Long like;
