@@ -35,7 +35,6 @@ public class CommentService {
     }
 
     public Comment createComment(Comment comment) { //댓글을 생성된걸 받는거
-
         return commentRepository.save(comment); //컨트롤러로객체반환 받은걸 다시 프론트에 반환
 
     }
@@ -50,11 +49,7 @@ public class CommentService {
 
     public Comment updateComment(Comment comment) {
         Optional<Comment> originComment = commentRepository.findById(comment.getCommentId());//아이디 잘못넘어왔으면 널 리턴되는데, 프로그램 멈춤을 막히 위해 옵셔널 오리진가지고 왔고
-
-        Optional.ofNullable(comment.getContent())
-                .ifPresent(content->originComment.get().setContent(content));
-
-        return commentRepository.save(originComment.get());
+        return commentRepository.save(comment);
     }
 
 
@@ -66,7 +61,6 @@ public class CommentService {
     public void deleteComment(long commentId) {
         //  Optional<Comment> comment = commentRepository.findById(commentId);
         //  commentRepository.delete(comment.get());
-
         commentRepository.deleteById(commentId);
         //}
     }

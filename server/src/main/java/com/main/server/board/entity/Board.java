@@ -41,7 +41,7 @@ public class Board {
     private Long likeCount;
 
     @ManyToOne
-    @JoinColumn(name = "member_Id")
+    @JoinColumn(name = "member_id")
 
     private Member member;
 

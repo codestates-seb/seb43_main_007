@@ -9,7 +9,10 @@ import javax.persistence.*;
 
 import java.time.LocalDateTime;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+
 @Entity
 @Builder
 @NoArgsConstructor
@@ -33,7 +36,7 @@ Comment { //엔티티의 역할? 테이블 설계
 
 
     @ManyToOne
-    @JoinColumn(name = "member_Id")
+    @JoinColumn(name = "member_id")
     private Member member;
 
 
@@ -41,13 +44,12 @@ Comment { //엔티티의 역할? 테이블 설계
     private Timestamp createdAt = new Timestamp(new Date().getTime());
 
     @Column(name = "board_id")
-    // @OneToMany(mappedBy = "board", cascade = CascadeType.REMOVE)
-    // private List<Comment> comments = new ArrayList<>();
+ //   @OneToMany(mappedBy = "board", cascade = CascadeType.REMOVE)
+  //  private List<Comment> comments = new ArrayList<>();
     private Long boardId;
 
 
-    // @Column(name = "parent_comment_id")
-    //  private Integer parentCommentId;  // 부모 댓글 ID
+
 
 
     public Comment(Long commentId, String content, Member member, Long boardId) {
@@ -55,11 +57,14 @@ Comment { //엔티티의 역할? 테이블 설계
         this.content = content;
         this.member = member;
         this.boardId = boardId;
-        //   this.parentCommentId = parentCommentId;
+
     }
-
+  //  @ManyToOne(fetch = FetchType.LAZY)
+  //  @JoinColumn(name = "parent_id")
+   // private Comment parent;
     //   this.parentCommentId = parentCommentId;
-
+   // @OneToMany(mappedBy = "parent", cascade = CascadeType.REMOVE)
+  //  private List<Comment> children = new ArrayList<>();
 
 }
 
