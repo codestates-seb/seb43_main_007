@@ -1,7 +1,6 @@
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useSelector } from "react-redux";
 import validFunc from "../../util/signinValidFunc";
-import { PasswordChangeForm } from "./profileTypes";
 import {
    ProfileEditContainer,
    TitleBox,
@@ -17,6 +16,12 @@ import {
    passwordChangeSuccess,
    serverError,
 } from "../../util/toastify";
+
+export interface PasswordChangeForm {
+   currentPassword: string;
+   newPassword: string;
+   confirmPassword: string;
+}
 
 function ChangePassoword() {
    // useForm setup
@@ -38,7 +43,7 @@ function ChangePassoword() {
    const memberId = useSelector((state: RootState) => state.memberId);
 
    // Handlers
-   const onSubmit: SubmitHandler<PasswordChangeForm> = (data) => handleChange();
+   const onSubmit: SubmitHandler<PasswordChangeForm> = () => handleChange();
 
    const handleChange = () => {
       const { currentPassword, newPassword, confirmPassword } = getValues();

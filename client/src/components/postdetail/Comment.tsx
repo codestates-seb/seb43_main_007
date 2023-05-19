@@ -1,15 +1,35 @@
 import styled from "styled-components";
-import { CommentProps } from "./postDetailTypes";
 import CreateReply from "./CreateReply";
 import Reply from "./Reply";
+
+export interface CommentType {
+   boardId: number;
+   commentId: number;
+   nickname: string;
+   picture: string;
+   content: string;
+   createdAt: string;
+   parent?: {
+      commentId: number;
+   };
+   replies?: CommentType[];
+}
+
+export interface CommentProps {
+   comment: CommentType;
+   handleReplySubmit: (commentId: number, content: string) => void;
+   handleReplyClick: (commentId: number | null) => void;
+   isReplySelected: boolean;
+   // selectedCommentId: number | null;
+}
 
 function Comment({
    comment,
    handleReplySubmit,
    handleReplyClick,
    isReplySelected,
-   selectedCommentId,
-}: CommentProps) {
+}: // selectedCommentId,
+CommentProps) {
    const handleReplySubmitWrapper = (content: string) => {
       handleReplySubmit(comment.commentId, content);
    };
@@ -21,7 +41,7 @@ function Comment({
                <AuthorInfo>
                   <img
                      src={comment.picture}
-                     alt="comment-author-img"
+                     alt="comment-author-profile"
                      className="comment-author-img"
                   />
                   <span className="comment-author">{comment.nickname}</span>
@@ -32,6 +52,18 @@ function Comment({
             </CommentContent>
             <DateAndReplyButton>
                <span className="comment-createdAt">{comment.createdAt}</span>
+               <CommentButtonContainer>
+                  <button type="submit" className="comment-btn">
+                     수정
+                  </button>
+                  <span>|</span>
+                  <button
+                     type="submit"
+                     className="comment-btn comment-delete-btn"
+                  >
+                     삭제
+                  </button>
+               </CommentButtonContainer>
                <ReplyButton
                   onClick={() =>
                      handleReplyClick(
@@ -106,6 +138,23 @@ export const DateAndReplyButton = styled.div`
    font-size: 12px;
    width: 120px;
    margin-top: 3px;
+`;
+
+export const CommentButtonContainer = styled.div`
+   display: flex;
+   align-items: center;
+   margin-top: 5px;
+
+   .comment-btn {
+      border: none;
+      background-color: transparent;
+      font-size: 12px;
+      cursor: pointer;
+   }
+
+   .comment-delete-btn {
+      padding-right: 0;
+   }
 `;
 
 export const ReplyButton = styled.button`

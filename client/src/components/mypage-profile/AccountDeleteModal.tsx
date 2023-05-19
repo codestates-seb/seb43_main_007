@@ -1,10 +1,14 @@
 import styled from "styled-components";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router";
-import { AccountDeleteModalProps } from "./profileTypes";
 import { RootState } from "../../store/store";
 import { deleteAccount } from "../../api/axios";
 import { serverError } from "../../util/toastify";
+
+export interface AccountDeleteModalProps {
+   open: boolean;
+   close: () => void;
+}
 
 function AccountDeleteModal({ open, close }: AccountDeleteModalProps) {
    const navigate = useNavigate();

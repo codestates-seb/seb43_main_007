@@ -1,5 +1,8 @@
 import styled from "styled-components";
-import { Content } from "./postDetailTypes";
+
+export interface Content {
+   content: string;
+}
 
 function PostContent({ content }: Content) {
    return (

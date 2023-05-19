@@ -12,11 +12,12 @@ import { likePatch, bookMarkPost, pinPost } from "../../api/axios";
 function ListContent({ userDatas }: { userDatas: ListData }) {
    // 관리자(매니저)인지 (로컬에서 관리?)
    const [isManager, setIsManager] = useState(false);
+   console.log(setIsManager);
    // 에디터 픽 유무(리덕스 관리?)-리덕스 툴킷으로 로컬할 수 있는거 찾아보기
    const [isEditerPick, setIsEditerPick] = useState(false);
+   console.log(setIsEditerPick);
    // 고정 유무(리덕스 툴킷으로 관리?)
    const [isFixPin, setIsFixPin] = useState(userDatas.pin);
-   const [isFixPinNumber, setIsFixPinNumber] = useState(0);
    // 좋아요 유무
    const [isLike, setIsLike] = useState(userDatas.like);
    // 즐겨찾기(북마크) 유무
@@ -151,7 +152,7 @@ function ListContent({ userDatas }: { userDatas: ListData }) {
 
 export default ListContent;
 
-const DivContainer = styled.div<{ isFixPin: boolean }>`
+const DivContainer = styled.div<{ isFixPin: number }>`
    display: flex;
    align-items: center;
 

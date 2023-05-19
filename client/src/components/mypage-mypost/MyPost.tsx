@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { CommentType } from "./dummyCommentTitleData";
+// import { CommentType } from "./dummyCommentTitleData";
 
 type MypostProps = {
    title: string;

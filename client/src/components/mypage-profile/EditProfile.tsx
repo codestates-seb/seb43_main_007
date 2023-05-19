@@ -4,9 +4,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { RootState } from "../../store/store";
 import validFunc from "../../util/signinValidFunc";
-import { setPhoto, resetPhoto } from "../../reducers/profilePhotoSlice";
-import { SignupTypes } from "../signup/signupTypes";
-import { setNickname } from "../../reducers/profileNicknameSlice";
+import { setPhoto, resetPhoto } from "../../reducers/ProfilePhotoSlice";
+import { SignupTypes } from "../signup/SignupTypes";
+import { setNickname } from "../../reducers/ProfileNicknameSlice";
 import {
    resetUserProfilePhoto,
    updateNickname,
@@ -67,7 +67,7 @@ function EditProfile() {
          reader.readAsDataURL(file);
 
          updateUserProfilePhoto(memberId, file)
-            .then((data) => {
+            .then(() => {
                photoChangeSuccess(); // 로컬에선 실패해도 뜨는 상태. 서버 연결 후 테스트 해봐야 함
                dispatch(setPhoto(prevPhoto));
             })

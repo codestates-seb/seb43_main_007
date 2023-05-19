@@ -2,7 +2,23 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import { deletePost, getPostData } from "../api/axios";
 import { postDeleteSuccess, serverError } from "../util/toastify";
-import { Post } from "../components/postdetail/postDetailTypes";
+
+export interface Post {
+   boardId: number;
+   title: string;
+   content: string;
+   address: string | null;
+   now: string;
+   photo: string;
+   like: number;
+   bookmark: number;
+   nickName: string;
+   userPhoto: string;
+   tags: {
+      tagId: number;
+      tagName: string;
+   }[];
+}
 
 const usePost = (boardId: string) => {
    const navigate = useNavigate();

@@ -6,8 +6,8 @@ import { BiSearch, BiHomeAlt2 } from "react-icons/bi";
 import userprofile from "../assets/img/userprofile.png";
 import { getUserProfile } from "../api/axios";
 import { RootState } from "../store/store";
-import { setNickname } from "../reducers/profileNicknameSlice";
-import { setPhoto } from "../reducers/profilePhotoSlice";
+import { setNickname } from "../reducers/ProfileNicknameSlice";
+import { setPhoto } from "../reducers/ProfilePhotoSlice";
 import { DefaultButton } from "./mypage-profile/EditProfile";
 
 const collections = [

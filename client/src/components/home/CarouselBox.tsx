@@ -1,8 +1,8 @@
 import styled from "styled-components";
 import ContentsBox from "./ContentsBox";
 import editorPickDummyContents from "./editorPickDummyContents";
-import { Post } from "../postdetail/postDetailTypes";
-import usePost from "../../hooks/usePost";
+// import { Post } from "../postdetail/postDetailTypes";
+// import usePost from "../../hooks/usePost";
 
 interface Props {
    pickNumber: number;
