@@ -6,6 +6,7 @@ import { CommentType } from "../components/postdetail/Comment";
 import groupCommentsAndReplies from "../util/groupCommentsAndReplies";
 
 export interface Post {
+   memberId: number;
    boardId: number;
    title: string;
    content: string;
