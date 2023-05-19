@@ -72,10 +72,11 @@ public class BoardController {
 //    }
 
     @GetMapping("/board")
-    public ResponseEntity getBoard(@RequestBody @Valid BoardDto.Basic board) {
-        Board response = boardService.getBoard(board.getBoardId());
+    public ResponseEntity getBoard( @RequestParam(name = "memberId", required = false) long memberId,
+                                    @RequestParam(name = "boardId", required = false) long boardId) {
+        Board response = boardService.getBoard(boardId);
 
-        return new ResponseEntity<>(boardMapper.boardToBoardResponse(response, likeService, bookmarkService, board.getMemberId()), HttpStatus.OK);
+        return new ResponseEntity<>(boardMapper.boardToBoardResponse(response, likeService, bookmarkService, memberId), HttpStatus.OK);
     }
 
     @GetMapping("/{memberId}")

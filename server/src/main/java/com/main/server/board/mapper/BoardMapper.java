@@ -83,7 +83,7 @@ public interface BoardMapper{
 
             Long likeCount = response.getLikeCount();
 
-            int bookmark = bookmarkService.checkBookmark(response.getBoardId(), userId);
+            int bookmark = bookmarkService.checkBookmark( userId , response.getBoardId());
 
             List<BoardTag> list = response.getBoardTag();
             List<BoardTagDto.Response> responsesTag = new ArrayList<>();

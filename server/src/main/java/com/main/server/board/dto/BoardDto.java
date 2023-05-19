@@ -14,12 +14,7 @@ import java.util.List;
 
 @Data
 public class BoardDto {
-    @Getter
-    @AllArgsConstructor
-    public static class Basic{
-        private long memberId;
-        private long boardId;
-    }
+
     @Getter
     @AllArgsConstructor
     public static class Post{
