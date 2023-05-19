@@ -6,6 +6,7 @@ import com.main.server.comment.dto.CommentDto;
 import com.main.server.comment.entity.Comment;
 import com.main.server.comment.mapper.CommentMapper;
 import com.main.server.comment.service.CommentService;
+import com.main.server.member.repository.MemberRepository;
 import com.main.server.utils.UriCreator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -29,6 +30,9 @@ public class CommentController {
     @Autowired
     private CommentMapper commentMapper;
 
+    @Autowired
+    private MemberRepository memberRepository;
+
     // 댓글 추가 API
 
 
@@ -43,10 +47,12 @@ public class CommentController {
     //List<Comment> commentList = commentService.getCommentsByBoardId(boardId);
     //return ResponseEntity.ok(commentList);
 
-    @PostMapping //댓글등록,,,, db에 등록 //페이지 안바뀌고 댓글이 추가됨..데이터를,,리턴값이
+    @PostMapping() //댓글등록,,,, db에 등록 //페이지 안바뀌고 댓글이 추가됨..데이터를,,리턴값이
     public ResponseEntity postComment(@Valid @RequestBody CommentDto.Post commentPostDto) {
 
-        Comment returncomment = commentService.createComment(commentMapper.commentPostDtoToComment2(commentPostDto)); //이게 엔티티가 반환됨 dto를 엔티티로 바꾸는거니깐 commenr로 빊ㅘㄴ
+        Comment returncomment = commentService.createComment(commentMapper.commentPostDtoToComment2(commentPostDto, memberRepository)); //이게 엔티티가 반환됨 dto를 엔티티로 바꾸는거니깐 commenr로 빊ㅘㄴ
+
+
         return new ResponseEntity<>(commentMapper.commentToCommentPostDto(returncomment), HttpStatus.OK);
 
     }

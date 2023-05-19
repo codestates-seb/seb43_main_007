@@ -35,6 +35,9 @@ public class CommentService {
     }
 
     public Comment createComment(Comment comment) { //댓글을 생성된걸 받는거
+        if(comment.getParent() == null){
+
+        }
         return commentRepository.save(comment); //컨트롤러로객체반환 받은걸 다시 프론트에 반환
 
     }

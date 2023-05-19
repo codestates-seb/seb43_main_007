@@ -9,6 +9,8 @@ import com.main.server.board.entity.BoardTag;
 import com.main.server.board.repository.BoardRepository;
 import com.main.server.bookmark.repository.BookmarkRepository;
 import com.main.server.bookmark.service.BookmarkService;
+import com.main.server.comment.dto.CommentDto;
+import com.main.server.comment.entity.Comment;
 import com.main.server.member.entity.Member;
 import com.main.server.tag.entity.Tag;
 import com.main.server.tag.service.TagService;
@@ -58,6 +60,7 @@ public interface BoardMapper{
                 return null;
             }
 
+
             String title = null;
             String content = null;
             String address = null;
@@ -90,8 +93,15 @@ public interface BoardMapper{
             for(BoardTag x : list){
                 responsesTag.add(new BoardTagDto.Response(x.getTag().getTagId(), x.getTag().getTagName()));
             }
+            List<Comment> comments = response.getComments();
+            List<CommentDto.Response> commentlist = new ArrayList<>();
+            for(Comment c : comments){
+                long parent = (c.getParent()==null) ? 0 : c.getParent().getCommentId();
+                commentlist.add(new CommentDto.Response(c.getMember().getNickname(), c.getMember().getProfileImageUrl(),
+                        c.getContent(), c.getCreatedAt(), c.getCommentId(), parent));
+            }
             BoardDto.Response response1 = new BoardDto.Response(boardId, memberId, title, content, address, now, photo, bookmark,
-                    nickName, userPhoto, category,pin, likeCheck, likeCount, responsesTag );
+                    nickName, userPhoto, category,pin, likeCheck, likeCount, responsesTag, commentlist );
 
             return response1;
         }

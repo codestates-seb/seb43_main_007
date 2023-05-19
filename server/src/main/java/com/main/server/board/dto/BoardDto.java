@@ -1,6 +1,7 @@
 package com.main.server.board.dto;
 
 import com.main.server.board.entity.BoardTag;
+import com.main.server.comment.dto.CommentDto;
 import com.main.server.tag.entity.Tag;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -79,6 +80,8 @@ public class BoardDto {
 
         private long likeCount;
         private List<BoardTagDto.Response> tags;
+
+        private List<CommentDto.Response> comments;
 
     }
 }
