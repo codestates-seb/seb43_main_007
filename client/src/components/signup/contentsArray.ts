@@ -1,5 +1,5 @@
 import validFunc from "../../util/signinValidFunc";
-import { SignupTypes } from "./SignupTypes";
+import { SignupTypes } from "./signupTypes";
 
 interface InputContents {
    labelName: string;

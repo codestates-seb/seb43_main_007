@@ -27,14 +27,22 @@ function BookmarkPagination({
          <button
             type="button"
             className="button prev"
+            onClick={() => handleButtonClick(1)}
+            disabled={currentPage <= 1}
+         >
+            &lt;&lt;
+         </button>
+         <button
+            type="button"
+            className="button prev"
             onClick={() => handleButtonClick(currentPage - 1)}
             disabled={currentPage <= 1}
          >
-            Prev
+            &lt;
          </button>
          {pageButtons.map((_, i) => {
             let key = i;
-            if (currentPage >= 4) key = i + currentPage - 3;
+            key += 5 * Math.floor((currentPage - 1) / 5);
             if (key + 1 > maxPages) return null;
             return (
                <button
@@ -56,7 +64,15 @@ function BookmarkPagination({
             onClick={() => handleButtonClick(currentPage + 1)}
             disabled={currentPage >= maxPages}
          >
-            Next
+            &gt;
+         </button>
+         <button
+            type="button"
+            className="button next"
+            onClick={() => handleButtonClick(maxPages)}
+            disabled={currentPage >= maxPages}
+         >
+            &gt;&gt;
          </button>
       </BookmarkPaginationContainer>
    );
@@ -95,6 +111,6 @@ const BookmarkPaginationContainer = styled.div`
    }
    .prev,
    .next {
-      width: 3.5em;
+      width: 2em;
    }
 `;

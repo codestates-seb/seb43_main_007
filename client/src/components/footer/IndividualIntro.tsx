@@ -1,13 +1,9 @@
 import styled from "styled-components";
+import { MemberInfoType } from "./memberInfo";
 
-interface Props {
-   name: string;
-   img: string;
-}
-
-function IndividualIntro({ name, img }: Props) {
+function IndividualIntro({ name, img, githubUrl }: MemberInfoType) {
    return (
-      <IndividualIntroContainer>
+      <IndividualIntroContainer href={githubUrl} target="_blank">
          <span className="member-name">{name}</span>
          <img className="member-icon" src={img} alt="icon" />
       </IndividualIntroContainer>
@@ -16,19 +12,21 @@ function IndividualIntro({ name, img }: Props) {
 
 export default IndividualIntro;
 
-const IndividualIntroContainer = styled.div`
+const IndividualIntroContainer = styled.a`
    display: flex;
    justify-content: center;
    align-items: center;
    flex-direction: column;
-   width: 130px;
+   width: 120px;
+   text-decoration: none;
+   color: var(--third-color4);
    .member-name {
-      font-size: 20px;
+      font-size: var(--font-large);
    }
    .member-icon {
       border-radius: 50%;
-      width: 100px;
-      height: 90px;
+      width: 80px;
+      height: 80px;
       margin-top: 5px;
    }
 `;

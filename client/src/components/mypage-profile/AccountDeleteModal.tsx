@@ -1,14 +1,32 @@
 import styled from "styled-components";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router";
 import { AccountDeleteModalProps } from "./profileTypes";
+import { RootState } from "../../store/store";
+import { deleteAccount } from "../../api/axios";
+import { serverError } from "../../util/toastify";
 
 function AccountDeleteModal({ open, close }: AccountDeleteModalProps) {
+   const navigate = useNavigate();
+   const memberId = useSelector((state: RootState) => state.memberId);
+
+   const handleDeleteAccount = async () => {
+      const response = await deleteAccount(memberId);
+      if (response) {
+         navigate("/");
+      } else {
+         serverError();
+      }
+   };
    return (
       <ModalContainer className={open ? "openModal" : "closeModal"}>
          <ModalContentBox>
             <h1>계정 삭제</h1>
             <p>정말로 계정을 삭제하시겠습니까?</p>
             <div className="button-container">
-               <DeleteButton>계정 삭제</DeleteButton>
+               <DeleteButton onClick={handleDeleteAccount}>
+                  계정 삭제
+               </DeleteButton>
                <CancelButton onClick={close}>취소</CancelButton>
             </div>
             {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}

@@ -11,6 +11,7 @@ import PostDetail from "./PostDetail";
 import CreatePostPage from "./CreatePostPage";
 import MypageBookmark from "./MypageBookmark";
 import Footer from "../components/footer/Footer";
+import MypageMylist from "./MypageMypost";
 
 function RoutingPage() {
    const { pathname } = useLocation();
@@ -21,17 +22,19 @@ function RoutingPage() {
    }, [pathname]);
    return (
       <Container>
+         {condition ? <Navbar /> : null}
          <MainBox>
-            {condition ? <Navbar /> : null}
             <Routes>
                <Route path="/" element={<Home />} />
                <Route path="/myprofile" element={<MypageProfile />} />
                <Route path="/bookmark" element={<MypageBookmark />} />
+               <Route path="/mypost" element={<MypageMylist />} />
                <Route path="/communitylist" element={<CommunityList />} />
+               <Route path="/communitylist/:cate" element={<CommunityList />} />
                <Route path="/createpost" element={<CreatePostPage />} />
                <Route path="/signup" element={<Signup />} />
                <Route path="/login" element={<Login />} />
-               <Route path="/post" element={<PostDetail />} />
+               <Route path="/post/:boardId" element={<PostDetail />} />
             </Routes>
          </MainBox>
          {condition ? <Footer /> : null}
@@ -51,5 +54,6 @@ const Container = styled.div`
 
 const MainBox = styled.div`
    display: flex;
+   margin-left: 300px;
    min-height: 100vh;
 `;

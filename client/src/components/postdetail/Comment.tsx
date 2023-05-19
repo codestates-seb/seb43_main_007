@@ -1,15 +1,17 @@
 import styled from "styled-components";
 import { CommentProps } from "./postDetailTypes";
 import CreateReply from "./CreateReply";
+import Reply from "./Reply";
 
 function Comment({
    comment,
    handleReplySubmit,
    handleReplyClick,
    isReplySelected,
+   selectedCommentId,
 }: CommentProps) {
    const handleReplySubmitWrapper = (content: string) => {
-      handleReplySubmit(content);
+      handleReplySubmit(comment.commentId, content);
    };
 
    return (
@@ -47,6 +49,10 @@ function Comment({
                onCancel={() => handleReplyClick(null)}
             />
          )}
+         {comment.replies &&
+            comment.replies.map((reply) => (
+               <Reply key={reply.commentId} comment={reply} />
+            ))}
       </>
    );
 }
@@ -56,7 +62,7 @@ export default Comment;
 export const CommentContainer = styled.li`
    width: 100%;
    padding: 10px 0 10px 15px;
-   border-bottom: 1px solid #dfdfdf;
+   border-bottom: 1px solid var(--light-gray);
    display: flex;
    justify-content: space-between;
 `;

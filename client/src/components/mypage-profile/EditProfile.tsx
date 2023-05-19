@@ -5,16 +5,20 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { RootState } from "../../store/store";
 import validFunc from "../../util/signinValidFunc";
 import { setPhoto, resetPhoto } from "../../reducers/profilePhotoSlice";
-import { SignupTypes } from "../signup/SignupTypes";
+import { SignupTypes } from "../signup/signupTypes";
 import { setNickname } from "../../reducers/profileNicknameSlice";
-import { updateNickname, updateUserProfilePhoto } from "../../api/axios";
+import {
+   resetUserProfilePhoto,
+   updateNickname,
+   updateUserProfilePhoto,
+} from "../../api/axios";
 import {
    nicknameChangeRetry,
    nicknameChangeSuccess,
    photoChangeError,
    photoChangeSuccess,
    serverError,
-} from "./profileToastify";
+} from "../../util/toastify";
 
 function EditProfile() {
    // useForm setup
@@ -91,8 +95,15 @@ function EditProfile() {
    };
 
    const handleDelete = () => {
-      dispatch(resetPhoto());
-      setFileName("");
+      resetUserProfilePhoto(memberId)
+         .then(() => {
+            dispatch(resetPhoto());
+            setFileName("");
+         })
+         .catch((error) => {
+            console.error("프로필 사진 초기화에 실패하였습니다.", error);
+            photoChangeError();
+         });
    };
 
    return (
@@ -197,7 +208,7 @@ export const InputButtonContainer = styled.div`
       height: 32px;
       margin-right: 15px;
       font-size: 13px;
-      border: 1px solid #dfdfdf;
+      border: 1px solid var(--light-gray);
    }
 
    input:focus {

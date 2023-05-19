@@ -34,9 +34,9 @@ function CommuDropDown({ item, setItem }: CommuDropProps) {
 
    const dropdownItems = [
       { id: 1, name: "카페" },
-      { id: 2, name: "리필 스테이션" },
+      { id: 2, name: "리필스테이션" },
       { id: 3, name: "식당" },
-      { id: 4, name: "식료폼" },
+      { id: 4, name: "식료품" },
       { id: 5, name: "전기차" },
    ];
 

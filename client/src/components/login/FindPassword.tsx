@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import validFunction from "../../util/signinValidFunc";
 import LoginModal from "./LoginModal";
 import { findPassword } from "../../api/axios";
-import { FindPasswordType } from "./LoginType";
+import { FindPasswordType } from "./loginType";
 
 function FindPassword() {
    const {
@@ -26,27 +26,27 @@ function FindPassword() {
    }, []);
 
    const onSubmit: SubmitHandler<FindPasswordType> = async (data) => {
-      // 비밀번호 찾기 요청 함수자리
-      // 비밀번호 찾기 성공시 modal 창으로 비밀번호 띄워주기
       const response = await findPassword(data);
-      setMessage({
-         text1: "회원님의 비밀번호는",
-         text2: "qwer1234 입니다.",
-      });
+      if (typeof response === "object") {
+         // 성공 메시지
+         setMessage({
+            text1: "회원님의 임시 비밀번호는",
+            text2: `${response.data} 입니다.`,
+         });
+      } else if (response === 400) {
+         // 비밀번호 찾기 실패(해당하는 정보 없음)
+         setMessage({
+            text1: "해당하는 회원정보가 없습니다.",
+            text2: "다시 한번 확인해주세요.",
+         });
+      } else {
+         // 다른 오류
+         setMessage({
+            text1: "서버와 통신이 원활하지 않습니다.",
+            text2: "다시 시도해 주세요.",
+         });
+      }
       setIsModalOpen(true);
-      // 비밀번호 찾기 실패시 실패 modal 창 띄우기
-      // setMessage({
-      //    text1: "기입하신 정보가 잘못되었습니다.",
-      //    text2: "다시 한번 확인해주세요.",
-      // });
-      // setIsModalOpen(true);
-      // 서버와 통신이 원활하지 않을 때
-      // setMessage({
-      //    text1: "서버와 통신이 원활하지 않습니다.",
-      //    text2: "다시 시도해 주세요.",
-      // });
-      // setIsModalOpen(true);
-      console.log(response);
    };
 
    const questionList = [

@@ -31,7 +31,7 @@ export default CreateComment;
 
 export const CreateCommentContainer = styled.div`
    background-color: var(--first-color2);
-   border-bottom: 1px solid #dfdfdf;
+   border-bottom: 1px solid var(--light-gray);
    padding: 15px;
    display: flex;
    align-items: center;
@@ -54,7 +54,7 @@ export const CommentInputBox = styled.div`
       height: 50px;
       width: 895px;
       resize: none;
-      border: 1px solid #dfdfdf;
+      border: 1px solid var(--light-gray);
       border-radius: 3px;
 
       &:focus {

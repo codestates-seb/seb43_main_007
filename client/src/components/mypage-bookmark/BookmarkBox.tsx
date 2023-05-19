@@ -5,7 +5,7 @@ import { dummyBookmark } from "./dummyBookmark";
 import BookmarkPagination from "./BookmarkPagination";
 
 function BookmarkBox() {
-   const manyDummy = new Array(11).fill([...dummyBookmark]).flat();
+   const manyDummy = new Array(22).fill([...dummyBookmark]).flat();
    const totalDataCount = manyDummy.length;
    const [currentPage, setCurrentPage] = useState(1);
    // 페이지당 item 개수

@@ -1,11 +1,19 @@
 import styled from "styled-components";
-import teamicon from "../../assets/img/teamicon.png";
+import githubIcon from "../../assets/img/github-icon.png";
 
 function TeamInfo() {
    return (
       <TeamInfoContainer>
-         <img className="icon" src={teamicon} alt="team-icon" />
-         <span>Team. 메인플스토리</span>
+         <a
+            className="icon-box"
+            href="https://github.com/codestates-seb/seb43_main_007"
+            target="_blank"
+            rel="noreferrer"
+         >
+            <img className="icon" src={githubIcon} alt="team-icon" />
+         </a>
+         <span className="text project-name">나만의 친환경</span>
+         <span className="text team-name">Team. 메인플스토리</span>
       </TeamInfoContainer>
    );
 }
@@ -16,11 +24,23 @@ const TeamInfoContainer = styled.div`
    display: flex;
    flex-direction: column;
    justify-content: center;
-   align-items: center;
-   width: 200px;
-   .icon {
-      width: 130px;
-      height: 150px;
+   width: auto;
+   .icon-box {
+      width: 100%;
+      display: flex;
+      justify-content: center;
       margin-bottom: 5px;
+      .icon {
+         width: 30px;
+         height: 30px;
+         margin: 5px;
+      }
+   }
+
+   .text {
+      margin-bottom: 10px;
+   }
+   .project-name {
+      font-size: 25px;
    }
 `;

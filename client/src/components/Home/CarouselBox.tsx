@@ -1,5 +1,8 @@
 import styled from "styled-components";
 import ContentsBox from "./ContentsBox";
+import editorPickDummyContents from "./editorPickDummyContents";
+import { Post } from "../postdetail/postDetailTypes";
+import usePost from "../../hooks/usePost";
 
 interface Props {
    pickNumber: number;
@@ -11,14 +14,26 @@ interface ContainerT {
 }
 
 function CarouselBox({ pickNumber, carouselTransition }: Props) {
-   const contentsArr = [-1, 0, 1, 2, 3, 4, 5, 6, 7];
+   const parseArr = [
+      editorPickDummyContents[0],
+      editorPickDummyContents[5],
+      ...editorPickDummyContents.slice(1),
+      editorPickDummyContents[1],
+      editorPickDummyContents[0],
+   ];
+   // const { post } = usePost("18");
+   // if (!post) {
+   //    return <div>Loading...</div>;
+   // }
+   // const parseArr: Post[] = [post, post, post, post, post, post, post];
    return (
       <CarouselBoxContainer
          pickNumber={pickNumber}
          carouselTransition={carouselTransition}
       >
-         {contentsArr.map((content) => {
-            return <ContentsBox key={content} content={content} />;
+         {parseArr.map((pick, idx) => {
+            const key = idx;
+            return <ContentsBox key={key} post={pick} id={key} />;
          })}
       </CarouselBoxContainer>
    );
@@ -31,7 +46,7 @@ const CarouselBoxContainer = styled.div<ContainerT>`
    align-items: center;
    transform: translateX(
       ${({ pickNumber }) => {
-         return `${-630 - pickNumber * 720}px`;
+         return `${-680 - pickNumber * 720}px`;
       }}
    ); //720px씩 넘기기
    transition: ${({ carouselTransition }) => carouselTransition};

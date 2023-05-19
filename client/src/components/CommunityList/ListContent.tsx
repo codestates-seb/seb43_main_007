@@ -3,8 +3,11 @@ import styled from "styled-components";
 import { RiSeedlingLine, RiSeedlingFill } from "react-icons/ri";
 import { BsPin, BsPinFill } from "react-icons/bs";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import { RootState } from "../../store/store";
 import type { ListData } from "./listTypes";
-import { likeBookMarkPatch } from "../../api/axios";
+import { likePatch, bookMarkPost, pinPost } from "../../api/axios";
 
 function ListContent({ userDatas }: { userDatas: ListData }) {
    // 관리자(매니저)인지 (로컬에서 관리?)
@@ -12,7 +15,7 @@ function ListContent({ userDatas }: { userDatas: ListData }) {
    // 에디터 픽 유무(리덕스 관리?)-리덕스 툴킷으로 로컬할 수 있는거 찾아보기
    const [isEditerPick, setIsEditerPick] = useState(false);
    // 고정 유무(리덕스 툴킷으로 관리?)
-   const [isFixPin, setIsFixPin] = useState(false);
+   const [isFixPin, setIsFixPin] = useState(userDatas.pin);
    const [isFixPinNumber, setIsFixPinNumber] = useState(0);
    // 좋아요 유무
    const [isLike, setIsLike] = useState(userDatas.like);
@@ -21,36 +24,47 @@ function ListContent({ userDatas }: { userDatas: ListData }) {
 
    // 고정 클릭 이벤트
    const pinFixClickHandler = () => {
-      setIsFixPin(!isFixPin);
+      if (isFixPin === 0) {
+         setIsFixPin(1);
+         pinPost(userDatas.boardId);
+      } else if (isFixPin === 1) {
+         setIsFixPin(0);
+         pinPost(userDatas.boardId);
+      }
    };
+
+   // --- 리덕스 store에서 가져온 멤버 id값
+   const memberId = useSelector((state: RootState) => state.memberId);
+   console.log(memberId);
 
    // 좋아요 클릭 이벤트
    const likeClickHandler = () => {
       const req = {
-         memberId: 1,
+         memberId,
          boardId: userDatas.boardId,
+         boardLike: isLike,
       };
       if (isLike === 0) {
          setIsLike(1);
-         likeBookMarkPatch("like", req);
+         likePatch(req);
       } else if (isLike === 1) {
          setIsLike(0);
-         likeBookMarkPatch("like", req);
+         likePatch(req);
       }
    };
 
    // 북마크 클릭 이벤트
    const bookMarkClickHandler = () => {
       const req = {
-         memberId: 1,
+         memberId,
          boardId: userDatas.boardId,
       };
       if (isBookMark === 0) {
          setIsBookMark(1);
-         likeBookMarkPatch("bookmark", req);
+         bookMarkPost(req);
       } else if (isBookMark === 1) {
          setIsBookMark(0);
-         likeBookMarkPatch("bookmark", req);
+         bookMarkPost(req);
       }
    };
 
@@ -71,7 +85,9 @@ function ListContent({ userDatas }: { userDatas: ListData }) {
                   {isEditerPick ? (
                      <DivEditerPick className="editer">{`Editer's Pick`}</DivEditerPick>
                   ) : null}
-                  <div>{userDatas.title}</div>
+                  <Link to={`/post/${userDatas.boardId}`}>
+                     <span>{userDatas.title}</span>
+                  </Link>
                </div>
                {/* 프로필+이름 / 고정 */}
                <div className="div-author">
@@ -168,6 +184,15 @@ const DivContent = styled.div`
 
       div {
          font-size: var(--font-large);
+      }
+
+      a {
+         text-decoration: none;
+         color: black;
+         :hover {
+            color: var(--first-color4);
+            text-decoration: underline;
+         }
       }
    }
    .div-author {

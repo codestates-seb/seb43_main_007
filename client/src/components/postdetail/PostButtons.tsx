@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { useState } from "react";
 import PostDeleteModal from "./PostDeleteModal";
 
-function PostButtons() {
+function PostButtons({ handleDeletePost }: { handleDeletePost: () => void }) {
    const [modalOpen, setModalOpen] = useState(false);
 
    const openModal = () => {
@@ -15,7 +15,7 @@ function PostButtons() {
    return (
       <PostButtonContainer>
          <EditDeleteContainer>
-            <button className="postdetail-btn" type="button">
+            <button className="postdetail-btn edit-btn" type="button">
                수정
             </button>
             <span className="separator">|</span>
@@ -26,7 +26,11 @@ function PostButtons() {
             >
                삭제
             </button>
-            <PostDeleteModal open={modalOpen} close={closeModal} />
+            <PostDeleteModal
+               open={modalOpen}
+               close={closeModal}
+               handleDeletePost={handleDeletePost}
+            />
          </EditDeleteContainer>
          <button className="postdetail-btn" type="button">
             목록으로
@@ -50,6 +54,10 @@ export const PostButtonContainer = styled.div`
       background-color: transparent;
       font-size: 13px;
       cursor: pointer;
+   }
+
+   .edit-btn {
+      padding-left: 0;
    }
 `;
 

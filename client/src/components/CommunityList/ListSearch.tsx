@@ -1,19 +1,31 @@
-import { useRef, useState } from "react";
+import { Dispatch, SetStateAction, useRef } from "react";
 import styled, { css } from "styled-components";
 import { BiUpArrowCircle, BiDownArrowCircle } from "react-icons/bi";
 import { Link } from "react-router-dom";
 import useDetectClose from "../../hooks/useDetectClose";
 import TitleValue from "./TitleValue";
-import { listSearchGet } from "../../api/axios";
 
-function ListSearch() {
+type SearchProps = {
+   search: string;
+   setSearch: Dispatch<SetStateAction<string>>;
+   setTitle: Dispatch<SetStateAction<string>>;
+   title: string;
+   searchSubmitHandler: () => void;
+};
+
+// 프롭으로 상태변경 함수를 넘겨서 검색후 get데이터를 부모로 넘겨준다.
+function ListSearch({
+   search,
+   setSearch,
+   setTitle,
+   title,
+   searchSubmitHandler,
+}: SearchProps) {
    const dropDownRef = useRef(null);
-   // 드롭다운 상태
-   const [title, setTitle] = useState("제목");
-   const titlesList = ["제목", "내용", "제목+내용"];
 
-   // 검색창 상태
-   const [serach, setSerach] = useState("");
+   // 드롭다운 카테고리 배열
+   const titlesList = ["제목", "내용", "제목+내용"];
+   // 드롭다운 클릭 여부
    const [isOpen, setIsOpen] = useDetectClose(dropDownRef, false);
 
    // 드롭다운 버튼 클릭 함수
@@ -23,25 +35,9 @@ function ListSearch() {
 
    // 검색창 데이터값 가져오는 핸들러 함수
    const searchHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-      setSerach(event.target.value);
+      setSearch(event.target.value);
    };
-   const searchSubmitHandler = () => {
-      console.log(serach);
 
-      if (title === "제목") {
-         console.log("제목 실행?");
-         listSearchGet("", `title=${serach}`, "");
-      }
-      if (title === "내용") {
-         console.log("내용 실행?");
-         listSearchGet("", "", `content=${serach}`);
-      }
-      if (title === "제목+내용") {
-         console.log("제목+내용 실행?");
-         listSearchGet("", `title=${serach}&`, `content=${serach}`);
-      }
-      setSerach("");
-   };
    const searchEnterHandler = (
       event: React.KeyboardEvent<HTMLInputElement>
    ) => {
@@ -93,7 +89,7 @@ function ListSearch() {
                <div className="search-div">
                   <input
                      type="text"
-                     value={serach}
+                     value={search}
                      onChange={searchHandler}
                      onKeyPress={searchEnterHandler}
                   />

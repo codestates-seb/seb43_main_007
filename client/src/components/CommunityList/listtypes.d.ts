@@ -16,6 +16,12 @@
 //    avatarUrl?: string;
 // };
 
+export type Likereq = {
+   memberId: number;
+   boardId: number;
+   boardLike?: number;
+};
+
 export type PageInfo = {
    page: number; // 현재 페이지
    size: number; // 한 페이지에서 몇개가 보일지
@@ -30,6 +36,7 @@ export type ListData = {
    address: string;
    now: any;
    photo: any;
+   pin: number;
    like: number;
    bookmark: number;
    nickName: string;
