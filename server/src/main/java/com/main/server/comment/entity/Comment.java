@@ -10,16 +10,12 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.sql.Timestamp;
 import java.util.Date;
+
 @Entity
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-//@RequiredArgsConstructor
-//@Setter
-//@Getter
-//@ToString
-//@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Table(name = "comments")
 public class
 Comment { //엔티티의 역할? 테이블 설계
@@ -33,7 +29,7 @@ Comment { //엔티티의 역할? 테이블 설계
 
 
         @ManyToOne
-        @JoinColumn(name = "member_Id")
+        @JoinColumn(name = "member_id")
         private Member member;
 
 

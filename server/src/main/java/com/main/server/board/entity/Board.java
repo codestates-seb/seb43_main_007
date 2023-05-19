@@ -31,6 +31,9 @@ public class Board {
     @Column()
     private String address;
 
+    @Column()
+    private String category;
+
     @Column(nullable = false)
     private LocalDateTime now = LocalDateTime.now();
 
@@ -39,6 +42,12 @@ public class Board {
 
     private Member member;
 
+
+    @Column()
+    private int bookmark;
+
+    @Column()
+    private int pin;
 
 //    private Long like;
 

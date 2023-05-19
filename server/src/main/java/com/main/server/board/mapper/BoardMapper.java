@@ -34,6 +34,9 @@ public interface BoardMapper{
                 })
                 .collect(Collectors.toList());
 
+        board.setCategory(post.getCategory());
+        board.setPin(0);
+        board.setAddress(post.getAddress());
         board.setTitle( post.getTitle() );
         board.setContent( post.getContent() );
         board.setBoardTag(boardTags);
@@ -53,25 +56,30 @@ public interface BoardMapper{
             String address = null;
             LocalDateTime now = null;
             long boardId = 0;
+            long memberId = 0;
+            String category = null;
+            int pin = 0;
 
-
+            memberId = response.getMember().getMemberId();
+            category = response.getCategory();
             boardId = response.getBoardId();
             title = response.getTitle();
             content = response.getContent();
             address = response.getAddress();
             now = response.getNow();
+            pin = response.getPin();
 
             String photo = "http://www.planet-times.com/Files/320/Images/202206/2022060332507773.jpg";
             String nickName = "InGeon";
             String userPhoto = "https://upload.wikimedia.org/wikipedia/ko/thumb/8/81/Spongebob_4795.jpg/345px-Spongebob_4795.jpg";
             int like = 0;
-            int bookmark = 1;
+            int bookmark = response.getBookmark();
             List<BoardTag> list = response.getBoardTag();
             List<BoardTagDto.Response> responsesTag = new ArrayList<>();
             for(BoardTag x : list){
                 responsesTag.add(new BoardTagDto.Response(x.getTag().getTagId(), x.getTag().getTagName()));
             }
-            BoardDto.Response response1 = new BoardDto.Response( boardId, title, content, address, now, photo, like, bookmark, nickName, userPhoto, responsesTag );
+            BoardDto.Response response1 = new BoardDto.Response(boardId, memberId, title, content, address, now, photo, like, bookmark, nickName, userPhoto, category,pin,responsesTag );
 
             return response1;
         }

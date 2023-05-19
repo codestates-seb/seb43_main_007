@@ -58,18 +58,18 @@ public class CommentController {
         commentPutDto.setCommentId(commentId); //
         Comment comment = commentMapper.commentPutDtoToComment(commentPutDto);
         Comment response = commentService.updateComment(comment);
-        
+
         return new ResponseEntity<>(commentMapper.CommentToCommentPutDto(response), HttpStatus.OK);
     }
 
-        @DeleteMapping("/{comment-id}")
-        public ResponseEntity deleteComment(@PathVariable("comment-id") @Positive long commentId){
-            commentService.deleteComment(commentId);
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-
-        }
+    @DeleteMapping("/{comment-id}")
+    public ResponseEntity deleteComment(@PathVariable("comment-id") @Positive long commentId) {
+        commentService.deleteComment(commentId);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 
     }
+
+}
 
 
 
