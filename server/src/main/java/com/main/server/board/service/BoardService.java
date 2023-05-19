@@ -6,16 +6,17 @@ import com.main.server.board.entity.Board;
 import com.main.server.board.entity.BoardTag;
 import com.main.server.board.repository.BoardRepository;
 import com.main.server.board.repository.BoardTagRepository;
+import com.main.server.bookmark.entity.Bookmark;
+import com.main.server.bookmark.repository.BookmarkRepository;
 import com.main.server.exception.BusinessLogicException;
 import com.main.server.member.entity.Member;
+import com.main.server.member.repository.MemberRepository;
 import com.main.server.member.service.MemberService;
 import com.main.server.tag.entity.Tag;
 import com.main.server.tag.repository.TagRepository;
 import com.main.server.tag.service.TagService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.main.server.exception.ExceptionCode;
@@ -37,17 +38,67 @@ public class BoardService {
 
     private final TagRepository tagRepository;
 
-
+    private final MemberRepository memberRepository;
+    private final BookmarkRepository bookmarkRepository;
     public Board getBoard(long boardId) {
 
 
         return findVerifiedBoard(boardId);
     }
+    public int checkBookmark(long memberId, long boardId){
+        Optional<Member> member = memberRepository.findById(memberId);
+        if(member.isPresent()){
+            Optional<Bookmark> bookmark = bookmarkRepository.findByMemberAndBoardId(member.get(), boardId);
+            if(bookmark.isPresent()){
+                return 1;
+            }else{
+                return 0;
+            }
+        }
+        return 0;
+    }
 
-    public Page<Board> getAllBoard(Pageable pageable) {
-        Page<Board> boards = boardRepository.findAll(pageable);
-        List<Board> updatedBoards = boards.getContent().stream().map(board -> c(board)).collect(Collectors.toList());
-        return new PageImpl<>(updatedBoards, pageable, boards.getTotalElements());
+    public Page<Board> getAllBoard(Pageable pageable, String cate, String title, String content, long memberId) {
+
+        Page<Board> boards = boardRepository.findAllByOrderByPinDescBoardIdDesc(pageable);
+        if(!cate.equals("")) { //카테고리만 입력
+            if(title.equals("") && content.equals("")){
+                Page<Board> filteredBoards1 = boardRepository.findByCategoryContaining(cate, pageable); // 카테 리스트
+                Page<Board> b = new PageImpl<>(filteredBoards1.toList(), pageable, filteredBoards1.getTotalElements());
+                return b;
+            }else if(!title.equals("") && content.equals("")) { // 카테고리+제목
+                Page<Board> filteredBoards2 = boardRepository.findByCategoryAndTitleContaining(cate, title, pageable);
+                Page<Board> b = new PageImpl<>(filteredBoards2.toList(), pageable, filteredBoards2.getTotalElements());
+                return b;
+            }else if(title.equals("") && !content.equals("")){ //카테고리+컨텐츠
+                Page<Board> filteredBoards3 = boardRepository.findByCategoryAndContentContaining(cate, content, pageable);
+                Page<Board> b = new PageImpl<>(filteredBoards3.toList(), pageable, filteredBoards3.getTotalElements());
+                return b;
+            }else{ //카테고리 + 컨텐츠 + 제목
+                Page<Board> filteredBoards4 = boardRepository.findByCategoryAndContentContainingOrTitleContaining(cate, content,title, pageable);
+                Page<Board> b = new PageImpl<>(filteredBoards4.toList(), pageable, filteredBoards4.getTotalElements());
+                return b;
+            }
+        }else{
+            if(title.equals("") && content.equals("")){ // 전체게시글
+                Page<Board> b = new PageImpl<>(boards.toList(), pageable, boards.getTotalElements());
+                return b;
+            }else if(!title.equals("") && content.equals("")) { //제목
+                Page<Board> filteredBoards2 = boardRepository.findByTitleContaining(title, pageable);
+                Page<Board> b = new PageImpl<>(filteredBoards2.toList(), pageable, filteredBoards2.getTotalElements());
+                return b;
+            }else if(title.equals("") && !content.equals("")){ //컨텐츠
+                Page<Board> filteredBoards3 = boardRepository.findByContentContaining( content, pageable);
+                Page<Board> b = new PageImpl<>(filteredBoards3.toList(), pageable, filteredBoards3.getTotalElements());
+                return b;
+            }else{ //컨텐츠 + 제목
+                Page<Board> filteredBoards4 = boardRepository.findByContentContainingOrTitleContaining(content,title, pageable);
+                Page<Board> b = new PageImpl<>(filteredBoards4.toList(), pageable, filteredBoards4.getTotalElements());
+                return b;
+            }
+
+        }
+//        return boards;
     }
 
     public Board putBoard(Board board) {
@@ -59,6 +110,20 @@ public class BoardService {
         Optional.ofNullable(board.getAddress())
                 .ifPresent(address -> originBoard.setAddress(address));
         return boardRepository.save(originBoard);
+    }
+    public void cretatePin(long boardId) {
+        Optional<Board> board = boardRepository.findById(boardId);
+        if(board.isPresent()) {
+            Board boardDB = board.get();
+            if(boardDB.getPin()==1) {
+                boardDB.setPin(0);
+            }
+            else {
+                pinCheck(); // pin이 3개이상이면 하나를 지운다.
+                boardDB.setPin(1);
+            }
+            boardRepository.save(boardDB);
+        }
     }
 
     public void deleteBoard(long boardId) {
@@ -84,6 +149,17 @@ public class BoardService {
                         new BusinessLogicException(ExceptionCode.BOARD_NOT_FOUND));
         return findBoard;
     }
+
+    public void pinCheck(){
+        List<Board> boards = boardRepository.findAllByPin(1);
+        if(boards.size()==3){
+            Board board = boards.get(0);
+            board.setPin(0);
+            boardRepository.save(board);
+        }
+
+    }
+
 
 
     private void putInformationForTag(Board board) {

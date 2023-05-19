@@ -11,9 +11,7 @@ import com.main.server.dto.MultiResponseDto;
 import com.main.server.tag.entity.Tag;
 import com.main.server.utils.UriCreator;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -41,14 +39,20 @@ public class BoardController {
     private final AmazonS3 s3Client;
 
     @PostMapping()
-    public ResponseEntity postBoard(@RequestBody @Valid BoardDto.Post boardPostDto){
+    public ResponseEntity postBoard(@RequestBody @Valid BoardDto.Post boardPostDto) {
         Board board = boardService.createBoard(boardMapper.boardDtoToBoard(boardPostDto));
         URI location = UriCreator.createUri("/boards", board.getBoardId());
         return ResponseEntity.created(location).build();
     }
 
+    @PostMapping("/pin/{boardId}")
+    public ResponseEntity postPin(@PathVariable("boardId") @Positive long boardId) {
+        boardService.cretatePin(boardId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
     @PostMapping("/photo")
-    public String postPhoto(@RequestParam(value = "file") MultipartFile file){
+    public String postPhoto(@RequestParam(value = "file") MultipartFile file) {
 
         return service.uploadFile(file);
     }
@@ -60,46 +64,40 @@ public class BoardController {
 //        return new ResponseEntity<>(boardMapper.boardToBoardResponse(response), HttpStatus.OK);
 //    }
 
-    @GetMapping("/{boardId}")
-    public void getsBoard(@PathVariable("boardId") @Positive String boardId){
+    @GetMapping("/board/{boardId}")
+    public ResponseEntity getBoard(@PathVariable("boardId") @Positive long boardId) {
+        Board response = boardService.getBoard(boardId);
 
-        System.out.println(boardId);
+        return new ResponseEntity<>(boardMapper.boardToBoardResponse(response), HttpStatus.OK);
     }
 
-//    @GetMapping()
-//    public ResponseEntity getAllBoard(@RequestParam(name = "page", defaultValue = "0") int page
-//            ,@PageableDefault(sort = "boardId", direction = Sort.Direction.DESC) Pageable pageable){
-//        if(page>0) page--;
-//        pageable = pageable.withPage(page);
-//
-//        Page<Board> boards= boardService.getAllBoard(pageable);
-//
-//
-//        List<Board> boardList = boards.getContent();
-//        List<BoardDto.Response> responses = boardList.stream().map(boardMapper::boardToBoardResponse)
-//                .map(::c)
-//                .collect(Collectors.toList());
-//
-//        return new ResponseEntity<>( new MultiResponseDto<>(responses, boards),  HttpStatus.OK);
-//    }
-   @GetMapping()
-public ResponseEntity getAllBoard(@RequestParam(name = "page", defaultValue = "0") int page
-        , @PageableDefault(sort = "boardId", direction = Sort.Direction.DESC) Pageable pageable) {
-    if (page > 0) page--;
-    pageable = pageable.withPage(page);
+    @GetMapping("/{memberId}")
+    public ResponseEntity getAllBoard( @PathVariable("memberId") @Positive long memberId,
+            @RequestParam(name = "cate", required = false) String cate,
+            @RequestParam(name = "title", required = false) String title,
+            @RequestParam(name = "content", required = false) String content
+            , @RequestParam(name = "page", defaultValue = "0") int page
+            , @PageableDefault Pageable pageable) {
+        if (page > 0) page--;
+        Sort sort = Sort.by("pin").descending().and(Sort.by("boardId").descending());
+        pageable = PageRequest.of(page, 10, sort);
+        // pin을 기준으로 우선순위 내림차순
+        if (cate == null) cate = "";
+        if (title == null) title = "";
+        if (content == null) content = "";
 
-    Page<Board> boards = boardService.getAllBoard(pageable);
+        Page<Board> boards = boardService.getAllBoard(pageable, cate, title, content, memberId);
 
 
     List<Board> boardList = boards.getContent();
     List<BoardDto.Response> responses = boardList.stream().map(boardMapper::boardToBoardResponse).collect(Collectors.toList());
 
-    return new ResponseEntity<>(new MultiResponseDto<>(responses, boards), HttpStatus.OK);
-}
+        return new ResponseEntity<>(new MultiResponseDto<>(responses, boards), HttpStatus.OK);
+    }
 
     @PutMapping("/{boardId}")
     public ResponseEntity putBoard(@PathVariable("boardId") long boardId,
-                                   @RequestBody @Valid BoardDto.Put boardPutDto){
+                                   @RequestBody @Valid BoardDto.Put boardPutDto) {
         boardPutDto.setBoardId(boardId);
         Board board = boardMapper.boardPutDtoToBoard(boardPutDto);
         Board response = boardService.putBoard(board);
@@ -113,6 +111,5 @@ public ResponseEntity getAllBoard(@RequestParam(name = "page", defaultValue = "0
         boardService.deleteBoard(boardId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
-
 
 }
