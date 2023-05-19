@@ -30,7 +30,7 @@ public class CommentDto { //서비스는 엔티티에서 받아온 애를 직접
         private Long memberId; //멤버를 식별하기 위함
         private Long boardId;
 
-        private Comment Parent;
+        //private Comment Parent;
 
     }
 
