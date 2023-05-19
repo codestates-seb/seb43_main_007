@@ -1,4 +1,4 @@
-import { CommentType } from "./postDetailTypes";
+import type { CommentType } from "./Comment";
 
 const dummyCommentData: CommentType[] = [
    {

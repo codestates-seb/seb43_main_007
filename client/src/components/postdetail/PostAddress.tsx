@@ -1,6 +1,9 @@
 import styled from "styled-components";
 import { HiLocationMarker } from "react-icons/hi";
-import { Address } from "./postDetailTypes";
+
+export interface Address {
+   address: string | null;
+}
 
 function PostAddress({ address }: Address) {
    return (
