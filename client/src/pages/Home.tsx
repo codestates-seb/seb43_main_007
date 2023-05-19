@@ -8,13 +8,6 @@ function Home() {
       <HomeContainer>
          <HomeHeader />
          <EditerPick />
-         <div className="bird-container bird-container--one">
-            <div className="bird bird--one" />
-         </div>
-
-         <div className="bird-container bird-container--two">
-            <div className="bird bird--two" />
-         </div>
       </HomeContainer>
    );
 }
