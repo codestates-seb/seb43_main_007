@@ -9,9 +9,7 @@ export interface CommentType {
    picture: string;
    content: string;
    createdAt: string;
-   parent?: {
-      commentId: number;
-   };
+   parentId: number;
    replies?: CommentType[];
 }
 
