@@ -1,8 +1,14 @@
 import styled from "styled-components";
 import { useState } from "react";
+import { useNavigate } from "react-router";
 import PostDeleteModal from "./PostDeleteModal";
 
-function PostButtons({ handleDeletePost }: { handleDeletePost: () => void }) {
+export interface PostButtonsProps {
+   handleDeletePost: () => Promise<void>;
+   boardId: number;
+}
+
+function PostButtons({ handleDeletePost, boardId }: PostButtonsProps) {
    const [modalOpen, setModalOpen] = useState(false);
 
    const openModal = () => {
@@ -12,10 +18,20 @@ function PostButtons({ handleDeletePost }: { handleDeletePost: () => void }) {
       setModalOpen(false);
    };
 
+   const navigate = useNavigate();
+
+   const handleEdit = () => {
+      navigate(`/createpost/${boardId}`);
+   };
+
    return (
       <PostButtonContainer>
          <EditDeleteContainer>
-            <button className="postdetail-btn edit-btn" type="button">
+            <button
+               className="postdetail-btn edit-btn"
+               type="button"
+               onClick={handleEdit}
+            >
                수정
             </button>
             <span className="separator">|</span>

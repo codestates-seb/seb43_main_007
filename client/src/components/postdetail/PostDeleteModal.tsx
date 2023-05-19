@@ -1,10 +1,15 @@
-import { PostDeleteModalProps } from "./postDetailTypes";
 import {
    ModalContainer,
    ModalContentBox,
    DeleteButton,
    CancelButton,
 } from "../mypage-profile/AccountDeleteModal";
+
+export interface PostDeleteModalProps {
+   open: boolean;
+   close: () => void;
+   handleDeletePost: () => void;
+}
 
 function PostDeleteModal({
    open,

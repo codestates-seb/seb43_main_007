@@ -1,8 +1,15 @@
 import { useState, ChangeEvent } from "react";
-import {
-   CommentCharacterCountProps,
-   CommentCharacterCountReturn,
-} from "../components/postdetail/postDetailTypes";
+
+export interface CommentCharacterCountProps {
+   maxLength: number;
+}
+
+export interface CommentCharacterCountReturn {
+   value: string;
+   characterCount: number;
+   handleChange: (event: ChangeEvent<HTMLTextAreaElement>) => void;
+   clearValue: () => void;
+}
 
 const useCommentCharacterCount = ({
    maxLength,

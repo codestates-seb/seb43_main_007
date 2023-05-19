@@ -1,5 +1,9 @@
 import styled from "styled-components";
-import { ReplyProps } from "./postDetailTypes";
+import type { CommentType } from "./Comment";
+
+export interface ReplyProps {
+   comment: CommentType;
+}
 
 function Reply({ comment }: ReplyProps) {
    return (
@@ -18,7 +22,18 @@ function Reply({ comment }: ReplyProps) {
             <ReplyContent>
                <div className="reply-content">{comment.content}</div>
             </ReplyContent>
-            <span className="reply-createdAt">{comment.createdAt}</span>
+            <DateAndButton>
+               <span className="reply-createdAt">{comment.createdAt}</span>
+               <ReplyButtonContainer>
+                  <button type="submit" className="reply-btn">
+                     수정
+                  </button>
+                  <span>|</span>
+                  <button type="submit" className="reply-btn reply-delete-btn">
+                     삭제
+                  </button>
+               </ReplyButtonContainer>
+            </DateAndButton>
          </ReplyBox>
       </ReplyContainer>
    );
@@ -69,5 +84,33 @@ export const ReplyContent = styled.div`
 
    .reply-content {
       font-size: 13px;
+   }
+`;
+
+export const DateAndButton = styled.div`
+   display: flex;
+   flex-direction: column;
+   justify-content: space-between;
+   align-items: flex-end;
+   height: 100%;
+   font-size: 12px;
+   width: 120px;
+   margin-top: 3px;
+`;
+
+export const ReplyButtonContainer = styled.div`
+   display: flex;
+   align-items: center;
+   margin-top: 5px;
+
+   .reply-btn {
+      border: none;
+      background-color: transparent;
+      font-size: 12px;
+      cursor: pointer;
+   }
+
+   .reply-delete-btn {
+      padding-right: 0;
    }
 `;

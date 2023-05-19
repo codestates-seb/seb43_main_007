@@ -1,5 +1,11 @@
 import styled from "styled-components";
-import { PostTagProps } from "./postDetailTypes";
+
+export interface PostTagProps {
+   tags: Array<{
+      tagId: number;
+      tagName: string;
+   }>;
+}
 
 function PostTags({ tags }: PostTagProps) {
    return (

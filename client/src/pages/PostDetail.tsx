@@ -10,16 +10,19 @@ import PostAddress from "../components/postdetail/PostAddress";
 import usePost from "../hooks/usePost";
 
 function PostDetail() {
-   const { boardId } = useParams<{ [key: string]: string }>();
-   const { post, handleDeletePost } = usePost(boardId || "");
+   const { boardId: boardIdString } = useParams<{ [key: string]: string }>();
+   const { post, handleDeletePost } = usePost(boardIdString || "");
 
    if (!post) {
       return <div>Loading...</div>;
    }
 
+   const baordIdNumber = Number(boardIdString) || 0;
+
    return (
       <PostDetailContainer>
          <PostTitle
+            boardId={baordIdNumber}
             title={post.title}
             now={post.now}
             like={post.like}
@@ -30,7 +33,10 @@ function PostDetail() {
          <PostAddress address={post.address} />
          <PostContent content={post.content} />
          <PostTags tags={post.tags} />
-         <PostButtons handleDeletePost={handleDeletePost} />
+         <PostButtons
+            handleDeletePost={handleDeletePost}
+            boardId={baordIdNumber}
+         />
          <CreateComment />
          <CommentList />
       </PostDetailContainer>
