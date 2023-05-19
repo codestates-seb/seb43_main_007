@@ -133,10 +133,9 @@ export const myPageMyPost = async (memberId: number) => {
 // 로그인 요청
 export const loginPost = async (req: LoginTypes) => {
    try {
-      const { data } = await request.post("/login", req);
+      const response = await request.post("members/login", req);
       console.log("성공");
-      console.log(data);
-      return data;
+      return response;
    } catch (error) {
       console.log("실패");
       console.log(error);

@@ -8,12 +8,10 @@ import validFunction from "../../util/signinValidFunc";
 import LoginModal from "./LoginModal";
 import { LoginTypes } from "./LoginType";
 import { loginPost } from "../../api/axios";
-// import { RootState } from "../../store/store";
 import { setMemberId } from "../../reducers/memberIdSlice";
 
 function LoginForm() {
    const dispatch = useDispatch();
-   // const memberId = useSelector((state: RootState) => state.memberId);
    const [memberCookie, setMemberCookie] = useCookies(["memberId"]);
    const [tokenCookie, setTokenCookie] = useCookies(["accessToken"]);
 
@@ -27,13 +25,9 @@ function LoginForm() {
       text1: "로그인에 실패했습니다.",
       text2: "아이디와 비밀번호를 확인해주세요.",
    });
-   setFailMessage({
-      text1: "로그인에 실패했습니다.",
-      text2: "아이디와 비밀번호를 확인해주세요.",
-   });
    // 페이지 입장할 때 첫 input에 focus
    const inputRef = useRef<HTMLInputElement | null>(null);
-   const { ref } = register("email");
+   const { ref } = register("username");
    useEffect(() => {
       if (inputRef.current !== null) inputRef.current.focus();
    }, []);
@@ -47,7 +41,7 @@ function LoginForm() {
       const newMemberId = 5;
       // if(성공시) {
       dispatch(setMemberId(newMemberId)); //   로그인 상태 변경
-      setMemberCookie("memberId", newMemberId, { maxAge: 60 * 60 * 3 }); // memberId 쿠키에 저장
+      setMemberCookie("memberId", newMemberId, { maxAge: 300 }); // memberId 쿠키에 저장
       //   setTokenCookie("accessToken", accessToken, { maxAge: 60 * 60 * 3 });  //access 토큰은 쿠키에 저장
       //   navigate('/'); home으로 이동
       // }
@@ -74,7 +68,7 @@ function LoginForm() {
             <input
                placeholder="이메일"
                className="email-input"
-               {...register("email", {
+               {...register("username", {
                   required: true,
                   validate: validFunction.validEmail,
                })}
@@ -83,7 +77,7 @@ function LoginForm() {
                   inputRef.current = e;
                }}
             />
-            {errors.email && (
+            {errors.username && (
                <span className="error-message">
                   이메일 형식으로 입력해주세요
                </span>
