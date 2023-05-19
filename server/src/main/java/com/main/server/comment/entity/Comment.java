@@ -33,7 +33,7 @@ Comment { //엔티티의 역할? 테이블 설계
 
 
         @ManyToOne
-        @JoinColumn(name = "member_Id")
+        @JoinColumn(name = "member_id")
         private Member member;
 
 

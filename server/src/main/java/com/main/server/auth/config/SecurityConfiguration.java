@@ -5,16 +5,15 @@ import com.main.server.auth.filter.JwtAuthenticationFilter;
 import com.main.server.auth.filter.JwtVerificationFilter;
 import com.main.server.auth.handler.*;
 import com.main.server.auth.jwt.JwtTokenizer;
+import com.main.server.auth.mail.MailService;
 import com.main.server.auth.oauth.CustomOAuth2UserService;
 import com.main.server.auth.oauth.OAuth2UserFailureHandler;
 import com.main.server.auth.oauth.OAuth2UserSuccessHandler;
 import com.main.server.auth.utils.CustomAuthorityUtils;
 import com.main.server.member.repository.MemberRepository;
-import com.main.server.member.service.MemberService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -29,8 +28,6 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.Arrays;
-
-import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
 @EnableWebSecurity
@@ -48,17 +45,20 @@ public class SecurityConfiguration {
     private final CustomOAuth2UserService customOAuth2UserService;
     private final CustomAuthorityUtils customAuthorityUtils;
     private final MemberRepository memberRepository;
+    private final MailService mailService;
 
     public SecurityConfiguration(JwtTokenizer jwtTokenizer,
                                  CustomAuthorityUtils authorityUtils,
                                  CustomOAuth2UserService customOAuth2UserService,
                                  CustomAuthorityUtils customAuthorityUtils,
-                                 MemberRepository memberRepository) {
+                                 MemberRepository memberRepository,
+                                 MailService mailService) {
         this.jwtTokenizer = jwtTokenizer;
         this.authorityUtils = authorityUtils;
         this.customOAuth2UserService = customOAuth2UserService;
         this.customAuthorityUtils = customAuthorityUtils;
         this.memberRepository = memberRepository;
+        this.mailService = mailService;
     }
 
     @Bean
@@ -91,7 +91,7 @@ public class SecurityConfiguration {
                         .anyRequest().permitAll()
                 )
                 .oauth2Login().loginPage("/oauth2/authorization/google")
-                .successHandler(new OAuth2UserSuccessHandler(jwtTokenizer, customAuthorityUtils, memberRepository))
+                .successHandler(new OAuth2UserSuccessHandler(jwtTokenizer, customAuthorityUtils, memberRepository, mailService))
                 .failureHandler(new OAuth2UserFailureHandler());
                 //.userInfoEndpoint().userService(customOAuth2UserService);
 

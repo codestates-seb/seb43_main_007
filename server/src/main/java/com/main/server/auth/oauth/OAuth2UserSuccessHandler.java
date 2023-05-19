@@ -1,10 +1,10 @@
 package com.main.server.auth.oauth;
 
 import com.main.server.auth.jwt.JwtTokenizer;
+import com.main.server.auth.mail.MailService;
 import com.main.server.auth.utils.CustomAuthorityUtils;
 import com.main.server.member.entity.Member;
 import com.main.server.member.repository.MemberRepository;
-import com.main.server.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
@@ -32,6 +32,7 @@ public class OAuth2UserSuccessHandler extends SimpleUrlAuthenticationSuccessHand
     private final JwtTokenizer jwtTokenizer;
     private final CustomAuthorityUtils customAuthorityUtils;
     private final MemberRepository memberRepository;
+    private final MailService mailService;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
@@ -57,6 +58,9 @@ public class OAuth2UserSuccessHandler extends SimpleUrlAuthenticationSuccessHand
         Member member = new Member(email, email.substring(0, email.indexOf("@")));
         memberRepository.save(member);
         log.info("##해당 멤버 저장 완료");
+
+        mailService.sendEmail(email, "반가워요!", "정말 반갑습니다!");
+        log.info("메일 전송 완료!");
         getRedirectStrategy().sendRedirect(request, response, createURI(accessToken).toString());
 
     }
