@@ -8,6 +8,7 @@ function CommentList() {
    const [comments, setComments] = useState(
       groupCommentsAndReplies(dummyComments)
    );
+   setComments(groupCommentsAndReplies(dummyComments));
    const [selectedCommentId, setSelectedCommentId] = useState<number | null>(
       null
    );
@@ -36,7 +37,7 @@ function CommentList() {
                      }
                      handleReplyClick={handleReplyClick}
                      isReplySelected={isReplySelected}
-                     selectedCommentId={selectedCommentId}
+                     // selectedCommentId={selectedCommentId}
                   />
                );
             })}

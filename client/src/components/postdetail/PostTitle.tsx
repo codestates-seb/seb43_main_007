@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { RiSeedlingLine, RiSeedlingFill } from "react-icons/ri";
-import { BsPin, BsPinFill } from "react-icons/bs";
+import { BsPin } from "react-icons/bs";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import { useSelector } from "react-redux";
 import { useState } from "react";

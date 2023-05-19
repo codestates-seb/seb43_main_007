@@ -1,7 +1,7 @@
 import axios, { AxiosError } from "axios";
 import moment from "moment";
-import { LoginTypes, FindPasswordType } from "../components/login/loginType";
-import { SignupTypes } from "../components/signup/signupTypes";
+import { LoginTypes, FindPasswordType } from "../components/login/LoginType";
+import { SignupTypes } from "../components/signup/SignupTypes";
 import { request } from "./create";
 import { Likereq } from "../components/communityList/listTypes";
 import { serverError, postSuccess } from "../util/toastify";
@@ -56,14 +56,14 @@ export const bookMarkPost = async (req: Likereq) => {
 export const pinPost = async (boardId: number) => {
    try {
       console.log(`/boards/pin/${boardId}`);
-      const data = await request.post(`/boards/pin/${boardId}`);
+      await request.post(`/boards/pin/${boardId}`);
    } catch (error) {
       console.log(error);
    }
 };
 
 // quill에디터 이미지 post요청
-export const editorImgPost = async (img: any, quillRef) => {
+export const editorImgPost = async (img: any, quillRef: any) => {
    try {
       const { data } = await request.post(
          "boards/photo",
@@ -123,7 +123,7 @@ export const createPost = async (
 
 export const myPageMyPost = async (memberId: number) => {
    try {
-      const data = await request.get(`/members/boards/${memberId}`);
+      await request.get(`/members/boards/${memberId}`);
    } catch (error) {
       serverError();
       console.log(error);

@@ -1,4 +1,4 @@
-import { Post } from "../postdetail/postDetailTypes";
+import { Post } from "../../hooks/usePost";
 
 const editorPickDummyContents: Post[] = [
    {

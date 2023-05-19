@@ -43,7 +43,7 @@ function ChangePassoword() {
    const memberId = useSelector((state: RootState) => state.memberId);
 
    // Handlers
-   const onSubmit: SubmitHandler<PasswordChangeForm> = (data) => handleChange();
+   const onSubmit: SubmitHandler<PasswordChangeForm> = () => handleChange();
 
    const handleChange = () => {
       const { currentPassword, newPassword, confirmPassword } = getValues();

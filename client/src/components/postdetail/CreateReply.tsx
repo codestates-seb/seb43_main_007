@@ -8,6 +8,7 @@ export interface CreateReplyProps {
 }
 
 function CreateReply({ onSubmit, onCancel }: CreateReplyProps) {
+   onCancel();
    const maxLength = 300;
    const { value, characterCount, handleChange, clearValue } =
       useCommentCharacterCount({
