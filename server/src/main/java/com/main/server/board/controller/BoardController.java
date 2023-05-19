@@ -57,6 +57,12 @@ public class BoardController {
         return service.uploadFile(file);
     }
 
+//    @GetMapping("/{boardId}")
+//    public ResponseEntity getBoard(@PathVariable("boardId") @Positive long boardId){
+//        Board response = boardService.getBoard(boardId);
+//
+//        return new ResponseEntity<>(boardMapper.boardToBoardResponse(response), HttpStatus.OK);
+//    }
 
     @GetMapping("/board/{boardId}")
     public ResponseEntity getBoard(@PathVariable("boardId") @Positive long boardId) {
@@ -83,8 +89,8 @@ public class BoardController {
         Page<Board> boards = boardService.getAllBoard(pageable, cate, title, content, memberId);
 
 
-        List<Board> boardList = boards.getContent();
-        List<BoardDto.Response> responses = boardList.stream().map(boardMapper::boardToBoardResponse).collect(Collectors.toList());
+    List<Board> boardList = boards.getContent();
+    List<BoardDto.Response> responses = boardList.stream().map(boardMapper::boardToBoardResponse).collect(Collectors.toList());
 
         return new ResponseEntity<>(new MultiResponseDto<>(responses, boards), HttpStatus.OK);
     }
@@ -97,6 +103,7 @@ public class BoardController {
         Board response = boardService.putBoard(board);
         return new ResponseEntity<>(boardMapper.boardToBoardResponse(response), HttpStatus.OK);
     }
+
 
 
     @DeleteMapping("/{boardId}")

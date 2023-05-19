@@ -16,6 +16,9 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
     // boardId에 해당하는 모든 댓글을 가져오는 JPA 쿼리 메서드
 
 
+   // List<Comment> findByMemberId(long memberId);
+
+
     //해당 객체 조회: findId(Long )
     //저장/수정: save(Comment)
 
