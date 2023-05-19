@@ -6,7 +6,7 @@ export interface CommentType {
    boardId: number;
    commentId: number;
    nickname: string;
-   picture: string;
+   userPhoto: string;
    content: string;
    createdAt: string;
    parentId: number;
@@ -38,7 +38,7 @@ CommentProps) {
             <AuthorInfoContainer>
                <AuthorInfo>
                   <img
-                     src={comment.picture}
+                     src={comment.userPhoto}
                      alt="comment-author-profile"
                      className="comment-author-img"
                   />

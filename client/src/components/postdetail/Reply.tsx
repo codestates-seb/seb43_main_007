@@ -12,7 +12,7 @@ function Reply({ comment }: ReplyProps) {
             <ReplyAuthorInfoContainer>
                <ReplyAuthorInfo>
                   <img
-                     src={comment.picture}
+                     src={comment.userPhoto}
                      alt="reply-author-img"
                      className="reply-author-img"
                   />

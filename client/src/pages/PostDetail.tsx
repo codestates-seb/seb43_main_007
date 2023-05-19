@@ -38,7 +38,7 @@ function PostDetail() {
             boardId={baordIdNumber}
          />
          <CreateComment />
-         <CommentList />
+         <CommentList comments={post.comments} />
       </PostDetailContainer>
    );
 }

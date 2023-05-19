@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import { deletePost, getPostData } from "../api/axios";
 import { postDeleteSuccess, serverError } from "../util/toastify";
+import { CommentType } from "../components/postdetail/Comment";
+import groupCommentsAndReplies from "../util/groupCommentsAndReplies";
 
 export interface Post {
    boardId: number;
@@ -18,6 +20,7 @@ export interface Post {
       tagId: number;
       tagName: string;
    }[];
+   comments?: CommentType[];
 }
 
 const usePost = (boardId: string) => {
@@ -27,6 +30,9 @@ const usePost = (boardId: string) => {
    useEffect(() => {
       const fetchPost = async () => {
          const data = await getPostData(parseInt(boardId, 10));
+         if (data && data.comments) {
+            data.comments = groupCommentsAndReplies(data.comments);
+         }
          setPost(data);
       };
 
