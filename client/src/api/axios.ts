@@ -379,3 +379,15 @@ export const createReply = async (
       return null;
    }
 };
+
+// 댓글 삭제
+export const deleteComment = async (commentId: number) => {
+   try {
+      const { data } = await request.delete(`/comments/${commentId}`);
+      console.log("댓글 삭제 성공");
+      return data;
+   } catch (error) {
+      console.log("댓글 삭제 실패");
+      return null;
+   }
+};

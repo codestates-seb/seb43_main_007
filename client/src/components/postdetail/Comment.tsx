@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import CreateReply from "./CreateReply";
 import Reply from "./Reply";
+import { deleteComment } from "../../api/axios";
 
 export interface CommentType {
    boardId: number;
@@ -36,6 +37,15 @@ CommentProps) {
       handleReplySubmit(comment.commentId, content);
    };
 
+   const handleDelete = async () => {
+      const response = await deleteComment(comment.commentId);
+      if (response) {
+         console.log("댓글 삭제 성공");
+      } else {
+         console.log("댓글 삭제 실패");
+      }
+   };
+
    return (
       <>
          <CommentContainer>
@@ -62,6 +72,7 @@ CommentProps) {
                   <button
                      type="submit"
                      className="comment-btn comment-delete-btn"
+                     onClick={handleDelete}
                   >
                      삭제
                   </button>
