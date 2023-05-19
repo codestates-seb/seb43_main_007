@@ -57,7 +57,7 @@ const WeatherContainer = styled.div`
    height: 70px;
    border-radius: 5px;
    background-color: skyblue;
-
+   z-index: 2;
    .icon {
       display: flex;
       justify-content: center;

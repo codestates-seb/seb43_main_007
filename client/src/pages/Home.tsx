@@ -24,6 +24,7 @@ const HomeContainer = styled.div`
    display: flex;
    flex-direction: column;
    align-items: center;
+   position: relative;
    width: 1080px;
    background-image: url(${background});
    background-size: 1080px 400px;
@@ -64,11 +65,12 @@ const HomeContainer = styled.div`
 
    .bird-container {
       position: absolute;
-      top: 20%;
-      left: -10%;
-      transform: scale(0) translateX(-10vw);
+      top: 10%;
+      left: -30%;
+      width: 100%;
+      transform: scale(0) translateX(-10%);
       will-change: transform;
-
+      z-index: 1;
       animation-name: fly-right-one;
       animation-timing-function: linear;
       animation-iteration-count: infinite;
@@ -92,27 +94,27 @@ const HomeContainer = styled.div`
 
    @keyframes fly-right-one {
       0% {
-         transform: scale(0.3) translateX(-10vw);
+         transform: scale(0.3) translateX(-10%);
       }
 
       20% {
-         transform: translateY(0vh) translateX(10vw) scale(0.5);
+         transform: translateY(0vh) translateX(15%) scale(0.5);
       }
 
       40% {
-         transform: translateY(2vh) translateX(30vw) scale(0.6);
+         transform: translateY(2vh) translateX(40%) scale(0.6);
       }
 
       60% {
-         transform: translateY(0vh) translateX(55vw) scale(0.6);
+         transform: translateY(0vh) translateX(60%) scale(0.6);
       }
 
       80% {
-         transform: translateY(0vh) translateX(75vw) scale(0.6);
+         transform: translateY(0vh) translateX(80%) scale(0.6);
       }
 
       100% {
-         transform: translateY(0vh) translateX(90vw) scale(0.6);
+         transform: translateY(0vh) translateX(100%) scale(0.6);
       }
    }
 `;
