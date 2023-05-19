@@ -11,6 +11,7 @@ import org.springframework.data.repository.query.Param;
 
 import javax.persistence.OrderBy;
 import java.util.List;
+import java.util.Optional;
 
 public interface BoardRepository extends JpaRepository<Board, Long> {
 
@@ -30,6 +31,7 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
     Page<Board> findByOrContentContaining( String content, Pageable pageable);
     Page<Board> findByContentContainingOrTitleContaining(String content, String title,Pageable pageable);
     Page<Board> findByContentContaining(String content, Pageable pageable);
+    Optional<Board> findByBoardId(long boardId);
 
     // pin을 기준으로 우선순위 내림차순 같다면 boardId를 기준으로 내림차순
 }
