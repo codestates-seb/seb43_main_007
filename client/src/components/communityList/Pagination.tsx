@@ -9,23 +9,27 @@ type PropsT = {
 };
 
 type ActiveT = {
+   key: number;
+   onClick: () => void;
    i: number;
    curPage: number;
+   "aria-current": string | undefined;
 };
 
 function Pagination({ setCurPage, curPage, totalPage, limit }: PropsT) {
    // 총 페이지 갯수에 따라 Pagination 갯수 정하기, limit 단위로 페이지 리스트 넘기기
-   const [currentPageArray, setCurrentPageArray] = useState([]);
-   const [totalPageArray, setTotalPageArray] = useState([]);
-   const [idx, setIdx] = useState<number>();
+   const [currentPageArray, setCurrentPageArray] = useState<number[]>([]);
+   const [totalPageArray, setTotalPageArray] = useState<number[][]>([]);
+   // const [idx, setIdx] = useState<number>();
 
-   const sliceArrayByLimit = (totalPage, limit) => {
-      const totalPageArray = Array(totalPage)
+   // 함수안에 인자, 변수명이 위에 상태와 동일해서 뒤에 1을 붙힘(명시적을 위해 함수를 같게하기위함)
+   const sliceArrayByLimit = (totalPage1: number, limit1: number) => {
+      const totalPageArray1 = Array(totalPage1)
          .fill(0)
          .map((_, i) => i);
-      return Array(Math.ceil(totalPage / limit))
+      return Array(Math.ceil(totalPage1 / limit1))
          .fill(0)
-         .map(() => totalPageArray.splice(0, limit));
+         .map(() => totalPageArray1.splice(0, limit1));
    };
    useEffect(() => {
       const slicedPageArray = sliceArrayByLimit(totalPage, limit);
@@ -63,7 +67,7 @@ function Pagination({ setCurPage, curPage, totalPage, limit }: PropsT) {
                   onClick={() => setCurPage(i + 1)}
                   i={i}
                   curPage={curPage}
-                  aria-current={curPage === i + 1 ? "page" : null}
+                  aria-current={curPage === i + 1 ? "page" : undefined}
                >
                   {i + 1}
                </PgBtn>

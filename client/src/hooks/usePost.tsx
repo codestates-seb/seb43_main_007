@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import { deletePost, getPostData } from "../api/axios";
 import { postDeleteSuccess, serverError } from "../util/toastify";
-import { Tags } from "../components/postdetail/PostTags";
 
 export interface Post {
    boardId: number;
@@ -15,7 +14,10 @@ export interface Post {
    bookmark: number;
    nickName: string;
    userPhoto: string;
-   tags: Tags[];
+   tags: {
+      tagId: number;
+      tagName: string;
+   }[];
 }
 
 const usePost = (boardId: string) => {
