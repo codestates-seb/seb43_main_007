@@ -2,7 +2,6 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '2.7.11'
     id 'io.spring.dependency-management' version '1.0.15.RELEASE'
-
 }
 
 group = 'com.main'
@@ -46,7 +45,7 @@ dependencies {
     runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5' //JWT
     runtimeOnly    'io.jsonwebtoken:jjwt-jackson:0.11.5' //JWT
     implementation 'com.google.code.gson:gson:2.9.0' //gson
-
+    implementation 'org.springframework.boot:spring-boot-starter-mail' //Mail
 
 }
 
