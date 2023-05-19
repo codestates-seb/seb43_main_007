@@ -47,6 +47,7 @@ public class Board {
 
     @Column()
     private int pin;
+
 //    private Long like;
 
     @OneToMany(mappedBy = "board", cascade = CascadeType.REMOVE)
