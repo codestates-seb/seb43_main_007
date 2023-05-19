@@ -53,8 +53,8 @@ function LoginForm() {
          const newMemberId = 5;
          const accessToken = response[1]?.headers.authorization.split(" ")[1];
          dispatch(setMemberId(newMemberId)); //   로그인 상태 변경
-         setMemberCookie("memberId", newMemberId, { maxAge: 300 }); // memberId 쿠키에 저장
-         setTokenCookie("accessToken", accessToken, { maxAge: 300 }); // access 토큰은 쿠키에 저장
+         setMemberCookie("memberId", newMemberId); // memberId 쿠키에 저장
+         setTokenCookie("accessToken", accessToken); // access 토큰은 쿠키에 저장
          navigate("/");
       } else if (response[1] === 401) {
          // 아이디 비번이 잘못됐을 때
@@ -110,7 +110,7 @@ function LoginForm() {
             )}
          </div>
          <button type="submit" className="submit">
-            LOGIN
+            L O G I N
          </button>
          <LoginModal
             isOpen={isFailModalOpen}
@@ -140,11 +140,11 @@ const LoginFormContainer = styled.form`
    }
    .input-box {
       width: 70%;
-      height: 70px;
+      height: 80px;
       .email-input,
       .password-input {
          width: 100%;
-         height: 40px;
+         height: 50px;
          font-size: var(--font-base);
          padding-left: 2%;
          margin-bottom: 5px;
@@ -158,8 +158,8 @@ const LoginFormContainer = styled.form`
    }
    .submit {
       width: 70%;
-      height: 40px;
-      font-size: var(--font-base);
+      height: 50px;
+      font-size: var(--font-large);
       color: white;
       cursor: pointer;
       background-color: var(--second-color3);

@@ -23,7 +23,7 @@ function FindAndSignup({ setIsOpen, setCurTab }: Props) {
             className="box"
             onClick={() => navigate("/signup")}
          >
-            회원가입
+            회원가입&nbsp;
          </button>
          <button type="button" className="box" onClick={handleIdFindModal}>
             아이디 찾기
@@ -46,13 +46,14 @@ const FindAndSignupContainer = styled.div`
    justify-content: center;
    height: 30px;
    width: 100%;
+   margin-top: 20px;
    .box {
       display: flex;
       justify-content: center;
       align-items: center;
       width: 20%;
       height: 100%;
-      font-size: var(--font-base);
+      font-size: var(--font-large);
       color: var(--third-color4);
       border: none;
       border-right: 1px solid black;
