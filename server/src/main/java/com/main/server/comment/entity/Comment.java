@@ -19,45 +19,47 @@ import java.util.Date;
 @Table(name = "comments")
 public class
 Comment { //엔티티의 역할? 테이블 설계
-    @Id //식별자
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "comment_id")
-    private Long commentId;
+        @Id //식별자
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
+        @Column(name = "comment_id")
+        private Long commentId;
 
-    @Column(name = "content")
-    private String content;
-
-
-    @ManyToOne
-    @JoinColumn(name = "memberId")
-    private Member member;
+        @Column(name = "content")
+        private String content;
 
 
-    @Column
-    private Timestamp createdAt = new Timestamp(new Date().getTime());
+        @ManyToOne
+        @JoinColumn(name = "member_id")
+        private Member member;
 
-    @Column(name = "board_id")
-    private Long boardId;
 
-    // @Column(name = "parent_comment_id")
-    //  private Integer parentCommentId;  // 부모 댓글 ID
+        @Column
+        private Timestamp createdAt = new Timestamp(new Date().getTime());
 
-    public Comment(long commentId, String content, Member member, long boardId, long parentCommentId) {
-        this.commentId = commentId;
-        this.content = content;
-        this.member = member;
-        this.boardId = boardId;
-        //   this.parentCommentId = parentCommentId;
-    }
+        @Column(name = "board_id")
+        private Long boardId;
+
+        // @Column(name = "parent_comment_id")
+        //  private Integer parentCommentId;  // 부모 댓글 ID
+
+        public Comment(long commentId, String content, Member member, long boardId, long parentCommentId) {
+                this.commentId = commentId;
+                this.content = content;
+                this.member = member;
+                this.createdAt = createdAt;
+                this.boardId = boardId;
+             //   this.parentCommentId = parentCommentId;
+        }
 
 }
+
 
 
 // 생성자, 게터, 세터 생략
 
 
-//보드와 커멘트의 관계는 1:N이다. 댓글이 기준이니깐
-// @ManyToOne(fetch = FetchType.LAZY)
-// @JoinColumn(name = "board_id")
-//private BoardEntity boardEntity;
+    //보드와 커멘트의 관계는 1:N이다. 댓글이 기준이니깐
+   // @ManyToOne(fetch = FetchType.LAZY)
+   // @JoinColumn(name = "board_id")
+    //private BoardEntity boardEntity;
 

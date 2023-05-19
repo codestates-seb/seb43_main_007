@@ -1,5 +1,7 @@
 package com.main.server.comment.dto;
 
+
+import lombok.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
@@ -31,6 +33,7 @@ public class CommentDto { //서비스는 엔티티에서 받아온 애를 직접
     public  static class Post {
         private String content;
         private Long memberId; //멤버를 식별하기 위함
+        private Long boardId;
 
     }
 
@@ -53,6 +56,17 @@ public class CommentDto { //서비스는 엔티티에서 받아온 애를 직접
         private Timestamp createdAt;
 
     }
+
+
+    @Getter @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class   MyPageResponse { //마이페이지 겟요청할때 필요. 보드아이디는 보드 찾아들어갈것, 내용은 보여줄것
+        private Long boardId;
+        private String content;
+
+    }
+
 }
 
 

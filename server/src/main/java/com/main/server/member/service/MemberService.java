@@ -49,7 +49,10 @@ public class MemberService {
         this.memberMapper = memberMapper;
     }
     
-
+    public Member createMember(Member member) {
+        Member savedMember = memberRepository.save(member);
+        return savedMember;
+    }
     public Member createMember(MemberDto.Post memberPostDto) { //mem 001
 
         //기존에 있는 회원인지 확인, 비밀번호와 비밀번호 확인이 일치하는지 확인, 닉네임 길이 괜찮은지, 닉네임 존재하는지 확인
