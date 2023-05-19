@@ -32,7 +32,7 @@ function TagBox({ tagList, setTagList }: TagProps) {
    };
 
    // 태그를 버튼클릭으로 지우는 함수
-   const deleteTagItem = (e: React.MouseEvent<HTMLButtonElement>) => {
+   const deleteTagItem = (e: any) => {
       const deleteTag = e.target.parentElement.firstChild.innerText;
       const filteredTagList = tagList.filter(
          (item) => item.tagName !== deleteTag

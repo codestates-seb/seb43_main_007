@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import MapBox from "./MapBox";
-import { Post } from "../postdetail/postDetailTypes";
+import { Post } from "../../hooks/usePost";
 
 interface Props {
    post: Post;
@@ -8,7 +8,7 @@ interface Props {
 }
 
 function ContentsBox({ post, id }: Props) {
-   const parsedDate = new Date(post.now).toLocaleString("ko-kr");
+   // const parsedDate = new Date(post.now).toLocaleString("ko-kr");
    return (
       <ContentsBoxContainer>
          <h1 className="title">{post.title}</h1>

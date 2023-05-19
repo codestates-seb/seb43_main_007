@@ -1,18 +1,18 @@
 import styled from "styled-components";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useEffect, useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import logo from "../../assets/img/logo2.png";
 import validFunction from "../../util/signinValidFunc";
 import LoginModal from "./LoginModal";
-import { LoginTypes } from "./loginType";
+import { LoginTypes } from "./LoginType";
 import { loginPost } from "../../api/axios";
-import { RootState } from "../../store/store";
+// import { RootState } from "../../store/store";
 import { setMemberId } from "../../reducers/memberIdSlice";
 
 function LoginForm() {
    const dispatch = useDispatch();
-   const memberId = useSelector((state: RootState) => state.memberId);
+   // const memberId = useSelector((state: RootState) => state.memberId);
 
    const {
       register,
@@ -24,7 +24,10 @@ function LoginForm() {
       text1: "로그인에 실패했습니다.",
       text2: "아이디와 비밀번호를 확인해주세요.",
    });
-
+   setFailMessage({
+      text1: "로그인에 실패했습니다.",
+      text2: "아이디와 비밀번호를 확인해주세요.",
+   });
    // 페이지 입장할 때 첫 input에 focus
    const inputRef = useRef<HTMLInputElement | null>(null);
    const { ref } = register("email");
@@ -36,7 +39,7 @@ function LoginForm() {
       // 로그인 요청 함수 자리
       // 로그인시 home화면으로 navigate
       const response = await loginPost(data);
-
+      console.log(response);
       // access 토큰 저장, memberid 저장, 로그인상태 변경
       // if(성공시) {
       dispatch(setMemberId(5)); //   로그인 상태 변경

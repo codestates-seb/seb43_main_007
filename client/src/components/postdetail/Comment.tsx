@@ -20,7 +20,7 @@ export interface CommentProps {
    handleReplySubmit: (commentId: number, content: string) => void;
    handleReplyClick: (commentId: number | null) => void;
    isReplySelected: boolean;
-   selectedCommentId: number | null;
+   // selectedCommentId: number | null;
 }
 
 function Comment({
@@ -28,8 +28,8 @@ function Comment({
    handleReplySubmit,
    handleReplyClick,
    isReplySelected,
-   selectedCommentId,
-}: CommentProps) {
+}: // selectedCommentId,
+CommentProps) {
    const handleReplySubmitWrapper = (content: string) => {
       handleReplySubmit(comment.commentId, content);
    };
@@ -165,5 +165,3 @@ export const ReplyButton = styled.button`
    margin-top: 5px;
    font-size: 12px;
 `;
-
-

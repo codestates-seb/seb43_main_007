@@ -1,4 +1,4 @@
-import { CommentType } from "../components/postdetail/postDetailTypes";
+import { CommentType } from "../components/postdetail/Comment";
 
 function groupCommentsAndReplies(commentData: CommentType[]): CommentType[] {
    // map the comments into a dictionary for easy lookup
