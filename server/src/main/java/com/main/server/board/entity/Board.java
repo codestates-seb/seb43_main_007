@@ -37,8 +37,14 @@ public class Board {
     @Column(nullable = false)
     private LocalDateTime now = LocalDateTime.now();
 
+
+    @Column()
+    private int likeCheck;
+    @Column()
+    private Long likeCount;
+
     @ManyToOne
-    @JoinColumn(name = "member_Id")
+    @JoinColumn(name = "member_id")
 
     private Member member;
 
@@ -48,6 +54,7 @@ public class Board {
 
     @Column()
     private int pin;
+
 
 //    private Long like;
 

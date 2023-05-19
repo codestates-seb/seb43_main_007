@@ -15,7 +15,7 @@ public class BoardTag {
     private Long boardTagId;
 
     @ManyToOne
-    @JoinColumn(name = "BOARD_ID")
+    @JoinColumn(name = "board_id")
     private Board board;
 
     @ManyToOne

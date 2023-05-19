@@ -1,5 +1,7 @@
 package com.main.server.board.service;
 
+import com.main.server.Like.entity.Like;
+import com.main.server.Like.repository.LikeRepository;
 import com.main.server.board.entity.Board;
 import com.main.server.board.entity.BoardTag;
 import com.main.server.board.repository.BoardRepository;
@@ -30,6 +32,7 @@ public class BoardService {
 
     private final BoardRepository boardRepository;
     private final BoardTagRepository boardTagRepository;
+    private final LikeRepository likeRepository;
 
     private final TagService tagService;
 
@@ -133,7 +136,7 @@ public class BoardService {
         }
 
         putInformationForTag(board);
-
+        board.setLikeCount(0L);
         return boardRepository.save(board);
     }
 
@@ -183,5 +186,19 @@ public class BoardService {
                 .collect(Collectors.toList());
 
         board.setBoardTag(boardTagList);
+    }
+    public Board c(Board board) {
+        long memberId = 1;
+        long boardId = board.getBoardId();
+
+        Optional<Like> like = likeRepository.findLikeByMemberIdAndBoardId(memberId, boardId);
+        if (like.isPresent()) {
+            board.setLikeCheck(1);
+        }else{
+        board.setLikeCheck(0);
+    }
+
+        return board;
+
     }
 }
