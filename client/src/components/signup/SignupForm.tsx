@@ -4,7 +4,6 @@ import { useState } from "react";
 import SignupInput from "./SignupInput";
 import { SignupTypes } from "./SignupTypes";
 import SignupQuestion from "./SignupQuestion";
-import SignupOauth from "./SignupOauth";
 import logo from "../../assets/img/logo2.png";
 import { signupPost } from "../../api/axios";
 import SignupModal from "./SignupModal";
@@ -24,16 +23,6 @@ function SignupForm() {
       formState: { errors },
    } = useForm<SignupTypes>();
    const onSubmit: SubmitHandler<SignupTypes> = async (data) => {
-      // 더미 데이터
-      // const data2 = {
-      //    email: "kim222@naver.com",
-      //    password: "1234",
-      //    passwordConfirm: "1234",
-      //    RRN: "0000000000",
-      //    nickname: "닉",
-      //    question: "질문 예시 1",
-      //    answer: "그건 바로 나 이인건",
-      // };
       const response = await signupPost(data);
       // 성공, 실패 case에 따라 modal을 띄워주는 함수
       getMessage(response, setMessage, setIsModalOpen);
@@ -66,7 +55,6 @@ function SignupForm() {
          <button type="submit" className="submit-button">
             회원가입
          </button>
-         <SignupOauth />
          <SignupModal
             isOpen={isModalOpen}
             setIsOpen={setIsModalOpen}
@@ -85,11 +73,11 @@ const SignupFormContainer = styled.form`
    align-items: center;
    justify-content: center;
    width: 550px;
-   height: 750px;
-   padding-top: 5%;
+   height: 700px;
    background-color: var(--second-color1);
    box-shadow: 2px 3px 5px 0;
    border-radius: 10px;
+   padding-top: 2%;
    .logo {
       position: absolute;
       width: 200px;
@@ -102,6 +90,7 @@ const SignupFormContainer = styled.form`
       width: 70%;
       height: 40px;
       font-size: var(--font-large);
+      margin-top: 4%;
       border-radius: 1000px;
       background-color: var(--second-color3);
       color: white;
