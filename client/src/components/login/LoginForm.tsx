@@ -3,6 +3,8 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { useEffect, useRef, useState } from "react";
 import { useCookies } from "react-cookie";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router";
+import { AxiosResponse } from "axios";
 import logo from "../../assets/img/logo2.png";
 import validFunction from "../../util/signinValidFunc";
 import LoginModal from "./LoginModal";
@@ -10,8 +12,11 @@ import { LoginTypes } from "./LoginType";
 import { loginPost } from "../../api/axios";
 import { setMemberId } from "../../reducers/memberIdSlice";
 
+type ResponseType = [string, AxiosResponse | number];
+
 function LoginForm() {
    const dispatch = useDispatch();
+   const navigate = useNavigate();
    const [memberCookie, setMemberCookie] = useCookies(["memberId"]);
    const [tokenCookie, setTokenCookie] = useCookies(["accessToken"]);
 
@@ -22,8 +27,8 @@ function LoginForm() {
    } = useForm<LoginTypes>();
    const [isFailModalOpen, setIsFailModalOpen] = useState(false);
    const [failMessage, setFailMessage] = useState({
-      text1: "로그인에 실패했습니다.",
-      text2: "아이디와 비밀번호를 확인해주세요.",
+      text1: "",
+      text2: "",
    });
    // 페이지 입장할 때 첫 input에 focus
    const inputRef = useRef<HTMLInputElement | null>(null);
@@ -32,33 +37,40 @@ function LoginForm() {
       if (inputRef.current !== null) inputRef.current.focus();
    }, []);
 
+   // 요청 성공/실패 확인 함수
+   const isSuccessResponse = (
+      res: ResponseType
+   ): res is [string, AxiosResponse] => {
+      if (res[0] === "성공") return true;
+      return false;
+   };
+
    const onSubmit: SubmitHandler<LoginTypes> = async (data) => {
       // 로그인 요청 함수 자리
       // 로그인시 home화면으로 navigate
-      const response = await loginPost(data);
-      console.log(response);
-      // access 토큰 저장, memberid 저장, 로그인상태 변경
-      const newMemberId = 5;
-      // if(성공시) {
-      dispatch(setMemberId(newMemberId)); //   로그인 상태 변경
-      setMemberCookie("memberId", newMemberId, { maxAge: 300 }); // memberId 쿠키에 저장
-      //   setTokenCookie("accessToken", accessToken, { maxAge: 60 * 60 * 3 });  //access 토큰은 쿠키에 저장
-      //   navigate('/'); home으로 이동
-      // }
-      // 로그인 실패시 modal창으로 로그인실패 에러 메시지 띄우기
-      // 서버와 통신이 원활하지 않을 때
-      // setFailMessage({
-      //    text1: "서버와 통신이 원활하지 않습니다.",
-      //    text2: "다시 시도해 주세요.",
-      // });
-      // setIsFailModalOpen(true);
-      // 아이디 비번이 잘못됐을 때
-      // setFailMessage({
-      //    text1: "로그인에 실패했습니다.",
-      //    text2: "아이디와 비밀번호를 확인해주세요.",
-      // });
-      // setIsFailModalOpen(true);
-      // console.log(data);
+      const response: ResponseType = await loginPost(data);
+      if (isSuccessResponse(response)) {
+         const newMemberId = 5;
+         const accessToken = response[1]?.headers.authorization.split(" ")[1];
+         dispatch(setMemberId(newMemberId)); //   로그인 상태 변경
+         setMemberCookie("memberId", newMemberId, { maxAge: 300 }); // memberId 쿠키에 저장
+         setTokenCookie("accessToken", accessToken, { maxAge: 300 }); // access 토큰은 쿠키에 저장
+         navigate("/");
+      } else if (response[1] === 401) {
+         // 아이디 비번이 잘못됐을 때
+         setFailMessage({
+            text1: "로그인에 실패했습니다.",
+            text2: "아이디와 비밀번호를 확인해주세요.",
+         });
+         setIsFailModalOpen(true);
+      } else {
+         // 서버와 통신이 원활하지 않을 때
+         setFailMessage({
+            text1: "서버와 통신이 원활하지 않습니다.",
+            text2: "다시 시도해 주세요.",
+         });
+         setIsFailModalOpen(true);
+      }
    };
 
    return (
