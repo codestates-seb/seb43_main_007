@@ -18,6 +18,6 @@ public class Bookmark {
     private Long boardId;
 
     @ManyToOne
-    @JoinColumn(name = "memberId")
+    @JoinColumn(name = "member_id")
     private Member member;
 }
