@@ -337,3 +337,23 @@ export const dustGet = () => {
       }&returnType=json&searchDate=${date}`
    );
 };
+
+// 댓글 작성
+export const createComment = async (
+   boardId: number,
+   content: string,
+   memberId: number
+) => {
+   try {
+      const { data } = await request.post(`/comments`, {
+         boardId,
+         content,
+         memberId,
+      });
+      console.log("댓글 작성 성공");
+      return data;
+   } catch (error) {
+      console.log("댓글 작성 실패");
+      return null;
+   }
+};
