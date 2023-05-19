@@ -357,3 +357,25 @@ export const createComment = async (
       return null;
    }
 };
+
+// 대댓글 작성
+export const createReply = async (
+   boardId: number,
+   content: string,
+   memberId: number,
+   parentId: number
+) => {
+   try {
+      const { data } = await request.post(`/comments`, {
+         boardId,
+         content,
+         memberId,
+         parentId,
+      });
+      console.log("댓글 작성 성공");
+      return data;
+   } catch (error) {
+      console.log("댓글 작성 실패");
+      return null;
+   }
+};

@@ -18,6 +18,8 @@ export interface CommentProps {
    handleReplySubmit: (commentId: number, content: string) => void;
    handleReplyClick: (commentId: number | null) => void;
    isReplySelected: boolean;
+   memberId: number;
+   boardId: number;
    // selectedCommentId: number | null;
 }
 
@@ -26,6 +28,8 @@ function Comment({
    handleReplySubmit,
    handleReplyClick,
    isReplySelected,
+   memberId,
+   boardId,
 }: // selectedCommentId,
 CommentProps) {
    const handleReplySubmitWrapper = (content: string) => {
@@ -77,6 +81,9 @@ CommentProps) {
             <CreateReply
                onSubmit={handleReplySubmitWrapper}
                onCancel={() => handleReplyClick(null)}
+               memberId={memberId}
+               boardId={boardId}
+               parentId={comment.commentId}
             />
          )}
          {comment.replies &&

@@ -5,9 +5,15 @@ import groupCommentsAndReplies from "../../util/groupCommentsAndReplies";
 
 interface CommentListProps {
    comments?: any[];
+   memberId: number;
+   boardId: number;
 }
 
-function CommentList({ comments: initialComments = [] }: CommentListProps) {
+function CommentList({
+   comments: initialComments = [],
+   memberId,
+   boardId,
+}: CommentListProps) {
    const [comments, setComments] = useState(
       groupCommentsAndReplies(initialComments || [])
    );
@@ -45,6 +51,8 @@ function CommentList({ comments: initialComments = [] }: CommentListProps) {
                      }
                      handleReplyClick={handleReplyClick}
                      isReplySelected={isReplySelected}
+                     memberId={memberId}
+                     boardId={boardId}
                      // selectedCommentId={selectedCommentId}
                   />
                );
