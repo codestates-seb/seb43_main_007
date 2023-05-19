@@ -56,7 +56,6 @@ public class Board {
     private int pin;
 
 
-//    private Long like;
 
     @OneToMany(mappedBy = "board", cascade = CascadeType.REMOVE)
     private List<BoardTag> boardTag = new ArrayList<>();

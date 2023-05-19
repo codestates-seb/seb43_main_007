@@ -2,12 +2,14 @@ package com.main.server.board.service;
 
 import com.main.server.Like.entity.Like;
 import com.main.server.Like.repository.LikeRepository;
+import com.main.server.Like.service.LikeService;
 import com.main.server.board.entity.Board;
 import com.main.server.board.entity.BoardTag;
 import com.main.server.board.repository.BoardRepository;
 import com.main.server.board.repository.BoardTagRepository;
 import com.main.server.bookmark.entity.Bookmark;
 import com.main.server.bookmark.repository.BookmarkRepository;
+import com.main.server.bookmark.service.BookmarkService;
 import com.main.server.exception.BusinessLogicException;
 import com.main.server.member.entity.Member;
 import com.main.server.member.repository.MemberRepository;
@@ -33,6 +35,9 @@ public class BoardService {
     private final BoardRepository boardRepository;
     private final BoardTagRepository boardTagRepository;
     private final LikeRepository likeRepository;
+    private final LikeService likeService;
+
+    private final BookmarkService bookmarkService;
 
     private final TagService tagService;
 
@@ -45,18 +50,7 @@ public class BoardService {
 
         return findVerifiedBoard(boardId);
     }
-    public int checkBookmark(long memberId, long boardId){
-        Optional<Member> member = memberRepository.findById(memberId);
-        if(member.isPresent()){
-            Optional<Bookmark> bookmark = bookmarkRepository.findByMemberAndBoardId(member.get(), boardId);
-            if(bookmark.isPresent()){
-                return 1;
-            }else{
-                return 0;
-            }
-        }
-        return 0;
-    }
+
 
     public Page<Board> getAllBoard(Pageable pageable, String cate, String title, String content, long memberId) {
 
@@ -65,6 +59,7 @@ public class BoardService {
             if(title.equals("") && content.equals("")){
                 Page<Board> filteredBoards1 = boardRepository.findByCategoryContaining(cate, pageable); // 카테 리스트
                 Page<Board> b = new PageImpl<>(filteredBoards1.toList(), pageable, filteredBoards1.getTotalElements());
+
                 return b;
             }else if(!title.equals("") && content.equals("")) { // 카테고리+제목
                 Page<Board> filteredBoards2 = boardRepository.findByCategoryAndTitleContaining(cate, title, pageable);
@@ -99,6 +94,10 @@ public class BoardService {
 
         }
 //        return boards;
+    }
+
+    public void checkLikeBookmark(){
+
     }
 
     public Board putBoard(Board board) {

@@ -5,6 +5,7 @@ import com.main.server.Like.entity.Like;
 import com.main.server.Like.repository.LikeRepository;
 import com.main.server.board.entity.Board;
 import com.main.server.board.repository.BoardRepository;
+import com.main.server.bookmark.entity.Bookmark;
 import com.main.server.member.dto.MemberDto;
 import com.main.server.member.entity.Member;
 import com.main.server.member.mapper.MemberMapper;
@@ -56,6 +57,11 @@ public class LikeService {
             return originBoard.getLikeCount(); //라이크카운트 리턴
         }
       return 0;//
+    }
+
+    public int checkLike(long memberId, long boardId){
+        Optional<Like> like = likeRepository.findLikeByMemberIdAndBoardId(memberId, boardId);
+        return like.isPresent() ? 1 : 0;
     }
 }
 

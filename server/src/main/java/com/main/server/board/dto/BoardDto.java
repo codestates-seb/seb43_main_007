@@ -16,6 +16,12 @@ import java.util.List;
 public class BoardDto {
     @Getter
     @AllArgsConstructor
+    public static class Basic{
+        private long memberId;
+        private long boardId;
+    }
+    @Getter
+    @AllArgsConstructor
     public static class Post{
         private long memberId;
 
@@ -36,6 +42,7 @@ public class BoardDto {
     @Setter
     @AllArgsConstructor
     public static class Put{
+        private Long memberId;
         private Long boardId;
         @NotEmpty(message = "제목을 작성해 주세요.")
         private String title;
@@ -63,7 +70,6 @@ public class BoardDto {
 
         private String photo;
 
-        private int like;
 
         private int bookmark;
 
@@ -73,6 +79,10 @@ public class BoardDto {
         private String category;
 
         private int pin;
+
+        private int likeCheck;
+
+        private long likeCount;
         private List<BoardTagDto.Response> tags;
 
     }
