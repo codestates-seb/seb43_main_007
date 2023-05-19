@@ -1,8 +1,10 @@
 import styled from "styled-components";
+import { useEffect } from "react";
 import MypageNavbar from "../components/mypage-profile/MypageNavbar";
 import MypageTopProfile from "../components/mypage-profile/MypageTopProfile";
 import MyPost from "../components/mypage-mypost/MyPost";
 import dummyCommentTitleData from "../components/mypage-mypost/dummyCommentTitleData";
+import { myPageMyPost } from "../api/axios";
 
 function MypageMypost() {
    const data = dummyCommentTitleData;
@@ -11,6 +13,10 @@ function MypageMypost() {
    // console.log(dataTitle);
    // const dataComment = data.map((el) => el.content);
    // console.log(dataComment);
+
+   useEffect(() => {
+      myPageMyPost(1);
+   }, []);
 
    // 데이터에 맞게 분기
    const dataTitle = data.map((el) =>
