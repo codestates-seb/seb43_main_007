@@ -76,7 +76,7 @@ const ModalView = styled.div`
    transform: translate(-50%, -50%);
    background-color: var(--second-color1);
    width: 500px;
-   height: 50%;
+   height: 400px;
    color: black;
    box-shadow: 2px 3px 5px 0;
    border-radius: 10px;

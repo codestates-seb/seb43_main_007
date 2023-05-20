@@ -1,4 +1,4 @@
-import axios, { AxiosError } from "axios";
+import axios, { AxiosError, AxiosResponse } from "axios";
 import moment from "moment";
 import { LoginTypes, FindPasswordType } from "../components/login/LoginType";
 import { SignupTypes } from "../components/signup/SignupTypes";
@@ -135,16 +135,18 @@ export const myPageMyPost = async (memberId: number) => {
 };
 
 // 로그인 요청
-export const loginPost = async (req: LoginTypes) => {
+export const loginPost = async (
+   req: LoginTypes
+): Promise<[string, AxiosResponse | number]> => {
    try {
-      const { data } = await request.post("/login", req);
-      console.log("성공");
-      console.log(data);
-      return data;
+      const response = await request.post("members/login", req);
+      // 로그인 성공시 response 반환
+      return ["성공", response];
    } catch (error) {
-      console.log("실패");
-      console.log(error);
-      return null;
+      // 로그인 실패시 에러 코드 반환
+      if (axios.isAxiosError(error) && error.response?.status)
+         return ["실패", error.response.status];
+      return ["실패", 404];
    }
 };
 

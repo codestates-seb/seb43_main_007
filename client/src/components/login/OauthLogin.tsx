@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import googleIcon from "../../assets/img/google-icon.png";
-import githubIcon from "../../assets/img/github-icon.png";
 
 function OauthLogin() {
    return (
@@ -10,12 +9,6 @@ function OauthLogin() {
                <img className="google" src={googleIcon} alt="google-icon" />
             </div>
             <div className="text">Google 로그인</div>
-         </button>
-         <button type="button" className="oauth-box">
-            <div className="icon">
-               <img className="github" src={githubIcon} alt="github-icon" />
-            </div>
-            <div className="text">Github 로그인</div>
          </button>
       </OauthLoginContainer>
    );
@@ -36,20 +29,17 @@ const OauthLoginContainer = styled.div`
       padding: 0;
       cursor: pointer;
       background-color: var(--second-color1);
+      height: 60px;
       .icon {
          display: flex;
          justify-content: center;
          align-items: center;
          border-right: 0.5px solid var(--third-color4);
-         width: 12%;
-         height: 45px;
+         width: 18%;
+         height: 60px;
          .google {
-            width: 50px;
-            height: 45px;
-         }
-         .github {
-            width: 40px;
-            height: 40px;
+            width: 90px;
+            height: 60px;
          }
       }
       .text {
@@ -58,7 +48,7 @@ const OauthLoginContainer = styled.div`
          height: 100%;
          justify-content: center;
          align-items: center;
-         font-size: var(--font-large);
+         font-size: 25px;
          color: var(--third-color4);
          transition-duration: 0.2s;
          &:hover {
