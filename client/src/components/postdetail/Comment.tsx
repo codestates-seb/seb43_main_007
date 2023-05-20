@@ -1,17 +1,16 @@
 import styled from "styled-components";
 import CreateReply from "./CreateReply";
 import Reply from "./Reply";
+import { deleteComment } from "../../api/axios";
 
 export interface CommentType {
    boardId: number;
    commentId: number;
    nickname: string;
-   picture: string;
+   userPhoto: string;
    content: string;
    createdAt: string;
-   parent?: {
-      commentId: number;
-   };
+   parentId: number;
    replies?: CommentType[];
 }
 
@@ -20,6 +19,8 @@ export interface CommentProps {
    handleReplySubmit: (commentId: number, content: string) => void;
    handleReplyClick: (commentId: number | null) => void;
    isReplySelected: boolean;
+   memberId: number;
+   boardId: number;
    // selectedCommentId: number | null;
 }
 
@@ -28,10 +29,21 @@ function Comment({
    handleReplySubmit,
    handleReplyClick,
    isReplySelected,
+   memberId,
+   boardId,
 }: // selectedCommentId,
 CommentProps) {
    const handleReplySubmitWrapper = (content: string) => {
       handleReplySubmit(comment.commentId, content);
+   };
+
+   const handleDelete = async () => {
+      const response = await deleteComment(comment.commentId);
+      if (response) {
+         console.log("댓글 삭제 성공");
+      } else {
+         console.log("댓글 삭제 실패");
+      }
    };
 
    return (
@@ -40,7 +52,7 @@ CommentProps) {
             <AuthorInfoContainer>
                <AuthorInfo>
                   <img
-                     src={comment.picture}
+                     src={comment.userPhoto}
                      alt="comment-author-profile"
                      className="comment-author-img"
                   />
@@ -60,6 +72,7 @@ CommentProps) {
                   <button
                      type="submit"
                      className="comment-btn comment-delete-btn"
+                     onClick={handleDelete}
                   >
                      삭제
                   </button>
@@ -79,6 +92,9 @@ CommentProps) {
             <CreateReply
                onSubmit={handleReplySubmitWrapper}
                onCancel={() => handleReplyClick(null)}
+               memberId={memberId}
+               boardId={boardId}
+               parentId={comment.commentId}
             />
          )}
          {comment.replies &&

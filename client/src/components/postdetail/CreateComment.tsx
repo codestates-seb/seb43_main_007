@@ -1,28 +1,46 @@
 import styled from "styled-components";
 import useCommentCharacterCount from "../../hooks/useCommentCharacterCount";
 import { DefaultButton } from "../mypage-profile/EditProfile";
+import { createComment } from "../../api/axios";
 
-function CreateComment() {
+interface CreateCommentProps {
+   memberId: number;
+   boardId: number;
+}
+
+function CreateComment({ memberId, boardId }: CreateCommentProps) {
    const maxLength = 300;
    const { value, characterCount, handleChange } = useCommentCharacterCount({
       maxLength,
    });
 
+   const handleCommentSubmit = async (event: React.FormEvent) => {
+      event.preventDefault();
+      const response = await createComment(boardId, value, memberId);
+      if (response) {
+         console.log("Comment submitted successfully");
+      } else {
+         console.log("Comment submission failed");
+      }
+   };
+
    return (
       <CreateCommentContainer>
-         <CommentInputBox>
-            <p className="letter-count">
-               {characterCount}/{maxLength}
-            </p>
-            <textarea
-               className="create-comment"
-               placeholder="댓글을 입력해주세요."
-               maxLength={maxLength}
-               value={value}
-               onChange={handleChange}
-            />
-         </CommentInputBox>
-         <DefaultButton>등록</DefaultButton>
+         <form onSubmit={handleCommentSubmit}>
+            <CommentInputBox>
+               <p className="letter-count">
+                  {characterCount}/{maxLength}
+               </p>
+               <textarea
+                  className="create-comment"
+                  placeholder="댓글을 입력해주세요."
+                  maxLength={maxLength}
+                  value={value}
+                  onChange={handleChange}
+               />
+            </CommentInputBox>
+            <DefaultButton type="submit">등록</DefaultButton>
+         </form>
       </CreateCommentContainer>
    );
 }

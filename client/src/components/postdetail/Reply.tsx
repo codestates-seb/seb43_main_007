@@ -1,18 +1,28 @@
 import styled from "styled-components";
 import type { CommentType } from "./Comment";
+import { deleteComment } from "../../api/axios";
 
 export interface ReplyProps {
    comment: CommentType;
 }
 
 function Reply({ comment }: ReplyProps) {
+   const handleDelete = async () => {
+      const response = await deleteComment(comment.commentId);
+      if (response) {
+         console.log("대댓글 삭제 성공");
+      } else {
+         console.log("대댓글 삭제 실패");
+      }
+   };
+
    return (
       <ReplyContainer>
          <ReplyBox>
             <ReplyAuthorInfoContainer>
                <ReplyAuthorInfo>
                   <img
-                     src={comment.picture}
+                     src={comment.userPhoto}
                      alt="reply-author-img"
                      className="reply-author-img"
                   />
@@ -29,7 +39,11 @@ function Reply({ comment }: ReplyProps) {
                      수정
                   </button>
                   <span>|</span>
-                  <button type="submit" className="reply-btn reply-delete-btn">
+                  <button
+                     type="submit"
+                     className="reply-btn reply-delete-btn"
+                     onClick={handleDelete}
+                  >
                      삭제
                   </button>
                </ReplyButtonContainer>

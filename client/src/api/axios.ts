@@ -345,21 +345,36 @@ export const dustGet = () => {
    );
 };
 
-// 댓글 삭제
-export const deleteComment = async (commentId: number) => {
+// 대댓글 작성
+export const createReply = async (
+   boardId: number,
+   content: string,
+   memberId: number,
+   parentId: number
+) => {
    try {
-      const response = await request.delete(`/comments/${commentId}`);
-      if (response.status === 204) {
-         return "댓글 삭제 성공";
-      }
-      console.log("Unexpected status code:", response.status);
-      return null;
+      const { data } = await request.post(`/comments`, {
+         boardId,
+         content,
+         memberId,
+         parentId,
+      });
+      console.log("댓글 작성 성공");
+      return data;
    } catch (error) {
-      console.log(error);
+      console.log("댓글 작성 실패");
       return null;
    }
 };
 
+// 댓글 삭제
+export const deleteComment = async (commentId: number) => {
+   try {
+      const { data } = await request.delete(`/comments/${commentId}`);
+      console.log("댓글 삭제 성공");
+      return data;
+   } catch (error) {
+      console.log("댓글 삭제 실패");
 // 댓글 생성
 export const createComment = async (
    memberId: number,
