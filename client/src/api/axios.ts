@@ -126,7 +126,7 @@ export const myPageMyPost = async (memberId: number) => {
    try {
       const { data } = await request.get(`/members/mypage/${memberId}`);
       console.log(data);
-      return data;
+      return [data.boards, data.comments];
    } catch (error) {
       serverError();
       console.log(error);
@@ -166,7 +166,7 @@ export const getUserProfile = async () => {
    try {
       const { data } = await request.get("/members/mypage/1"); // 나중에 수정
       console.log("유저 프로필 사진, 닉네임 GET 성공");
-      return [data.boards, data.comments];
+      return data;
    } catch (error) {
       console.log("유저 프로필 사진, 닉네임 GET 실패");
       console.error(error);
