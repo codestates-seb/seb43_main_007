@@ -22,6 +22,7 @@ const RightPhrasesContainer = styled.div`
    top: 15px;
    box-shadow: 2px 3px 2px 0 rgba(0, 0, 0);
    border-radius: 1000px;
+   z-index: 2;
    .text {
       font-weight: 900;
       margin-left: 70px;
