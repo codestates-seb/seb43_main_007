@@ -158,9 +158,9 @@ export const signupPost = async (req: SignupTypes): Promise<string> => {
 };
 
 // 유저 프로필 사진, 닉네임 GET 요청
-export const getUserProfile = async () => {
+export const getUserProfile = async (memberId: string) => {
    try {
-      const { data } = await request.get("/members/mypage/1"); // 나중에 수정
+      const { data } = await request.get(`/members/mypage/1`); // 나중에 수정
       console.log("유저 프로필 사진, 닉네임 GET 성공");
       return data;
    } catch (error) {
@@ -303,12 +303,15 @@ export const deleteAccount = async (memberId: number) => {
 };
 
 // 게시글 상세 조회
-export const getPostData = async (boardId: number) => {
+export const getPostData = async (memberId: number, boardId: number) => {
    try {
-      const { data } = await request.get(`/boards/board/${boardId}`);
+      const { data } = await request.get(`/boards/board`, {
+         params: { memberId, boardId },
+      });
+      console.log("게시글 조회 성공");
       return data;
    } catch (error) {
-      console.log(error);
+      console.log("게시글 조회 실패");
       return null;
    }
 };
@@ -336,4 +339,43 @@ export const dustGet = () => {
          import.meta.env.VITE_DUST_SERVICEKEY
       }&returnType=json&searchDate=${date}`
    );
+};
+
+// 댓글 삭제
+export const deleteComment = async (commentId: number) => {
+   try {
+      const response = await request.delete(`/comments/${commentId}`);
+      if (response.status === 204) {
+         return "댓글 삭제 성공";
+      }
+      console.log("Unexpected status code:", response.status);
+      return null;
+   } catch (error) {
+      console.log(error);
+      return null;
+   }
+};
+
+// 댓글 생성
+export const createComment = async (
+   memberId: number,
+   boardId: number,
+   content: string
+) => {
+   try {
+      const data = await request.post("/comments", {
+         memberId,
+         boardId,
+         content,
+      });
+
+      if (data.status === 201 || data.status === 200) {
+         console.log("댓글 작성 성공");
+         return data;
+      }
+      return null;
+   } catch (error) {
+      console.log("댓글 생성 오류");
+      return null;
+   }
 };
