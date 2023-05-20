@@ -377,6 +377,8 @@ export const deleteComment = async (commentId: number) => {
       return data;
    } catch (error) {
       console.log("댓글 삭제 실패");
+   }
+};
 // 댓글 생성
 export const createComment = async (
    memberId: number,
