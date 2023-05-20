@@ -1,13 +1,23 @@
 import useCommentCharacterCount from "../../hooks/useCommentCharacterCount";
 import { CreateCommentContainer, CommentInputBox } from "./CreateComment";
 import { DefaultButton } from "../mypage-profile/EditProfile";
+import { createReply } from "../../api/axios";
 
 export interface CreateReplyProps {
    onSubmit: (content: string) => void;
    onCancel: () => void;
+   memberId: number;
+   boardId: number;
+   parentId: number;
 }
 
-function CreateReply({ onSubmit, onCancel }: CreateReplyProps) {
+function CreateReply({
+   onSubmit,
+   onCancel,
+   memberId,
+   boardId,
+   parentId,
+}: CreateReplyProps) {
    onCancel();
    const maxLength = 300;
    const { value, characterCount, handleChange, clearValue } =
@@ -15,9 +25,15 @@ function CreateReply({ onSubmit, onCancel }: CreateReplyProps) {
          maxLength,
       });
 
-   const handleReplySubmit = (event: React.FormEvent) => {
+   const handleReplySubmit = async (event: React.FormEvent) => {
       event.preventDefault();
-      onSubmit(value);
+      const response = await createReply(boardId, value, memberId, parentId);
+      if (response) {
+         console.log("대댓글 생성 성공");
+         onSubmit(value);
+      } else {
+         console.log("대댓글 생성 실패");
+      }
       clearValue();
    };
 

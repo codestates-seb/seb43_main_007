@@ -8,6 +8,13 @@ function Home() {
       <HomeContainer>
          <HomeHeader />
          <EditerPick />
+         <div className="bird-container bird-container--one">
+            <div className="bird bird--one" />
+         </div>
+
+         <div className="bird-container bird-container--two">
+            <div className="bird bird--two" />
+         </div>
       </HomeContainer>
    );
 }
@@ -17,6 +24,7 @@ const HomeContainer = styled.div`
    display: flex;
    flex-direction: column;
    align-items: center;
+   position: relative;
    width: 1080px;
    background-image: url(${background});
    background-size: 1080px 400px;
@@ -31,5 +39,83 @@ const HomeContainer = styled.div`
       left: 0px;
       right: 0px;
       bottom: 0px;
+   }
+
+   .bird {
+      background-image: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/174479/bird-cells-new.svg);
+      background-size: auto 100%;
+      width: 88px;
+      height: 125px;
+      will-change: background-position;
+
+      animation-name: fly-cycle;
+      animation-timing-function: steps(10);
+      animation-iteration-count: infinite;
+
+      &--one {
+         animation-duration: 1s;
+         animation-delay: -0.5s;
+      }
+
+      &--two {
+         animation-duration: 0.9s;
+         animation-delay: -0.75s;
+      }
+   }
+
+   .bird-container {
+      position: absolute;
+      top: 10%;
+      left: -30%;
+      width: 100%;
+      transform: scale(0) translateX(-10%);
+      will-change: transform;
+      z-index: 1;
+      animation-name: fly-right-one;
+      animation-timing-function: linear;
+      animation-iteration-count: infinite;
+
+      &--one {
+         animation-duration: 15s;
+         animation-delay: 0;
+      }
+
+      &--two {
+         animation-duration: 16s;
+         animation-delay: 1s;
+      }
+   }
+
+   @keyframes fly-cycle {
+      100% {
+         background-position: -900px 0;
+      }
+   }
+
+   @keyframes fly-right-one {
+      0% {
+         transform: scale(0.3) translateX(-10%);
+      }
+
+      20% {
+         transform: translateY(0vh) translateX(15%) scale(0.5);
+      }
+
+      40% {
+         transform: translateY(2vh) translateX(40%) scale(0.6);
+      }
+
+      60% {
+         transform: translateY(0vh) translateX(60%) scale(0.6);
+      }
+
+      80% {
+         transform: translateY(0vh) translateX(80%) scale(0.6);
+      }
+
+      100% {
+         transform: translateY(0vh) translateX(100%) scale(0.6);
+      }
+
    }
 `;

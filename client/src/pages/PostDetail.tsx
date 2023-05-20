@@ -37,8 +37,12 @@ function PostDetail() {
             handleDeletePost={handleDeletePost}
             boardId={baordIdNumber}
          />
-         <CreateComment />
-         <CommentList />
+         <CreateComment memberId={post.memberId} boardId={baordIdNumber} />
+         <CommentList
+            comments={post.comments}
+            memberId={post.memberId}
+            boardId={baordIdNumber}
+         />
       </PostDetailContainer>
    );
 }

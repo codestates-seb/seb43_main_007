@@ -1,17 +1,34 @@
 import styled from "styled-components";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Comment from "./Comment";
-import dummyComments from "./dummyCommentData";
 import groupCommentsAndReplies from "../../util/groupCommentsAndReplies";
 
-function CommentList() {
+interface CommentListProps {
+   comments?: any[];
+   memberId: number;
+   boardId: number;
+}
+
+function CommentList({
+   comments: initialComments = [],
+   memberId,
+   boardId,
+}: CommentListProps) {
    const [comments, setComments] = useState(
-      groupCommentsAndReplies(dummyComments)
+      groupCommentsAndReplies(initialComments || [])
    );
-   setComments(groupCommentsAndReplies(dummyComments));
+   console.log(comments);
+   console.log(setComments);
+  
    const [selectedCommentId, setSelectedCommentId] = useState<number | null>(
       null
    );
+
+   useEffect(() => {
+      if (initialComments) {
+         setComments(groupCommentsAndReplies(initialComments));
+      }
+   }, [initialComments]);
 
    const handleReplySubmit = (commentId: number, content: string) => {
       console.log("handleReplySubmit called with:", { commentId, content });
@@ -37,6 +54,8 @@ function CommentList() {
                      }
                      handleReplyClick={handleReplyClick}
                      isReplySelected={isReplySelected}
+                     memberId={memberId}
+                     boardId={boardId}
                      // selectedCommentId={selectedCommentId}
                   />
                );

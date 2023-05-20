@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import MypageTopProfile from "../components/mypage-profile/MypageTopProfile";
 import MypageNavbar from "../components/mypage-profile/MypageNavbar";
 import EditProfile from "../components/mypage-profile/EditProfile";
@@ -9,22 +9,29 @@ import DeleteAccount from "../components/mypage-profile/DeleteAccount";
 import { setPhoto } from "../reducers/ProfilePhotoSlice";
 import { setNickname } from "../reducers/ProfileNicknameSlice";
 import { getUserProfile } from "../api/axios";
+import { RootState } from "../store/store";
 
 function MypageProfile() {
    const dispatch = useDispatch();
 
+   const memberId = useSelector((state: RootState) => state.memberId);
    useEffect(() => {
-      getUserProfile()
-         .then((data) => {
-            if (data) {
-               dispatch(setNickname(data.nickname));
-               dispatch(setPhoto(data.imageUrl));
+      const fetchUserProfile = async () => {
+         try {
+            if (memberId) {
+               const data = await getUserProfile(String(memberId));
+               if (data) {
+                  dispatch(setNickname(data.nickname));
+                  dispatch(setPhoto(data.imageUrl));
+               }
             }
-         })
-         .catch((error) => {
+         } catch (error) {
             console.error("실패", error);
-         });
-   }, [dispatch]);
+         }
+      };
+
+      fetchUserProfile();
+   }, [dispatch, memberId]);
 
    return (
       <MypageProfileContainer>

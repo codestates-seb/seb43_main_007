@@ -11,6 +11,7 @@ function MypageTopProfile() {
    const profileNickname = useSelector(
       (state: RootState) => state.profileNickname.nickname
    );
+
    return (
       <TopProfileContainer>
          <ProfileBox>

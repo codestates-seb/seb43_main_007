@@ -30,10 +30,10 @@ export const listData = async (
    }
 };
 
-// 목록페이지 좋아요 patch요청
+// 목록페이지 좋아요 post
 export const likePatch = async (req: Likereq) => {
    try {
-      const data = await request.patch(`/boards/like`, req);
+      const data = await request.post(`/likes`, req);
       console.log("요청 성공");
       console.log(data);
    } catch (error) {
@@ -121,12 +121,16 @@ export const createPost = async (
    }
 };
 
+// 마이페이지 내가 쓴 글 get요청 (미사용)
 export const myPageMyPost = async (memberId: number) => {
    try {
-      await request.get(`/members/boards/${memberId}`);
+      const { data } = await request.get(`/members/mypage/${memberId}`);
+      console.log(data);
+      return [data.boards, data.comments];
    } catch (error) {
       serverError();
       console.log(error);
+      throw error;
    }
 };
 
@@ -160,9 +164,9 @@ export const signupPost = async (req: SignupTypes): Promise<string> => {
 };
 
 // 유저 프로필 사진, 닉네임 GET 요청
-export const getUserProfile = async () => {
+export const getUserProfile = async (memberId: string) => {
    try {
-      const { data } = await request.get("/members/mypage/1"); // 나중에 수정
+      const { data } = await request.get(`/members/mypage/1`); // 나중에 수정
       console.log("유저 프로필 사진, 닉네임 GET 성공");
       return data;
    } catch (error) {
@@ -305,12 +309,15 @@ export const deleteAccount = async (memberId: number) => {
 };
 
 // 게시글 상세 조회
-export const getPostData = async (boardId: number) => {
+export const getPostData = async (memberId: number, boardId: number) => {
    try {
-      const { data } = await request.get(`/boards/board/${boardId}`);
+      const { data } = await request.get(`/boards/board`, {
+         params: { memberId, boardId },
+      });
+      console.log("게시글 조회 성공");
       return data;
    } catch (error) {
-      console.log(error);
+      console.log("게시글 조회 실패");
       return null;
    }
 };
@@ -338,4 +345,58 @@ export const dustGet = () => {
          import.meta.env.VITE_DUST_SERVICEKEY
       }&returnType=json&searchDate=${date}`
    );
+};
+
+// 대댓글 작성
+export const createReply = async (
+   boardId: number,
+   content: string,
+   memberId: number,
+   parentId: number
+) => {
+   try {
+      const { data } = await request.post(`/comments`, {
+         boardId,
+         content,
+         memberId,
+         parentId,
+      });
+      console.log("댓글 작성 성공");
+      return data;
+   } catch (error) {
+      console.log("댓글 작성 실패");
+      return null;
+   }
+};
+
+// 댓글 삭제
+export const deleteComment = async (commentId: number) => {
+   try {
+      const { data } = await request.delete(`/comments/${commentId}`);
+      console.log("댓글 삭제 성공");
+      return data;
+   } catch (error) {
+      console.log("댓글 삭제 실패");
+// 댓글 생성
+export const createComment = async (
+   memberId: number,
+   boardId: number,
+   content: string
+) => {
+   try {
+      const data = await request.post("/comments", {
+         memberId,
+         boardId,
+         content,
+      });
+
+      if (data.status === 201 || data.status === 200) {
+         console.log("댓글 작성 성공");
+         return data;
+      }
+      return null;
+   } catch (error) {
+      console.log("댓글 생성 오류");
+      return null;
+   }
 };

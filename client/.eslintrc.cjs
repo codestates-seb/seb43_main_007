@@ -33,5 +33,9 @@ module.exports = {
          },
       ],
       "no-nested-ternary": "off",
+      "react/require-default-props": [
+         "error",
+         { ignoreFunctionalComponents: true },
+      ],
    },
 };

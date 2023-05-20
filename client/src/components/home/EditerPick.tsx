@@ -50,6 +50,7 @@ const EditerPickContainer = styled.div`
    align-items: center;
    position: relative;
    width: 100%;
+   z-index: 2;
    .carousel-container {
       display: flex;
       width: 800px;
