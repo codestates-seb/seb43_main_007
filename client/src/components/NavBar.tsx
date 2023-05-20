@@ -19,7 +19,7 @@ const collections = [
       path: "/communitylist/리필스테이션",
    },
    { emoji: "🍴", label: "식당", path: "/communitylist/식당" },
-   { emoji: "🍎", label: "식료품", path: "/communitylist/식료품" },
+   { emoji: "🎽", label: "의류", path: "/communitylist/의류" },
    { emoji: "🚙 ", label: "전기차", path: "/communitylist/전기차" },
 ];
 

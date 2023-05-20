@@ -19,7 +19,6 @@ export type ListDataProps = {
 export type Likereq = {
    memberId: number;
    boardId: number;
-   boardLike?: number;
 };
 
 export type PageInfo = {
@@ -37,7 +36,7 @@ export type ListData = {
    now: any;
    photo: any;
    pin: number;
-   like: number;
+   likeCheck: number;
    bookmark: number;
    nickName: string;
    userPhoto: any;

@@ -42,7 +42,6 @@ function LoginForm() {
       console.log(response);
       // access 토큰 저장, memberid 저장, 로그인상태 변경
       // if(성공시) {
-      dispatch(setMemberId(5)); //   로그인 상태 변경
       //   memberID 전역상태 설정
       //   access 토큰은 쿠키에저장
       //   home으로 이동
