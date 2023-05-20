@@ -8,7 +8,9 @@ function CommentList() {
    const [comments, setComments] = useState(
       groupCommentsAndReplies(dummyComments)
    );
-   setComments(groupCommentsAndReplies(dummyComments));
+   console.log(comments);
+   console.log(setComments);
+
    const [selectedCommentId, setSelectedCommentId] = useState<number | null>(
       null
    );

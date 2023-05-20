@@ -19,7 +19,7 @@ function ListContent({ userDatas }: { userDatas: ListData }) {
    // 고정 유무(리덕스 툴킷으로 관리?)
    const [isFixPin, setIsFixPin] = useState(userDatas.pin);
    // 좋아요 유무
-   const [isLike, setIsLike] = useState(userDatas.like);
+   const [isLike, setIsLike] = useState(userDatas.likeCheck);
    // 즐겨찾기(북마크) 유무
    const [isBookMark, setIsBookMark] = useState(userDatas.bookmark);
 
@@ -40,10 +40,10 @@ function ListContent({ userDatas }: { userDatas: ListData }) {
 
    // 좋아요 클릭 이벤트
    const likeClickHandler = () => {
+      console.log("?");
       const req = {
          memberId,
          boardId: userDatas.boardId,
-         boardLike: isLike,
       };
       if (isLike === 0) {
          setIsLike(1);

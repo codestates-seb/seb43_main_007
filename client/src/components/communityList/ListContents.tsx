@@ -61,7 +61,6 @@ function ListContents() {
 
    // ListSearch 컴포넌트로 프롬내려주는 함수 (검색 get요청)
    const searchSubmitHandler = async () => {
-      console.log(search);
       let data;
       if (cate === undefined) {
          if (title === "제목") {
@@ -96,7 +95,6 @@ function ListContents() {
          }
       } else {
          if (title === "제목") {
-            console.log("제목 실행?");
             data = await listData(
                curPage,
                `/${memberId}`,
@@ -106,7 +104,6 @@ function ListContents() {
             );
          }
          if (title === "내용") {
-            console.log("내용 실행?");
             data = await listData(
                curPage,
                `/${memberId}`,
@@ -116,7 +113,6 @@ function ListContents() {
             );
          }
          if (title === "제목+내용") {
-            console.log("제목+내용 실행?");
             data = await listData(
                curPage,
                `/${memberId}`,

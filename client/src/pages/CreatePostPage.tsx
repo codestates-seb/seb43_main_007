@@ -34,9 +34,8 @@ function CreatePost() {
    const navigate = useNavigate();
 
    // 리덕스 디스패치 - 멤버아이디 1로 변경후 멤버 아이디 가져오기
-   const dispatch = useDispatch();
-   dispatch(setMemberId(1));
    const memberId = useSelector((state: RootState) => state.memberId);
+   console.log(memberId);
 
    // 내용에서 html 태그 제외하고 글자만 빼오기(에디터 내용 유효성 검사)
    const previewBody = value.replace(/(<([^>]+)>)/gi, "").trim();

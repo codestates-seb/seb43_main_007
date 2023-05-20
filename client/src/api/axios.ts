@@ -30,10 +30,10 @@ export const listData = async (
    }
 };
 
-// 목록페이지 좋아요 patch요청
+// 목록페이지 좋아요 post
 export const likePatch = async (req: Likereq) => {
    try {
-      const data = await request.patch(`/boards/like`, req);
+      const data = await request.post(`/likes`, req);
       console.log("요청 성공");
       console.log(data);
    } catch (error) {
@@ -121,12 +121,16 @@ export const createPost = async (
    }
 };
 
+// 마이페이지 내가 쓴 글 get요청 (미사용)
 export const myPageMyPost = async (memberId: number) => {
    try {
-      await request.get(`/members/boards/${memberId}`);
+      const { data } = await request.get(`/members/mypage/${memberId}`);
+      console.log(data);
+      return [data.boards, data.comments];
    } catch (error) {
       serverError();
       console.log(error);
+      throw error;
    }
 };
 
