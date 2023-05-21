@@ -1,18 +1,21 @@
 import styled from "styled-components";
+import { useSelector } from "react-redux";
 import useCommentCharacterCount from "../../hooks/useCommentCharacterCount";
 import { DefaultButton } from "../mypage-profile/EditProfile";
 import { createComment } from "../../api/axios";
+import { RootState } from "../../store/store";
 
 interface CreateCommentProps {
-   memberId: number;
    boardId: number;
 }
 
-function CreateComment({ memberId, boardId }: CreateCommentProps) {
+function CreateComment({ boardId }: CreateCommentProps) {
    const maxLength = 300;
    const { value, characterCount, handleChange } = useCommentCharacterCount({
       maxLength,
    });
+
+   const memberId = useSelector((state: RootState) => state.memberId);
 
    const handleCommentSubmit = async (event: React.FormEvent) => {
       event.preventDefault();

@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { useParams } from "react-router";
+import { useSelector } from "react-redux";
 import PostTitle from "../components/postdetail/PostTitle";
 import PostContent from "../components/postdetail/PostContent";
 import PostTags from "../components/postdetail/PostTags";
@@ -37,7 +38,7 @@ function PostDetail() {
             handleDeletePost={handleDeletePost}
             boardId={baordIdNumber}
          />
-         <CreateComment memberId={post.memberId} boardId={baordIdNumber} />
+         <CreateComment boardId={baordIdNumber} />
          <CommentList
             comments={post.comments}
             memberId={post.memberId}
