@@ -16,6 +16,9 @@ function Reply({ comment }: ReplyProps) {
       }
    };
 
+   const commentDate = comment.createdAt.slice(0, 10);
+   const commentTime = comment.createdAt.slice(12, 16);
+
    return (
       <ReplyContainer>
          <ReplyBox>
@@ -33,7 +36,9 @@ function Reply({ comment }: ReplyProps) {
                <div className="reply-content">{comment.content}</div>
             </ReplyContent>
             <DateAndButton>
-               <span className="reply-createdAt">{comment.createdAt}</span>
+               <span className="reply-createdAt">
+                  {commentDate} {commentTime}
+               </span>
                <ReplyButtonContainer>
                   <button type="submit" className="reply-btn">
                      수정

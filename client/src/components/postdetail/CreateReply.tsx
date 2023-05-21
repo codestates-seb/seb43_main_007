@@ -18,7 +18,6 @@ function CreateReply({
    boardId,
    parentId,
 }: CreateReplyProps) {
-   onCancel();
    const maxLength = 300;
    const { value, characterCount, handleChange, clearValue } =
       useCommentCharacterCount({
@@ -27,10 +26,12 @@ function CreateReply({
 
    const handleReplySubmit = async (event: React.FormEvent) => {
       event.preventDefault();
-      const response = await createReply(boardId, value, memberId, parentId);
+      const response = await createReply(memberId, value, boardId, parentId);
       if (response) {
          console.log("대댓글 생성 성공");
          onSubmit(value);
+         clearValue();
+         onCancel();
       } else {
          console.log("대댓글 생성 실패");
       }

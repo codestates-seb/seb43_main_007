@@ -65,7 +65,7 @@ function PostTitle({
    };
 
    const postDate = now.slice(0, 10);
-   const postTime = now.slice(11, 19);
+   const postTime = now.slice(11, 16);
 
    return (
       <PostTitleContainer>

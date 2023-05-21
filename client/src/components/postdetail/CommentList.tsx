@@ -17,17 +17,16 @@ function CommentList({
    const [comments, setComments] = useState(
       groupCommentsAndReplies(initialComments || [])
    );
-   console.log(comments);
-   console.log(setComments);
-  
+
    const [selectedCommentId, setSelectedCommentId] = useState<number | null>(
       null
    );
 
    useEffect(() => {
       if (initialComments) {
-         setComments(groupCommentsAndReplies(initialComments));
+         setComments(initialComments);
       }
+      console.log(initialComments);
    }, [initialComments]);
 
    const handleReplySubmit = (commentId: number, content: string) => {
@@ -44,14 +43,12 @@ function CommentList({
          <ul className="comments">
             {comments.map((comment) => {
                const isReplySelected = selectedCommentId === comment.commentId;
-
+               console.log(comment);
                return (
                   <Comment
                      key={comment.commentId}
                      comment={comment}
-                     handleReplySubmit={() =>
-                        handleReplySubmit(comment.commentId, comment.content)
-                     }
+                     handleReplySubmit={handleReplySubmit}
                      handleReplyClick={handleReplyClick}
                      isReplySelected={isReplySelected}
                      memberId={memberId}

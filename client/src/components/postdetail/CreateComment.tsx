@@ -16,7 +16,7 @@ function CreateComment({ memberId, boardId }: CreateCommentProps) {
 
    const handleCommentSubmit = async (event: React.FormEvent) => {
       event.preventDefault();
-      const response = await createComment(boardId, value, memberId);
+      const response = await createComment(memberId, boardId, value);
       if (response) {
          console.log("Comment submitted successfully");
       } else {
@@ -39,7 +39,9 @@ function CreateComment({ memberId, boardId }: CreateCommentProps) {
                   onChange={handleChange}
                />
             </CommentInputBox>
-            <DefaultButton type="submit">등록</DefaultButton>
+            <DefaultButton type="submit" onClick={handleCommentSubmit}>
+               등록
+            </DefaultButton>
          </form>
       </CreateCommentContainer>
    );
