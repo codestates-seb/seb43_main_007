@@ -1,7 +1,10 @@
 import styled from "styled-components";
+import { useState } from "react";
+import { useSelector } from "react-redux";
 import CreateReply from "./CreateReply";
 import Reply from "./Reply";
-import { deleteComment } from "../../api/axios";
+import { editComment, deleteComment } from "../../api/axios";
+import { RootState } from "../../store/store";
 
 export interface CommentType {
    boardId: number;
@@ -19,7 +22,6 @@ export interface CommentProps {
    handleReplySubmit: (commentId: number, content: string) => void;
    handleReplyClick: (commentId: number | null) => void;
    isReplySelected: boolean;
-   memberId: number;
    boardId: number;
 }
 
@@ -28,12 +30,13 @@ function Comment({
    handleReplySubmit,
    handleReplyClick,
    isReplySelected,
-   memberId,
    boardId,
 }: CommentProps) {
    const handleReplySubmitWrapper = (content: string) => {
       handleReplySubmit(comment.commentId, content);
    };
+
+   const memberId = useSelector((state: RootState) => state.memberId);
 
    const handleDelete = async () => {
       const response = await deleteComment(comment.commentId);
@@ -45,6 +48,30 @@ function Comment({
 
    const commentDate = comment.createdAt.slice(0, 10);
    const commentTime = comment.createdAt.slice(12, 16);
+
+   const [isEditing, setIsEditing] = useState(false);
+   const [editedComment, setEditedComment] = useState(comment.content);
+
+   const handleEditSaveClick = async () => {
+      const response = await editComment(
+         comment.commentId,
+         boardId,
+         memberId,
+         editedComment
+      );
+      if (response) {
+         console.log("댓글 수정 성공");
+         setIsEditing(false);
+         window.location.reload();
+      } else {
+         console.log("댓글 수정 실패");
+      }
+   };
+
+   const handleEditCancelClick = () => {
+      setEditedComment(comment.content);
+      setIsEditing(false);
+   };
 
    return (
       <>
@@ -60,24 +87,58 @@ function Comment({
                </AuthorInfo>
             </AuthorInfoContainer>
             <CommentContent>
-               <div className="comment-content">{comment.content}</div>
+               {isEditing ? (
+                  <textarea
+                     className="comment-edit"
+                     value={editedComment}
+                     onChange={(e) => setEditedComment(e.target.value)}
+                  />
+               ) : (
+                  <div className="comment-content">{comment.content}</div>
+               )}
             </CommentContent>
             <DateAndReplyButton>
                <span className="comment-createdAt">
                   {commentDate} {commentTime}
                </span>
                <CommentButtonContainer>
-                  <button type="submit" className="comment-btn">
-                     수정
-                  </button>
-                  <span>|</span>
-                  <button
-                     type="submit"
-                     className="comment-btn comment-delete-btn"
-                     onClick={handleDelete}
-                  >
-                     삭제
-                  </button>
+                  {isEditing ? (
+                     <>
+                        <button
+                           type="submit"
+                           className="comment-btn"
+                           onClick={handleEditSaveClick}
+                        >
+                           등록
+                        </button>
+                        <span>|</span>
+                        <button
+                           type="submit"
+                           className="comment-btn comment-delete-btn"
+                           onClick={handleEditCancelClick}
+                        >
+                           취소
+                        </button>
+                     </>
+                  ) : (
+                     <>
+                        <button
+                           type="submit"
+                           className="comment-btn"
+                           onClick={() => setIsEditing(true)}
+                        >
+                           수정
+                        </button>
+                        <span>|</span>
+                        <button
+                           type="submit"
+                           className="comment-btn comment-delete-btn"
+                           onClick={handleDelete}
+                        >
+                           삭제
+                        </button>
+                     </>
+                  )}
                </CommentButtonContainer>
                <ReplyButton
                   onClick={() =>
@@ -94,7 +155,6 @@ function Comment({
             <CreateReply
                onSubmit={handleReplySubmitWrapper}
                onCancel={() => handleReplyClick(null)}
-               memberId={memberId}
                boardId={boardId}
                parentId={comment.commentId}
             />
@@ -139,11 +199,25 @@ export const AuthorInfo = styled.div`
 
 export const CommentContent = styled.div`
    width: 790px;
-   height: 100%;
    margin-top: 3px;
 
    .comment-content {
       font-size: 13px;
+   }
+
+   .comment-edit {
+      font-size: 13px;
+      width: 100%;
+      height: 100%;
+      resize: none;
+      border: 1px solid var(--light-gray);
+      border-radius: 3px;
+
+      &:focus {
+         box-shadow: 0 0 0 2px rgba(0, 149, 255, 0.15);
+         border: 1px solid var(--second-color3);
+         outline: none;
+      }
    }
 `;
 

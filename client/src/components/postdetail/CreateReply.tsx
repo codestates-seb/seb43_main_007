@@ -1,12 +1,13 @@
+import { useSelector } from "react-redux";
 import useCommentCharacterCount from "../../hooks/useCommentCharacterCount";
 import { CreateCommentContainer, CommentInputBox } from "./CreateComment";
 import { DefaultButton } from "../mypage-profile/EditProfile";
 import { createReply } from "../../api/axios";
+import { RootState } from "../../store/store";
 
 export interface CreateReplyProps {
    onSubmit: (content: string) => void;
    onCancel: () => void;
-   memberId: number;
    boardId: number;
    parentId: number;
 }
@@ -14,7 +15,6 @@ export interface CreateReplyProps {
 function CreateReply({
    onSubmit,
    onCancel,
-   memberId,
    boardId,
    parentId,
 }: CreateReplyProps) {
@@ -24,9 +24,11 @@ function CreateReply({
          maxLength,
       });
 
+   const memberId = useSelector((state: RootState) => state.memberId);
+
    const handleReplySubmit = async (event: React.FormEvent) => {
       event.preventDefault();
-      const response = await createReply(memberId, value, boardId, parentId);
+      const response = await createReply(boardId, value, memberId, parentId);
       if (response) {
          console.log("대댓글 생성 성공");
          onSubmit(value);

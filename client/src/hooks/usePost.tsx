@@ -17,6 +17,7 @@ export interface Post {
    photo: string;
    pin: number;
    likeCheck: number;
+   likeCount: number;
    bookmark: number;
    nickName: string;
    userPhoto: string;
@@ -55,6 +56,8 @@ const usePost = (boardId: string) => {
          serverError();
       }
    };
+
+   console.log(post);
 
    return { post, handleDeletePost };
 };

@@ -13,9 +13,11 @@ export interface PostTitleProps {
    now: string;
    pin: number;
    likeCheck: number;
+   likeCount: number;
    bookmark: number;
    nickName: string;
    userPhoto: string;
+   comments?: any[];
 }
 
 function PostTitle({
@@ -24,16 +26,20 @@ function PostTitle({
    now,
    pin,
    likeCheck,
+   likeCount,
    bookmark,
    nickName,
    userPhoto,
+   comments,
 }: PostTitleProps) {
    const memberId = useSelector((state: RootState) => state.memberId);
 
    // 고정 유무
    const [isFixPin, setIsFixPin] = useState(pin);
-   // 좋아요 유무
+   // 좋아요
    const [isLike, setIsLike] = useState(likeCheck);
+   const [heartCount, setHeartCount] = useState(likeCount);
+
    // 즐겨찾기(북마크) 유무
    const [isBookMark, setIsBookMark] = useState(bookmark);
 
@@ -49,17 +55,23 @@ function PostTitle({
    };
 
    // 좋아요 클릭 이벤트
-   const likeClickHandler = () => {
+   const likeClickHandler = async () => {
       const req = {
          memberId,
          boardId,
       };
       if (isLike === 0) {
          setIsLike(1);
-         likePatch(req);
+         const success = await likePatch(req);
+         if (success) {
+            setHeartCount(heartCount + 1);
+         }
       } else if (isLike === 1) {
          setIsLike(0);
-         likePatch(req);
+         const success = await likePatch(req);
+         if (success) {
+            setHeartCount(heartCount - 1);
+         }
       }
    };
 
@@ -80,6 +92,13 @@ function PostTitle({
 
    const postDate = now.slice(0, 10);
    const postTime = now.slice(11, 16);
+
+   let numTotalComments = comments ? comments.length : 0;
+   if (comments) {
+      comments.forEach((comment) => {
+         numTotalComments += comment.replies.length;
+      });
+   }
 
    return (
       <PostTitleContainer>
@@ -140,7 +159,9 @@ function PostTitle({
                   {nickName} | {postDate} {postTime}
                </span>
             </AuthorDateContainer>
-            <span className="likes-comments">좋아요 153 | 댓글 3</span>
+            <span className="likes-comments">
+               좋아요 {heartCount} | 댓글 {numTotalComments}
+            </span>
          </BottomTitleContainer>
       </PostTitleContainer>
    );

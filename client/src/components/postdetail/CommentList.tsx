@@ -6,13 +6,11 @@ import { commentSuccess } from "../../util/toastify";
 
 interface CommentListProps {
    comments?: any[];
-   memberId: number;
    boardId: number;
 }
 
 function CommentList({
    comments: initialComments = [],
-   memberId,
    boardId,
 }: CommentListProps) {
    const [comments, setComments] = useState(
@@ -49,7 +47,6 @@ function CommentList({
                      handleReplySubmit={handleReplySubmit}
                      handleReplyClick={handleReplyClick}
                      isReplySelected={isReplySelected}
-                     memberId={memberId}
                      boardId={boardId}
                   />
                );

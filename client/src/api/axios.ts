@@ -36,9 +36,11 @@ export const likePatch = async (req: Likereq) => {
       const data = await request.post(`/likes`, req);
       console.log("요청 성공");
       console.log(data);
+      return true;
    } catch (error) {
       console.log("요청 실패");
       console.log(error);
+      return false;
    }
 };
 
@@ -400,6 +402,27 @@ export const createComment = async (
       return null;
    } catch (error) {
       console.log("댓글 생성 오류", error);
+      return null;
+   }
+};
+
+// 댓글 수정
+export const editComment = async (
+   boardId: number,
+   commentId: number,
+   memberId: number,
+   content: string
+) => {
+   try {
+      const { data } = await request.put(`/comments/${commentId}`, {
+         boardId,
+         memberId,
+         content,
+      });
+      console.log("댓글 수정 성공");
+      return data;
+   } catch (error) {
+      console.log("댓글 수정 실패");
       return null;
    }
 };

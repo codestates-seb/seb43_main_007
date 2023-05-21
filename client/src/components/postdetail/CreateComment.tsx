@@ -22,7 +22,7 @@ function CreateComment({ boardId }: CreateCommentProps) {
       const response = await createComment(memberId, boardId, value);
       if (response) {
          console.log("Comment submitted successfully");
-         window.location.reload();
+         // window.location.reload();
       } else {
          console.log("Comment submission failed");
       }

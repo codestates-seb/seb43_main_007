@@ -27,9 +27,11 @@ function PostDetail() {
             now={post.now}
             pin={post.pin}
             likeCheck={post.likeCheck}
+            likeCount={post.likeCount}
             bookmark={post.bookmark}
             nickName={post.nickName}
             userPhoto={post.userPhoto}
+            comments={post.comments}
          />
          <PostAddress address={post.address} />
          <PostContent content={post.content} />
@@ -39,11 +41,7 @@ function PostDetail() {
             boardId={baordIdNumber}
          />
          <CreateComment boardId={baordIdNumber} />
-         <CommentList
-            comments={post.comments}
-            memberId={post.memberId}
-            boardId={baordIdNumber}
-         />
+         <CommentList comments={post.comments} boardId={baordIdNumber} />
       </PostDetailContainer>
    );
 }
