@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
+import { useSelector } from "react-redux";
 import { deletePost, getPostData } from "../api/axios";
 import { postDeleteSuccess, serverError } from "../util/toastify";
 import { CommentType } from "../components/postdetail/Comment";
 import groupCommentsAndReplies from "../util/groupCommentsAndReplies";
+import { RootState } from "../store/store";
 
 export interface Post {
    memberId: number;
@@ -13,7 +15,8 @@ export interface Post {
    address: string | null;
    now: string;
    photo: string;
-   like: number;
+   pin: number;
+   likeCheck: number;
    bookmark: number;
    nickName: string;
    userPhoto: string;
@@ -28,17 +31,20 @@ const usePost = (boardId: string) => {
    const navigate = useNavigate();
    const [post, setPost] = useState<Post | null>(null);
 
+   const memberId = useSelector((state: RootState) => state.memberId);
+
    useEffect(() => {
       const fetchPost = async () => {
-         const data = await getPostData(parseInt(boardId, 10));
+         const data = await getPostData(memberId, parseInt(boardId, 10));
          if (data && data.comments) {
             data.comments = groupCommentsAndReplies(data.comments);
          }
          setPost(data);
+         console.log(`data.comments :`, data.comments);
       };
 
       fetchPost();
-   }, [boardId]);
+   }, [memberId, boardId]);
 
    const handleDeletePost = async () => {
       const response = await deletePost(parseInt(boardId, 10));

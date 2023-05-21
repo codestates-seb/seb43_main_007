@@ -166,7 +166,7 @@ export const signupPost = async (req: SignupTypes): Promise<string> => {
 // 유저 프로필 사진, 닉네임 GET 요청
 export const getUserProfile = async (memberId: string) => {
    try {
-      const { data } = await request.get(`/members/mypage/1`); // 나중에 수정
+      const { data } = await request.get(`/members/mypage/${memberId}`); // 나중에 수정
       console.log("유저 프로필 사진, 닉네임 GET 성공");
       return data;
    } catch (error) {
@@ -288,7 +288,7 @@ export const resetUserProfilePhoto = async (memberId: number) => {
       });
       return data;
    } catch (error) {
-      console.log("프로필 사진 초기화 실패");
+      console.log("프로필 사진 초기화 실패", error);
       return null;
    }
 };
@@ -379,6 +379,7 @@ export const deleteComment = async (commentId: number) => {
       console.log("댓글 삭제 실패");
    }
 };
+
 // 댓글 생성
 export const createComment = async (
    memberId: number,
@@ -398,7 +399,7 @@ export const createComment = async (
       }
       return null;
    } catch (error) {
-      console.log("댓글 생성 오류");
+      console.log("댓글 생성 오류", error);
       return null;
    }
 };

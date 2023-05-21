@@ -46,6 +46,9 @@ CommentProps) {
       }
    };
 
+   const commentDate = comment.createdAt.slice(0, 10);
+   const commentTime = comment.createdAt.slice(12, 16);
+
    return (
       <>
          <CommentContainer>
@@ -63,7 +66,9 @@ CommentProps) {
                <div className="comment-content">{comment.content}</div>
             </CommentContent>
             <DateAndReplyButton>
-               <span className="comment-createdAt">{comment.createdAt}</span>
+               <span className="comment-createdAt">
+                  {commentDate} {commentTime}
+               </span>
                <CommentButtonContainer>
                   <button type="submit" className="comment-btn">
                      수정

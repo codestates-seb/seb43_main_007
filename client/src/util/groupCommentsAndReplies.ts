@@ -24,6 +24,8 @@ function groupCommentsAndReplies(commentData: CommentType[]): CommentType[] {
       (comment) => comment.parentId === 0
    );
 
+   console.log(commentData);
+
    return topLevelComments;
 }
 

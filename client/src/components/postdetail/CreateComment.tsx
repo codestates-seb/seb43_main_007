@@ -1,22 +1,25 @@
 import styled from "styled-components";
+import { useSelector } from "react-redux";
 import useCommentCharacterCount from "../../hooks/useCommentCharacterCount";
 import { DefaultButton } from "../mypage-profile/EditProfile";
 import { createComment } from "../../api/axios";
+import { RootState } from "../../store/store";
 
 interface CreateCommentProps {
-   memberId: number;
    boardId: number;
 }
 
-function CreateComment({ memberId, boardId }: CreateCommentProps) {
+function CreateComment({ boardId }: CreateCommentProps) {
    const maxLength = 300;
    const { value, characterCount, handleChange } = useCommentCharacterCount({
       maxLength,
    });
 
+   const memberId = useSelector((state: RootState) => state.memberId);
+
    const handleCommentSubmit = async (event: React.FormEvent) => {
       event.preventDefault();
-      const response = await createComment(boardId, value, memberId);
+      const response = await createComment(memberId, boardId, value);
       if (response) {
          console.log("Comment submitted successfully");
       } else {
@@ -39,7 +42,9 @@ function CreateComment({ memberId, boardId }: CreateCommentProps) {
                   onChange={handleChange}
                />
             </CommentInputBox>
-            <DefaultButton type="submit">등록</DefaultButton>
+            <DefaultButton type="submit" onClick={handleCommentSubmit}>
+               등록
+            </DefaultButton>
          </form>
       </CreateCommentContainer>
    );
