@@ -40,7 +40,6 @@ const usePost = (boardId: string) => {
             data.comments = groupCommentsAndReplies(data.comments);
          }
          setPost(data);
-         console.log(`data.comments :`, data.comments);
       };
 
       fetchPost();

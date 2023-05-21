@@ -32,6 +32,7 @@ function CreateReply({
          onSubmit(value);
          clearValue();
          onCancel();
+         window.location.reload();
       } else {
          console.log("대댓글 생성 실패");
       }

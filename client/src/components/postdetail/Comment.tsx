@@ -21,7 +21,6 @@ export interface CommentProps {
    isReplySelected: boolean;
    memberId: number;
    boardId: number;
-   // selectedCommentId: number | null;
 }
 
 function Comment({
@@ -31,8 +30,7 @@ function Comment({
    isReplySelected,
    memberId,
    boardId,
-}: // selectedCommentId,
-CommentProps) {
+}: CommentProps) {
    const handleReplySubmitWrapper = (content: string) => {
       handleReplySubmit(comment.commentId, content);
    };
@@ -41,8 +39,7 @@ CommentProps) {
       const response = await deleteComment(comment.commentId);
       if (response) {
          console.log("댓글 삭제 성공");
-      } else {
-         console.log("댓글 삭제 실패");
+         window.location.reload();
       }
    };
 

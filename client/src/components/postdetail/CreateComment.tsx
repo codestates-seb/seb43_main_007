@@ -22,6 +22,7 @@ function CreateComment({ boardId }: CreateCommentProps) {
       const response = await createComment(memberId, boardId, value);
       if (response) {
          console.log("Comment submitted successfully");
+         window.location.reload();
       } else {
          console.log("Comment submission failed");
       }
@@ -29,23 +30,21 @@ function CreateComment({ boardId }: CreateCommentProps) {
 
    return (
       <CreateCommentContainer>
-         <form onSubmit={handleCommentSubmit}>
-            <CommentInputBox>
-               <p className="letter-count">
-                  {characterCount}/{maxLength}
-               </p>
-               <textarea
-                  className="create-comment"
-                  placeholder="댓글을 입력해주세요."
-                  maxLength={maxLength}
-                  value={value}
-                  onChange={handleChange}
-               />
-            </CommentInputBox>
-            <DefaultButton type="submit" onClick={handleCommentSubmit}>
-               등록
-            </DefaultButton>
-         </form>
+         <CommentInputBox>
+            <p className="letter-count">
+               {characterCount}/{maxLength}
+            </p>
+            <textarea
+               className="create-comment"
+               placeholder="댓글을 입력해주세요."
+               maxLength={maxLength}
+               value={value}
+               onChange={handleChange}
+            />
+         </CommentInputBox>
+         <DefaultButton type="submit" onClick={handleCommentSubmit}>
+            등록
+         </DefaultButton>
       </CreateCommentContainer>
    );
 }
