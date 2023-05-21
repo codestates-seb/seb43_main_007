@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import { useParams } from "react-router";
-import { useSelector } from "react-redux";
 import PostTitle from "../components/postdetail/PostTitle";
 import PostContent from "../components/postdetail/PostContent";
 import PostTags from "../components/postdetail/PostTags";
@@ -26,7 +25,8 @@ function PostDetail() {
             boardId={baordIdNumber}
             title={post.title}
             now={post.now}
-            like={post.like}
+            pin={post.pin}
+            likeCheck={post.likeCheck}
             bookmark={post.bookmark}
             nickName={post.nickName}
             userPhoto={post.userPhoto}

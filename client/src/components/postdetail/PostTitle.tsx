@@ -1,17 +1,18 @@
 import styled from "styled-components";
 import { RiSeedlingLine, RiSeedlingFill } from "react-icons/ri";
-import { BsPin } from "react-icons/bs";
+import { BsPin, BsPinFill } from "react-icons/bs";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import { useSelector } from "react-redux";
 import { useState } from "react";
 import { RootState } from "../../store/store";
-import { likePatch, bookMarkPost } from "../../api/axios";
+import { likePatch, bookMarkPost, pinPost } from "../../api/axios";
 
 export interface PostTitleProps {
    boardId: number;
    title: string;
    now: string;
-   like: number;
+   pin: number;
+   likeCheck: number;
    bookmark: number;
    nickName: string;
    userPhoto: string;
@@ -21,24 +22,37 @@ function PostTitle({
    boardId,
    title,
    now,
-   like,
+   pin,
+   likeCheck,
    bookmark,
    nickName,
    userPhoto,
 }: PostTitleProps) {
    const memberId = useSelector((state: RootState) => state.memberId);
 
+   // 고정 유무
+   const [isFixPin, setIsFixPin] = useState(pin);
    // 좋아요 유무
-   const [isLike, setIsLike] = useState(like);
+   const [isLike, setIsLike] = useState(likeCheck);
    // 즐겨찾기(북마크) 유무
    const [isBookMark, setIsBookMark] = useState(bookmark);
+
+   // 고정 클릭 이벤트
+   const pinFixClickHandler = () => {
+      if (isFixPin === 0) {
+         setIsFixPin(1);
+         pinPost(boardId);
+      } else if (isFixPin === 1) {
+         setIsFixPin(0);
+         pinPost(boardId);
+      }
+   };
 
    // 좋아요 클릭 이벤트
    const likeClickHandler = () => {
       const req = {
          memberId,
          boardId,
-         boardLike: isLike,
       };
       if (isLike === 0) {
          setIsLike(1);
@@ -78,7 +92,14 @@ function PostTitle({
                <button type="submit" className="pick-btn">
                   채택
                </button>
-               <BsPin size={23} style={{ cursor: "pointer" }} />
+               {isFixPin ? (
+                  <BsPinFill
+                     className="mark-icon pin-filled-icon"
+                     onClick={pinFixClickHandler}
+                  />
+               ) : (
+                  <BsPin className="mark-icon" onClick={pinFixClickHandler} />
+               )}
                {isLike ? (
                   <AiFillHeart
                      className="mark-icon like-filled-icon"
@@ -164,6 +185,10 @@ export const MarkContainer = styled.div`
    .mark-icon {
       font-size: 23px;
       cursor: pointer;
+   }
+
+   .pin-filled-icon {
+      color: green;
    }
 
    .like-filled-icon {

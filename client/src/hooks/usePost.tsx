@@ -15,7 +15,8 @@ export interface Post {
    address: string | null;
    now: string;
    photo: string;
-   like: number;
+   pin: number;
+   likeCheck: number;
    bookmark: number;
    nickName: string;
    userPhoto: string;
