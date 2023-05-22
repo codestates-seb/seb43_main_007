@@ -54,8 +54,8 @@ function Comment({
 
    const handleEditSaveClick = async () => {
       const response = await editComment(
-         comment.commentId,
          boardId,
+         comment.commentId,
          memberId,
          editedComment
       );
