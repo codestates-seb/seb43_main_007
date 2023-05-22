@@ -4,6 +4,7 @@ import { BsPin, BsPinFill } from "react-icons/bs";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import { useSelector } from "react-redux";
 import { useState } from "react";
+import { useNavigate } from "react-router";
 import { RootState } from "../../store/store";
 import { likePost, bookMarkPost, pinPost, editorPick } from "../../api/axios";
 
@@ -53,11 +54,12 @@ function PostTitle({
       }
    };
 
+   const navigate = useNavigate();
+
    // 고정 클릭 이벤트
    const pinFixClickHandler = () => {
       if (isFixPin === 0) {
-         setIsFixPin(1);
-         pinPost(boardId);
+         navigate(``); // 관리자 수정페이지로
       } else if (isFixPin === 1) {
          setIsFixPin(0);
          pinPost(boardId);
