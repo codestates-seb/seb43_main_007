@@ -23,7 +23,7 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
     Page<Board> findByCategoryAndTitleContaining(String cate, String title, Pageable pageable);
     Page<Board> findByCategoryAndContentContaining(String cate, String content, Pageable pageable);
 
-    @Query("SELECT b FROM Board b WHERE category=:cate or title Like '%:title%' or content Like '%:content%' ")
+    @Query("SELECT b FROM Board b WHERE category=:cate AND title Like '%:title%' or content Like '%:content%' ")
     Page<Board> findByCategoryAndContentContainingOrTitleContaining(@Param("cate") String cate, @Param("content") String content, @Param("title") String title, Pageable pageable);
 
 

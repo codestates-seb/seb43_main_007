@@ -115,6 +115,7 @@ public class BoardController {
         boardPutDto.setBoardId(boardId);
         Board board = boardMapper.boardPutDtoToBoard(boardPutDto);
         Board response = boardService.putBoard(board);
+        boardPutDto.setMemberId(response.getMember().getMemberId());
         return new ResponseEntity<>(boardMapper.boardToBoardResponse(response, likeService, bookmarkService, boardPutDto.getMemberId()), HttpStatus.OK);
     }
 

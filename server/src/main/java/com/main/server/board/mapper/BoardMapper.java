@@ -84,7 +84,8 @@ public interface BoardMapper{
 
             String photo = "http://www.planet-times.com/Files/320/Images/202206/2022060332507773.jpg";
             String nickName = response.getMember().getNickname();
-            String userPhoto = response.getMember().getProfileImageUrl();
+            String userPhoto = (response.getMember().getProfileImageUrl()==null)?
+                    "https://mainplestory.s3.ap-northeast-2.amazonaws.com/User.png":response.getMember().getProfileImageUrl();
             int likeCheck = likeService.checkLike(userId,response.getBoardId());
 
             Long likeCount = response.getLikeCount();
