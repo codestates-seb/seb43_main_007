@@ -32,6 +32,7 @@ function ListContents() {
    // 멤버 아이디 리덕스에서 가져오기
    // 비회원 일때는 멤버 아이디 0으로 => 로그인 되면 그 회원 아이디로 바뀌는 로직이다.(로그인에서 처리해줌)
    const memberId = useSelector((state: RootState) => state.memberId);
+   console.log(memberId);
 
    // 서버에러 ui적으로 처리를 위한 변수
    const [isError, setIsError] = useState(false);
@@ -40,9 +41,10 @@ function ListContents() {
 
    // list목록페이지 데이터 get요청
    const listDatas = async () => {
+      setIsError(true);
       if (cate === undefined) {
          const data = await listData(curPage, `/${memberId}`, ``, ``, ``);
-         setIsError(true);
+         console.log(data);
          if (data.data.length === 0) {
             setIsData(false);
          } else {
@@ -58,6 +60,11 @@ function ListContents() {
             ``,
             ``
          );
+         if (data.data.length === 0) {
+            setIsData(false);
+         } else {
+            setIsData(true);
+         }
          setDatas(data.data);
          setPageInfo(data.pageInfo);
       }
@@ -164,6 +171,12 @@ function ListContents() {
                   서버에러가 있습니다. 새로고침 혹은 잠시후 다시 시도해주세요.
                </div>
             )}
+
+            {/* <ul>
+               {datas.map((el: ListData) => (
+                  <ListContent key={el.boardId} userDatas={el} />
+               ))}
+            </ul> */}
          </div>
          <DivPagination>
             {totalPage ? (
