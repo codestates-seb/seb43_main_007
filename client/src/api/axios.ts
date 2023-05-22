@@ -447,3 +447,31 @@ export const editorPick = async (boardId: number) => {
       return null;
    }
 };
+
+// 게시글 수정
+export const updatePost = async (
+   boardId: number,
+   memberId: number,
+   item: string,
+   title: string,
+   address: string,
+   value: string,
+   tagList: { tagName: string }[]
+) => {
+   try {
+      const { data } = await request.put(`/boards/${boardId}`, {
+         memberId,
+         item,
+         title,
+         address,
+         value,
+         tagList,
+      });
+
+      console.log("게시글 업데이트 성공");
+      return data;
+   } catch (error) {
+      console.log("게시글 업데이트 실패");
+      return null;
+   }
+};
