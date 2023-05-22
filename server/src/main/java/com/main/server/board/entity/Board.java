@@ -1,5 +1,6 @@
 package com.main.server.board.entity;
 
+import com.main.server.comment.entity.Comment;
 import com.main.server.member.entity.Member;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -55,11 +56,16 @@ public class Board {
     @Column()
     private int pin;
 
+    @Column()
+    private int pick;
 
-//    private Long like;
+
 
     @OneToMany(mappedBy = "board", cascade = CascadeType.REMOVE)
     private List<BoardTag> boardTag = new ArrayList<>();
+
+    @OneToMany(mappedBy = "board", cascade = CascadeType.REMOVE)
+    private List<Comment> comments = new ArrayList<>();
 
 
 
