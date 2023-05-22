@@ -36,26 +36,21 @@ function Comment({
       handleReplySubmit(comment.commentId, content);
    };
 
+   // memberId
    const memberId = useSelector((state: RootState) => state.memberId);
 
-   const handleDelete = async () => {
-      const response = await deleteComment(comment.commentId);
-      if (response) {
-         console.log("댓글 삭제 성공");
-         window.location.reload();
-      }
-   };
-
+   // 댓글 날짜 display
    const commentDate = comment.createdAt.slice(0, 10);
    const commentTime = comment.createdAt.slice(12, 16);
 
+   // 댓글 수정
    const [isEditing, setIsEditing] = useState(false);
    const [editedComment, setEditedComment] = useState(comment.content);
 
    const handleEditSaveClick = async () => {
       const response = await editComment(
-         comment.commentId,
          boardId,
+         comment.commentId,
          memberId,
          editedComment
       );
@@ -71,6 +66,15 @@ function Comment({
    const handleEditCancelClick = () => {
       setEditedComment(comment.content);
       setIsEditing(false);
+   };
+
+   // 댓글 삭제
+   const handleDelete = async () => {
+      const response = await deleteComment(comment.commentId);
+      if (response) {
+         console.log("댓글 삭제 성공");
+         window.location.reload();
+      }
    };
 
    return (
@@ -161,7 +165,7 @@ function Comment({
          )}
          {comment.replies &&
             comment.replies.map((reply) => (
-               <Reply key={reply.commentId} comment={reply} />
+               <Reply key={reply.commentId} comment={reply} boardId={boardId} />
             ))}
       </>
    );
