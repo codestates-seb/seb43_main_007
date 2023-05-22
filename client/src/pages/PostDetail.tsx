@@ -1,5 +1,6 @@
 import styled from "styled-components";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
+import { useSelector } from "react-redux";
 import PostTitle from "../components/postdetail/PostTitle";
 import PostContent from "../components/postdetail/PostContent";
 import PostTags from "../components/postdetail/PostTags";
@@ -8,10 +9,17 @@ import CreateComment from "../components/postdetail/CreateComment";
 import CommentList from "../components/postdetail/CommentList";
 import PostAddress from "../components/postdetail/PostAddress";
 import usePost from "../hooks/usePost";
+import { RootState } from "../store/store";
 
 function PostDetail() {
    const { boardId: boardIdString } = useParams<{ [key: string]: string }>();
    const { post, handleDeletePost } = usePost(boardIdString || "");
+   const memberId = useSelector((state: RootState) => state.memberId);
+   const navigate = useNavigate();
+
+   if (memberId === 0) {
+      navigate(`/login`);
+   }
 
    if (!post) {
       return <div>Loading...</div>;
