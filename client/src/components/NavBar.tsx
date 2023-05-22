@@ -71,22 +71,25 @@ function Navbar() {
 
    return (
       <NavbarContainer>
-         <NavProfileContainer to="/myprofile">
-            <img
-               src={profilePhoto || userprofile}
-               alt="프로필 이미지"
-               className="nav-profile-img"
-            />
-            <div className="nav-profile-nickname">{profileNickname}</div>
-         </NavProfileContainer>
-         {/* <NavProfileContainer to="/login">
-            <img
-               src={userprofile}
-               alt="비회원 프로필 이미지"
-               className="nav-profile-img"
-            />
-            <div className="nav-profile-nickname">로그인</div>
-         </NavProfileContainer> */}
+         {memberId === 0 ? (
+            <NavProfileContainer to="/login">
+               <img
+                  src={userprofile}
+                  alt="비회원 프로필 이미지"
+                  className="nav-profile-img"
+               />
+               <div className="nav-profile-nickname">로그인</div>
+            </NavProfileContainer>
+         ) : (
+            <NavProfileContainer to="/myprofile">
+               <img
+                  src={profilePhoto || userprofile}
+                  alt="프로필 이미지"
+                  className="nav-profile-img"
+               />
+               <div className="nav-profile-nickname">{profileNickname}</div>
+            </NavProfileContainer>
+         )}
          <Line />
          <NavSearchContainer>
             <div className="nav-searchbar">
@@ -113,10 +116,14 @@ function Navbar() {
          </CommunityContainer>
          <Line />
          <LogoutContainer>
-            <BiLogOut className="logout-icon" />
-            <button type="submit" className="logout-btn">
-               로그아웃
-            </button>
+            {memberId !== 0 && (
+               <>
+                  <BiLogOut className="logout-icon" />
+                  <button type="submit" className="logout-btn">
+                     로그아웃
+                  </button>
+               </>
+            )}
          </LogoutContainer>
       </NavbarContainer>
    );
