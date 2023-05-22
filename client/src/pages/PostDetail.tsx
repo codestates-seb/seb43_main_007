@@ -46,6 +46,7 @@ function PostDetail() {
          <PostContent content={post.content} />
          <PostTags tags={post.tags} />
          <PostButtons
+            memberId={post.memberId}
             handleDeletePost={handleDeletePost}
             boardId={baordIdNumber}
             category={post.category}
