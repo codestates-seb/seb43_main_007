@@ -1,9 +1,11 @@
 package com.main.server.member.controller;
 
+import com.main.server.Like.service.LikeService;
 import com.main.server.board.dto.BoardDto;
 import com.main.server.board.entity.Board;
 import com.main.server.board.mapper.BoardMapper;
 import com.main.server.board.service.BoardService;
+import com.main.server.bookmark.service.BookmarkService;
 import com.main.server.bookmark.dto.BookmarkDto;
 import com.main.server.comment.dto.CommentDto;
 import com.main.server.comment.mapper.CommentMapper;
@@ -28,7 +30,6 @@ import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 import java.io.IOException;
 import java.net.URI;
-import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -46,15 +47,22 @@ public class MemberController {
     private final BoardMapper boardMapper;
     private final CommentMapper commentMapper;
 
+    private final LikeService likeService;
+    private final BookmarkService bookmarkService;
+
     public MemberController(@Lazy MemberService memberService,
                             MemberMapper memberMapper,
                             BoardMapper boardMapper,
                             CommentMapper commentMapper,
+                            LikeService likeService,
+                            BookmarkService bookmarkService,
                             @Lazy BoardService boardService) {  //TODO: Lazy 어노테이션 사라지게 할 방법
         this.memberService = memberService;
         this.memberMapper = memberMapper;
         this.boardMapper = boardMapper;
         this.commentMapper = commentMapper;
+        this.likeService = likeService;
+        this.bookmarkService = bookmarkService;
         this.boardService = boardService;
     }
     //mem001
@@ -147,7 +155,7 @@ public class MemberController {
 
 
         List<BoardDto.Response> boardResponse = findMember.getBoards().stream()
-                        .map(board -> boardMapper.boardToBoardResponse(board))
+                        .map(board -> boardMapper.boardToBoardResponse(board, likeService, bookmarkService, memberId))
                                 .collect(Collectors.toList());
         myPageDto.setBoards(boardResponse);
 

@@ -12,7 +12,7 @@ import java.util.List;
 //엔티티만을 인식할 수 있음
 @Repository
 public interface CommentRepository extends JpaRepository<Comment, Long> {
-    List<Comment> findByBoardId(long boardId); // 보드아이디로 댓글찾기  db에는 entity로 저장되어 있음 이걸 리스트로 묶음
+  // 보드아이디로 댓글찾기  db에는 entity로 저장되어 있음 이걸 리스트로 묶음
     // boardId에 해당하는 모든 댓글을 가져오는 JPA 쿼리 메서드
 
 
