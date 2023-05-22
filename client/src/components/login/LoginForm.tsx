@@ -8,10 +8,15 @@ import { AxiosResponse } from "axios";
 import logo from "../../assets/img/logo2.png";
 import validFunction from "../../util/signinValidFunc";
 import LoginModal from "./LoginModal";
-import { LoginTypes } from "./LoginType";
 import { loginPost } from "../../api/axios";
 import { setMemberId } from "../../reducers/memberIdSlice";
 import { setIsAdmin } from "../../reducers/isAdminSlice";
+import Loading from "../Loading";
+
+export interface LoginTypes {
+   username: string;
+   password: string;
+}
 
 type ResponseType = [string, AxiosResponse | number];
 
@@ -26,6 +31,7 @@ function LoginForm() {
       formState: { errors },
    } = useForm<LoginTypes>();
    const [isFailModalOpen, setIsFailModalOpen] = useState(false);
+   const [isLoading, setIsLoading] = useState(false);
    const [failMessage, setFailMessage] = useState({
       text1: "",
       text2: "",
@@ -46,6 +52,7 @@ function LoginForm() {
    };
 
    const onSubmit: SubmitHandler<LoginTypes> = async (data) => {
+      setIsLoading(true);
       const response: ResponseType = await loginPost(data);
       if (isSuccessResponse(response)) {
          //  memberId session storage에 저장(로그인 상태 변경)
@@ -82,6 +89,7 @@ function LoginForm() {
          });
          setIsFailModalOpen(true);
       }
+      setIsLoading(false);
    };
 
    return (
@@ -128,6 +136,11 @@ function LoginForm() {
             setIsOpen={setIsFailModalOpen}
             message={failMessage}
          />
+         {isLoading ? (
+            <LoadingContainer className="loading-container">
+               <Loading />
+            </LoadingContainer>
+         ) : null}
       </LoginFormContainer>
    );
 }
@@ -183,4 +196,16 @@ const LoginFormContainer = styled.form`
          transition-duration: 0.2s;
       }
    }
+`;
+
+const LoadingContainer = styled.div`
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   position: absolute;
+   top: 0;
+   bottom: 0;
+   left: 0;
+   right: 0;
+   background: rgba(128, 128, 128, 0.2);
 `;

@@ -48,7 +48,7 @@ function CreatePost() {
       // html태그를 제외한 에디터 내용만 30자 이상
       if (!(previewBody.length > 30)) return false;
 
-      // 이미지 여부
+      // 이미지 여부 true면(통과) 이미지가 있다는 뜻
       if (!isImg) return false;
 
       return true;

@@ -153,7 +153,7 @@ function PostTitle({
                         />
                      ) : (
                         <BsPin
-                           className="mark-icon"
+                           className="mark-icon pin-icon"
                            onClick={pinFixClickHandler}
                         />
                      )}

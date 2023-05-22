@@ -4,7 +4,7 @@ import {
    FieldErrors,
    UseFormGetValues,
 } from "react-hook-form";
-import { SignupTypes } from "./SignupTypes";
+import { SignupTypes } from "./contentsArray";
 
 interface Props {
    register: UseFormRegister<SignupTypes>;

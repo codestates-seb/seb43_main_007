@@ -4,7 +4,13 @@ import { useEffect, useRef, useState } from "react";
 import validFunction from "../../util/signinValidFunc";
 import LoginModal from "./LoginModal";
 import { findPassword } from "../../api/axios";
-import { FindPasswordType } from "./LoginType";
+
+export interface FindPasswordType {
+   [key: string]: string;
+   email: string;
+   question: string;
+   answer: string;
+}
 
 function FindPassword() {
    const {
