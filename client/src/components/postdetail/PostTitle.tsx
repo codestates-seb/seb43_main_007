@@ -123,13 +123,13 @@ function PostTitle({
       <PostTitleContainer>
          <TopTitleContainer>
             <TitleBadgeContainer>
-               {pick === 1 && <EditorPick>Editor&apos;s Pick</EditorPick>}
+               {isPicked === 1 && <EditorPick>Editor&apos;s Pick</EditorPick>}
                <h1 className="post-title">{title}</h1>
             </TitleBadgeContainer>
             <MarkContainer>
                {isAdmin && (
                   <>
-                     {pick === 0 ? (
+                     {isPicked === 0 ? (
                         <button
                            type="submit"
                            className="pick-btn unpicked"

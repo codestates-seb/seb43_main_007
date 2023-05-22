@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router";
 import { useSelector } from "react-redux";
-import { getPostData, updatePost } from "../api/axios";
+import { getPostData, updatePost, editorPick } from "../api/axios";
 import GuideLine from "../components/createPost/GuideLine";
 import QuillTextEditor from "../components/createPost/QuillTextEditor";
 import TitleTagCommuForm from "../components/createPost/TitleTagCommuForm";
@@ -21,6 +21,7 @@ function PostEdit() {
 
    const navigate = useNavigate();
    const memberId = useSelector((state: RootState) => state.memberId);
+   const isAdmin = useSelector((state: RootState) => state.isAdmin);
 
    useEffect(() => {
       const fetchPost = async () => {
@@ -65,6 +66,15 @@ function PostEdit() {
       }
    };
 
+   const editorUpdateHandler = async () => {
+      try {
+         await editorPick(boardId);
+         navigate(`/`);
+      } catch (error) {
+         console.log(error);
+      }
+   };
+
    return (
       <DivContainer>
          <div className="guide-line">
@@ -88,13 +98,23 @@ function PostEdit() {
             />
          </div>
          <DivButton>
-            <button
-               type="button"
-               onClick={updatePostButtonClick}
-               className="submit-button"
-            >
-               등록
-            </button>
+            {isAdmin ? (
+               <button
+                  type="button"
+                  onClick={editorUpdateHandler}
+                  className="submit-button"
+               >
+                  등록
+               </button>
+            ) : (
+               <button
+                  type="button"
+                  onClick={updatePostButtonClick}
+                  className="submit-button"
+               >
+                  등록
+               </button>
+            )}
          </DivButton>
       </DivContainer>
    );

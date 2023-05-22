@@ -442,8 +442,10 @@ export const editComment = async (
 export const editorPick = async (boardId: number) => {
    try {
       const { data } = await request.post(`/boards/pick/${boardId}`);
+      console.log("관리자 게시글 업데이트 성공");
       return data;
    } catch (error) {
+      console.log("관리자 게시글 업데이트 실패");
       return null;
    }
 };
