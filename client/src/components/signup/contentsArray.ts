@@ -1,5 +1,14 @@
 import validFunc from "../../util/signinValidFunc";
-import { SignupTypes } from "./SignupTypes";
+
+export interface SignupTypes {
+   nickname: string;
+   email: string;
+   password: string;
+   passwordConfirm: string;
+   RRN: string;
+   question: string;
+   answer: string;
+}
 
 interface InputContents {
    labelName: string;

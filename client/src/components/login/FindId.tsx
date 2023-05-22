@@ -4,7 +4,10 @@ import { useEffect, useRef, useState } from "react";
 import validFunction from "../../util/signinValidFunc";
 import LoginModal from "./LoginModal";
 import { findId } from "../../api/axios";
-import { SocialNum } from "./LoginType";
+
+interface SocialNum {
+   RRNConfirm: string;
+}
 
 function FindId() {
    const {
