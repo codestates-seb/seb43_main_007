@@ -5,17 +5,7 @@ import CreateReply from "./CreateReply";
 import Reply from "./Reply";
 import { editComment, deleteComment } from "../../api/axios";
 import { RootState } from "../../store/store";
-
-export interface CommentType {
-   boardId: number;
-   commentId: number;
-   nickname: string;
-   userPhoto: string;
-   content: string;
-   createdAt: string;
-   parentId: number;
-   replies?: CommentType[];
-}
+import { CommentType } from "./commentType";
 
 export interface CommentProps {
    comment: CommentType;

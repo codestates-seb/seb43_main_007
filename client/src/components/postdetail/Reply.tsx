@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { useSelector } from "react-redux";
 import { useState } from "react";
-import type { CommentType } from "./Comment";
+import { CommentType } from "./commentType";
 import { deleteComment, editComment } from "../../api/axios";
 import { RootState } from "../../store/store";
 
@@ -107,23 +107,23 @@ function Reply({ comment, boardId }: ReplyProps) {
                      </>
                   ) : (
                      comment.nickname === myNickname && (
-                     <>
-                        <button
-                           type="submit"
-                           className="reply-btn"
-                           onClick={() => setIsEditing(true)}
-                        >
-                           수정
-                        </button>
-                        <span>|</span>
-                        <button
-                           type="submit"
-                           className="reply-btn reply-delete-btn"
-                           onClick={handleDelete}
-                        >
-                           삭제
-                        </button>
-                     </>
+                        <>
+                           <button
+                              type="submit"
+                              className="reply-btn"
+                              onClick={() => setIsEditing(true)}
+                           >
+                              수정
+                           </button>
+                           <span>|</span>
+                           <button
+                              type="submit"
+                              className="reply-btn reply-delete-btn"
+                              onClick={handleDelete}
+                           >
+                              삭제
+                           </button>
+                        </>
                      )
                   )}
                </ReplyButtonContainer>
