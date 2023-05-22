@@ -80,7 +80,6 @@ function ListContents() {
       let data;
       if (cate === undefined) {
          if (title === "제목") {
-            console.log("제목 실행?");
             data = await listData(
                curPage,
                `/${memberId}`,
@@ -90,7 +89,6 @@ function ListContents() {
             );
          }
          if (title === "내용") {
-            console.log("내용 실행?");
             data = await listData(
                curPage,
                `/${memberId}`,
@@ -100,7 +98,6 @@ function ListContents() {
             );
          }
          if (title === "제목+내용") {
-            console.log("제목+내용 실행?");
             data = await listData(
                curPage,
                `/${memberId}`,
