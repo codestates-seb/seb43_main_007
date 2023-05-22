@@ -15,6 +15,7 @@ export interface Post {
    address: string | null;
    now: string;
    photo: string;
+   pick: number;
    pin: number;
    likeCheck: number;
    likeCount: number;

@@ -25,6 +25,7 @@ function PostDetail() {
             boardId={baordIdNumber}
             title={post.title}
             now={post.now}
+            pick={post.pick}
             pin={post.pin}
             likeCheck={post.likeCheck}
             likeCount={post.likeCount}
