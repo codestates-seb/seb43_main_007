@@ -14,7 +14,10 @@ function MyPost({ title, data }: MypostProps) {
             {data?.map((el, idx) => {
                const key = idx;
                return (
-                  <LiPostStyle key={key}>{`${idx + 1}. ${el}`}</LiPostStyle>
+                  <LiPostStyle key={key}>
+                     <span className="number">{idx + 1}.</span>
+                     <span>{el}</span>
+                  </LiPostStyle>
                );
             })}
          </UlPostsStyle>
@@ -56,4 +59,8 @@ const LiPostStyle = styled.li`
    cursor: pointer;
    /* background-color: #eef1d8; */
    border-bottom: 2px solid #eef1d8;
+
+   .number {
+      width: 25px;
+   }
 `;

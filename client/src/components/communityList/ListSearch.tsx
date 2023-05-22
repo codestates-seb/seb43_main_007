@@ -1,9 +1,11 @@
 import { Dispatch, SetStateAction, useRef } from "react";
 import styled, { css } from "styled-components";
 import { BiUpArrowCircle, BiDownArrowCircle } from "react-icons/bi";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 import useDetectClose from "../../hooks/useDetectClose";
 import TitleValue from "./TitleValue";
+import { RootState } from "../../store/store";
 
 type SearchProps = {
    search: string;
@@ -47,6 +49,17 @@ function ListSearch({
       }
    };
 
+   // 글쓰기 버튼 핸들러
+   const navigate = useNavigate();
+   const memberId = useSelector((state: RootState) => state.memberId);
+   const createPostHandler = () => {
+      if (memberId === 0) {
+         navigate("/login");
+      } else {
+         navigate("/createpost");
+      }
+   };
+
    return (
       <DivContainer>
          <DivContent>
@@ -61,15 +74,18 @@ function ListSearch({
                   <Menu isOpen={isOpen}>
                      {isOpen && (
                         <ul>
-                           {titlesList.map((el, idx) => (
-                              <TitleValue
-                                 key={idx}
-                                 value={el}
-                                 setIsOpen={setIsOpen}
-                                 setTitle={setTitle}
-                                 isOpen={isOpen}
-                              />
-                           ))}
+                           {titlesList.map((el, idx) => {
+                              const key = idx;
+                              return (
+                                 <TitleValue
+                                    key={key}
+                                    value={el}
+                                    setIsOpen={setIsOpen}
+                                    setTitle={setTitle}
+                                    isOpen={isOpen}
+                                 />
+                              );
+                           })}
                         </ul>
                      )}
                   </Menu>
@@ -98,11 +114,11 @@ function ListSearch({
                   </button>
                </div>
             </DivSearch>
-            <Link to="/createpost">
-               <DivCreateText>
-                  <button type="button">글쓰기</button>
-               </DivCreateText>
-            </Link>
+            <DivCreateText>
+               <button type="button" onClick={createPostHandler}>
+                  글쓰기
+               </button>
+            </DivCreateText>
          </DivContent>
       </DivContainer>
    );

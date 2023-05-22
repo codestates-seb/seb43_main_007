@@ -135,15 +135,12 @@ export const createPost = async (
 
 // 마이페이지 내가 쓴 글 get요청 (미사용)
 export const myPageMyPost = async (memberId: number) => {
-   let isError = false;
    try {
-      isError = true;
       const { data } = await request.get(`/members/mypage/${memberId}`);
       console.log(data);
-      isError = false;
       return [data.boards, data.comments];
    } catch (error) {
-      if (isError) serverError();
+      serverError();
       console.log(error);
       throw error;
    }

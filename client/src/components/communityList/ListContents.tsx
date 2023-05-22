@@ -1,14 +1,13 @@
 import styled from "styled-components";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import ListContent from "./ListContent";
 import Pagination from "./Pagination";
 import type { PageInfo, ListData } from "./listTypes";
 import { listData } from "../../api/axios";
 import { RootState } from "../../store/store";
 import ListSearch from "./ListSearch";
-import { setMemberId } from "../../reducers/memberIdSlice";
 // import data from "./dumyData";
 
 function ListContents() {
@@ -18,7 +17,6 @@ function ListContents() {
 
    // api로 가져온 데이터들
    const [datas, setDatas] = useState<ListData[]>([]);
-   console.log(datas);
    const [pageInfo, setPageInfo] = useState<PageInfo>();
 
    // // 페이지 네이션 필요한 상태 변수들
@@ -34,6 +32,7 @@ function ListContents() {
    // 멤버 아이디 리덕스에서 가져오기
    // 비회원 일때는 멤버 아이디 0으로 => 로그인 되면 그 회원 아이디로 바뀌는 로직이다.(로그인에서 처리해줌)
    const memberId = useSelector((state: RootState) => state.memberId);
+   console.log(memberId);
 
    // 서버에러 ui적으로 처리를 위한 변수
    const [isError, setIsError] = useState(false);
@@ -42,9 +41,10 @@ function ListContents() {
 
    // list목록페이지 데이터 get요청
    const listDatas = async () => {
+      setIsError(true);
       if (cate === undefined) {
          const data = await listData(curPage, `/${memberId}`, ``, ``, ``);
-         setIsError(true);
+         console.log(data);
          if (data.data.length === 0) {
             setIsData(false);
          } else {
@@ -60,6 +60,11 @@ function ListContents() {
             ``,
             ``
          );
+         if (data.data.length === 0) {
+            setIsData(false);
+         } else {
+            setIsData(true);
+         }
          setDatas(data.data);
          setPageInfo(data.pageInfo);
       }
@@ -163,9 +168,15 @@ function ListContents() {
                )
             ) : (
                <div className="error server">
-                  서버에러가 있습니다. 잠시후 다시 시도해주세요
+                  서버에러가 있습니다. 새로고침 혹은 잠시후 다시 시도해주세요.
                </div>
             )}
+
+            {/* <ul>
+               {datas.map((el: ListData) => (
+                  <ListContent key={el.boardId} userDatas={el} />
+               ))}
+            </ul> */}
          </div>
          <DivPagination>
             {totalPage ? (

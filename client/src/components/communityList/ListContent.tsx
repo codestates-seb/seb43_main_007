@@ -3,20 +3,19 @@ import styled from "styled-components";
 import { RiSeedlingLine, RiSeedlingFill } from "react-icons/ri";
 import { BsPin, BsPinFill } from "react-icons/bs";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { RootState } from "../../store/store";
 import type { ListData } from "./listTypes";
 import { likePost, bookMarkPost, pinPost } from "../../api/axios";
-import { setMemberId } from "../../reducers/memberIdSlice";
 
 function ListContent({ userDatas }: { userDatas: ListData }) {
    // 관리자(매니저)인지 (로컬에서 관리?)
    const [isManager, setIsManager] = useState(false);
-   console.log(setIsManager);
    // 에디터 픽 유무(리덕스 관리?)-리덕스 툴킷으로 로컬할 수 있는거 찾아보기
    const [isEditerPick, setIsEditerPick] = useState(false);
-   console.log(setIsEditerPick);
+   // const isEditerPick = userDatas.pick;
+   // const [isEditerPick, setIsEditerPick] = useState(userDatas.pick);
    // 고정 유무(리덕스 툴킷으로 관리?)
    const [isFixPin, setIsFixPin] = useState(userDatas.pin);
    // 좋아요 유무
@@ -37,11 +36,9 @@ function ListContent({ userDatas }: { userDatas: ListData }) {
 
    // --- 리덕스 store에서 가져온 멤버 id값
    const memberId = useSelector((state: RootState) => state.memberId);
-   console.log(memberId);
 
    // 좋아요 클릭 이벤트
    const likeClickHandler = () => {
-      console.log("?");
       const req = {
          memberId,
          boardId: userDatas.boardId,
