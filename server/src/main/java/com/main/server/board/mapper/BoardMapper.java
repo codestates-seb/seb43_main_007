@@ -1,9 +1,16 @@
 package com.main.server.board.mapper;
 
+import com.main.server.Like.repository.LikeRepository;
+import com.main.server.Like.service.LikeService;
 import com.main.server.board.dto.BoardDto;
 import com.main.server.board.dto.BoardTagDto;
 import com.main.server.board.entity.Board;
 import com.main.server.board.entity.BoardTag;
+import com.main.server.board.repository.BoardRepository;
+import com.main.server.bookmark.repository.BookmarkRepository;
+import com.main.server.bookmark.service.BookmarkService;
+import com.main.server.comment.dto.CommentDto;
+import com.main.server.comment.entity.Comment;
 import com.main.server.member.entity.Member;
 import com.main.server.tag.entity.Tag;
 import com.main.server.tag.service.TagService;
@@ -46,10 +53,13 @@ public interface BoardMapper{
 
     Board boardPutDtoToBoard(BoardDto.Put boardPutDto);
 
-    default BoardDto.Response boardToBoardResponse(Board response){
+
+
+    default BoardDto.Response boardToBoardResponse(Board response, LikeService likeService, BookmarkService bookmarkService, long userId){
             if ( response == null ) {
                 return null;
             }
+
 
             String title = null;
             String content = null;
@@ -59,6 +69,7 @@ public interface BoardMapper{
             long memberId = 0;
             String category = null;
             int pin = 0;
+            int pick = 0;
 
             memberId = response.getMember().getMemberId();
             category = response.getCategory();
@@ -68,18 +79,32 @@ public interface BoardMapper{
             address = response.getAddress();
             now = response.getNow();
             pin = response.getPin();
+            pick = response.getPick();
+
 
             String photo = "http://www.planet-times.com/Files/320/Images/202206/2022060332507773.jpg";
-            String nickName = "InGeon";
-            String userPhoto = "https://upload.wikimedia.org/wikipedia/ko/thumb/8/81/Spongebob_4795.jpg/345px-Spongebob_4795.jpg";
-            int like = 0;
-            int bookmark = response.getBookmark();
+            String nickName = response.getMember().getNickname();
+            String userPhoto = response.getMember().getProfileImageUrl();
+            int likeCheck = likeService.checkLike(userId,response.getBoardId());
+
+            Long likeCount = response.getLikeCount();
+
+            int bookmark = bookmarkService.checkBookmark( userId , response.getBoardId());
+
             List<BoardTag> list = response.getBoardTag();
             List<BoardTagDto.Response> responsesTag = new ArrayList<>();
             for(BoardTag x : list){
                 responsesTag.add(new BoardTagDto.Response(x.getTag().getTagId(), x.getTag().getTagName()));
             }
-            BoardDto.Response response1 = new BoardDto.Response(boardId, memberId, title, content, address, now, photo, like, bookmark, nickName, userPhoto, category,pin,responsesTag );
+            List<Comment> comments = response.getComments();
+            List<CommentDto.Response> commentlist = new ArrayList<>();
+            for(Comment c : comments){
+                long parent = (c.getParent()==null) ? 0 : c.getParent().getCommentId();
+                commentlist.add(new CommentDto.Response(c.getMember().getNickname(), c.getMember().getProfileImageUrl(),
+                        c.getContent(), c.getCreatedAt(), c.getCommentId(), parent));
+            }
+            BoardDto.Response response1 = new BoardDto.Response(boardId, memberId, title, content, address, now, photo, bookmark,
+                    nickName, userPhoto, category,pin, likeCheck, likeCount, pick, responsesTag, commentlist );
 
             return response1;
         }

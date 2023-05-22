@@ -26,8 +26,8 @@ public class MailService {
             helper.setTo(recipientEmail);
             helper.setSubject(subject);
             helper.setText(message, false); // HTML 형식의 메일 내용을 전송할 때 true로 설정
-
             mailSender.send(mimeMessage);
+
         } catch (MessagingException e) {
             // 메일 전송 실패 시 예외 처리
             e.printStackTrace();

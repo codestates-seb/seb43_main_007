@@ -1,6 +1,7 @@
 package com.main.server.board.dto;
 
 import com.main.server.board.entity.BoardTag;
+import com.main.server.comment.dto.CommentDto;
 import com.main.server.tag.entity.Tag;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,6 +15,7 @@ import java.util.List;
 
 @Data
 public class BoardDto {
+
     @Getter
     @AllArgsConstructor
     public static class Post{
@@ -36,6 +38,7 @@ public class BoardDto {
     @Setter
     @AllArgsConstructor
     public static class Put{
+        private Long memberId;
         private Long boardId;
         @NotEmpty(message = "제목을 작성해 주세요.")
         private String title;
@@ -63,7 +66,6 @@ public class BoardDto {
 
         private String photo;
 
-        private int like;
 
         private int bookmark;
 
@@ -73,7 +75,15 @@ public class BoardDto {
         private String category;
 
         private int pin;
+
+        private int likeCheck;
+
+        private long likeCount;
+
+        private int pick;
         private List<BoardTagDto.Response> tags;
+
+        private List<CommentDto.Response> comments;
 
     }
 }
