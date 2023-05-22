@@ -155,6 +155,7 @@ export const loginPost = async (
 ): Promise<[string, AxiosResponse | number]> => {
    try {
       const response = await request.post("members/login", req);
+      console.log(response);
       // 로그인 성공시 response 반환
       return ["성공", response];
    } catch (error) {
