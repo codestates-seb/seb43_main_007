@@ -59,9 +59,9 @@ public class CommentDto { //서비스는 엔티티에서 받아온 애를 직접
     @Getter @Setter
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class   MyPageResponse { //마이페이지 겟요청할때 필요. 보드아이디는 보드 찾아들어갈것, 내용은 보여줄것
-        private Long boardId;
-        private String content;
+    public static class   MyPageResponse { //마이페이지 겟요청할때 필요. 보드아이디는 보드 찾아들어갈것, 내용은 보여줄것 , 게시글 목록 조회 할때 내가 단 댓글이 보여야 함 , 뭐뭐 보여야할까?
+        private Long boardId; //어떤 게시글에 글 남겼는지
+        private String content; //내용
 
     }
 

@@ -48,23 +48,23 @@ Comment { //엔티티의 역할? 테이블 설계
   //  private List<Comment> comments = new ArrayList<>();
     private Long boardId;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "parent_id")
+    private Comment parent;
+
+    @OneToMany(mappedBy = "parent", cascade = CascadeType.REMOVE)
+    private List<Comment> children = new ArrayList<>();
 
 
 
-
-    public Comment(Long commentId, String content, Member member, Long boardId) {
+    public Comment(Long commentId, String content, Member member, Long boardId, Comment parent) {
         this.commentId = commentId;
         this.content = content;
         this.member = member;
         this.boardId = boardId;
-
+        this.parent = parent;
     }
-  //  @ManyToOne(fetch = FetchType.LAZY)
-  //  @JoinColumn(name = "parent_id")
-   // private Comment parent;
-    //   this.parentCommentId = parentCommentId;
-   // @OneToMany(mappedBy = "parent", cascade = CascadeType.REMOVE)
-  //  private List<Comment> children = new ArrayList<>();
+
 
 }
 
@@ -75,6 +75,6 @@ Comment { //엔티티의 역할? 테이블 설계
 
     //보드와 커멘트의 관계는 1:N이다. 댓글이 기준이니깐
    // @ManyToOne(fetch = FetchType.LAZY)
-   // @JoinColumn(name = "board_id")
+    //@JoinColumn(name = "board_id")
     //private BoardEntity boardEntity;
 
