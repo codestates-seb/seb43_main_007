@@ -23,14 +23,9 @@ public class LikeController { //이렇게 하려면 얘가 생성해야되는건
     @PostMapping
     public long like(@RequestBody @Valid LikeDto likeDto) {
 
-        long a = likeService.like(likeDto); //라이크카운트리턴
+        long a = likeService.updateLike(likeDto); //라이크카운트리턴
         return a;
     }
 
 
-    @DeleteMapping
-    public long unlike(@RequestBody @Valid LikeDto likeDto) {
-
-        long b = likeService.unlike(likeDto); // 라이크카운트리턴
-        return b;
-    }   }
+}

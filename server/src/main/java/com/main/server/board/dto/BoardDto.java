@@ -79,6 +79,8 @@ public class BoardDto {
         private int likeCheck;
 
         private long likeCount;
+
+        private int pick;
         private List<BoardTagDto.Response> tags;
 
         private List<CommentDto.Response> comments;

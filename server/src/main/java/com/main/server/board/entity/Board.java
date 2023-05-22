@@ -56,6 +56,9 @@ public class Board {
     @Column()
     private int pin;
 
+    @Column()
+    private int pick;
+
 
 
     @OneToMany(mappedBy = "board", cascade = CascadeType.REMOVE)

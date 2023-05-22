@@ -58,6 +58,12 @@ public class BoardController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @PostMapping("/pick/{boardId}")
+    public ResponseEntity postPick(@PathVariable("boardId") @Positive long boardId){
+        boardService.createPick(boardId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
     @PostMapping("/photo")
     public String postPhoto(@RequestParam(value = "file") MultipartFile file) {
 

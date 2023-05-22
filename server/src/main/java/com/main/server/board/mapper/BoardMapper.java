@@ -69,6 +69,7 @@ public interface BoardMapper{
             long memberId = 0;
             String category = null;
             int pin = 0;
+            int pick = 0;
 
             memberId = response.getMember().getMemberId();
             category = response.getCategory();
@@ -78,10 +79,12 @@ public interface BoardMapper{
             address = response.getAddress();
             now = response.getNow();
             pin = response.getPin();
+            pick = response.getPick();
+
 
             String photo = "http://www.planet-times.com/Files/320/Images/202206/2022060332507773.jpg";
-            String nickName = "InGeon";
-            String userPhoto = "https://upload.wikimedia.org/wikipedia/ko/thumb/8/81/Spongebob_4795.jpg/345px-Spongebob_4795.jpg";
+            String nickName = response.getMember().getNickname();
+            String userPhoto = response.getMember().getProfileImageUrl();
             int likeCheck = likeService.checkLike(userId,response.getBoardId());
 
             Long likeCount = response.getLikeCount();
@@ -101,7 +104,7 @@ public interface BoardMapper{
                         c.getContent(), c.getCreatedAt(), c.getCommentId(), parent));
             }
             BoardDto.Response response1 = new BoardDto.Response(boardId, memberId, title, content, address, now, photo, bookmark,
-                    nickName, userPhoto, category,pin, likeCheck, likeCount, responsesTag, commentlist );
+                    nickName, userPhoto, category,pin, likeCheck, likeCount, pick, responsesTag, commentlist );
 
             return response1;
         }

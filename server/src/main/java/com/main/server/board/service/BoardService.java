@@ -125,6 +125,21 @@ public class BoardService {
         }
     }
 
+    public void createPick(long boardId){
+        Optional<Board> board = boardRepository.findById(boardId);
+        if(board.isPresent()) {
+            Board boardDB = board.get();
+            if(boardDB.getPick()==1) {
+                boardDB.setPick(0);
+            } else {
+                Optional<Member> member = memberRepository.findById(1L);
+                if(member.isPresent()) boardDB.setMember(member.get());
+                boardDB.setPick(1);
+            }
+            boardRepository.save(boardDB);
+        }
+    }
+
     public void deleteBoard(long boardId) {
         boardRepository.delete(findVerifiedBoard(boardId));
     }
