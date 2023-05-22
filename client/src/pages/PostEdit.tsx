@@ -28,9 +28,9 @@ function PostEdit() {
          setItem(post.category);
          setTitle(post.title);
          setAddress(post.address);
-         setTagList(post.tagList);
-         setValue(post.body);
-         setIsImg(post.hasImage);
+         setTagList(post.tags);
+         setValue(post.content);
+         setIsImg(post.photo);
          console.log(post);
       };
       fetchPost();
@@ -59,7 +59,7 @@ function PostEdit() {
             value,
             tagList
          );
-         navigate(`/postdetail/${boardId}`);
+         navigate(`/post/${boardId}`);
       } else {
          postError();
       }
@@ -78,6 +78,8 @@ function PostEdit() {
                setAddress={setAddress}
                tagList={tagList}
                setTagList={setTagList}
+               title={title}
+               address={address}
             />
             <QuillTextEditor
                setValue={setValue}

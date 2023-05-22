@@ -455,8 +455,8 @@ export const updatePost = async (
    item: string,
    title: string,
    address: string,
-   value: string,
-   tagList: { tagName: string }[]
+   content: string,
+   tagList: { tagName: string }[],
 ) => {
    try {
       const { data } = await request.put(`/boards/${boardId}`, {
@@ -464,7 +464,7 @@ export const updatePost = async (
          item,
          title,
          address,
-         value,
+         content,
          tagList,
       });
 

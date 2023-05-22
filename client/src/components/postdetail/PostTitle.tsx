@@ -38,6 +38,8 @@ function PostTitle({
    const memberId = useSelector((state: RootState) => state.memberId);
    const isAdmin = useSelector((state: RootState) => state.isAdmin);
 
+   // 채택 유무
+   const [isPicked, setIsPicked] = useState(pick);
    // 고정 유무
    const [isFixPin, setIsFixPin] = useState(pin);
    // 좋아요
@@ -49,9 +51,10 @@ function PostTitle({
    // 채택 클릭 이벤트
    const editorPickHandler = () => {
       if (pick === 0) {
-         editorPick(boardId);
+         navigate(`/editpost/${boardId}`);
       } else if (pick === 1) {
          editorPick(boardId);
+         setIsPicked(0);
       }
    };
 
@@ -60,7 +63,8 @@ function PostTitle({
    // 고정 클릭 이벤트
    const pinFixClickHandler = () => {
       if (isFixPin === 0) {
-         navigate(``); // 관리자 수정페이지로
+         setIsFixPin(1);
+         pinPost(boardId);
       } else if (isFixPin === 1) {
          setIsFixPin(0);
          pinPost(boardId);
