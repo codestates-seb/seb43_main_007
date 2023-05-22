@@ -18,6 +18,7 @@ function ListContents() {
 
    // api로 가져온 데이터들
    const [datas, setDatas] = useState<ListData[]>([]);
+   console.log(datas);
    const [pageInfo, setPageInfo] = useState<PageInfo>();
 
    // // 페이지 네이션 필요한 상태 변수들
@@ -32,14 +33,23 @@ function ListContents() {
 
    // 멤버 아이디 리덕스에서 가져오기
    // 비회원 일때는 멤버 아이디 0으로 => 로그인 되면 그 회원 아이디로 바뀌는 로직이다.(로그인에서 처리해줌)
-   const dispatch = useDispatch();
-   dispatch(setMemberId(1));
    const memberId = useSelector((state: RootState) => state.memberId);
+
+   // 서버에러 ui적으로 처리를 위한 변수
+   const [isError, setIsError] = useState(false);
+   // 데이터가 없다면 ui적으로 처리를 위한 변수
+   const [isData, setIsData] = useState(false);
 
    // list목록페이지 데이터 get요청
    const listDatas = async () => {
       if (cate === undefined) {
          const data = await listData(curPage, `/${memberId}`, ``, ``, ``);
+         setIsError(true);
+         if (data.data.length === 0) {
+            setIsData(false);
+         } else {
+            setIsData(true);
+         }
          setDatas(data.data);
          setPageInfo(data.pageInfo);
       } else {
@@ -56,7 +66,10 @@ function ListContents() {
    };
 
    useEffect(() => {
-      listDatas();
+      listDatas().catch(() => {
+         setIsError(false);
+         console.log("서버에러");
+      });
    }, [curPage, cate]);
 
    // ListSearch 컴포넌트로 프롬내려주는 함수 (검색 get요청)
@@ -138,21 +151,31 @@ function ListContents() {
             searchSubmitHandler={searchSubmitHandler}
          />
          <div className="postList-div">
-            <ul>
-               {datas.map((el: ListData) => (
-                  <ListContent key={el.boardId} userDatas={el} />
-               ))}
-            </ul>
+            {isError ? (
+               isData ? (
+                  <ul>
+                     {datas.map((el: ListData) => (
+                        <ListContent key={el.boardId} userDatas={el} />
+                     ))}
+                  </ul>
+               ) : (
+                  <div className="error dataNull">데이터가 없습니다</div>
+               )
+            ) : (
+               <div className="error server">
+                  서버에러가 있습니다. 잠시후 다시 시도해주세요
+               </div>
+            )}
          </div>
          <DivPagination>
-            {totalPage && (
+            {totalPage ? (
                <Pagination
                   totalPage={totalPage}
                   limit={limit}
                   curPage={curPage}
                   setCurPage={setCurPage}
                />
-            )}
+            ) : null}
          </DivPagination>
       </DivContainer>
    );
@@ -165,6 +188,14 @@ const DivContainer = styled.div`
 
    > div > ul {
       padding: 0px;
+   }
+
+   .error {
+      display: flex;
+      justify-content: center;
+
+      margin-top: 50px;
+      color: #d2d2d2;
    }
 `;
 

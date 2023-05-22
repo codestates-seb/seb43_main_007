@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 type MypostProps = {
    title: string;
-   data: string[][];
+   data: string[] | undefined;
 };
 
 function MyPost({ title, data }: MypostProps) {
@@ -11,7 +11,7 @@ function MyPost({ title, data }: MypostProps) {
       <DivContainer>
          <div className="title-div">{title}</div>
          <UlPostsStyle>
-            {data.map((el, idx) => {
+            {data?.map((el, idx) => {
                const key = idx;
                return (
                   <LiPostStyle key={key}>{`${idx + 1}. ${el}`}</LiPostStyle>

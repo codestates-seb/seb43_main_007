@@ -16,8 +16,6 @@ export const listData = async (
    content?: string
 ) => {
    try {
-      console.log(cate);
-      console.log(cate);
       console.log(`boards${memberId}?page=${curPage}${cate}${title}${content}`);
       const { data } = await request.get(
          `boards${memberId}?page=${curPage}${cate}${title}${content}`
@@ -30,8 +28,8 @@ export const listData = async (
    }
 };
 
-// 목록페이지 좋아요 post
-export const likePatch = async (req: Likereq) => {
+// 목록페이지 좋아요 요청 post
+export const likePost = async (req: Likereq) => {
    try {
       const data = await request.post(`/likes`, req);
       console.log("요청 성공");
@@ -41,6 +39,18 @@ export const likePatch = async (req: Likereq) => {
       console.log(error);
    }
 };
+
+// // 목록페이지 좋아요 삭제요청 delete
+// export const likeDelete = async (req: Likereq) => {
+//    try {
+//       const data = await request.delete(`/likes`, req);
+//       console.log("요청 성공");
+//       console.log(data);
+//    } catch (error) {
+//       console.log("요청 실패");
+//       console.log(error);
+//    }
+// };
 
 // 목록페이지 북마크 post요청
 export const bookMarkPost = async (req: Likereq) => {
@@ -123,12 +133,15 @@ export const createPost = async (
 
 // 마이페이지 내가 쓴 글 get요청 (미사용)
 export const myPageMyPost = async (memberId: number) => {
+   let isError = false;
    try {
+      isError = true;
       const { data } = await request.get(`/members/mypage/${memberId}`);
       console.log(data);
+      isError = false;
       return [data.boards, data.comments];
    } catch (error) {
-      serverError();
+      if (isError) serverError();
       console.log(error);
       throw error;
    }
@@ -377,6 +390,7 @@ export const deleteComment = async (commentId: number) => {
       return data;
    } catch (error) {
       console.log("댓글 삭제 실패");
+      throw error;
    }
 };
 
