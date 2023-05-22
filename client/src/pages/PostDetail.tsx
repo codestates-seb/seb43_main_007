@@ -25,6 +25,7 @@ function PostDetail() {
             boardId={baordIdNumber}
             title={post.title}
             now={post.now}
+            pick={post.pick}
             pin={post.pin}
             likeCheck={post.likeCheck}
             likeCount={post.likeCount}
@@ -39,6 +40,7 @@ function PostDetail() {
          <PostButtons
             handleDeletePost={handleDeletePost}
             boardId={baordIdNumber}
+            category={post.category}
          />
          <CreateComment boardId={baordIdNumber} />
          <CommentList comments={post.comments} boardId={baordIdNumber} />

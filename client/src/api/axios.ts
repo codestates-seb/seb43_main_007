@@ -176,7 +176,7 @@ export const signupPost = async (req: SignupTypes): Promise<string> => {
 };
 
 // 유저 프로필 사진, 닉네임 GET 요청
-export const getUserProfile = async (memberId: string) => {
+export const getUserProfile = async (memberId: number) => {
    try {
       const { data } = await request.get(`/members/mypage/${memberId}`); // 나중에 수정
       console.log("유저 프로필 사진, 닉네임 GET 성공");
@@ -437,3 +437,26 @@ export const editComment = async (
       return null;
    }
 };
+
+// 관리자 채택
+export const editorPick = async (boardId: number) => {
+   try {
+      const { data } = await request.get(`/boards/check/${boardId}`);
+      return data;
+   } catch (error) {
+      return null;
+   }
+};
+
+// 관리자 채택 취소
+// export const editorPickCancel = async (boardId: number) => {
+//    try {
+//       const {data} = await request.post(`/boards/check/${boardId}`, {
+//          boardId,
+//          ...
+//       });
+//       return data;
+//    } catch (error) {
+//       return null;
+//    }
+// };

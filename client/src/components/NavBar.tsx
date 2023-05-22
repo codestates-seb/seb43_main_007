@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { BiSearch, BiHomeAlt2 } from "react-icons/bi";
+import { BiSearch, BiHomeAlt2, BiLogOut } from "react-icons/bi";
 import userprofile from "../assets/img/userprofile.png";
 import { getUserProfile } from "../api/axios";
 import { RootState } from "../store/store";
@@ -26,6 +26,8 @@ const collections = [
 function Navbar() {
    const [search, setSearch] = useState("");
 
+   const memberId = useSelector((state: RootState) => state.memberId);
+
    const profilePhoto = useSelector(
       (state: RootState) => state.profilePhoto.photo
    );
@@ -36,7 +38,7 @@ function Navbar() {
    const dispatch = useDispatch();
 
    useEffect(() => {
-      getUserProfile()
+      getUserProfile(memberId)
          .then((data) => {
             if (data) {
                dispatch(setNickname(data.nickname));
@@ -46,7 +48,7 @@ function Navbar() {
          .catch((error) => {
             console.error("실패", error);
          });
-   }, [dispatch]);
+   }, [dispatch, memberId]);
 
    // 검색창 값 상태 저장하는 함수
    const searchInputHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -72,11 +74,19 @@ function Navbar() {
          <NavProfileContainer to="/myprofile">
             <img
                src={profilePhoto || userprofile}
-               alt="프로필이미지"
+               alt="프로필 이미지"
                className="nav-profile-img"
             />
             <div className="nav-profile-nickname">{profileNickname}</div>
          </NavProfileContainer>
+         {/* <NavProfileContainer to="/login">
+            <img
+               src={userprofile}
+               alt="비회원 프로필 이미지"
+               className="nav-profile-img"
+            />
+            <div className="nav-profile-nickname">로그인</div>
+         </NavProfileContainer> */}
          <Line />
          <NavSearchContainer>
             <div className="nav-searchbar">
@@ -101,6 +111,13 @@ function Navbar() {
             <span className="community">Community</span>
             <div>{collectionLinks}</div>
          </CommunityContainer>
+         <Line />
+         <LogoutContainer>
+            <BiLogOut className="logout-icon" />
+            <button type="submit" className="logout-btn">
+               로그아웃
+            </button>
+         </LogoutContainer>
       </NavbarContainer>
    );
 }
@@ -215,5 +232,28 @@ export const CommunityContainer = styled.div`
       font-size: 13px;
       color: #868e96;
       margin-bottom: 10px;
+   }
+`;
+
+export const LogoutContainer = styled.div`
+   display: flex;
+   align-items: center;
+
+   .logout-icon {
+      margin-right: 5px;
+      color: var(--dark-gray);
+   }
+
+   .logout-btn {
+      padding: 0;
+      border: none;
+      background-color: transparent;
+      font-size: 13px;
+      color: var(--dark-gray);
+      cursor: pointer;
+
+      &:hover {
+         color: black;
+      }
    }
 `;

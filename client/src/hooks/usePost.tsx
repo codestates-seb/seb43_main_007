@@ -15,12 +15,14 @@ export interface Post {
    address: string | null;
    now: string;
    photo: string;
+   pick: number;
    pin: number;
    likeCheck: number;
    likeCount: number;
    bookmark: number;
    nickName: string;
    userPhoto: string;
+   category: string;
    tags: {
       tagId: number;
       tagName: string;

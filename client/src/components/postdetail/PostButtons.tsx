@@ -6,9 +6,14 @@ import PostDeleteModal from "./PostDeleteModal";
 export interface PostButtonsProps {
    handleDeletePost: () => Promise<void>;
    boardId: number;
+   category: string;
 }
 
-function PostButtons({ handleDeletePost, boardId }: PostButtonsProps) {
+function PostButtons({
+   handleDeletePost,
+   boardId,
+   category,
+}: PostButtonsProps) {
    const [modalOpen, setModalOpen] = useState(false);
 
    const openModal = () => {
@@ -22,6 +27,10 @@ function PostButtons({ handleDeletePost, boardId }: PostButtonsProps) {
 
    const handleEdit = () => {
       navigate(`/createpost/${boardId}`);
+   };
+
+   const handleToList = () => {
+      navigate(`/communitylist/${category}`);
    };
 
    return (
@@ -48,7 +57,11 @@ function PostButtons({ handleDeletePost, boardId }: PostButtonsProps) {
                handleDeletePost={handleDeletePost}
             />
          </EditDeleteContainer>
-         <button className="postdetail-btn" type="button">
+         <button
+            className="postdetail-btn"
+            type="button"
+            onClick={handleToList}
+         >
             목록으로
          </button>
       </PostButtonContainer>

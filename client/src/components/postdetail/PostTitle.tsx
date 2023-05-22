@@ -5,12 +5,13 @@ import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import { useSelector } from "react-redux";
 import { useState } from "react";
 import { RootState } from "../../store/store";
-import { likePost, bookMarkPost, pinPost } from "../../api/axios";
+import { likePost, bookMarkPost, pinPost, editorPick } from "../../api/axios";
 
 export interface PostTitleProps {
    boardId: number;
    title: string;
    now: string;
+   pick: number;
    pin: number;
    likeCheck: number;
    likeCount: number;
@@ -24,6 +25,7 @@ function PostTitle({
    boardId,
    title,
    now,
+   pick,
    pin,
    likeCheck,
    likeCount,
@@ -39,9 +41,17 @@ function PostTitle({
    // 좋아요
    const [isLike, setIsLike] = useState(likeCheck);
    const [heartCount, setHeartCount] = useState(likeCount);
-
    // 즐겨찾기(북마크) 유무
    const [isBookMark, setIsBookMark] = useState(bookmark);
+
+   // 채택 클릭 이벤트
+   const editorPickHandler = () => {
+      if (pick === 0) {
+         editorPick(boardId);
+      } else if (pick === 1) {
+         editorPick(boardId);
+      }
+   };
 
    // 고정 클릭 이벤트
    const pinFixClickHandler = () => {
@@ -90,9 +100,11 @@ function PostTitle({
       }
    };
 
+   // 게시글 날짜 및 시간 display
    const postDate = now.slice(0, 10);
    const postTime = now.slice(11, 16);
 
+   // 좋아요 총 개수
    let numTotalComments = comments ? comments.length : 0;
    if (comments) {
       comments.forEach((comment) => {
@@ -108,7 +120,11 @@ function PostTitle({
                <h1 className="post-title">{title}</h1>
             </TitleBadgeContainer>
             <MarkContainer>
-               <button type="submit" className="pick-btn">
+               <button
+                  type="submit"
+                  className="pick-btn"
+                  onClick={editorPickHandler}
+               >
                   채택
                </button>
                {isFixPin ? (
