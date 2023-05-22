@@ -8,11 +8,15 @@ import { AxiosResponse } from "axios";
 import logo from "../../assets/img/logo2.png";
 import validFunction from "../../util/signinValidFunc";
 import LoginModal from "./LoginModal";
-import { LoginTypes } from "./LoginType";
 import { loginPost } from "../../api/axios";
 import { setMemberId } from "../../reducers/memberIdSlice";
 import { setIsAdmin } from "../../reducers/isAdminSlice";
 import Loading from "../Loading";
+
+export interface LoginTypes {
+   username: string;
+   password: string;
+}
 
 type ResponseType = [string, AxiosResponse | number];
 
