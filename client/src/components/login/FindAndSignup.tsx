@@ -72,5 +72,14 @@ const FindAndSignupContainer = styled.div`
    .box:last-child {
       border-right: 0px;
       border-radius: 0 3px 3px 0;
+      flex-basis: 120px;
+   }
+   @media screen and (max-width: 768px) {
+      .box {
+         font-size: 12px;
+      }
+      .box:last-child {
+         flex-basis: 90px;
+      }
    }
 `;

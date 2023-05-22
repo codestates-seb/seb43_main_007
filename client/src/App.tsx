@@ -1,10 +1,19 @@
 import styled from "styled-components";
 import { BrowserRouter } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import GlobalStyles from "./style/GlobalStyle";
 import RoutingPage from "./pages/RoutingPage";
+import { setMemberId } from "./reducers/memberIdSlice";
 
 function App() {
+   const dispatch = useDispatch();
+   const newMemberId = sessionStorage.getItem("memberId");
+   // 세션 스토리지에 memberId가 있으면 전역상태에 넣어준다.
+   useEffect(() => {
+      if (newMemberId) dispatch(setMemberId(Number(newMemberId)));
+   }, [dispatch, newMemberId]);
    return (
       <Container>
          <ToastContainer

@@ -135,4 +135,15 @@ const FindIdContainer = styled.form`
          border-color: var(--third-color3);
       }
    }
+   @media screen and (max-width: 768px) {
+      .text {
+         font-size: var(--font-base);
+      }
+      .input-box {
+         height: 40px;
+      }
+      .submit {
+         height: 35px;
+      }
+   }
 `;

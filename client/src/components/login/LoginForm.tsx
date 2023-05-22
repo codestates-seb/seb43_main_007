@@ -17,8 +17,7 @@ type ResponseType = [string, AxiosResponse | number];
 function LoginForm() {
    const dispatch = useDispatch();
    const navigate = useNavigate();
-   const [memberCookie, setMemberCookie] = useCookies(["memberId"]);
-   const [tokenCookie, setTokenCookie] = useCookies(["accessToken"]);
+   const [, setTokenCookie] = useCookies(["accessToken"]);
 
    const {
       register,
@@ -46,15 +45,13 @@ function LoginForm() {
    };
 
    const onSubmit: SubmitHandler<LoginTypes> = async (data) => {
-      // 로그인 요청 함수 자리
-      // 로그인시 home화면으로 navigate
       const response: ResponseType = await loginPost(data);
       if (isSuccessResponse(response)) {
-         const newMemberId = 5;
+         const newMemberId = 1;
          const accessToken = response[1]?.headers.authorization.split(" ")[1];
-         dispatch(setMemberId(newMemberId)); //   로그인 상태 변경
-         setMemberCookie("memberId", newMemberId); // memberId 쿠키에 저장
-         setTokenCookie("accessToken", accessToken); // access 토큰은 쿠키에 저장
+         dispatch(setMemberId(newMemberId)); //  로그인 상태 변경
+         sessionStorage.setItem("memberId", JSON.stringify(newMemberId));
+         setTokenCookie("accessToken", accessToken);
          navigate("/");
       } else if (response[1] === 401) {
          // 아이디 비번이 잘못됐을 때

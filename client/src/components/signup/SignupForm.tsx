@@ -77,7 +77,7 @@ const SignupFormContainer = styled.form`
    background-color: var(--second-color1);
    box-shadow: 2px 3px 5px 0;
    border-radius: 10px;
-   padding-top: 2%;
+   padding-top: 15px;
    .logo {
       position: absolute;
       width: 200px;
@@ -99,6 +99,15 @@ const SignupFormContainer = styled.form`
       &:hover {
          background-color: var(--second-color4);
          transition-duration: 0.2s;
+      }
+   }
+   @media screen and (max-width: 768px) {
+      height: 80%;
+      padding-top: 10px;
+      .logo {
+         width: 150px;
+         height: 150px;
+         top: -75px;
       }
    }
 `;

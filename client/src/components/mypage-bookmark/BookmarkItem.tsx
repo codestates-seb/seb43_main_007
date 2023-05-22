@@ -46,9 +46,15 @@ const BookmarkItemContainer = styled.div`
       url(${background});
    background-position: 50% 30%;
    border-radius: 10px;
-   box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
+   box-shadow: rgba(0, 0, 0, 0.25) 0px 34px 35px,
       rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
       rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+   transition-duration: 0.3s;
+   cursor: pointer;
+   &:hover {
+      transform: translateY(-10px);
+      transition-duration: 0.3s;
+   }
    .img-box {
       display: flex;
       justify-content: center;
