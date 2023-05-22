@@ -4,6 +4,7 @@ import com.main.server.board.dto.BoardDto;
 import com.main.server.board.entity.Board;
 import com.main.server.board.mapper.BoardMapper;
 import com.main.server.board.service.BoardService;
+import com.main.server.bookmark.dto.BookmarkDto;
 import com.main.server.comment.dto.CommentDto;
 import com.main.server.comment.mapper.CommentMapper;
 import com.main.server.comment.service.CommentService;
@@ -27,6 +28,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 import java.io.IOException;
 import java.net.URI;
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -39,6 +41,7 @@ import java.util.stream.Stream;
 public class MemberController {
     private final static String MEMBER_DEFAULT_URL = "/members";
     private final MemberService memberService;
+    private final BoardService boardService;
     private final MemberMapper memberMapper;
     private final BoardMapper boardMapper;
     private final CommentMapper commentMapper;
@@ -46,11 +49,13 @@ public class MemberController {
     public MemberController(@Lazy MemberService memberService,
                             MemberMapper memberMapper,
                             BoardMapper boardMapper,
-                            CommentMapper commentMapper) {  //TODO: Lazy 어노테이션 사라지게 할 방법
+                            CommentMapper commentMapper,
+                            @Lazy BoardService boardService) {  //TODO: Lazy 어노테이션 사라지게 할 방법
         this.memberService = memberService;
         this.memberMapper = memberMapper;
         this.boardMapper = boardMapper;
         this.commentMapper = commentMapper;
+        this.boardService = boardService;
     }
     //mem001
     @PostMapping
@@ -139,15 +144,28 @@ public class MemberController {
     public ResponseEntity getMemberMyPage(@Positive @PathVariable("member-id") long memberId) {
         MemberDto.GetMyPage myPageDto = memberMapper.memberToMyPageDto(memberService.findMember(memberId));
         Member findMember = memberService.findMember(memberId);
+
+
         List<BoardDto.Response> boardResponse = findMember.getBoards().stream()
                         .map(board -> boardMapper.boardToBoardResponse(board))
                                 .collect(Collectors.toList());
         myPageDto.setBoards(boardResponse);
 
+
+
         List<CommentDto.MyPageResponse> commentResponse = findMember.getComments().stream()
                         .map(comment -> commentMapper.commentToCommentMyPageDto(comment))
                                 .collect(Collectors.toList());
         myPageDto.setComments(commentResponse);
+
+
+
+        List<Long> boardIds = findMember.getBookmarks().stream()
+                .map(bookmark -> bookmark.getBoardId())
+                    .collect(Collectors.toList());
+
+        myPageDto.setBookmarkBoardIds(boardIds);
+
         return new ResponseEntity<>(myPageDto, HttpStatus.OK);
     }
 

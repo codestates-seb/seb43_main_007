@@ -1,6 +1,7 @@
 package com.main.server.member.service;
 
 //import com.main.server.auth.handler.MemberRegistraionApplicationEvent;
+import com.main.server.auth.mail.MailService;
 import com.main.server.auth.utils.CustomAuthorityUtils;
 import com.main.server.awsS3.StorageService;
 import com.main.server.exception.BusinessLogicException;
@@ -34,19 +35,22 @@ public class MemberService {
     private final CustomAuthorityUtils authorityUtils;
     private final MemberMapper memberMapper;
     private final StorageService storageService;
+    private final MailService mailService;
 
     public MemberService(MemberRepository memberRepository,
                          @Lazy PasswordEncoder passwordEncoder,
                          ApplicationEventPublisher publisher,
                          CustomAuthorityUtils authorityUtils,
                          StorageService storageService,
-                         @Lazy MemberMapper memberMapper) {
+                         @Lazy MemberMapper memberMapper,
+                         MailService mailService) {
         this.memberRepository = memberRepository;
         this.publisher = publisher;
         this.passwordEncoder = passwordEncoder;
         this.authorityUtils = authorityUtils;
         this.storageService = storageService;
         this.memberMapper = memberMapper;
+        this.mailService = mailService;
     }
     
     public Member createMember(Member member) {
@@ -71,6 +75,9 @@ public class MemberService {
         //member가 가지고 있는 이메일로 role 확인 후 저장
         List<String> roles = authorityUtils.createRoles(member.getEmail());
         member.setRoles(roles);
+
+        mailService.sendEmail(member.getEmail(), "반갑습니다!", "정말 반갑습니다!");
+        log.info("이메일 전송 완료!");
 
         Member savedMember = memberRepository.save(member);
 
