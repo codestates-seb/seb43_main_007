@@ -5,7 +5,7 @@ import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import { useSelector } from "react-redux";
 import { useState } from "react";
 import { RootState } from "../../store/store";
-import { likePatch, bookMarkPost, pinPost } from "../../api/axios";
+import { likePost, bookMarkPost, pinPost } from "../../api/axios";
 
 export interface PostTitleProps {
    boardId: number;
@@ -62,13 +62,13 @@ function PostTitle({
       };
       if (isLike === 0) {
          setIsLike(1);
-         const success = await likePatch(req);
+         const success = await likePost(req);
          if (success) {
             setHeartCount(heartCount + 1);
          }
       } else if (isLike === 1) {
          setIsLike(0);
-         const success = await likePatch(req);
+         const success = await likePost(req);
          if (success) {
             setHeartCount(heartCount - 1);
          }
