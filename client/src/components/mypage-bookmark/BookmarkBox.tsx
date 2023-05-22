@@ -6,11 +6,13 @@ import BookmarkPagination from "./BookmarkPagination";
 import { RootState } from "../../store/store";
 import { getUserProfile } from "../../api/axios";
 import { request } from "../../api/create";
+import Loading from "../Loading";
 
 function BookmarkBox() {
    const memberId = useSelector((state: RootState) => state.memberId);
    const [bookmarkBoardIds, setBookmarkBoardIds] = useState<number[]>([]);
    const [bookmarkItems, setBookmarkItems] = useState<BookmartItemType[]>([]);
+   const [isLoading, setIsLoading] = useState(false);
    const [errorMessage, setErrorMessage] =
       useState("북마크된 글이 존재하지 않습니다.");
    // bookmark boardId 불러오기
@@ -18,6 +20,7 @@ function BookmarkBox() {
       const fetchUserProfile = async () => {
          try {
             if (memberId) {
+               setIsLoading(true);
                const data = await getUserProfile(memberId);
                setBookmarkBoardIds([...data.bookmarkBoardIds]);
             }
@@ -32,6 +35,7 @@ function BookmarkBox() {
    useEffect(() => {
       const getBookmark = async (bookmarkIds: number[]) => {
          try {
+            setIsLoading(true);
             const res = await Promise.all(
                bookmarkIds.map((boardId) =>
                   request.get(`/boards/board`, {
@@ -40,6 +44,7 @@ function BookmarkBox() {
                )
             );
             setBookmarkItems(res.map((el) => el.data));
+            setIsLoading(false);
          } catch (error) {
             setErrorMessage("서버 연결에 실패했습니다.");
          }
@@ -58,7 +63,9 @@ function BookmarkBox() {
    );
    return (
       <BookmarkBoxContainer>
-         {totalDataCount > 0 ? (
+         {isLoading ? (
+            <Loading />
+         ) : totalDataCount > 0 ? (
             currentItems.map((data) => {
                return <BookmarkItem key={data.boardId} data={data} />;
             })
