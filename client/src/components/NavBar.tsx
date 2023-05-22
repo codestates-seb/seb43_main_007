@@ -1,8 +1,9 @@
 import styled from "styled-components";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { BiSearch, BiHomeAlt2, BiLogOut } from "react-icons/bi";
+import { useCookies } from "react-cookie";
 import userprofile from "../assets/img/userprofile.png";
 import { getUserProfile } from "../api/axios";
 import { RootState } from "../store/store";
@@ -24,6 +25,7 @@ const collections = [
 ];
 
 function Navbar() {
+   const [, , removeCookie] = useCookies(["accessToken", "isAdmin"]);
    const [search, setSearch] = useState("");
 
    const memberId = useSelector((state: RootState) => state.memberId);
@@ -34,6 +36,8 @@ function Navbar() {
    const profileNickname = useSelector(
       (state: RootState) => state.profileNickname.nickname
    );
+
+   const navigate = useNavigate();
 
    const dispatch = useDispatch();
 
@@ -62,6 +66,15 @@ function Navbar() {
       console.log(search);
    };
 
+   // 로그아웃
+   const handleLogout = () => {
+      removeCookie("accessToken");
+      removeCookie("isAdmin");
+      sessionStorage.removeItem("memberId");
+      navigate(`/`);
+      window.location.reload();
+   };
+
    const collectionLinks = collections.map((collection) => (
       <StyledLink to={collection.path} key={collection.label}>
          <span className="collection-emoji">{collection.emoji}</span>
@@ -71,22 +84,25 @@ function Navbar() {
 
    return (
       <NavbarContainer>
-         <NavProfileContainer to="/myprofile">
-            <img
-               src={profilePhoto || userprofile}
-               alt="프로필 이미지"
-               className="nav-profile-img"
-            />
-            <div className="nav-profile-nickname">{profileNickname}</div>
-         </NavProfileContainer>
-         {/* <NavProfileContainer to="/login">
-            <img
-               src={userprofile}
-               alt="비회원 프로필 이미지"
-               className="nav-profile-img"
-            />
-            <div className="nav-profile-nickname">로그인</div>
-         </NavProfileContainer> */}
+         {memberId === 0 ? (
+            <NavProfileContainer to="/login">
+               <img
+                  src={userprofile}
+                  alt="비회원 프로필 이미지"
+                  className="nav-profile-img"
+               />
+               <div className="nav-profile-nickname">로그인</div>
+            </NavProfileContainer>
+         ) : (
+            <NavProfileContainer to="/myprofile">
+               <img
+                  src={profilePhoto || userprofile}
+                  alt="프로필 이미지"
+                  className="nav-profile-img"
+               />
+               <div className="nav-profile-nickname">{profileNickname}</div>
+            </NavProfileContainer>
+         )}
          <Line />
          <NavSearchContainer>
             <div className="nav-searchbar">
@@ -113,10 +129,18 @@ function Navbar() {
          </CommunityContainer>
          <Line />
          <LogoutContainer>
-            <BiLogOut className="logout-icon" />
-            <button type="submit" className="logout-btn">
-               로그아웃
-            </button>
+            {memberId !== 0 && (
+               <>
+                  <BiLogOut className="logout-icon" />
+                  <button
+                     type="submit"
+                     className="logout-btn"
+                     onClick={handleLogout}
+                  >
+                     로그아웃
+                  </button>
+               </>
+            )}
          </LogoutContainer>
       </NavbarContainer>
    );
