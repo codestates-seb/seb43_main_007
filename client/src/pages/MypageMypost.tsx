@@ -11,9 +11,11 @@ function MypageMypost() {
    const [data, setData] = useState<Board[][]>();
 
    useEffect(() => {
-      myPageMyPost(1).then((res) => {
-         setData(res);
-      });
+      myPageMyPost(1)
+         .then((res) => {
+            setData(res);
+         })
+         .catch((error) => console.log(error));
    }, []);
 
    // 데이터에 맞게 분기

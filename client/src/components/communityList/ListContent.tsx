@@ -3,11 +3,12 @@ import styled from "styled-components";
 import { RiSeedlingLine, RiSeedlingFill } from "react-icons/ri";
 import { BsPin, BsPinFill } from "react-icons/bs";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { RootState } from "../../store/store";
 import type { ListData } from "./listTypes";
-import { likePatch, bookMarkPost, pinPost } from "../../api/axios";
+import { likePost, bookMarkPost, pinPost } from "../../api/axios";
+import { setMemberId } from "../../reducers/memberIdSlice";
 
 function ListContent({ userDatas }: { userDatas: ListData }) {
    // 관리자(매니저)인지 (로컬에서 관리?)
@@ -47,10 +48,10 @@ function ListContent({ userDatas }: { userDatas: ListData }) {
       };
       if (isLike === 0) {
          setIsLike(1);
-         likePatch(req);
+         likePost(req);
       } else if (isLike === 1) {
          setIsLike(0);
-         likePatch(req);
+         likePost(req);
       }
    };
 
