@@ -36,6 +36,7 @@ export type ListData = {
    now: any;
    photo: any;
    pin: number;
+   pick: number;
    likeCheck: number;
    bookmark: number;
    nickName: string;
