@@ -1,29 +1,59 @@
 import styled from "styled-components";
-import { useState } from "react";
-import BookmarkItem from "./BookmarkItem";
-import { dummyBookmark } from "./dummyBookmark";
+import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
+import BookmarkItem, { BookmartItemType } from "./BookmarkItem";
 import BookmarkPagination from "./BookmarkPagination";
+import { RootState } from "../../store/store";
+import { getUserProfile } from "../../api/axios";
+import { request } from "../../api/create";
 
 function BookmarkBox() {
-   const manyDummy = new Array(22).fill([...dummyBookmark]).flat();
-   const totalDataCount = manyDummy.length;
+   const memberId = useSelector((state: RootState) => state.memberId);
+   const [bookmarkBoardIds, setBookmarkBoardIds] = useState<number[]>([]);
+   const [bookmarkItems, setBookmarkItems] = useState<BookmartItemType[]>([]);
+   // bookmark boardId 불러오기
+   useEffect(() => {
+      const fetchUserProfile = async () => {
+         try {
+            if (memberId) {
+               const data = await getUserProfile(memberId);
+               setBookmarkBoardIds([...data.bookmarkBoardIds]);
+            }
+         } catch (error) {
+            console.error("실패", error);
+         }
+      };
+      fetchUserProfile();
+   }, [memberId]);
+
+   // 북마크 게시글 하나하나 불러오기
+   useEffect(() => {
+      const getBookmark = async (bookmarkIds: number[]) => {
+         const res = await Promise.all(
+            bookmarkIds.map((boardId) =>
+               request.get(`/boards/board`, {
+                  params: { memberId, boardId },
+               })
+            )
+         );
+         setBookmarkItems(res.map((el) => el.data));
+      };
+      getBookmark(bookmarkBoardIds);
+   }, [memberId, bookmarkBoardIds]);
+
+   const totalDataCount = bookmarkItems.length;
    const [currentPage, setCurrentPage] = useState(1);
    // 페이지당 item 개수
    const limitItems = 6;
    // 페이지당 item limitItems만큼 렌더링
-   const currentItems = manyDummy.slice(
+   const currentItems = bookmarkItems.slice(
       (currentPage - 1) * limitItems,
       currentPage * limitItems
    );
    return (
       <BookmarkBoxContainer>
          {currentItems.map((data) => {
-            return (
-               <BookmarkItem
-                  key={data.questionId * Math.random()}
-                  data={data}
-               />
-            );
+            return <BookmarkItem key={data.boardId} data={data} />;
          })}
          <BookmarkPagination
             totalDataCount={totalDataCount}
