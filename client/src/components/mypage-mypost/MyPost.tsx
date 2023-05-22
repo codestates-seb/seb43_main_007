@@ -1,12 +1,14 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 // import { CommentType } from "./dummyCommentTitleData";
 
 type MypostProps = {
    title: string;
-   data: string[] | undefined;
+   data: (string | (string | number)[])[] | undefined;
 };
 
 function MyPost({ title, data }: MypostProps) {
+   console.log(data);
    return (
       <DivContainer>
          <div className="title-div">{title}</div>
@@ -15,8 +17,10 @@ function MyPost({ title, data }: MypostProps) {
                const key = idx;
                return (
                   <LiPostStyle key={key}>
-                     <span className="number">{idx + 1}.</span>
-                     <span>{el}</span>
+                     <Link to={`/post/${el[1]}`}>
+                        <div className="number">{idx + 1}.</div>
+                        <div>{el[0]}</div>
+                     </Link>
                   </LiPostStyle>
                );
             })}
@@ -40,6 +44,8 @@ const DivContainer = styled.div`
    .title-div {
       font-size: 25px;
    }
+
+   overflow-y: scroll;
 `;
 
 const UlPostsStyle = styled.ul`
@@ -50,17 +56,25 @@ const UlPostsStyle = styled.ul`
 `;
 
 const LiPostStyle = styled.li`
-   display: flex;
-   align-items: center;
-
    margin: 10px 5px 10px 5px;
    height: 30px;
 
    cursor: pointer;
-   /* background-color: #eef1d8; */
    border-bottom: 2px solid #eef1d8;
 
-   .number {
-      width: 25px;
+   a {
+      display: flex;
+
+      text-decoration: none;
+      color: black;
+
+      .number {
+         width: 25px;
+      }
+
+      :hover {
+         color: var(--first-color4);
+         text-decoration: underline;
+      }
    }
 `;
