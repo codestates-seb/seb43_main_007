@@ -116,6 +116,5 @@ const HomeContainer = styled.div`
       100% {
          transform: translateY(0vh) translateX(100%) scale(0.6);
       }
-
    }
 `;

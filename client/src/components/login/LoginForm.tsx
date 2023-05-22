@@ -12,11 +12,7 @@ import { loginPost } from "../../api/axios";
 import { setMemberId } from "../../reducers/memberIdSlice";
 import { setIsAdmin } from "../../reducers/isAdminSlice";
 import Loading from "../Loading";
-
-export interface LoginTypes {
-   username: string;
-   password: string;
-}
+import { LoginTypes } from "./loginTypes";
 
 type ResponseType = [string, AxiosResponse | number];
 
@@ -63,7 +59,6 @@ function LoginForm() {
          // accessToken은 쿠키에 저장
          const accessToken = response[1]?.headers.authorization.split(" ")[1];
          setCookie("accessToken", accessToken);
-         console.log(response[1]?.headers.role.slice(1, 6));
          // 관리자인지 여부 쿠키에 저장
          const isAdmin = response[1]?.headers.role.slice(1, 6) === "ADMIN";
          dispatch(setIsAdmin(isAdmin));

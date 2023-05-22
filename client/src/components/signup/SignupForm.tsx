@@ -2,12 +2,11 @@ import styled from "styled-components";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useState } from "react";
 import SignupInput from "./SignupInput";
-import { SignupTypes } from "./contentsArray";
+import contentsArr, { SignupTypes } from "./contentsArray";
 import SignupQuestion from "./SignupQuestion";
 import logo from "../../assets/img/logo2.png";
 import { signupPost } from "../../api/axios";
 import SignupModal from "./SignupModal";
-import contentsArr from "./contentsArray";
 import getMessage from "./getMessage";
 import Loading from "../Loading";
 
