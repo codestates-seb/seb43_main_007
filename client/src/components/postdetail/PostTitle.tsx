@@ -49,7 +49,7 @@ function PostTitle({
    // 채택 클릭 이벤트
    const editorPickHandler = () => {
       if (pick === 0) {
-         editorPick(boardId);
+         navigate(``); // 관리자 수정페이지로
       } else if (pick === 1) {
          editorPick(boardId);
       }
@@ -60,7 +60,8 @@ function PostTitle({
    // 고정 클릭 이벤트
    const pinFixClickHandler = () => {
       if (isFixPin === 0) {
-         navigate(``); // 관리자 수정페이지로
+         setIsFixPin(1);
+         pinPost(boardId);
       } else if (isFixPin === 1) {
          setIsFixPin(0);
          pinPost(boardId);
@@ -149,7 +150,7 @@ function PostTitle({
                         />
                      ) : (
                         <BsPin
-                           className="mark-icon"
+                           className="mark-icon pin-icon"
                            onClick={pinFixClickHandler}
                         />
                      )}
