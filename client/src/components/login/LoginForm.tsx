@@ -47,7 +47,7 @@ function LoginForm() {
    const onSubmit: SubmitHandler<LoginTypes> = async (data) => {
       const response: ResponseType = await loginPost(data);
       if (isSuccessResponse(response)) {
-         const newMemberId = 5;
+         const newMemberId = 1;
          const accessToken = response[1]?.headers.authorization.split(" ")[1];
          dispatch(setMemberId(newMemberId)); //  로그인 상태 변경
          sessionStorage.setItem("memberId", JSON.stringify(newMemberId));
