@@ -38,6 +38,8 @@ function PostTitle({
    const memberId = useSelector((state: RootState) => state.memberId);
    const isAdmin = useSelector((state: RootState) => state.isAdmin);
 
+   // 채택 유무
+   const [isPicked, setIsPicked] = useState(pick);
    // 고정 유무
    const [isFixPin, setIsFixPin] = useState(pin);
    // 좋아요
@@ -49,9 +51,10 @@ function PostTitle({
    // 채택 클릭 이벤트
    const editorPickHandler = () => {
       if (pick === 0) {
-         navigate(``); // 관리자 수정페이지로
+         navigate(`/editpost/${boardId}`);
       } else if (pick === 1) {
          editorPick(boardId);
+         setIsPicked(0);
       }
    };
 
@@ -120,13 +123,13 @@ function PostTitle({
       <PostTitleContainer>
          <TopTitleContainer>
             <TitleBadgeContainer>
-               {pick === 1 && <EditorPick>Editor&apos;s Pick</EditorPick>}
+               {isPicked === 1 && <EditorPick>Editor&apos;s Pick</EditorPick>}
                <h1 className="post-title">{title}</h1>
             </TitleBadgeContainer>
             <MarkContainer>
                {isAdmin && (
                   <>
-                     {pick === 0 ? (
+                     {isPicked === 0 ? (
                         <button
                            type="submit"
                            className="pick-btn unpicked"

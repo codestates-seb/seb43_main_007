@@ -26,7 +26,7 @@ function PostButtons({
    const navigate = useNavigate();
 
    const handleEdit = () => {
-      navigate(`/createpost/${boardId}`);
+      navigate(`/editpost/${boardId}`);
    };
 
    const handleToList = () => {

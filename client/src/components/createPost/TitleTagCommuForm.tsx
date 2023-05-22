@@ -15,6 +15,8 @@ type CommuProps = {
          }[]
       >
    >;
+   title: string;
+   address: string;
 };
 
 function TitleTagCommuForm({
@@ -24,6 +26,8 @@ function TitleTagCommuForm({
    setAddress,
    tagList,
    setTagList,
+   title,
+   address,
 }: CommuProps) {
    // 제목입력 값 핸들러
    const titleValueHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -47,6 +51,7 @@ function TitleTagCommuForm({
                type="text"
                onChange={titleValueHandler}
                placeholder="제목을 입력하세요."
+               value={title}
             />
          </DivContent>
          <DivContent>
@@ -56,6 +61,7 @@ function TitleTagCommuForm({
                type="text"
                onChange={addressValueHandler}
                placeholder="주소를 입력하세요."
+               value={address}
             />
          </DivContent>
          <TagBox tagList={tagList} setTagList={setTagList} />
