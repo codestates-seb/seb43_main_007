@@ -1,28 +1,66 @@
 import styled from "styled-components";
 import { AiFillHeart } from "react-icons/ai";
-import thumbnail from "../../assets/img/logo1.png";
+import { useNavigate } from "react-router";
 import background from "../../assets/img/leafmemo.png";
-import { DummyType } from "./dummyBookmark";
 
-function BookmarkItem({ data }: { data: DummyType }) {
+export interface BookmartItemType {
+   boardId: number;
+   title: string;
+   content: string;
+   address: string;
+   now: string;
+   photo: string;
+   pin: number;
+   pick: number;
+   likeCheck: number;
+   bookmark: number;
+   nickName: string;
+   userPhoto: string;
+   category: string;
+   comments: [];
+   likeCount: number;
+   memberId: number;
+   tags: { tagId: number; tagName: string }[];
+}
+
+function BookmarkItem({ data }: { data: BookmartItemType }) {
+   const navigate = useNavigate();
    // 생성날짜 보기좋게 파싱
-   const parsedDate = new Date(data.createdAt).toLocaleString("ko-kr");
+   const parsedDate = new Date(data.now).toLocaleString("ko-kr");
    // 내용에서 html 태그 제외하고 글자만 빼오기
    const previewBody = data.content.replace(/(<([^>]+)>)/gi, "").trim();
+   const handleClick = () => {
+      navigate(`/post/${data.boardId}`);
+   };
    return (
-      <BookmarkItemContainer>
+      <BookmarkItemContainer onClick={handleClick}>
          <div className="img-box">
-            <img className="thumbnail" src={thumbnail} alt="thumbnail" />
+            <img className="thumbnail" src={data.photo} alt="thumbnail" />
          </div>
          <div className="contents-box">
             <h1 className="contents-title">{data.title}</h1>
             <p className="contents-body">{previewBody}</p>
          </div>
          <div className="item-footer">
-            <span className="author">{data.author}</span>
+            <ul className="tags">
+               {data.tags.slice(0, 3).map((el) => {
+                  // 태그 4글자까지만 보이게
+                  const parsingTag = el.tagName.split("").slice(0, 4).join("");
+                  return (
+                     <li className="tag-item" key={el.tagId}>
+                        {parsingTag}
+                     </li>
+                  );
+               })}
+               {data.tags.length > 3 ? <span className="dot">...</span> : null}
+            </ul>
+            <div className="user-info">
+               <img className="user-photo" src={data.userPhoto} alt="user" />
+               <span className="author">{data.nickName}</span>
+            </div>
             <div className="like">
                <AiFillHeart />
-               <span>{data.like}</span>
+               <span className="like-count">{data.likeCount}</span>
             </div>
             <span>{parsedDate}</span>
          </div>
@@ -91,14 +129,49 @@ const BookmarkItemContainer = styled.div`
       align-items: end;
       padding-right: 15px;
       width: 100%;
-      .author {
-         display: inline-block;
+      .tags {
+         display: flex;
+         position: absolute;
+         left: 0;
+         width: 60%;
+         overflow: hidden;
+         .tag-item {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: var(--font-small);
+            padding: 2px;
+            border-radius: 5px;
+            min-width: 20px;
+            height: 20px;
+            margin-right: 5px;
+            background-color: var(--second-color3);
+         }
+      }
+      .user-info {
+         display: flex;
+         align-items: center;
+         justify-content: end;
          margin-bottom: 10px;
+         width: 50%;
+         .user-photo {
+            width: 20px;
+            margin-right: 2px;
+         }
+         .author {
+            display: inline-block;
+         }
       }
       .like {
          position: absolute;
+         display: flex;
+         justify-content: center;
+         align-items: center;
          left: 5%;
          bottom: 0;
+         .like-count {
+            margin-left: 4px;
+         }
       }
    }
 `;
