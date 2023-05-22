@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { AiFillHeart } from "react-icons/ai";
+import { useNavigate } from "react-router";
 import background from "../../assets/img/leafmemo.png";
 
 export interface BookmartItemType {
@@ -23,12 +24,16 @@ export interface BookmartItemType {
 }
 
 function BookmarkItem({ data }: { data: BookmartItemType }) {
+   const navigate = useNavigate();
    // 생성날짜 보기좋게 파싱
    const parsedDate = new Date(data.now).toLocaleString("ko-kr");
    // 내용에서 html 태그 제외하고 글자만 빼오기
    const previewBody = data.content.replace(/(<([^>]+)>)/gi, "").trim();
+   const handleClick = () => {
+      navigate(`/post/${data.boardId}`);
+   };
    return (
-      <BookmarkItemContainer>
+      <BookmarkItemContainer onClick={handleClick}>
          <div className="img-box">
             <img className="thumbnail" src={data.photo} alt="thumbnail" />
          </div>
@@ -137,6 +142,7 @@ const BookmarkItemContainer = styled.div`
             font-size: var(--font-small);
             padding: 2px;
             border-radius: 5px;
+            min-width: 20px;
             height: 20px;
             margin-right: 5px;
             background-color: var(--second-color3);
