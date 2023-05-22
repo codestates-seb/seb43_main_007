@@ -225,13 +225,12 @@ const DivContent = styled.div`
    .div-author {
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
-      align-items: center;
 
       font-size: 12px;
       color: #6b728e;
 
-      height: 60px;
+      height: 100%;
+      width: 100px;
    }
    .div-createdAt {
       display: flex;
@@ -257,6 +256,8 @@ const DivEditerPick = styled.div`
 const DivAuthor = styled.div`
    display: flex;
    align-items: center;
+
+   margin-top: 8px;
 `;
 
 const DivImg = styled.div`
