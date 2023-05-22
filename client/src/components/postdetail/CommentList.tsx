@@ -2,16 +2,15 @@ import styled from "styled-components";
 import { useState, useEffect } from "react";
 import Comment from "./Comment";
 import groupCommentsAndReplies from "../../util/groupCommentsAndReplies";
+import { commentSuccess } from "../../util/toastify";
 
 interface CommentListProps {
    comments?: any[];
-   memberId: number;
    boardId: number;
 }
 
 function CommentList({
    comments: initialComments = [],
-   memberId,
    boardId,
 }: CommentListProps) {
    const [comments, setComments] = useState(
@@ -26,12 +25,10 @@ function CommentList({
       if (initialComments) {
          setComments(initialComments);
       }
-      console.log(initialComments);
    }, [initialComments]);
 
-   const handleReplySubmit = (commentId: number, content: string) => {
-      console.log("handleReplySubmit called with:", { commentId, content });
-      console.log("Reply content:", content);
+   const handleReplySubmit = () => {
+      commentSuccess();
    };
 
    const handleReplyClick = (commentId: number | null) => {
@@ -43,7 +40,6 @@ function CommentList({
          <ul className="comments">
             {comments.map((comment) => {
                const isReplySelected = selectedCommentId === comment.commentId;
-               console.log(comment);
                return (
                   <Comment
                      key={comment.commentId}
@@ -51,9 +47,7 @@ function CommentList({
                      handleReplySubmit={handleReplySubmit}
                      handleReplyClick={handleReplyClick}
                      isReplySelected={isReplySelected}
-                     memberId={memberId}
                      boardId={boardId}
-                     // selectedCommentId={selectedCommentId}
                   />
                );
             })}
