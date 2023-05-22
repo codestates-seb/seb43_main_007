@@ -1,28 +1,29 @@
 import styled from "styled-components";
 import { AiFillHeart } from "react-icons/ai";
-import thumbnail from "../../assets/img/logo1.png";
 import background from "../../assets/img/leafmemo.png";
-import { DummyType } from "./dummyBookmark";
 
-function BookmarkItem({ data }: { data: DummyType }) {
+function BookmarkItem({ data }: { data: any }) {
    // 생성날짜 보기좋게 파싱
-   const parsedDate = new Date(data.createdAt).toLocaleString("ko-kr");
+   const parsedDate = new Date(data.now).toLocaleString("ko-kr");
    // 내용에서 html 태그 제외하고 글자만 빼오기
    const previewBody = data.content.replace(/(<([^>]+)>)/gi, "").trim();
    return (
       <BookmarkItemContainer>
          <div className="img-box">
-            <img className="thumbnail" src={thumbnail} alt="thumbnail" />
+            <img className="thumbnail" src={data.photo} alt="thumbnail" />
          </div>
          <div className="contents-box">
             <h1 className="contents-title">{data.title}</h1>
             <p className="contents-body">{previewBody}</p>
          </div>
          <div className="item-footer">
-            <span className="author">{data.author}</span>
+            <div className="user-info">
+               <img className="user-photo" src={data.userPhoto} alt="user" />
+               <span className="author">{data.nickName}</span>
+            </div>
             <div className="like">
                <AiFillHeart />
-               <span>{data.like}</span>
+               <span className="like-count">{data.likeCount}</span>
             </div>
             <span>{parsedDate}</span>
          </div>
@@ -91,14 +92,28 @@ const BookmarkItemContainer = styled.div`
       align-items: end;
       padding-right: 15px;
       width: 100%;
-      .author {
-         display: inline-block;
+      .user-info {
+         display: flex;
+         align-items: center;
          margin-bottom: 10px;
+         .user-photo {
+            width: 20px;
+            margin-right: 2px;
+         }
+         .author {
+            display: inline-block;
+         }
       }
       .like {
          position: absolute;
+         display: flex;
+         justify-content: center;
+         align-items: center;
          left: 5%;
          bottom: 0;
+         .like-count {
+            margin-left: 4px;
+         }
       }
    }
 `;
