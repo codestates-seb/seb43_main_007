@@ -3,6 +3,7 @@ package com.main.server.board.service;
 import com.main.server.Like.entity.Like;
 import com.main.server.Like.repository.LikeRepository;
 import com.main.server.Like.service.LikeService;
+import com.main.server.auth.mail.MailService;
 import com.main.server.board.entity.Board;
 import com.main.server.board.entity.BoardTag;
 import com.main.server.board.repository.BoardRepository;
@@ -45,6 +46,8 @@ public class BoardService {
 
     private final MemberRepository memberRepository;
     private final BookmarkRepository bookmarkRepository;
+
+    private final MailService mailService;
     public Board getBoard(long boardId) {
 
 
@@ -133,7 +136,9 @@ public class BoardService {
                 boardDB.setPick(0);
             } else {
                 Optional<Member> member = memberRepository.findById(1L);
+                String email = boardDB.getMember().getEmail();
                 if(member.isPresent()) boardDB.setMember(member.get());
+                mailService.sendEmail(email, "에디터 게시글에 선정되었습니다! 축하합니다.", "축하");
                 boardDB.setPick(1);
             }
             boardRepository.save(boardDB);

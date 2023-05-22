@@ -2,6 +2,7 @@ package com.main.server.member.dto;
 
 import com.main.server.board.dto.BoardDto;
 import com.main.server.board.entity.Board;
+import com.main.server.bookmark.dto.BookmarkDto;
 import com.main.server.comment.dto.CommentDto;
 import com.main.server.comment.entity.Comment;
 import com.main.server.member.entity.Member;
@@ -15,6 +16,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 
 public class MemberDto {
@@ -74,6 +76,7 @@ public class MemberDto {
         private String imageUrl;
         private List<BoardDto.Response> boards;
         private List<CommentDto.MyPageResponse> comments;
+        private List<Long> bookmarkBoardIds;
     }
 
     @Getter
