@@ -1,14 +1,13 @@
 import styled from "styled-components";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import ListContent from "./ListContent";
 import Pagination from "./Pagination";
 import type { PageInfo, ListData } from "./listTypes";
 import { listData } from "../../api/axios";
 import { RootState } from "../../store/store";
 import ListSearch from "./ListSearch";
-import { setMemberId } from "../../reducers/memberIdSlice";
 // import data from "./dumyData";
 
 function ListContents() {
@@ -18,7 +17,6 @@ function ListContents() {
 
    // api로 가져온 데이터들
    const [datas, setDatas] = useState<ListData[]>([]);
-   console.log(datas);
    const [pageInfo, setPageInfo] = useState<PageInfo>();
 
    // // 페이지 네이션 필요한 상태 변수들
@@ -163,7 +161,7 @@ function ListContents() {
                )
             ) : (
                <div className="error server">
-                  서버에러가 있습니다. 잠시후 다시 시도해주세요
+                  서버에러가 있습니다. 새로고침 혹은 잠시후 다시 시도해주세요.
                </div>
             )}
          </div>
