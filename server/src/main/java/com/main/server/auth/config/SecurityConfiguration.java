@@ -46,20 +46,17 @@ public class SecurityConfiguration {
 
     private final JwtTokenizer jwtTokenizer;
     private final CustomAuthorityUtils authorityUtils;
-    private final CustomOAuth2UserService customOAuth2UserService;
     private final CustomAuthorityUtils customAuthorityUtils;
     private final MemberRepository memberRepository;
     private final MailService mailService;
 
     public SecurityConfiguration(JwtTokenizer jwtTokenizer,
                                  CustomAuthorityUtils authorityUtils,
-                                 CustomOAuth2UserService customOAuth2UserService,
                                  CustomAuthorityUtils customAuthorityUtils,
                                  MemberRepository memberRepository,
                                  MailService mailService) {
         this.jwtTokenizer = jwtTokenizer;
         this.authorityUtils = authorityUtils;
-        this.customOAuth2UserService = customOAuth2UserService;
         this.customAuthorityUtils = customAuthorityUtils;
         this.memberRepository = memberRepository;
         this.mailService = mailService;

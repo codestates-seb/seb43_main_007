@@ -60,6 +60,7 @@ public class OAuth2UserSuccessHandler extends SimpleUrlAuthenticationSuccessHand
         log.info("## 토큰: {}", accessToken);
         response.setHeader("Authentication", "Bearer_" + accessToken);
         response.setHeader("memberId", String.valueOf(member.getMemberId()));
+        response.setHeader("role", String.valueOf(member.getRoles()));
 
         mailService.sendEmail(email, "반가워요!", "정말 반갑습니다!");
         log.info("메일 전송 완료!");
