@@ -62,19 +62,19 @@ function EditProfile() {
             if (event.target) {
                const fileResult = event.target.result as string;
                setPrevPhoto(fileResult);
+               dispatch(setPhoto(fileResult));
+
+               updateUserProfilePhoto(memberId, file)
+                  .then(() => {
+                     photoChangeSuccess();
+                  })
+                  .catch((error) => {
+                     console.error("프로필 사진 변경에 실패하였습니다.", error);
+                     photoChangeError();
+                  });
             }
          };
          reader.readAsDataURL(file);
-
-         updateUserProfilePhoto(memberId, file)
-            .then(() => {
-               photoChangeSuccess(); // 로컬에선 실패해도 뜨는 상태. 서버 연결 후 테스트 해봐야 함
-               dispatch(setPhoto(prevPhoto));
-            })
-            .catch((error) => {
-               console.error("프로필 사진 변경에 실패하였습니다.", error);
-               photoChangeError();
-            });
       }
    };
 
