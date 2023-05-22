@@ -179,7 +179,7 @@ export const signupPost = async (req: SignupTypes): Promise<string> => {
 };
 
 // 유저 프로필 사진, 닉네임 GET 요청
-export const getUserProfile = async (memberId: string) => {
+export const getUserProfile = async (memberId: number) => {
    try {
       const { data } = await request.get(`/members/mypage/${memberId}`); // 나중에 수정
       console.log("유저 프로필 사진, 닉네임 GET 성공");
