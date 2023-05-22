@@ -9,9 +9,11 @@ import { signupPost } from "../../api/axios";
 import SignupModal from "./SignupModal";
 import contentsArr from "./contentsArray";
 import getMessage from "./getMessage";
+import Loading from "../Loading";
 
 function SignupForm() {
    const [isModalOpen, setIsModalOpen] = useState(false);
+   const [isLoading, setIsLoading] = useState(false);
    const [message, setMessage] = useState({
       text1: "",
       text2: "",
@@ -23,7 +25,9 @@ function SignupForm() {
       formState: { errors },
    } = useForm<SignupTypes>();
    const onSubmit: SubmitHandler<SignupTypes> = async (data) => {
+      setIsLoading(true);
       const response = await signupPost(data);
+      setIsLoading(false);
       // 성공, 실패 case에 따라 modal을 띄워주는 함수
       getMessage(response, setMessage, setIsModalOpen);
    };
@@ -60,6 +64,11 @@ function SignupForm() {
             setIsOpen={setIsModalOpen}
             message={message}
          />
+         {isLoading ? (
+            <LoadingContainer className="loading-container">
+               <Loading />
+            </LoadingContainer>
+         ) : null}
       </SignupFormContainer>
    );
 }
@@ -110,4 +119,16 @@ const SignupFormContainer = styled.form`
          top: -75px;
       }
    }
+`;
+
+const LoadingContainer = styled.div`
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   position: absolute;
+   top: 0;
+   bottom: 0;
+   left: 0;
+   right: 0;
+   background: rgba(128, 128, 128, 0.2);
 `;
