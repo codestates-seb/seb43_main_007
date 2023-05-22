@@ -441,22 +441,9 @@ export const editComment = async (
 // 관리자 채택
 export const editorPick = async (boardId: number) => {
    try {
-      const { data } = await request.get(`/boards/check/${boardId}`);
+      const { data } = await request.post(`/boards/pick/${boardId}`);
       return data;
    } catch (error) {
       return null;
    }
 };
-
-// 관리자 채택 취소
-// export const editorPickCancel = async (boardId: number) => {
-//    try {
-//       const {data} = await request.post(`/boards/check/${boardId}`, {
-//          boardId,
-//          ...
-//       });
-//       return data;
-//    } catch (error) {
-//       return null;
-//    }
-// };
