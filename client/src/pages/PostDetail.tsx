@@ -39,6 +39,7 @@ function PostDetail() {
          <PostButtons
             handleDeletePost={handleDeletePost}
             boardId={baordIdNumber}
+            category={post.category}
          />
          <CreateComment boardId={baordIdNumber} />
          <CommentList comments={post.comments} boardId={baordIdNumber} />

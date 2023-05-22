@@ -21,6 +21,7 @@ export interface Post {
    bookmark: number;
    nickName: string;
    userPhoto: string;
+   category: string;
    tags: {
       tagId: number;
       tagName: string;
