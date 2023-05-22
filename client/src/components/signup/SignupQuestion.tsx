@@ -59,4 +59,11 @@ const SignupQuestionContainer = styled.div`
       font-size: var(--font-base);
       cursor: pointer;
    }
+   @media screen and (max-width: 768px) {
+      height: 40px;
+      .contents-label,
+      .input {
+         font-size: 12px;
+      }
+   }
 `;

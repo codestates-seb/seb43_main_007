@@ -58,4 +58,19 @@ const OauthLoginContainer = styled.div`
          }
       }
    }
+   @media screen and (max-width: 768px) {
+      .oauth-box {
+         .icon {
+            width: 20%;
+            height: 60px;
+            .google {
+               width: 60px;
+               height: 50px;
+            }
+         }
+         .text {
+            font-size: 20px;
+         }
+      }
+   }
 `;

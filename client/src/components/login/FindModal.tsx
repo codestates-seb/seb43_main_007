@@ -106,4 +106,14 @@ const ModalView = styled.div`
          border: none;
       }
    }
+   @media screen and (max-width: 768px) {
+      width: 80%;
+      height: 40%;
+      .tab {
+         .id,
+         .password {
+            font-size: var(--font-base);
+         }
+      }
+   }
 `;
