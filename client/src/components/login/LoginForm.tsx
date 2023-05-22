@@ -11,13 +11,14 @@ import LoginModal from "./LoginModal";
 import { LoginTypes } from "./LoginType";
 import { loginPost } from "../../api/axios";
 import { setMemberId } from "../../reducers/memberIdSlice";
+import { setIsAdmin } from "../../reducers/isAdminSlice";
 
 type ResponseType = [string, AxiosResponse | number];
 
 function LoginForm() {
    const dispatch = useDispatch();
    const navigate = useNavigate();
-   const [, setTokenCookie] = useCookies(["accessToken"]);
+   const [, setCookie] = useCookies(["accessToken", "isAdmin"]);
 
    const {
       register,
@@ -47,11 +48,20 @@ function LoginForm() {
    const onSubmit: SubmitHandler<LoginTypes> = async (data) => {
       const response: ResponseType = await loginPost(data);
       if (isSuccessResponse(response)) {
-         const newMemberId = 1;
-         const accessToken = response[1]?.headers.authorization.split(" ")[1];
-         dispatch(setMemberId(newMemberId)); //  로그인 상태 변경
+         //  memberId session storage에 저장(로그인 상태 변경)
+         const newMemberId = Number(response[1]?.headers.memberid);
+         dispatch(setMemberId(newMemberId));
          sessionStorage.setItem("memberId", JSON.stringify(newMemberId));
-         setTokenCookie("accessToken", accessToken);
+
+         // accessToken은 쿠키에 저장
+         const accessToken = response[1]?.headers.authorization.split(" ")[1];
+         setCookie("accessToken", accessToken);
+         console.log(response[1]?.headers.role.slice(1, 6));
+         // 관리자인지 여부 쿠키에 저장
+         const isAdmin = response[1]?.headers.role.slice(1, 6) === "ADMIN";
+         dispatch(setIsAdmin(isAdmin));
+         if (isAdmin) setCookie("isAdmin", "true");
+         // home으로 이동
          navigate("/");
       } else if (response[1] === 401) {
          // 아이디 비번이 잘못됐을 때
