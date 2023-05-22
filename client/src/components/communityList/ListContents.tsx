@@ -32,7 +32,6 @@ function ListContents() {
    // 멤버 아이디 리덕스에서 가져오기
    // 비회원 일때는 멤버 아이디 0으로 => 로그인 되면 그 회원 아이디로 바뀌는 로직이다.(로그인에서 처리해줌)
    const memberId = useSelector((state: RootState) => state.memberId);
-   console.log(memberId);
 
    // 서버에러 ui적으로 처리를 위한 변수
    const [isError, setIsError] = useState(false);
@@ -44,7 +43,6 @@ function ListContents() {
       setIsError(true);
       if (cate === undefined) {
          const data = await listData(curPage, `/${memberId}`, ``, ``, ``);
-         console.log(data);
          if (data.data.length === 0) {
             setIsData(false);
          } else {

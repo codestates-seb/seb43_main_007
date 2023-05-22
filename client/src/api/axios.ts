@@ -134,13 +134,12 @@ export const createPost = async (
 };
 
 // 마이페이지 내가 쓴 글 get요청 (미사용)
-export const myPageMyPost = async (memberId: number) => {
+export const myPageMyPost = async (memberId: string | number) => {
    try {
       const { data } = await request.get(`/members/mypage/${memberId}`);
       console.log(data);
       return [data.boards, data.comments];
    } catch (error) {
-      serverError();
       console.log(error);
       throw error;
    }

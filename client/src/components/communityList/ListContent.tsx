@@ -10,11 +10,14 @@ import type { ListData } from "./listTypes";
 import { likePost, bookMarkPost, pinPost } from "../../api/axios";
 
 function ListContent({ userDatas }: { userDatas: ListData }) {
+   const isAdmin = useSelector((state: RootState) => state.isAdmin);
+   console.log(isAdmin);
+
    // 관리자(매니저)인지 (로컬에서 관리?)
-   const [isManager, setIsManager] = useState(false);
+   const [isManager, setIsManager] = useState(isAdmin);
    // 에디터 픽 유무(리덕스 관리?)-리덕스 툴킷으로 로컬할 수 있는거 찾아보기
-   const [isEditerPick, setIsEditerPick] = useState(false);
-   // const isEditerPick = userDatas.pick;
+   // const [isEditerPick, setIsEditerPick] = useState(false);
+   const isEditerPick = userDatas.pick;
    // const [isEditerPick, setIsEditerPick] = useState(userDatas.pick);
    // 고정 유무(리덕스 툴킷으로 관리?)
    const [isFixPin, setIsFixPin] = useState(userDatas.pin);
@@ -36,6 +39,7 @@ function ListContent({ userDatas }: { userDatas: ListData }) {
 
    // --- 리덕스 store에서 가져온 멤버 id값
    const memberId = useSelector((state: RootState) => state.memberId);
+   console.log(memberId);
 
    // 좋아요 클릭 이벤트
    const likeClickHandler = () => {
@@ -92,23 +96,22 @@ function ListContent({ userDatas }: { userDatas: ListData }) {
                <div className="div-author">
                   {isManager ? (
                      isFixPin ? (
-                        <DivImg>
+                        <DivImg onClick={pinFixClickHandler}>
                            <BsPinFill size="25" color="green" />
                         </DivImg>
                      ) : (
-                        <DivImg>
+                        <DivImg onClick={pinFixClickHandler}>
                            <BsPin size="25" />
                         </DivImg>
                      )
                   ) : isFixPin ? (
-                     <DivImg onClick={pinFixClickHandler}>
+                     <DivImg>
                         <BsPinFill size="25" color="green" />
                      </DivImg>
-                  ) : (
-                     <DivImg onClick={pinFixClickHandler}>
-                        <BsPin size="25" />
-                     </DivImg>
-                  )}
+                  ) : // <DivImg>
+                  //    <BsPin size="25" />
+                  // </DivImg>
+                  null}
                   {/* 프로필+이름 */}
                   <DivAuthor>
                      <span>

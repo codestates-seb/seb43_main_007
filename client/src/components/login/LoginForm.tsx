@@ -18,7 +18,7 @@ type ResponseType = [string, AxiosResponse | number];
 function LoginForm() {
    const dispatch = useDispatch();
    const navigate = useNavigate();
-   const [, setCookie] = useCookies(["accessToken", "isAdmin"]);
+   const [, setCookie, removeCookie] = useCookies(["accessToken", "isAdmin"]);
 
    const {
       register,
@@ -60,7 +60,11 @@ function LoginForm() {
          // 관리자인지 여부 쿠키에 저장
          const isAdmin = response[1]?.headers.role.slice(1, 6) === "ADMIN";
          dispatch(setIsAdmin(isAdmin));
-         if (isAdmin) setCookie("isAdmin", "true");
+         if (isAdmin) {
+            setCookie("isAdmin", "true");
+         } else {
+            removeCookie("isAdmin");
+         }
          // home으로 이동
          navigate("/");
       } else if (response[1] === 401) {

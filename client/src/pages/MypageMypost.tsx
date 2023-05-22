@@ -1,22 +1,30 @@
 import styled from "styled-components";
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import MypageNavbar from "../components/mypage-profile/MypageNavbar";
 import MypageTopProfile from "../components/mypage-profile/MypageTopProfile";
 import MyPost from "../components/mypage-mypost/MyPost";
 import { myPageMyPost } from "../api/axios";
 import type { Board } from "../components/mypage-mypost/myPostDataType.d";
+import { RootState } from "../store/store";
+import { serverError } from "../util/toastify";
 
 function MypageMypost() {
    // const data = dummyCommentTitleData;
    const [data, setData] = useState<Board[][]>();
+   const memberId = useSelector((state: RootState) => state.memberId);
 
    useEffect(() => {
-      myPageMyPost(1)
+      myPageMyPost(memberId)
          .then((res) => {
+            console.log(memberId);
             setData(res);
          })
-         .catch((error) => console.log(error));
-   }, []);
+         .catch((error) => {
+            console.log(error);
+            serverError();
+         });
+   }, [memberId]);
 
    // 데이터에 맞게 분기
    const dataTitle =

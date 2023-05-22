@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-const initialState = 0;
+const initialState = +(sessionStorage.getItem("memberId") || 0);
 
 const memberIdSlice = createSlice({
    name: "memberId",
