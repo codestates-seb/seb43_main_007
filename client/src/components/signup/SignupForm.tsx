@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useState } from "react";
+import { useNavigate } from "react-router";
 import SignupInput from "./SignupInput";
 import contentsArr, { SignupTypes } from "./contentsArray";
 import SignupQuestion from "./SignupQuestion";
@@ -11,6 +12,7 @@ import getMessage from "./getMessage";
 import Loading from "../Loading";
 
 function SignupForm() {
+   const navigate = useNavigate();
    const [isModalOpen, setIsModalOpen] = useState(false);
    const [isLoading, setIsLoading] = useState(false);
    const [message, setMessage] = useState({
@@ -31,9 +33,15 @@ function SignupForm() {
       getMessage(response, setMessage, setIsModalOpen);
    };
 
+   const navToHome = () => {
+      navigate("/");
+   };
+
    return (
       <SignupFormContainer onSubmit={handleSubmit(onSubmit)}>
-         <img className="logo" src={logo} alt="logo" />
+         <button onClick={navToHome} type="button" className="logo-container">
+            <img className="logo" src={logo} alt="logo" />
+         </button>
          {contentsArr.map((el) => {
             if (el.contents === "question") {
                return (
@@ -86,13 +94,22 @@ const SignupFormContainer = styled.form`
    box-shadow: 2px 3px 5px 0;
    border-radius: 10px;
    padding-top: 15px;
-   .logo {
+   .logo-container {
       position: absolute;
-      width: 200px;
-      height: 200px;
-      top: -100px;
+      width: 100px;
+      height: 100px;
+      top: -50px;
       left: 50%;
       transform: translate(-50%, 0);
+      overflow: hidden;
+      cursor: pointer;
+      background-color: transparent;
+      border: none;
+      .logo {
+         width: 200px;
+         height: 200px;
+         transform: translate(-29%, -27%);
+      }
    }
    .submit-button {
       width: 70%;
