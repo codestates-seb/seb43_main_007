@@ -60,7 +60,7 @@ function TagBox({ tagList, setTagList }: TagProps) {
          })}
          <TagInput
             type="text"
-            placeholder="태그를 입력하세요."
+            placeholder="태그 입력 시 엔터를 눌러주세요."
             tabIndex={2}
             onChange={(e) => setTagItem(e.target.value)}
             value={tagItem}
@@ -96,7 +96,7 @@ const TagInput = styled.input`
    outline: none;
    cursor: text;
 
-   width: 130px;
+   width: 200px;
    height: 40px;
    padding: 9px 14px;
 `;
