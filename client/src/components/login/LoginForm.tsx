@@ -69,7 +69,6 @@ function LoginForm() {
             removeCookie("isAdmin");
          }
          // 들어온 페이지로 이동, state 없으면 홈으로 이동
-         console.log(state);
          if (state) {
             navigate(state);
          } else {
