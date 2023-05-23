@@ -39,11 +39,14 @@ public interface CommentMapper {
             parent.setCommentId(commentDto.getParentId());
             comment.setParent(parent);
         }
+        
 
         board.setBoardId(commentDto.getBoardId());
         member.setMemberId(commentDto.getMemberId());
-        String nickName  = memberRepository.findById(commentDto.getMemberId()).get().getNickname();
-        String userPhoto = memberRepository.findById(commentDto.getMemberId()).get().getProfileImageUrl();
+        Member memberDB = memberRepository.findById(commentDto.getMemberId()).get();
+        String nickName  = memberDB.getNickname();
+        String userPhoto =  (memberDB.getProfileImageUrl()==null)?
+                "https://mainplestory.s3.ap-northeast-2.amazonaws.com/userprofile.png":memberDB.getProfileImageUrl();
         member.setNickname(nickName);
         member.setProfileImageUrl(userPhoto);
 
