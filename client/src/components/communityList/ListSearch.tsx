@@ -11,6 +11,7 @@ type SearchProps = {
    setTitle: Dispatch<SetStateAction<string>>;
    title: string;
    searchSubmitHandler: () => void;
+   titlesList: string[];
 };
 
 // 프롭으로 상태변경 함수를 넘겨서 검색후 get데이터를 부모로 넘겨준다.
@@ -20,11 +21,10 @@ function ListSearch({
    setTitle,
    title,
    searchSubmitHandler,
+   titlesList,
 }: SearchProps) {
    const dropDownRef = useRef(null);
 
-   // 드롭다운 카테고리 배열
-   const titlesList = ["제목", "내용", "제목+내용"];
    // 드롭다운 클릭 여부
    const [isOpen, setIsOpen] = useDetectClose(dropDownRef, false);
 
