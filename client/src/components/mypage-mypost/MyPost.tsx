@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 // import { CommentType } from "./dummyCommentTitleData";
@@ -8,22 +9,34 @@ type MypostProps = {
 };
 
 function MyPost({ title, data }: MypostProps) {
-   console.log(data);
+   const [isData, setIsData] = useState(false);
+
+   useEffect(() => {
+      if (data?.length === 0) {
+         setIsData(false);
+      } else {
+         setIsData(true);
+      }
+   }, [data?.length]);
    return (
       <DivContainer>
          <div className="title-div">{title}</div>
          <UlPostsStyle>
-            {data?.map((el, idx) => {
-               const key = idx;
-               return (
-                  <LiPostStyle key={key}>
-                     <Link to={`/post/${el[1]}`}>
-                        <div className="number">{idx + 1}.</div>
-                        <div>{el[0]}</div>
-                     </Link>
-                  </LiPostStyle>
-               );
-            })}
+            {isData ? (
+               data?.map((el, idx) => {
+                  const key = idx;
+                  return (
+                     <LiPostStyle key={key}>
+                        <Link to={`/post/${el[1]}`}>
+                           <div className="number">{idx + 1}.</div>
+                           <div>{el[0]}</div>
+                        </Link>
+                     </LiPostStyle>
+                  );
+               })
+            ) : (
+               <div className="error-data">데이터가 없습니다.</div>
+            )}
          </UlPostsStyle>
       </DivContainer>
    );
@@ -53,6 +66,17 @@ const UlPostsStyle = styled.ul`
    margin-top: 30px;
    width: 100%;
    text-align: left;
+
+   height: 100%;
+
+   .error-data {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 70%;
+
+      color: var(--third-color3);
+   }
 `;
 
 const LiPostStyle = styled.li`
