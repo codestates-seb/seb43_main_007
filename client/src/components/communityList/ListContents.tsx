@@ -193,12 +193,6 @@ function ListContents() {
                   서버에러가 있습니다. 새로고침 혹은 잠시후 다시 시도해주세요.
                </div>
             )}
-
-            {/* <ul>
-               {datas.map((el: ListData) => (
-                  <ListContent key={el.boardId} userDatas={el} />
-               ))}
-            </ul> */}
          </div>
          <DivPagination>
             {totalPage ? (
@@ -215,9 +209,11 @@ function ListContents() {
 }
 
 const DivContainer = styled.div`
-   /* border: 1px solid green; */
-   width: 1050px;
    margin-left: 30px;
+
+   @media (max-width: 1023px) {
+      width: 700px;
+   }
 
    > div > ul {
       padding: 0px;

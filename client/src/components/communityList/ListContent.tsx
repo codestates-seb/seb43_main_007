@@ -199,16 +199,20 @@ const DivContent = styled.div`
    display: flex;
    align-items: center;
    justify-content: space-between;
-
    width: 100%;
 
    .div-img {
-      width: 30px;
+      width: 100px;
+      margin-right: 50px;
    }
 
    .div-title {
       width: 500px;
+      margin-right: 50px;
 
+      @media (max-width: 1023px) {
+         width: 200px;
+      }
       div {
          font-size: var(--font-large);
       }
@@ -231,6 +235,11 @@ const DivContent = styled.div`
 
       height: 100%;
       width: 100px;
+      margin-right: 50px;
+
+      @media (max-width: 1023px) {
+         width: 100px;
+      }
    }
    .div-createdAt {
       display: flex;
@@ -242,15 +251,8 @@ const DivContent = styled.div`
       color: #6b728e;
 
       height: 60px;
+      width: 100px;
    }
-`;
-
-const DivEditerPick = styled.div`
-   width: 100px;
-   height: 20px;
-   border-radius: 5px;
-   background-color: #e0ede4;
-   color: #083c1f;
 `;
 
 const DivAuthor = styled.div`
