@@ -5,7 +5,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { RootState } from "../../store/store";
 import validFunc from "../../util/signinValidFunc";
 import { setPhoto, resetPhoto } from "../../reducers/ProfilePhotoSlice";
-import { SignupTypes } from "../signup/SignupTypes";
+import { SignupTypes } from "../signup/contentsArray";
 import { setNickname } from "../../reducers/ProfileNicknameSlice";
 import {
    resetUserProfilePhoto,
@@ -40,7 +40,7 @@ function EditProfile() {
 
    // State variables
    const [fileName, setFileName] = useState("");
-   const [prevPhoto, setPrevPhoto] = useState("");
+   const [, setPrevPhoto] = useState("");
 
    // Redux selector
    const memberId = useSelector((state: RootState) => state.memberId);

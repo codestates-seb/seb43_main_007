@@ -3,7 +3,7 @@ import { useNavigate } from "react-router";
 import { useSelector } from "react-redux";
 import { deletePost, getPostData } from "../api/axios";
 import { postDeleteSuccess, serverError } from "../util/toastify";
-import { CommentType } from "../components/postdetail/Comment";
+import { CommentType } from "../components/postdetail/commentType";
 import groupCommentsAndReplies from "../util/groupCommentsAndReplies";
 import { RootState } from "../store/store";
 

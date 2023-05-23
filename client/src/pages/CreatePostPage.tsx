@@ -1,13 +1,12 @@
 import styled from "styled-components";
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { createPost } from "../api/axios";
 import GuideLine from "../components/createPost/GuideLine";
 import QuillTextEditor from "../components/createPost/QuillTextEditor";
 import TitleTagCommuForm from "../components/createPost/TitleTagCommuForm";
 import { RootState } from "../store/store";
-import { setMemberId } from "../reducers/memberIdSlice";
 import { postError } from "../util/toastify";
 
 // 남아 있는 숙제(후순위)
@@ -69,7 +68,6 @@ function CreatePost() {
       const isValid = valid();
 
       if (isValid) {
-         // notifySuccess();
          createPost(memberId, item, title, address, value, tagList, navigate);
       } else {
          postError();

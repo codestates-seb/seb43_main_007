@@ -13,7 +13,6 @@ function MypageMypost() {
    // const data = dummyCommentTitleData;
    const [data, setData] = useState<Board[][]>();
    const memberId = useSelector((state: RootState) => state.memberId);
-   const [isData, setIsData] = useState(false);
 
    useEffect(() => {
       myPageMyPost(memberId)

@@ -19,7 +19,7 @@ function MypageProfile() {
       const fetchUserProfile = async () => {
          try {
             if (memberId) {
-               const data = await getUserProfile(String(memberId));
+               const data = await getUserProfile(memberId);
                if (data) {
                   dispatch(setNickname(data.nickname));
                   dispatch(setPhoto(data.imageUrl));

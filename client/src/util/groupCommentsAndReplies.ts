@@ -1,4 +1,4 @@
-import { CommentType } from "../components/postdetail/Comment";
+import { CommentType } from "../components/postdetail/commentType";
 
 function groupCommentsAndReplies(commentData: CommentType[]): CommentType[] {
    const commentDict: {
