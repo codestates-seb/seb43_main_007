@@ -467,3 +467,13 @@ export const updatePost = async (
       return null;
    }
 };
+
+// 홈 화면 관리자 채택글 get 요청
+export const getEditorPick = async () => {
+   try {
+      const { data } = await request.get("/boards/pickList");
+      return data;
+   } catch (error) {
+      return null;
+   }
+};

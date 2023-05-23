@@ -1,6 +1,24 @@
-import { Post } from "../../hooks/usePost";
+export interface EditerPickType {
+   boardId: number;
+   title: string;
+   content: string;
+   address: string;
+   now: string;
+   photo: string;
+   pin: number;
+   pick: number;
+   likeCheck: number;
+   bookmark: number;
+   nickName: string;
+   userPhoto: string;
+   category: string;
+   comments: [];
+   likeCount: number;
+   memberId: number;
+   tags: { tagId: number; tagName: string }[];
+}
 
-const editorPickDummyContents: Post[] = [
+const editorPickDummyContents: EditerPickType[] = [
    {
       boardId: 0,
       title: "",
@@ -8,76 +26,35 @@ const editorPickDummyContents: Post[] = [
       address: "",
       now: "",
       photo: "",
-      like: 0,
+      pin: 0,
+      pick: 0,
+      likeCheck: 0,
       bookmark: 0,
       nickName: "",
       userPhoto: "",
+      category: "",
+      comments: [],
+      likeCount: 0,
+      memberId: 0,
       tags: [],
    },
    {
-      boardId: 1,
-      title: "롯데타워",
-      content:
-         "<p>친환경 카페 추천합니다. 채택글 테스트</p><p>친환경 카페 추천합니다. 채택글 테스트</p><p>친환경 카페 추천합니다. 채택글 테스트<img src='https://lh3.googleusercontent.com/p/AF1QipNHIHoAvXaC28eQSRIejAGeHzLz0auyenKogroB=s1360-w1360-h1020'></p><p>잘들어오나 안들어오나</p><p>123층 높이의 대규모 초고층 건물에 고급 호텔과 멋진 전망을 볼 수 있는 전망대가 있습니다.</p><p>주소: 서울특별시 송파구 올림픽로 300</p><p>롯데월드타워를 설계용역을 하면서 환경기술은 왜 빠졌을까 궁굼합니다.</p><p>환경기술은 말씀하신 쓰레기재활용을 포함해서 훨씬 더 포괄적인 환경에 대한 개념을 담고 있습니다. 예를 들자면 쓰레기에서 발생되는 폐열을 이용한</p>",
-      address: "서울시 송파구 올림픽로 300",
-      now: "2023-05-16T01:02:17Z",
+      boardId: 0,
+      title: "관리자 채택글이 존재하지 않습니다.",
+      content: "",
+      address: "",
+      now: "",
       photo: "",
-      like: 0,
+      pin: 0,
+      pick: 0,
+      likeCheck: 0,
       bookmark: 0,
-      nickName: "롯데팬",
+      nickName: "",
       userPhoto: "",
-      tags: [],
-   },
-   {
-      photo: "",
-      like: 0,
-      bookmark: 0,
-      userPhoto: "",
-      tags: [],
-      title: "보틀라운지",
-      content: "친환경 카페 공유합니다.",
-      nickName: "지나가던사람",
-      now: "2023-05-16T01:02:17Z",
-      address: "서울시 서대문구 홍연길 26",
-      boardId: 2,
-   },
-   {
-      title: "창원의집",
-      content: "창원 놀러오세요~",
-      nickName: "창원토박이",
-      now: "2023-05-16T01:02:17Z",
-      address: "경상남도 창원시 의창구 사림로16번길 59",
-      boardId: 3,
-      photo: "",
-      like: 0,
-      bookmark: 0,
-      userPhoto: "",
-      tags: [],
-   },
-   {
-      title: "사직 야구장",
-      content: "가즈아~~~~~~~~~~",
-      nickName: "야구맨",
-      now: "2023-05-16T01:02:17Z",
-      address: "부산광역시 동래구 사직로 45",
-      boardId: 4,
-      photo: "",
-      like: 0,
-      bookmark: 0,
-      userPhoto: "",
-      tags: [],
-   },
-   {
-      title: "경복궁",
-      content: "그냥 경복궁",
-      nickName: "경복궁",
-      now: "2023-05-16T01:02:17Z",
-      address: "서울특별시 종로구 사직로 161",
-      boardId: 5,
-      photo: "",
-      like: 0,
-      bookmark: 0,
-      userPhoto: "",
+      category: "",
+      comments: [],
+      likeCount: 0,
+      memberId: 0,
       tags: [],
    },
 ];
