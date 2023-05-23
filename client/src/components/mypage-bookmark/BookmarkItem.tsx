@@ -26,7 +26,9 @@ export interface BookmartItemType {
 function BookmarkItem({ data }: { data: BookmartItemType }) {
    const navigate = useNavigate();
    // 생성날짜 보기좋게 파싱
-   const parsedDate = new Date(data.now).toLocaleString("ko-kr");
+   const date = new Date(data.now);
+   date.setHours(date.getHours() + 9);
+   const parsedDate = date.toLocaleString("ko-kr");
    // 내용에서 html 태그 제외하고 글자만 빼오기
    const previewBody = data.content.replace(/(<([^>]+)>)/gi, "").trim();
    const handleClick = () => {
