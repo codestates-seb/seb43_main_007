@@ -1,5 +1,7 @@
 import styled from "styled-components";
-import { useParams } from "react-router";
+import { useLocation, useNavigate, useParams } from "react-router";
+import { useSelector } from "react-redux";
+import { useEffect } from "react";
 import PostTitle from "../components/postdetail/PostTitle";
 import PostContent from "../components/postdetail/PostContent";
 import PostTags from "../components/postdetail/PostTags";
@@ -8,10 +10,23 @@ import CreateComment from "../components/postdetail/CreateComment";
 import CommentList from "../components/postdetail/CommentList";
 import PostAddress from "../components/postdetail/PostAddress";
 import usePost from "../hooks/usePost";
+import { RootState } from "../store/store";
 
 function PostDetail() {
    const { boardId: boardIdString } = useParams<{ [key: string]: string }>();
    const { post, handleDeletePost } = usePost(boardIdString || "");
+
+   // 로그인 상태가 아니면 로그인 페이지 이동
+   const navigate = useNavigate();
+   const { pathname } = useLocation();
+   const memberId = useSelector((store: RootState) => store.memberId);
+   useEffect(() => {
+      // 로그인 상태가 아니면(memberId가 없으면)
+      if (!memberId) {
+         //  로그인 페이지로 이동, 현재 페이지 url 기억
+         navigate("/login", { state: pathname });
+      }
+   }, [memberId, navigate, pathname]);
 
    if (!post) {
       return <div>Loading...</div>;

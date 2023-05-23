@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import { useState } from "react";
-import { useNavigate } from "react-router";
+import { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router";
 import { useSelector, useDispatch } from "react-redux";
 import { createPost } from "../api/axios";
 import GuideLine from "../components/createPost/GuideLine";
@@ -36,6 +36,16 @@ function CreatePost() {
    // 리덕스 디스패치 - 멤버아이디 1로 변경후 멤버 아이디 가져오기
    const memberId = useSelector((state: RootState) => state.memberId);
    console.log(memberId);
+
+   // 로그인 상태가 아니면 로그인 페이지로 이동
+   const { pathname } = useLocation();
+   useEffect(() => {
+      // 로그인 상태가 아니면(memberId가 없으면)
+      if (!memberId) {
+         //  로그인 페이지로 이동, 현재 페이지 url 기억
+         navigate("/login", { state: pathname });
+      }
+   }, [memberId, navigate, pathname]);
 
    // 내용에서 html 태그 제외하고 글자만 빼오기(에디터 내용 유효성 검사)
    const previewBody = value.replace(/(<([^>]+)>)/gi, "").trim();

@@ -3,7 +3,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { useEffect, useRef, useState } from "react";
 import { useCookies } from "react-cookie";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import { AxiosResponse } from "axios";
 import logo from "../../assets/img/logo2.png";
 import validFunction from "../../util/signinValidFunc";
@@ -19,6 +19,7 @@ type ResponseType = [string, AxiosResponse | number];
 function LoginForm() {
    const dispatch = useDispatch();
    const navigate = useNavigate();
+   const { state } = useLocation(); // 들어온 페이지 url
    const [, setCookie, removeCookie] = useCookies(["accessToken", "isAdmin"]);
 
    const {
@@ -67,8 +68,13 @@ function LoginForm() {
          } else {
             removeCookie("isAdmin");
          }
-         // home으로 이동
-         navigate("/");
+         // 들어온 페이지로 이동, state 없으면 홈으로 이동
+         console.log(state);
+         if (state) {
+            navigate(state);
+         } else {
+            navigate("/");
+         }
       } else if (response[1] === 401) {
          // 아이디 비번이 잘못됐을 때
          setFailMessage({
