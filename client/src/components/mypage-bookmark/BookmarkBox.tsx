@@ -20,7 +20,6 @@ function BookmarkBox() {
       const fetchUserProfile = async () => {
          try {
             if (memberId) {
-               setIsLoading(true);
                const data = await getUserProfile(memberId);
                setBookmarkBoardIds([...data.bookmarkBoardIds]);
             }
@@ -36,18 +35,24 @@ function BookmarkBox() {
       const getBookmark = async (bookmarkIds: number[]) => {
          try {
             setIsLoading(true);
-            const res = await Promise.all(
+            // Promise.allSettled는 실패하더라도 일단은 다받아옴
+            const res = await Promise.allSettled(
                bookmarkIds.map((boardId) =>
                   request.get(`/boards/board`, {
                      params: { memberId, boardId },
                   })
                )
             );
-            setBookmarkItems(res.map((el) => el.data));
-            setIsLoading(false);
+            // 성공한 데이터만 배열에 넣는다.
+            const getArr: BookmartItemType[] = [];
+            res.map((el) =>
+               el.status === "fulfilled" ? getArr.push(el.value.data) : 0
+            );
+            setBookmarkItems(getArr);
          } catch (error) {
             setErrorMessage("서버 연결에 실패했습니다.");
          }
+         setIsLoading(false);
       };
       getBookmark(bookmarkBoardIds);
    }, [memberId, bookmarkBoardIds]);
