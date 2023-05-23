@@ -59,9 +59,14 @@ public class BoardController {
     }
 
     @PostMapping("/pick/{boardId}")
-    public ResponseEntity postPick(@PathVariable("boardId") @Positive long boardId){
+    public ResponseEntity postPick(@PathVariable("boardId") @Positive long boardId) {
         boardService.createPick(boardId);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/pickList")
+    public ResponseEntity getPickList() {
+        return new ResponseEntity<>(boardMapper.pickListToResponse(boardService.getPickList()), HttpStatus.OK);
     }
 
     @PostMapping("/photo")
@@ -78,18 +83,19 @@ public class BoardController {
 //    }
 
     @GetMapping("/board")
-    public ResponseEntity getBoard( @RequestParam(name = "memberId", required = false) long memberId,
-                                    @RequestParam(name = "boardId", required = false) long boardId) {
+    public ResponseEntity getBoard(@RequestParam(name = "memberId", required = false) long memberId,
+                                   @RequestParam(name = "boardId", required = false) long boardId) {
         Board response = boardService.getBoard(boardId);
 
         return new ResponseEntity<>(boardMapper.boardToBoardResponse(response, likeService, bookmarkService, memberId), HttpStatus.OK);
     }
 
     @GetMapping("/{memberId}")
-    public ResponseEntity getAllBoard( @PathVariable("memberId") @Positive long memberId,
-            @RequestParam(name = "cate", required = false) String cate,
-            @RequestParam(name = "title", required = false) String title,
-            @RequestParam(name = "content", required = false) String content
+    public ResponseEntity getAllBoard(@PathVariable("memberId") @Positive long memberId,
+                                      @RequestParam(name = "tag", required = false) String tag,
+                                      @RequestParam(name = "cate", required = false) String cate,
+                                      @RequestParam(name = "title", required = false) String title,
+                                      @RequestParam(name = "content", required = false) String content
             , @RequestParam(name = "page", defaultValue = "0") int page
             , @PageableDefault Pageable pageable) {
         if (page > 0) page--;
@@ -99,12 +105,12 @@ public class BoardController {
         if (cate == null) cate = "";
         if (title == null) title = "";
         if (content == null) content = "";
+        Page<Board> boards = null;
+        if(tag==null) boards = boardService.getAllBoard(pageable, cate, title, content, memberId);
+        else boards = boardService.getAllTag(pageable, tag);
 
-        Page<Board> boards = boardService.getAllBoard(pageable, cate, title, content, memberId);
-
-
-    List<Board> boardList = boards.getContent();
-    List<BoardDto.Response> responses = boardList.stream().map(board -> boardMapper.boardToBoardResponse(board, likeService, bookmarkService, memberId)).collect(Collectors.toList());
+        List<Board> boardList = boards.getContent();
+        List<BoardDto.Response> responses = boardList.stream().map(board -> boardMapper.boardToBoardResponse(board, likeService, bookmarkService, memberId)).collect(Collectors.toList());
 
         return new ResponseEntity<>(new MultiResponseDto<>(responses, boards), HttpStatus.OK);
     }
@@ -118,7 +124,6 @@ public class BoardController {
         boardPutDto.setMemberId(response.getMember().getMemberId());
         return new ResponseEntity<>(boardMapper.boardToBoardResponse(response, likeService, bookmarkService, boardPutDto.getMemberId()), HttpStatus.OK);
     }
-
 
 
     @DeleteMapping("/{boardId}")

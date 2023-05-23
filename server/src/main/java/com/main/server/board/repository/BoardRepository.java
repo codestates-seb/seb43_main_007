@@ -15,6 +15,9 @@ import java.util.Optional;
 
 public interface BoardRepository extends JpaRepository<Board, Long> {
 
+    List<Board> findAllByPick(int pickNum);
+    @Query("SELECT b FROM Board b JOIN b.boardTag bt JOIN bt.tag t WHERE t.tagName LIKE %:tagName%")
+    Page<Board> findByTagNameContaining(@Param("tagName") String tagName, Pageable pageable);
     List<Board> findAllByPin(int pinNum);
     Page<Board> findAllByOrderByPinDescBoardIdDesc(Pageable pageable);
 

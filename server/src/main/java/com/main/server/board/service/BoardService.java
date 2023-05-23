@@ -54,7 +54,9 @@ public class BoardService {
         return findVerifiedBoard(boardId);
     }
 
-
+    public Page<Board> getAllTag(Pageable pageable, String tagName){
+        return boardRepository.findByTagNameContaining(tagName, pageable);
+    }
     public Page<Board> getAllBoard(Pageable pageable, String cate, String title, String content, long memberId) {
 
         Page<Board> boards = boardRepository.findAllByOrderByPinDescBoardIdDesc(pageable);
@@ -103,6 +105,11 @@ public class BoardService {
 
     }
 
+    public List<Board> getPickList(){
+        List<Board> pickList = boardRepository.findAllByPick(1);
+        return pickList;
+    }
+
     public Board putBoard(Board board) {
         Board originBoard = findVerifiedBoard(board.getBoardId());
         Optional.ofNullable(board.getContent())
@@ -111,6 +118,8 @@ public class BoardService {
                 .ifPresent(title -> originBoard.setTitle(title));
         Optional.ofNullable(board.getAddress())
                 .ifPresent(address -> originBoard.setAddress(address));
+        Optional.ofNullable(board.getCategory())
+                .ifPresent(category-> originBoard.setCategory(category));
         return boardRepository.save(originBoard);
     }
     public void cretatePin(long boardId) {

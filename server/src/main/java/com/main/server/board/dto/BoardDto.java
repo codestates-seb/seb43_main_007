@@ -46,6 +46,8 @@ public class BoardDto {
         @Length(min = 10, message = "내용은 10자 이상 작성하셔야 합니다.")
         private String content;
 
+        private String category;
+
         private String address;
 //        private List<Tag> tags;
 
