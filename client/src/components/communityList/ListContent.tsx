@@ -85,15 +85,9 @@ function ListContent({ userDatas }: { userDatas: ListData }) {
                   {isEditerPick ? (
                      <DivEditerPick className="editer">{`Editer's Pick`}</DivEditerPick>
                   ) : null}
-                  {memberId ? (
-                     <Link to={`/post/${userDatas.boardId}`}>
-                        <span>{userDatas.title}</span>
-                     </Link>
-                  ) : (
-                     <Link to="/login">
-                        <span>{userDatas.title}</span>
-                     </Link>
-                  )}
+                  <Link to={`/post/${userDatas.boardId}`}>
+                     <span>{userDatas.title}</span>
+                  </Link>
                </div>
                {/* 프로필+이름 / 고정 */}
                <div className="div-author">

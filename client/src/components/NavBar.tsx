@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { BiSearch, BiHomeAlt2, BiLogOut } from "react-icons/bi";
 import { useCookies } from "react-cookie";
 import userprofile from "../assets/img/userprofile.png";
@@ -27,6 +27,7 @@ const collections = [
 function Navbar() {
    const [, , removeCookie] = useCookies(["accessToken", "isAdmin"]);
    const [search, setSearch] = useState("");
+   const { pathname } = useLocation();
 
    const memberId = useSelector((state: RootState) => state.memberId);
 
@@ -85,7 +86,7 @@ function Navbar() {
    return (
       <NavbarContainer>
          {memberId === 0 ? (
-            <NavProfileContainer to="/login">
+            <NavProfileContainer to="/login" state={{ pathname }}>
                <img
                   src={userprofile}
                   alt="비회원 프로필 이미지"
