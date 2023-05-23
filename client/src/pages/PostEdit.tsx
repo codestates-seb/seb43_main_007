@@ -99,20 +99,29 @@ function PostEdit() {
          </div>
          <DivButton>
             {isAdmin ? (
-               <button
-                  type="button"
-                  onClick={editorUpdateHandler}
-                  className="submit-button"
-               >
-                  등록
-               </button>
+               <>
+                  <button
+                     type="button"
+                     onClick={editorUpdateHandler}
+                     className="submit-button"
+                  >
+                     채택
+                  </button>
+                  <button
+                     type="button"
+                     onClick={updatePostButtonClick}
+                     className="submit-button"
+                  >
+                     수정
+                  </button>
+               </>
             ) : (
                <button
                   type="button"
                   onClick={updatePostButtonClick}
                   className="submit-button"
                >
-                  등록
+                  수정
                </button>
             )}
          </DivButton>

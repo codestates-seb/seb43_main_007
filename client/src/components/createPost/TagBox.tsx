@@ -25,10 +25,14 @@ function TagBox({ tagList, setTagList }: TagProps) {
 
    // 태그를 태그 리스트에 저장하는 함수
    const submitTagItem = () => {
-      const updatedTagList = [...tagList];
-      updatedTagList.push({ tagName: tagItem });
-      setTagList(updatedTagList);
-      setTagItem("");
+      if (tagList.length < 5) {
+         if (tagItem.length < 11) {
+            const updatedTagList = [...tagList];
+            updatedTagList.push({ tagName: tagItem });
+            setTagList(updatedTagList);
+            setTagItem("");
+         }
+      }
    };
 
    // 태그를 버튼클릭으로 지우는 함수
@@ -56,7 +60,7 @@ function TagBox({ tagList, setTagList }: TagProps) {
          })}
          <TagInput
             type="text"
-            placeholder="태그를 입력하세요."
+            placeholder="태그 입력 시 엔터를 눌러주세요."
             tabIndex={2}
             onChange={(e) => setTagItem(e.target.value)}
             value={tagItem}
@@ -80,7 +84,7 @@ const TagContainer = styled.div`
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 100px;
+      min-width: 100px;
       height: 40px;
       border-right: 1px solid #d2d2d2;
    }
@@ -92,7 +96,7 @@ const TagInput = styled.input`
    outline: none;
    cursor: text;
 
-   width: 130px;
+   width: 200px;
    height: 40px;
    padding: 9px 14px;
 `;
@@ -105,4 +109,5 @@ const TagItem = styled.div`
    padding: 5px;
    border-radius: 5px;
    font-size: 13px;
+   text-overflow: ellipsis;
 `;

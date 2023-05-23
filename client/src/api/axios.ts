@@ -444,7 +444,7 @@ export const editorPick = async (boardId: number) => {
 export const updatePost = async (
    boardId: number,
    memberId: number,
-   item: string,
+   category: string,
    title: string,
    address: string,
    content: string,
@@ -453,11 +453,11 @@ export const updatePost = async (
    try {
       const { data } = await request.put(`/boards/${boardId}`, {
          memberId,
-         item,
+         category,
          title,
          address,
          content,
-         tagList,
+         tagNames: tagList,
       });
 
       console.log("게시글 업데이트 성공");
