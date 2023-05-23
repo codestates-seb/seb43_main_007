@@ -6,6 +6,12 @@ import Reply from "./Reply";
 import { editComment, deleteComment } from "../../api/axios";
 import { RootState } from "../../store/store";
 import { CommentType } from "./commentType";
+import {
+   commentEditSuccess,
+   commentEditError,
+   commentDeleteSuccess,
+   commentDeleteError,
+} from "../../util/toastify";
 
 export interface CommentProps {
    comment: CommentType;
@@ -13,6 +19,7 @@ export interface CommentProps {
    handleReplyClick: (commentId: number | null) => void;
    isReplySelected: boolean;
    boardId: number;
+   refreshPost: () => void;
 }
 
 function Comment({
@@ -21,6 +28,7 @@ function Comment({
    handleReplyClick,
    isReplySelected,
    boardId,
+   refreshPost,
 }: CommentProps) {
    const handleReplySubmitWrapper = (content: string) => {
       handleReplySubmit(comment.commentId, content);
@@ -49,11 +57,11 @@ function Comment({
          editedComment
       );
       if (response) {
-         console.log("댓글 수정 성공");
+         commentEditSuccess();
          setIsEditing(false);
-         window.location.reload();
+         refreshPost();
       } else {
-         console.log("댓글 수정 실패");
+         commentEditError();
       }
    };
 
@@ -64,10 +72,12 @@ function Comment({
 
    // 댓글 삭제
    const handleDelete = async () => {
-      const response = await deleteComment(comment.commentId);
-      if (response) {
-         console.log("댓글 삭제 성공");
-         window.location.reload();
+      try {
+         await deleteComment(comment.commentId);
+         refreshPost();
+         commentDeleteSuccess();
+      } catch (error) {
+         commentDeleteError();
       }
    };
 
@@ -157,11 +167,17 @@ function Comment({
                onCancel={() => handleReplyClick(null)}
                boardId={boardId}
                parentId={comment.commentId}
+               refreshPost={refreshPost}
             />
          )}
          {comment.replies &&
             comment.replies.map((reply) => (
-               <Reply key={reply.commentId} comment={reply} boardId={boardId} />
+               <Reply
+                  key={reply.commentId}
+                  comment={reply}
+                  boardId={boardId}
+                  refreshPost={refreshPost}
+               />
             ))}
       </>
    );

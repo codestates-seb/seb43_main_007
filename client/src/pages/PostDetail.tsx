@@ -13,7 +13,7 @@ import { RootState } from "../store/store";
 
 function PostDetail() {
    const { boardId: boardIdString } = useParams<{ [key: string]: string }>();
-   const { post, handleDeletePost } = usePost(boardIdString || "");
+   const { post, handleDeletePost, refreshPost } = usePost(boardIdString || "");
 
    // 로그인 상태가 아니면 로그인 페이지 이동
    const navigate = useNavigate();
@@ -57,7 +57,11 @@ function PostDetail() {
             boardId={baordIdNumber}
             category={post.category}
          />
-         <CommentList comments={post.comments} boardId={baordIdNumber} />
+         <CommentList
+            comments={post.comments}
+            boardId={baordIdNumber}
+            refreshPost={refreshPost}
+         />
       </PostDetailContainer>
    );
 }
