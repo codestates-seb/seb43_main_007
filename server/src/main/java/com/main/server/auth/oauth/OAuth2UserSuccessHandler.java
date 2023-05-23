@@ -49,7 +49,7 @@ public class OAuth2UserSuccessHandler extends SimpleUrlAuthenticationSuccessHand
         String accessToken = delegateAccessToken(oauthUser);
         //String refreshToken = delegateRefreshToken(oAuth2User);
 
-        String redirectURI = "http://localhost:8080/login/oauth2/code/google"; //TODO :  고치기
+        String redirectURI = "http://ourecostory.s3-website.ap-northeast-2.amazonaws.com/";
         
         log.info("##해당 멤버 저장 시작");
         Member member = new Member(email, email.substring(0, email.indexOf("@")));
@@ -74,9 +74,9 @@ public class OAuth2UserSuccessHandler extends SimpleUrlAuthenticationSuccessHand
         //queryParams.add("refresh_token", refreshToken);
 
         return UriComponentsBuilder.newInstance()
-                //.scheme("http")
-                .scheme("https")
-                .host("www.naver.com") //TODO : 고치기
+                .scheme("http")
+                //.scheme("https")
+                .host("ourecostory.s3-website.ap-northeast-2.amazonaws.com/")
                 .queryParams(queryParams).build().toUri();
     }
 

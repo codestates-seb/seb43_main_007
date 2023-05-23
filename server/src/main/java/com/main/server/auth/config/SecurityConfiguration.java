@@ -15,7 +15,6 @@ import com.main.server.auth.oauth.OAuth2UserSuccessHandler;
 import com.main.server.auth.utils.CustomAuthorityUtils;
 import com.main.server.member.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -25,7 +24,6 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.oauth2.client.web.OAuth2LoginAuthenticationFilter;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -70,6 +68,8 @@ public class SecurityConfiguration {
                 .csrf().disable()
                 .cors().configurationSource(corsConfigurationSource())
                 .and()
+                //.requiresChannel().anyRequest().requiresSecure()
+                //.and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .formLogin().disable()
