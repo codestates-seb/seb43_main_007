@@ -457,7 +457,7 @@ export const updatePost = async (
    title: string,
    address: string,
    content: string,
-   tagList: { tagName: string }[],
+   tagList: { tagName: string }[]
 ) => {
    try {
       const { data } = await request.put(`/boards/${boardId}`, {
@@ -473,6 +473,16 @@ export const updatePost = async (
       return data;
    } catch (error) {
       console.log("게시글 업데이트 실패");
+      return null;
+   }
+};
+
+// 홈 화면 관리자 채택글 get 요청
+export const getEditorPick = async () => {
+   try {
+      const { data } = await request.get("/boards/pickList");
+      return data;
+   } catch (error) {
       return null;
    }
 };

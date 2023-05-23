@@ -1,12 +1,23 @@
-import { CarouselHandlerArgsType } from "./homeTypes";
+export type CarouselHandlerArgsType = [
+   pickNumber: number,
+   setPickNumber: React.Dispatch<React.SetStateAction<number>>,
+   setCarouselTransition: React.Dispatch<React.SetStateAction<string>>,
+   setDisabled: React.Dispatch<React.SetStateAction<boolean>>,
+   maxLength: number
+];
 
 interface PageHandler {
    (argsArr: CarouselHandlerArgsType): void;
 }
 
 export const prevHandler: PageHandler = (argsArr) => {
-   const [pickNumber, setPickNumber, setCarouselTransition, setDisabled] =
-      argsArr;
+   const [
+      pickNumber,
+      setPickNumber,
+      setCarouselTransition,
+      setDisabled,
+      maxLength,
+   ] = argsArr;
    const curNumber = pickNumber;
    setDisabled(true);
    if (curNumber <= 1) {
@@ -15,7 +26,7 @@ export const prevHandler: PageHandler = (argsArr) => {
          setCarouselTransition("none");
       }, 500);
       setTimeout(() => {
-         setPickNumber(5);
+         setPickNumber(maxLength);
       }, 550);
       setTimeout(() => {
          setCarouselTransition("transform 0.5s ease-in-out");
@@ -26,12 +37,17 @@ export const prevHandler: PageHandler = (argsArr) => {
    }, 600);
 };
 export const nextHandler: PageHandler = (argsArr) => {
-   const [pickNumber, setPickNumber, setCarouselTransition, setDisabled] =
-      argsArr;
+   const [
+      pickNumber,
+      setPickNumber,
+      setCarouselTransition,
+      setDisabled,
+      maxLength,
+   ] = argsArr;
    const curNumber = pickNumber;
    setDisabled(true);
-   if (curNumber >= 5) {
-      setPickNumber(6);
+   if (curNumber >= maxLength) {
+      setPickNumber(maxLength + 1);
       setTimeout(() => {
          setCarouselTransition("none");
       }, 500);

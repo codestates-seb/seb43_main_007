@@ -1,25 +1,25 @@
 import styled from "styled-components";
 import MapBox from "./MapBox";
-import { Post } from "../../hooks/usePost";
+import { EditerPickType } from "./editorPickDummyContents";
 
 interface Props {
-   post: Post;
+   pick: EditerPickType;
    id: number;
 }
 
-function ContentsBox({ post, id }: Props) {
-   // const parsedDate = new Date(post.now).toLocaleString("ko-kr");
+function ContentsBox({ pick, id }: Props) {
+   const parsedDate =
+      pick.now !== "" ? new Date(pick.now).toLocaleString("ko-kr") : "";
    return (
       <ContentsBoxContainer>
-         <h1 className="title">{post.title}</h1>
+         <h1 className="title">{pick.title}</h1>
          <div className="author-createdAt-box">
-            {/* <span className="author">{post.author}</span>
-            <span className="createdAt">{parsedDate}</span> */}
+            <span className="createdAt">{parsedDate}</span>
          </div>
-         {post.address !== null ? <MapBox data={post.address} id={id} /> : null}
+         {pick.address !== "" ? <MapBox data={pick.address} id={id} /> : null}
          <p
             className="content"
-            dangerouslySetInnerHTML={{ __html: post.content }}
+            dangerouslySetInnerHTML={{ __html: pick.content }}
          />
       </ContentsBoxContainer>
    );

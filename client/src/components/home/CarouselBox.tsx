@@ -1,10 +1,9 @@
 import styled from "styled-components";
 import ContentsBox from "./ContentsBox";
-import editorPickDummyContents from "./editorPickDummyContents";
-// import { Post } from "../postdetail/postDetailTypes";
-// import usePost from "../../hooks/usePost";
+import { EditerPickType } from "./editorPickDummyContents";
 
 interface Props {
+   pickItems: EditerPickType[];
    pickNumber: number;
    carouselTransition: string;
 }
@@ -13,27 +12,15 @@ interface ContainerT {
    carouselTransition: string;
 }
 
-function CarouselBox({ pickNumber, carouselTransition }: Props) {
-   const parseArr = [
-      editorPickDummyContents[0],
-      editorPickDummyContents[5],
-      ...editorPickDummyContents.slice(1),
-      editorPickDummyContents[1],
-      editorPickDummyContents[0],
-   ];
-   // const { post } = usePost("18");
-   // if (!post) {
-   //    return <div>Loading...</div>;
-   // }
-   // const parseArr: Post[] = [post, post, post, post, post, post, post];
+function CarouselBox({ pickItems, pickNumber, carouselTransition }: Props) {
    return (
       <CarouselBoxContainer
          pickNumber={pickNumber}
          carouselTransition={carouselTransition}
       >
-         {parseArr.map((pick, idx) => {
+         {pickItems.map((pick, idx) => {
             const key = idx;
-            return <ContentsBox key={key} post={pick} id={key} />;
+            return <ContentsBox key={key} pick={pick} id={key} />;
          })}
       </CarouselBoxContainer>
    );
