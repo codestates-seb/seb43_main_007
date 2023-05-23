@@ -29,4 +29,7 @@ const IndividualIntroContainer = styled.a`
       height: 80px;
       margin-top: 5px;
    }
+   @media all and (max-width: 1200px) {
+      width: 100px;
+   }
 `;

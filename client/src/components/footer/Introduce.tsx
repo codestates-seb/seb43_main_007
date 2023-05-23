@@ -46,4 +46,18 @@ const IntroduceContainer = styled.div`
          justify-content: center;
       }
    }
+   @media all and (max-width: 1200px) {
+      width: 700px;
+      .intro-box {
+         width: 300px;
+      }
+   }
+   @media screen and (max-width: 1024px) {
+      transform: scale(0.8);
+      margin-left: -5%;
+   }
+   @media screen and (max-width: 850px) {
+      transform: scale(0.6);
+      margin-left: -15%;
+   }
 `;

@@ -36,11 +36,25 @@ const TeamInfoContainer = styled.div`
          margin: 5px;
       }
    }
-
    .text {
       margin-bottom: 10px;
+      min-width: 125px;
    }
    .project-name {
       font-size: 25px;
+   }
+   @media all and (max-width: 1200px) {
+      .project-name {
+         font-size: 20px;
+      }
+      .team-name {
+         font-size: var(--font-base);
+      }
+   }
+   @media screen and (max-width: 1024px) {
+      transform: scale(0.8);
+   }
+   @media screen and (max-width: 850px) {
+      transform: scale(0.6);
    }
 `;
