@@ -51,7 +51,32 @@ public interface BoardMapper {
         return board;
     }
 
-    Board boardPutDtoToBoard(BoardDto.Put boardPutDto);
+    default  Board boardPutDtoToBoard(BoardDto.Put boardPutDto){
+        if ( boardPutDto == null ) {
+            return null;
+        }
+
+        Board board = new Board();
+
+        board.setBoardId( boardPutDto.getBoardId() );
+        board.setTitle( boardPutDto.getTitle() );
+        board.setContent( boardPutDto.getContent() );
+        board.setAddress( boardPutDto.getAddress() );
+        board.setCategory( boardPutDto.getCategory() );
+
+        List<BoardTag> boardTags = boardPutDto.getTagNames().stream()
+                .map(boardTagDto -> {
+                    BoardTag boardTag = new BoardTag();
+                    Tag tag = new Tag();
+                    tag.setTagName(boardTagDto.getTagName());
+                    boardTag.setTag(tag);
+                    return boardTag;
+                })
+                .collect(Collectors.toList());
+        board.setBoardTag(boardTags);
+
+        return board;
+    }
 
     List<BoardDto.Response> pickListToResponse(List<Board> boards);
 
@@ -87,7 +112,7 @@ public interface BoardMapper {
         int startIndex = content.indexOf("https");
         int endIndex = content.indexOf(".png", startIndex) + 4; // .png까지의 인덱스 + 확장자 길이
 
-        if (startIndex != -1 && endIndex != -1) {
+        if (startIndex != -1 && endIndex != -1 && endIndex>startIndex) {
             photo = content.substring(startIndex, endIndex);
             System.out.println(photo);
         }else{

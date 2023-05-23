@@ -49,8 +49,8 @@ public class BoardDto {
         private String category;
 
         private String address;
-//        private List<Tag> tags;
 
+        private List<BoardTagDto.Add> tagNames;
     }
 
     @Getter
