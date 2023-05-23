@@ -152,10 +152,11 @@ export default Navbar;
 export const NavbarContainer = styled.div`
    position: fixed;
    height: 100%;
-   z-index: 1;
+   z-index: 10;
    padding: 16px;
    width: 300px;
    border-right: 1px solid #e9ecef;
+   background-color: #fff;
 `;
 
 export const NavProfileContainer = styled(Link)`

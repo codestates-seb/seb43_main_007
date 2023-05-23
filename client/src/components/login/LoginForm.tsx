@@ -92,9 +92,15 @@ function LoginForm() {
       setIsLoading(false);
    };
 
+   const navToHome = () => {
+      navigate("/");
+   };
+
    return (
       <LoginFormContainer onSubmit={handleSubmit(onSubmit)}>
-         <img className="logo" src={logo} alt="logo" />
+         <button onClick={navToHome} type="button" className="logo-container">
+            <img className="logo" src={logo} alt="logo" />
+         </button>
          <div className="input-box">
             <input
                placeholder="이메일"
@@ -154,13 +160,22 @@ const LoginFormContainer = styled.form`
    width: 100%;
    height: 35%;
    margin-bottom: 1%;
-   .logo {
+   .logo-container {
       position: absolute;
-      width: 200px;
-      height: 200px;
-      top: -100px;
+      width: 100px;
+      height: 100px;
+      top: -50px;
       left: 50%;
       transform: translate(-50%, 0);
+      overflow: hidden;
+      cursor: pointer;
+      background-color: transparent;
+      border: none;
+      .logo {
+         width: 200px;
+         height: 200px;
+         transform: translate(-29%, -27%);
+      }
    }
    .input-box {
       width: 70%;
