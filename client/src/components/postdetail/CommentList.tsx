@@ -1,8 +1,13 @@
 import styled from "styled-components";
 import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import Comment from "./Comment";
 import groupCommentsAndReplies from "../../util/groupCommentsAndReplies";
 import { commentSuccess } from "../../util/toastify";
+import useCommentCharacterCount from "../../hooks/useCommentCharacterCount";
+import { DefaultButton } from "../mypage-profile/EditProfile";
+import { createComment } from "../../api/axios";
+import { RootState } from "../../store/store";
 
 interface CommentListProps {
    comments?: any[];
@@ -35,8 +40,44 @@ function CommentList({
       setSelectedCommentId(commentId);
    };
 
+   const maxLength = 300;
+   const { value, characterCount, handleChange } = useCommentCharacterCount({
+      maxLength,
+   });
+
+   const memberId = useSelector((state: RootState) => state.memberId);
+
+   const handleCommentSubmit = async (event: React.FormEvent) => {
+      event.preventDefault();
+      const response = await createComment(memberId, boardId, value);
+      if (response) {
+         console.log("Comment submitted successfully");
+         // window.location.reload();
+      } else {
+         console.log("Comment submission failed");
+      }
+   };
+
    return (
-      <CommentListContainer>
+      <>
+      <CreateCommentContainer>
+         <CommentInputBox>
+            <p className="letter-count">
+               {characterCount}/{maxLength}
+            </p>
+            <textarea
+               className="create-comment"
+               placeholder="댓글을 입력해주세요."
+               maxLength={maxLength}
+               value={value}
+               onChange={handleChange}
+            />
+         </CommentInputBox>
+         <DefaultButton type="submit" onClick={handleCommentSubmit}>
+            등록
+         </DefaultButton>
+      </CreateCommentContainer>
+               <CommentListContainer>
          <ul className="comments">
             {comments.map((comment) => {
                const isReplySelected = selectedCommentId === comment.commentId;
@@ -53,6 +94,8 @@ function CommentList({
             })}
          </ul>
       </CommentListContainer>
+      </>
+
    );
 }
 
@@ -64,5 +107,41 @@ export const CommentListContainer = styled.div`
 
    .comments {
       padding: 0;
+   }
+`;
+
+export const CreateCommentContainer = styled.div`
+   background-color: var(--first-color2);
+   border-bottom: 1px solid var(--light-gray);
+   padding: 15px;
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+`;
+
+export const CommentInputBox = styled.div`
+   display: flex;
+   align-items: center;
+
+   .letter-count {
+      font-size: 12px;
+      width: 50px;
+      text-align: end;
+      margin-right: 10px;
+      color: var(--dark-gray);
+   }
+
+   .create-comment {
+      height: 50px;
+      width: 895px;
+      resize: none;
+      border: 1px solid var(--light-gray);
+      border-radius: 3px;
+
+      &:focus {
+         box-shadow: 0 0 0 2px rgba(0, 149, 255, 0.15);
+         border: 1px solid var(--second-color3);
+         outline: none;
+      }
    }
 `;

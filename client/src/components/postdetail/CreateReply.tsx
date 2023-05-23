@@ -1,6 +1,6 @@
+import styled from "styled-components";
 import { useSelector } from "react-redux";
 import useCommentCharacterCount from "../../hooks/useCommentCharacterCount";
-import { CreateCommentContainer, CommentInputBox } from "./CreateComment";
 import { DefaultButton } from "../mypage-profile/EditProfile";
 import { createReply } from "../../api/axios";
 import { RootState } from "../../store/store";
@@ -42,8 +42,8 @@ function CreateReply({
    };
 
    return (
-      <CreateCommentContainer>
-         <CommentInputBox>
+      <CreateReplyContainer>
+         <ReplyInputBox>
             <p className="letter-count">
                {characterCount}/{maxLength}
             </p>
@@ -54,10 +54,46 @@ function CreateReply({
                value={value}
                onChange={handleChange}
             />
-         </CommentInputBox>
+         </ReplyInputBox>
          <DefaultButton onClick={handleReplySubmit}>등록</DefaultButton>
-      </CreateCommentContainer>
+      </CreateReplyContainer>
    );
 }
 
 export default CreateReply;
+
+export const CreateReplyContainer = styled.div`
+   background-color: var(--first-color2);
+   border-bottom: 1px solid var(--light-gray);
+   padding: 15px;
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+`;
+
+export const ReplyInputBox = styled.div`
+   display: flex;
+   align-items: center;
+
+   .letter-count {
+      font-size: 12px;
+      width: 50px;
+      text-align: end;
+      margin-right: 10px;
+      color: var(--dark-gray);
+   }
+
+   .create-comment {
+      height: 50px;
+      width: 895px;
+      resize: none;
+      border: 1px solid var(--light-gray);
+      border-radius: 3px;
+
+      &:focus {
+         box-shadow: 0 0 0 2px rgba(0, 149, 255, 0.15);
+         border: 1px solid var(--second-color3);
+         outline: none;
+      }
+   }
+`;

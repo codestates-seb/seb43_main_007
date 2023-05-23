@@ -12,6 +12,7 @@ import CreatePostPage from "./CreatePostPage";
 import MypageBookmark from "./MypageBookmark";
 import Footer from "../components/footer/Footer";
 import MypageMylist from "./MypageMypost";
+import PostEdit from "./PostEdit";
 
 function RoutingPage() {
    const { pathname } = useLocation();
@@ -32,6 +33,7 @@ function RoutingPage() {
                <Route path="/communitylist" element={<CommunityList />} />
                <Route path="/communitylist/:cate" element={<CommunityList />} />
                <Route path="/createpost" element={<CreatePostPage />} />
+               <Route path="/editpost/:boardId" element={<PostEdit />} />
                <Route path="/signup" element={<Signup />} />
                <Route path="/login" element={<Login />} />
                <Route path="/post/:boardId" element={<PostDetail />} />

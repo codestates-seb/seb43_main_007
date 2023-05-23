@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { useSelector } from "react-redux";
 import { useState } from "react";
-import type { CommentType } from "./Comment";
+import { CommentType } from "./commentType";
 import { deleteComment, editComment } from "../../api/axios";
 import { RootState } from "../../store/store";
 
@@ -13,6 +13,11 @@ export interface ReplyProps {
 function Reply({ comment, boardId }: ReplyProps) {
    // memberId
    const memberId = useSelector((state: RootState) => state.memberId);
+
+   // 닉네임
+   const myNickname = useSelector(
+      (state: RootState) => state.profileNickname.nickname
+   );
 
    // 대댓글 날짜 display
    const commentDate = comment.createdAt.slice(0, 10);
@@ -101,23 +106,25 @@ function Reply({ comment, boardId }: ReplyProps) {
                         </button>
                      </>
                   ) : (
-                     <>
-                        <button
-                           type="submit"
-                           className="reply-btn"
-                           onClick={() => setIsEditing(true)}
-                        >
-                           수정
-                        </button>
-                        <span>|</span>
-                        <button
-                           type="submit"
-                           className="reply-btn reply-delete-btn"
-                           onClick={handleDelete}
-                        >
-                           삭제
-                        </button>
-                     </>
+                     comment.nickname === myNickname && (
+                        <>
+                           <button
+                              type="submit"
+                              className="reply-btn"
+                              onClick={() => setIsEditing(true)}
+                           >
+                              수정
+                           </button>
+                           <span>|</span>
+                           <button
+                              type="submit"
+                              className="reply-btn reply-delete-btn"
+                              onClick={handleDelete}
+                           >
+                              삭제
+                           </button>
+                        </>
+                     )
                   )}
                </ReplyButtonContainer>
             </DateAndButton>

@@ -440,22 +440,39 @@ export const editComment = async (
 // 관리자 채택
 export const editorPick = async (boardId: number) => {
    try {
-      const { data } = await request.get(`/boards/check/${boardId}`);
+      const { data } = await request.post(`/boards/pick/${boardId}`);
+      console.log("관리자 게시글 업데이트 성공");
       return data;
    } catch (error) {
+      console.log("관리자 게시글 업데이트 실패");
       return null;
    }
 };
 
-// 관리자 채택 취소
-// export const editorPickCancel = async (boardId: number) => {
-//    try {
-//       const {data} = await request.post(`/boards/check/${boardId}`, {
-//          boardId,
-//          ...
-//       });
-//       return data;
-//    } catch (error) {
-//       return null;
-//    }
-// };
+// 게시글 수정
+export const updatePost = async (
+   boardId: number,
+   memberId: number,
+   item: string,
+   title: string,
+   address: string,
+   content: string,
+   tagList: { tagName: string }[],
+) => {
+   try {
+      const { data } = await request.put(`/boards/${boardId}`, {
+         memberId,
+         item,
+         title,
+         address,
+         content,
+         tagList,
+      });
+
+      console.log("게시글 업데이트 성공");
+      return data;
+   } catch (error) {
+      console.log("게시글 업데이트 실패");
+      return null;
+   }
+};

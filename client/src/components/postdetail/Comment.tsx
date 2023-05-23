@@ -5,17 +5,7 @@ import CreateReply from "./CreateReply";
 import Reply from "./Reply";
 import { editComment, deleteComment } from "../../api/axios";
 import { RootState } from "../../store/store";
-
-export interface CommentType {
-   boardId: number;
-   commentId: number;
-   nickname: string;
-   userPhoto: string;
-   content: string;
-   createdAt: string;
-   parentId: number;
-   replies?: CommentType[];
-}
+import { CommentType } from "./commentType";
 
 export interface CommentProps {
    comment: CommentType;
@@ -38,6 +28,10 @@ function Comment({
 
    // memberId
    const memberId = useSelector((state: RootState) => state.memberId);
+   // 닉네임
+   const myNickname = useSelector(
+      (state: RootState) => state.profileNickname.nickname
+   );
 
    // 댓글 날짜 display
    const commentDate = comment.createdAt.slice(0, 10);
@@ -125,23 +119,25 @@ function Comment({
                         </button>
                      </>
                   ) : (
-                     <>
-                        <button
-                           type="submit"
-                           className="comment-btn"
-                           onClick={() => setIsEditing(true)}
-                        >
-                           수정
-                        </button>
-                        <span>|</span>
-                        <button
-                           type="submit"
-                           className="comment-btn comment-delete-btn"
-                           onClick={handleDelete}
-                        >
-                           삭제
-                        </button>
-                     </>
+                     comment.nickname === myNickname && (
+                        <>
+                           <button
+                              type="submit"
+                              className="comment-btn"
+                              onClick={() => setIsEditing(true)}
+                           >
+                              수정
+                           </button>
+                           <span>|</span>
+                           <button
+                              type="submit"
+                              className="comment-btn comment-delete-btn"
+                              onClick={handleDelete}
+                           >
+                              삭제
+                           </button>
+                        </>
+                     )
                   )}
                </CommentButtonContainer>
                <ReplyButton

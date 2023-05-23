@@ -4,6 +4,7 @@ import { BsPin, BsPinFill } from "react-icons/bs";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import { useSelector } from "react-redux";
 import { useState } from "react";
+import { useNavigate } from "react-router";
 import { RootState } from "../../store/store";
 import { likePost, bookMarkPost, pinPost, editorPick } from "../../api/axios";
 
@@ -35,7 +36,10 @@ function PostTitle({
    comments,
 }: PostTitleProps) {
    const memberId = useSelector((state: RootState) => state.memberId);
+   const isAdmin = useSelector((state: RootState) => state.isAdmin);
 
+   // 채택 유무
+   const [isPicked, setIsPicked] = useState(pick);
    // 고정 유무
    const [isFixPin, setIsFixPin] = useState(pin);
    // 좋아요
@@ -47,11 +51,14 @@ function PostTitle({
    // 채택 클릭 이벤트
    const editorPickHandler = () => {
       if (pick === 0) {
-         editorPick(boardId);
+         navigate(`/editpost/${boardId}`);
       } else if (pick === 1) {
          editorPick(boardId);
+         setIsPicked(0);
       }
    };
+
+   const navigate = useNavigate();
 
    // 고정 클릭 이벤트
    const pinFixClickHandler = () => {
@@ -116,24 +123,41 @@ function PostTitle({
       <PostTitleContainer>
          <TopTitleContainer>
             <TitleBadgeContainer>
-               {/* Editor's pick 컴포넌트 - 세영님 */}
+               {isPicked === 1 && <EditorPick>Editor&apos;s Pick</EditorPick>}
                <h1 className="post-title">{title}</h1>
             </TitleBadgeContainer>
             <MarkContainer>
-               <button
-                  type="submit"
-                  className="pick-btn"
-                  onClick={editorPickHandler}
-               >
-                  채택
-               </button>
-               {isFixPin ? (
-                  <BsPinFill
-                     className="mark-icon pin-filled-icon"
-                     onClick={pinFixClickHandler}
-                  />
-               ) : (
-                  <BsPin className="mark-icon" onClick={pinFixClickHandler} />
+               {isAdmin && (
+                  <>
+                     {isPicked === 0 ? (
+                        <button
+                           type="submit"
+                           className="pick-btn unpicked"
+                           onClick={editorPickHandler}
+                        >
+                           채택
+                        </button>
+                     ) : (
+                        <button
+                           type="submit"
+                           className="pick-btn picked"
+                           onClick={editorPickHandler}
+                        >
+                           채택
+                        </button>
+                     )}
+                     {isFixPin ? (
+                        <BsPinFill
+                           className="mark-icon pin-filled-icon"
+                           onClick={pinFixClickHandler}
+                        />
+                     ) : (
+                        <BsPin
+                           className="mark-icon pin-icon"
+                           onClick={pinFixClickHandler}
+                        />
+                     )}
+                  </>
                )}
                {isLike ? (
                   <AiFillHeart
@@ -142,7 +166,7 @@ function PostTitle({
                   />
                ) : (
                   <AiOutlineHeart
-                     className="mark-icon"
+                     className="mark-icon like-icon"
                      onClick={likeClickHandler}
                   />
                )}
@@ -206,17 +230,37 @@ export const TitleBadgeContainer = styled.div`
    }
 `;
 
+export const EditorPick = styled.div`
+   width: 100px;
+   height: 20px;
+   font-size: 13px;
+   text-align: center;
+   line-height: 18px;
+   border-radius: 5px;
+   margin-right: 10px;
+   background-color: var(--first-color3);
+   color: var(--first-color4);
+   border: 1px solid #c4dccb;
+   font-weight: 700;
+`;
+
 export const MarkContainer = styled.div`
    display: flex;
-   justify-content: space-between;
-   width: 130px;
+   justify-content: flex-end;
+   width: 180px;
 
    .pick-btn {
       font-size: 12px;
-      border: 1px solid #c4dccb;
-      color: var(--first-color4);
+      border: 1px solid black;
+      border-radius: 3px;
+      color: black;
       background-color: transparent;
       cursor: pointer;
+      margin-right: 5px;
+   }
+
+   .picked {
+      background-color: #c2dbca;
    }
 
    .mark-icon {
@@ -224,12 +268,22 @@ export const MarkContainer = styled.div`
       cursor: pointer;
    }
 
+   .pin-icon {
+      margin-right: 5px;
+   }
+
    .pin-filled-icon {
       color: green;
+      margin-right: 5px;
+   }
+
+   .like-icon {
+      margin-right: 5px;
    }
 
    .like-filled-icon {
       color: red;
+      margin-right: 5px;
    }
 
    .bookmark-filled-icon {

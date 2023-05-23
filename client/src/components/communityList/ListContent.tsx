@@ -124,20 +124,42 @@ function ListContent({ userDatas }: { userDatas: ListData }) {
                {/* 날짜 / 좋아요 + 북마크 */}
                <div className="div-createdAt">
                   <DivImg>
-                     <button type="button" onClick={likeClickHandler}>
-                        {isLike ? (
-                           <AiFillHeart size="25" color="red" />
-                        ) : (
-                           <AiOutlineHeart size="25" />
-                        )}
-                     </button>
-                     <button type="button" onClick={bookMarkClickHandler}>
-                        {isBookMark ? (
-                           <RiSeedlingFill size="25" color="green" />
-                        ) : (
-                           <RiSeedlingLine size="25" />
-                        )}
-                     </button>
+                     {/* 멤버(회원)이면/아니면 예외처리 좋아요 */}
+                     {memberId ? (
+                        <button type="button" onClick={likeClickHandler}>
+                           {isLike ? (
+                              <AiFillHeart size="25" color="red" />
+                           ) : (
+                              <AiOutlineHeart size="25" />
+                           )}
+                        </button>
+                     ) : (
+                        <span>
+                           {isLike ? (
+                              <AiFillHeart size="25" color="red" />
+                           ) : (
+                              <AiOutlineHeart size="25" />
+                           )}
+                        </span>
+                     )}
+                     {/* 멤버(회원)이면/아니면 예외처리 북마크 */}
+                     {memberId ? (
+                        <button type="button" onClick={bookMarkClickHandler}>
+                           {isBookMark ? (
+                              <RiSeedlingFill size="25" color="green" />
+                           ) : (
+                              <RiSeedlingLine size="25" />
+                           )}
+                        </button>
+                     ) : (
+                        <span>
+                           {isBookMark ? (
+                              <RiSeedlingFill size="25" color="green" />
+                           ) : (
+                              <RiSeedlingLine size="25" />
+                           )}
+                        </span>
+                     )}
                   </DivImg>
                   {/* 날짜 */}
                   <div>{userDatas.now.slice(0, 10)}</div>
@@ -197,13 +219,12 @@ const DivContent = styled.div`
    .div-author {
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
-      align-items: center;
 
       font-size: 12px;
       color: #6b728e;
 
-      height: 60px;
+      height: 100%;
+      width: 100px;
    }
    .div-createdAt {
       display: flex;
@@ -229,6 +250,8 @@ const DivEditerPick = styled.div`
 const DivAuthor = styled.div`
    display: flex;
    align-items: center;
+
+   margin-top: 8px;
 `;
 
 const DivImg = styled.div`
