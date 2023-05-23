@@ -38,11 +38,20 @@ function ListContents() {
    // 데이터가 없다면 ui적으로 처리를 위한 변수
    const [isData, setIsData] = useState(false);
 
+   // 드롭다운 카테고리 배열
+   const titlesList: string[] = [];
+   // 전체는 태그 추가 - 카테고리별 검색은 태그 삭제
+   if (cate === undefined) {
+      titlesList.push("제목", "내용", "태그", "제목+내용");
+   } else {
+      titlesList.push("제목", "내용", "제목+내용");
+   }
+
    // list목록페이지 데이터 get요청
    const listDatas = async () => {
       setIsError(true);
       if (cate === undefined) {
-         const data = await listData(curPage, `/${memberId}`, ``, ``, ``);
+         const data = await listData(curPage, `/${memberId}`, ``, ``, ``, ``);
          if (data.data.length === 0) {
             setIsData(false);
          } else {
@@ -55,6 +64,7 @@ function ListContents() {
             curPage,
             `/${memberId}`,
             `&cate=${cate}`,
+            ``,
             ``,
             ``
          );
@@ -85,6 +95,7 @@ function ListContents() {
                `/${memberId}`,
                ``,
                `&title=${search}`,
+               "",
                ""
             );
          }
@@ -94,7 +105,8 @@ function ListContents() {
                `/${memberId}`,
                "",
                "",
-               `&content=${search}`
+               `&content=${search}`,
+               ""
             );
          }
          if (title === "제목+내용") {
@@ -103,7 +115,18 @@ function ListContents() {
                `/${memberId}`,
                "",
                `&title=${search}&`,
-               `content=${search}`
+               `content=${search}`,
+               ""
+            );
+         }
+         if (title === "태그") {
+            data = await listData(
+               curPage,
+               `/${memberId}`,
+               "",
+               ``,
+               ``,
+               `&tag=${search}`
             );
          }
       } else {
@@ -113,6 +136,7 @@ function ListContents() {
                `/${memberId}`,
                `&cate=${cate}&`,
                `title=${search}`,
+               "",
                ""
             );
          }
@@ -122,7 +146,8 @@ function ListContents() {
                `/${memberId}`,
                `&cate=${cate}&`,
                "",
-               `content=${search}`
+               `content=${search}`,
+               ""
             );
          }
          if (title === "제목+내용") {
@@ -131,7 +156,8 @@ function ListContents() {
                `/${memberId}`,
                `&cate=${cate}&`,
                `title=${search}&`,
-               `content=${search}`
+               `content=${search}`,
+               ""
             );
          }
       }
@@ -149,6 +175,7 @@ function ListContents() {
             setTitle={setTitle}
             title={title}
             searchSubmitHandler={searchSubmitHandler}
+            titlesList={titlesList}
          />
          <div className="postList-div">
             {isError ? (

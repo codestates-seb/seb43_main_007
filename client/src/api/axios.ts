@@ -13,12 +13,15 @@ export const listData = async (
    memberId: string,
    cate?: string,
    title?: string,
-   content?: string
+   content?: string,
+   tag?: string
 ) => {
    try {
-      console.log(`boards${memberId}?page=${curPage}${cate}${title}${content}`);
+      console.log(
+         `boards${memberId}?page=${curPage}${cate}${title}${content}${tag}`
+      );
       const { data } = await request.get(
-         `boards${memberId}?page=${curPage}${cate}${title}${content}`
+         `boards${memberId}?page=${curPage}${cate}${title}${content}${tag}`
       );
       console.log(data);
       return data;
@@ -41,18 +44,6 @@ export const likePost = async (req: Likereq) => {
       return false;
    }
 };
-
-// // 목록페이지 좋아요 삭제요청 delete
-// export const likeDelete = async (req: Likereq) => {
-//    try {
-//       const data = await request.delete(`/likes`, req);
-//       console.log("요청 성공");
-//       console.log(data);
-//    } catch (error) {
-//       console.log("요청 실패");
-//       console.log(error);
-//    }
-// };
 
 // 목록페이지 북마크 post요청
 export const bookMarkPost = async (req: Likereq) => {
@@ -133,7 +124,7 @@ export const createPost = async (
    }
 };
 
-// 마이페이지 내가 쓴 글 get요청 (미사용)
+// 마이페이지 내가 쓴 글 get요청
 export const myPageMyPost = async (memberId: string | number) => {
    try {
       const { data } = await request.get(`/members/mypage/${memberId}`);
@@ -457,7 +448,7 @@ export const updatePost = async (
    title: string,
    address: string,
    content: string,
-   tagList: { tagName: string }[],
+   tagList: { tagName: string }[]
 ) => {
    try {
       const { data } = await request.put(`/boards/${boardId}`, {
