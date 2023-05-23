@@ -79,6 +79,8 @@ function CreatePost() {
                setAddress={setAddress}
                tagList={tagList}
                setTagList={setTagList}
+               title={title}
+               address={address}
             />
             <QuillTextEditor
                setValue={setValue}

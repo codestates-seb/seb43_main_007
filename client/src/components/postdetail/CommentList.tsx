@@ -60,42 +60,42 @@ function CommentList({
 
    return (
       <>
-      <CreateCommentContainer>
-         <CommentInputBox>
-            <p className="letter-count">
-               {characterCount}/{maxLength}
-            </p>
-            <textarea
-               className="create-comment"
-               placeholder="댓글을 입력해주세요."
-               maxLength={maxLength}
-               value={value}
-               onChange={handleChange}
-            />
-         </CommentInputBox>
-         <DefaultButton type="submit" onClick={handleCommentSubmit}>
-            등록
-         </DefaultButton>
-      </CreateCommentContainer>
-               <CommentListContainer>
-         <ul className="comments">
-            {comments.map((comment) => {
-               const isReplySelected = selectedCommentId === comment.commentId;
-               return (
-                  <Comment
-                     key={comment.commentId}
-                     comment={comment}
-                     handleReplySubmit={handleReplySubmit}
-                     handleReplyClick={handleReplyClick}
-                     isReplySelected={isReplySelected}
-                     boardId={boardId}
-                  />
-               );
-            })}
-         </ul>
-      </CommentListContainer>
+         <CreateCommentContainer>
+            <CommentInputBox>
+               <p className="letter-count">
+                  {characterCount}/{maxLength}
+               </p>
+               <textarea
+                  className="create-comment"
+                  placeholder="댓글을 입력해주세요."
+                  maxLength={maxLength}
+                  value={value}
+                  onChange={handleChange}
+               />
+            </CommentInputBox>
+            <DefaultButton type="submit" onClick={handleCommentSubmit}>
+               등록
+            </DefaultButton>
+         </CreateCommentContainer>
+         <CommentListContainer>
+            <ul className="comments">
+               {comments.map((comment) => {
+                  const isReplySelected =
+                     selectedCommentId === comment.commentId;
+                  return (
+                     <Comment
+                        key={comment.commentId}
+                        comment={comment}
+                        handleReplySubmit={handleReplySubmit}
+                        handleReplyClick={handleReplyClick}
+                        isReplySelected={isReplySelected}
+                        boardId={boardId}
+                     />
+                  );
+               })}
+            </ul>
+         </CommentListContainer>
       </>
-
    );
 }
 
