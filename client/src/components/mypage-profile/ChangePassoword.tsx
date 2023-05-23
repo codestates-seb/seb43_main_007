@@ -70,6 +70,7 @@ function ChangePassoword() {
                   <input
                      id="current-password"
                      type="password"
+                     className="profile-input"
                      placeholder="현재 비밀번호"
                      {...register("currentPassword", {
                         required: "현재 비밀번호를 입력해주세요.",
@@ -86,6 +87,7 @@ function ChangePassoword() {
                   <input
                      id="new-password"
                      type="password"
+                     className="profile-input"
                      placeholder="영문, 숫자 포함 8자 이상 20자 이하"
                      {...register("newPassword", {
                         required: true,
@@ -105,6 +107,7 @@ function ChangePassoword() {
                   <input
                      id="confirm-password"
                      type="password"
+                     className="profile-input"
                      placeholder="새로운 비밀번호 재입력"
                      {...register("confirmPassword", {
                         required: true,
