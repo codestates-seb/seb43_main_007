@@ -94,7 +94,7 @@ public class SecurityConfiguration {
                 .oauth2Login().loginPage("/oauth2/authorization/google")
                 .successHandler(new OAuth2UserSuccessHandler(jwtTokenizer, customAuthorityUtils, memberRepository, mailService))
                 .failureHandler(new OAuth2UserFailureHandler());
-                //.userInfoEndpoint().userService(customOAuth2UserService);
+        //.userInfoEndpoint().userService(customOAuth2UserService);
 
         return http.build();
     }

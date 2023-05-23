@@ -20,6 +20,7 @@ import com.main.server.tag.repository.TagRepository;
 import com.main.server.tag.service.TagService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.*;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.main.server.exception.ExceptionCode;
@@ -54,7 +55,9 @@ public class BoardService {
         return findVerifiedBoard(boardId);
     }
 
-
+    public Page<Board> getAllTag(Pageable pageable, String tagName){
+        return boardRepository.findByTagNameContaining(tagName, pageable);
+    }
     public Page<Board> getAllBoard(Pageable pageable, String cate, String title, String content, long memberId) {
 
         Page<Board> boards = boardRepository.findAllByOrderByPinDescBoardIdDesc(pageable);
@@ -103,7 +106,13 @@ public class BoardService {
 
     }
 
+    public List<Board> getPickList(){
+        List<Board> pickList = boardRepository.findAllByPick(1);
+        return pickList;
+    }
+
     public Board putBoard(Board board) {
+
         Board originBoard = findVerifiedBoard(board.getBoardId());
         Optional.ofNullable(board.getContent())
                 .ifPresent(contnet -> originBoard.setContent(contnet));
@@ -111,6 +120,17 @@ public class BoardService {
                 .ifPresent(title -> originBoard.setTitle(title));
         Optional.ofNullable(board.getAddress())
                 .ifPresent(address -> originBoard.setAddress(address));
+        Optional.ofNullable(board.getCategory())
+                .ifPresent(category-> originBoard.setCategory(category));
+
+        if(board.getBoardTag()!=null) {
+            for (BoardTag boardTag : board.getBoardTag()) {
+                boardTag.setBoard(board);
+            }
+            originBoard.setBoardTag(board.getBoardTag());
+            putInformationForTag(board);
+        }
+
         return boardRepository.save(originBoard);
     }
     public void cretatePin(long boardId) {
@@ -199,6 +219,10 @@ public class BoardService {
                     return boardTag;
                 })
                 .collect(Collectors.toList());
+
+
+
+
 
         boardTags.stream()
                 .map(boardTagRepository::save)
