@@ -25,10 +25,14 @@ function TagBox({ tagList, setTagList }: TagProps) {
 
    // 태그를 태그 리스트에 저장하는 함수
    const submitTagItem = () => {
-      const updatedTagList = [...tagList];
-      updatedTagList.push({ tagName: tagItem });
-      setTagList(updatedTagList);
-      setTagItem("");
+      if (tagList.length < 5) {
+         if (tagItem.length < 11) {
+            const updatedTagList = [...tagList];
+            updatedTagList.push({ tagName: tagItem });
+            setTagList(updatedTagList);
+            setTagItem("");
+         }
+      }
    };
 
    // 태그를 버튼클릭으로 지우는 함수
@@ -80,7 +84,7 @@ const TagContainer = styled.div`
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 100px;
+      min-width: 100px;
       height: 40px;
       border-right: 1px solid #d2d2d2;
    }
@@ -105,4 +109,5 @@ const TagItem = styled.div`
    padding: 5px;
    border-radius: 5px;
    font-size: 13px;
+   text-overflow: ellipsis;
 `;
