@@ -32,6 +32,14 @@ const commentSuccess = () => toast.success("댓글이 생성되었습니다.");
 
 const commentError = () => toast.error("댓글 생성에 실패하였습니다.");
 
+const commentDeleteSuccess = () => toast.success("댓글이 삭제되었습니다.");
+
+const commentDeleteError = () => toast.error("댓글 삭제에 실패하였습니다.");
+
+const commentEditSuccess = () => toast.success("댓글이 수정되었습니다.");
+
+const commentEditError = () => toast.error("댓글 수정에 실패하였습니다.");
+
 export {
    nicknameChangeSuccess,
    nicknameChangeRetry,
@@ -45,4 +53,8 @@ export {
    postDeleteSuccess,
    commentSuccess,
    commentError,
+   commentDeleteSuccess,
+   commentDeleteError,
+   commentEditSuccess,
+   commentEditError,
 };

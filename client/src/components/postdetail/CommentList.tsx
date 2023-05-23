@@ -2,8 +2,7 @@ import styled from "styled-components";
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import Comment from "./Comment";
-import groupCommentsAndReplies from "../../util/groupCommentsAndReplies";
-import { commentSuccess } from "../../util/toastify";
+import { commentSuccess, commentError } from "../../util/toastify";
 import useCommentCharacterCount from "../../hooks/useCommentCharacterCount";
 import { DefaultButton } from "../mypage-profile/EditProfile";
 import { createComment } from "../../api/axios";
@@ -12,15 +11,19 @@ import { RootState } from "../../store/store";
 interface CommentListProps {
    comments?: any[];
    boardId: number;
+   refreshPost: () => void;
 }
 
 function CommentList({
    comments: initialComments = [],
    boardId,
+   refreshPost,
 }: CommentListProps) {
-   const [comments, setComments] = useState(
-      groupCommentsAndReplies(initialComments || [])
-   );
+   // 멤버 아이디
+   const memberId = useSelector((state: RootState) => state.memberId);
+
+   // 댓글 리스트
+   const [comments, setComments] = useState(initialComments || []);
 
    const [selectedCommentId, setSelectedCommentId] = useState<number | null>(
       null
@@ -40,21 +43,23 @@ function CommentList({
       setSelectedCommentId(commentId);
    };
 
+   // 댓글 글자 수 알림
    const maxLength = 300;
-   const { value, characterCount, handleChange } = useCommentCharacterCount({
-      maxLength,
-   });
+   const { value, clearValue, characterCount, handleChange } =
+      useCommentCharacterCount({
+         maxLength,
+      });
 
-   const memberId = useSelector((state: RootState) => state.memberId);
-
+   // 댓글 등록 이벤트
    const handleCommentSubmit = async (event: React.FormEvent) => {
       event.preventDefault();
       const response = await createComment(memberId, boardId, value);
       if (response) {
-         console.log("Comment submitted successfully");
-         // window.location.reload();
+         commentSuccess();
+         setComments((prevComments) => [...prevComments, response.data]);
+         clearValue();
       } else {
-         console.log("Comment submission failed");
+         commentError();
       }
    };
 
@@ -90,6 +95,7 @@ function CommentList({
                         handleReplyClick={handleReplyClick}
                         isReplySelected={isReplySelected}
                         boardId={boardId}
+                        refreshPost={refreshPost}
                      />
                   );
                })}

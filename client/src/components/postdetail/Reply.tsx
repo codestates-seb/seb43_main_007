@@ -4,13 +4,20 @@ import { useState } from "react";
 import { CommentType } from "./commentType";
 import { deleteComment, editComment } from "../../api/axios";
 import { RootState } from "../../store/store";
+import {
+   commentEditSuccess,
+   commentEditError,
+   commentDeleteSuccess,
+   commentDeleteError,
+} from "../../util/toastify";
 
 export interface ReplyProps {
    comment: CommentType;
    boardId: number;
+   refreshPost: () => void;
 }
 
-function Reply({ comment, boardId }: ReplyProps) {
+function Reply({ comment, boardId, refreshPost }: ReplyProps) {
    // memberId
    const memberId = useSelector((state: RootState) => state.memberId);
 
@@ -35,11 +42,11 @@ function Reply({ comment, boardId }: ReplyProps) {
          editedComment
       );
       if (response) {
-         console.log("대댓글 수정 성공");
+         commentEditSuccess();
          setIsEditing(false);
-         window.location.reload();
+         refreshPost();
       } else {
-         console.log("대댓글 수정 실패");
+         commentEditError();
       }
    };
 
@@ -50,11 +57,12 @@ function Reply({ comment, boardId }: ReplyProps) {
 
    // 대댓글 삭제
    const handleDelete = async () => {
-      const response = await deleteComment(comment.commentId);
-      if (response) {
-         console.log("대댓글 삭제 성공");
-      } else {
-         console.log("대댓글 삭제 실패");
+      try {
+         await deleteComment(comment.commentId);
+         refreshPost();
+         commentDeleteSuccess();
+      } catch (error) {
+         commentDeleteError();
       }
    };
 

@@ -33,6 +33,7 @@ export interface Post {
 const usePost = (boardId: string) => {
    const navigate = useNavigate();
    const [post, setPost] = useState<Post | null>(null);
+   const [refreshKey, setRefreshKey] = useState(0);
 
    const memberId = useSelector((state: RootState) => state.memberId);
 
@@ -46,7 +47,7 @@ const usePost = (boardId: string) => {
       };
 
       fetchPost();
-   }, [memberId, boardId]);
+   }, [memberId, boardId, refreshKey]);
 
    const handleDeletePost = async () => {
       const response = await deletePost(parseInt(boardId, 10));
@@ -59,9 +60,11 @@ const usePost = (boardId: string) => {
       }
    };
 
-   console.log(post);
+   const refreshPost = () => {
+      setRefreshKey((prevKey) => prevKey + 1);
+   };
 
-   return { post, handleDeletePost };
+   return { post, handleDeletePost, refreshPost };
 };
 
 export default usePost;

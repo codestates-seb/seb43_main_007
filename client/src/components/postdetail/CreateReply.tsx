@@ -4,12 +4,14 @@ import useCommentCharacterCount from "../../hooks/useCommentCharacterCount";
 import { DefaultButton } from "../mypage-profile/EditProfile";
 import { createReply } from "../../api/axios";
 import { RootState } from "../../store/store";
+import { commentError } from "../../util/toastify";
 
 export interface CreateReplyProps {
    onSubmit: (content: string) => void;
    onCancel: () => void;
    boardId: number;
    parentId: number;
+   refreshPost: () => void;
 }
 
 function CreateReply({
@@ -17,6 +19,7 @@ function CreateReply({
    onCancel,
    boardId,
    parentId,
+   refreshPost,
 }: CreateReplyProps) {
    const maxLength = 300;
    const { value, characterCount, handleChange, clearValue } =
@@ -30,13 +33,12 @@ function CreateReply({
       event.preventDefault();
       const response = await createReply(boardId, value, memberId, parentId);
       if (response) {
-         console.log("대댓글 생성 성공");
          onSubmit(value);
          clearValue();
          onCancel();
-         window.location.reload();
+         refreshPost();
       } else {
-         console.log("대댓글 생성 실패");
+         commentError();
       }
       clearValue();
    };
