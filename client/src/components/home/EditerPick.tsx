@@ -27,7 +27,7 @@ function EditerPick() {
       editorPickDummyContents[0],
       editorPickDummyContents[0],
    ]);
-   const [isLoading, setIsLoading] = useState(true);
+   const [isLoading, setIsLoading] = useState(false);
    // 관리자 채택글 get 요청
    useEffect(() => {
       const getPick = async () => {
@@ -43,11 +43,11 @@ function EditerPick() {
                editorPickDummyContents[0],
             ]);
          else {
-            const lastItem = pickItems.length > 4 ? 4 : pickItems.length - 1;
+            const lastItem = response.length > 4 ? 4 : response.length - 1;
             const newArr = [
                editorPickDummyContents[0],
                response[lastItem],
-               response.slice(0, 5),
+               ...response.slice(0, 5),
                response[0],
                editorPickDummyContents[0],
             ];
@@ -56,7 +56,7 @@ function EditerPick() {
          setIsLoading(false);
       };
       getPick();
-   }, [pickItems]);
+   }, [pickItems.length]);
 
    // 버튼 핸들러 함수에 넣을 인자 배열
    const argsArr: CarouselHandlerArgsType = [
@@ -69,7 +69,7 @@ function EditerPick() {
 
    return (
       <EditerPickContainer>
-         {!disabled ? (
+         {!disabled && pickItems.length > 5 ? (
             <button type="button" className="icon left">
                <BiLeftArrow onClick={() => prevHandler(argsArr)} />
             </button>
@@ -87,7 +87,7 @@ function EditerPick() {
                <div className="error">서버에 문제가 있습니다.</div>
             ) : null}
          </div>
-         {!disabled ? (
+         {!disabled && pickItems.length > 5 ? (
             <button type="button" className="icon right">
                <BiRightArrow onClick={() => nextHandler(argsArr)} />
             </button>
