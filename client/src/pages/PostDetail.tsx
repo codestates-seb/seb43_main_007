@@ -5,7 +5,6 @@ import PostTitle from "../components/postdetail/PostTitle";
 import PostContent from "../components/postdetail/PostContent";
 import PostTags from "../components/postdetail/PostTags";
 import PostButtons from "../components/postdetail/PostButtons";
-import CreateComment from "../components/postdetail/CreateComment";
 import CommentList from "../components/postdetail/CommentList";
 import PostAddress from "../components/postdetail/PostAddress";
 import usePost from "../hooks/usePost";
@@ -51,7 +50,6 @@ function PostDetail() {
             boardId={baordIdNumber}
             category={post.category}
          />
-         <CreateComment boardId={baordIdNumber} />
          <CommentList comments={post.comments} boardId={baordIdNumber} />
       </PostDetailContainer>
    );
