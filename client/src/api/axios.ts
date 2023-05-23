@@ -1,7 +1,7 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
 import moment from "moment";
-import { LoginTypes, FindPasswordType } from "../components/login/LoginType";
-import { SignupTypes } from "../components/signup/SignupTypes";
+import { LoginTypes, FindPasswordType } from "../components/login/loginTypes";
+import { SignupTypes } from "../components/signup/contentsArray";
 import { request } from "./create";
 import { Likereq } from "../components/communityList/listTypes";
 import { serverError, postSuccess } from "../util/toastify";
@@ -151,7 +151,6 @@ export const loginPost = async (
 ): Promise<[string, AxiosResponse | number]> => {
    try {
       const response = await request.post("members/login", req);
-      console.log(response);
       // 로그인 성공시 response 반환
       return ["성공", response];
    } catch (error) {
