@@ -38,6 +38,10 @@ function Comment({
 
    // memberId
    const memberId = useSelector((state: RootState) => state.memberId);
+   // 닉네임
+   const myNickname = useSelector(
+      (state: RootState) => state.profileNickname.nickname
+   );
 
    // 댓글 날짜 display
    const commentDate = comment.createdAt.slice(0, 10);
@@ -125,23 +129,25 @@ function Comment({
                         </button>
                      </>
                   ) : (
-                     <>
-                        <button
-                           type="submit"
-                           className="comment-btn"
-                           onClick={() => setIsEditing(true)}
-                        >
-                           수정
-                        </button>
-                        <span>|</span>
-                        <button
-                           type="submit"
-                           className="comment-btn comment-delete-btn"
-                           onClick={handleDelete}
-                        >
-                           삭제
-                        </button>
-                     </>
+                     comment.nickname === myNickname && (
+                        <>
+                           <button
+                              type="submit"
+                              className="comment-btn"
+                              onClick={() => setIsEditing(true)}
+                           >
+                              수정
+                           </button>
+                           <span>|</span>
+                           <button
+                              type="submit"
+                              className="comment-btn comment-delete-btn"
+                              onClick={handleDelete}
+                           >
+                              삭제
+                           </button>
+                        </>
+                     )
                   )}
                </CommentButtonContainer>
                <ReplyButton

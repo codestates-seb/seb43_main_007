@@ -14,6 +14,11 @@ function Reply({ comment, boardId }: ReplyProps) {
    // memberId
    const memberId = useSelector((state: RootState) => state.memberId);
 
+   // 닉네임
+   const myNickname = useSelector(
+      (state: RootState) => state.profileNickname.nickname
+   );
+
    // 대댓글 날짜 display
    const commentDate = comment.createdAt.slice(0, 10);
    const commentTime = comment.createdAt.slice(12, 16);
@@ -101,6 +106,7 @@ function Reply({ comment, boardId }: ReplyProps) {
                         </button>
                      </>
                   ) : (
+                     comment.nickname === myNickname && (
                      <>
                         <button
                            type="submit"
@@ -118,6 +124,7 @@ function Reply({ comment, boardId }: ReplyProps) {
                            삭제
                         </button>
                      </>
+                     )
                   )}
                </ReplyButtonContainer>
             </DateAndButton>

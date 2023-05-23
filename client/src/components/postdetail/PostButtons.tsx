@@ -1,20 +1,27 @@
 import styled from "styled-components";
 import { useState } from "react";
 import { useNavigate } from "react-router";
+import { useSelector } from "react-redux";
 import PostDeleteModal from "./PostDeleteModal";
+import { RootState } from "../../store/store";
 
 export interface PostButtonsProps {
+   memberId: number;
    handleDeletePost: () => Promise<void>;
    boardId: number;
    category: string;
 }
 
 function PostButtons({
+   memberId,
    handleDeletePost,
    boardId,
    category,
 }: PostButtonsProps) {
    const [modalOpen, setModalOpen] = useState(false);
+
+   const myMemberId = useSelector((state: RootState) => state.memberId);
+   const isAdmin = useSelector((state: RootState) => state.isAdmin);
 
    const openModal = () => {
       setModalOpen(true);
@@ -35,28 +42,30 @@ function PostButtons({
 
    return (
       <PostButtonContainer>
-         <EditDeleteContainer>
-            <button
-               className="postdetail-btn edit-btn"
-               type="button"
-               onClick={handleEdit}
-            >
-               수정
-            </button>
-            <span className="separator">|</span>
-            <button
-               className="postdetail-btn"
-               type="submit"
-               onClick={openModal}
-            >
-               삭제
-            </button>
-            <PostDeleteModal
-               open={modalOpen}
-               close={closeModal}
-               handleDeletePost={handleDeletePost}
-            />
-         </EditDeleteContainer>
+         {(isAdmin || memberId === myMemberId) && (
+            <EditDeleteContainer>
+               <button
+                  className="postdetail-btn edit-btn"
+                  type="button"
+                  onClick={handleEdit}
+               >
+                  수정
+               </button>
+               <span className="separator">|</span>
+               <button
+                  className="postdetail-btn"
+                  type="submit"
+                  onClick={openModal}
+               >
+                  삭제
+               </button>
+               <PostDeleteModal
+                  open={modalOpen}
+                  close={closeModal}
+                  handleDeletePost={handleDeletePost}
+               />
+            </EditDeleteContainer>
+         )}
          <button
             className="postdetail-btn"
             type="button"
