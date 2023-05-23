@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import { RootState } from "../../store/store";
 import type { ListData } from "./listTypes";
 import { likePost, bookMarkPost, pinPost } from "../../api/axios";
+import { EditorPick } from "../postdetail/PostTitle";
 
 function ListContent({ userDatas }: { userDatas: ListData }) {
    // 관리자(매니저)인지 유저인지(리덕스로 불러오기-리덕스로 전역관리 로그인에서 처리)
@@ -83,7 +84,7 @@ function ListContent({ userDatas }: { userDatas: ListData }) {
                {/* 에디터픽 + 제목 */}
                <div className="div-title">
                   {isEditerPick ? (
-                     <DivEditerPick className="editer">{`Editer's Pick`}</DivEditerPick>
+                     <EditorPick>Editor&apos;s Pick</EditorPick>
                   ) : null}
                   <Link to={`/post/${userDatas.boardId}`}>
                      <span>{userDatas.title}</span>
