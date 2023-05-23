@@ -50,7 +50,6 @@ public class OAuth2UserSuccessHandler extends SimpleUrlAuthenticationSuccessHand
         //String refreshToken = delegateRefreshToken(oAuth2User);
 
         String redirectURI = "http://ourecostory.s3-website.ap-northeast-2.amazonaws.com/";
-
         log.info("##해당 멤버 저장 시작");
         Member member = new Member(email, email.substring(0, email.indexOf("@")));
         memberRepository.save(member);
