@@ -14,6 +14,7 @@ function Home() {
    const searchParams = new URLSearchParams(window.location.search);
    const accessToken = searchParams.get("access_token");
    const memberId = searchParams.get("memberId");
+   // 관리자인지 확인
    const isAdmin = searchParams.get("Role")?.slice(1, 6) === "ADMIN";
    const [, setCookie, removeCookie] = useCookies(["accessToken", "isAdmin"]);
    const navigate = useNavigate();
@@ -35,6 +36,7 @@ function Home() {
          }
       }
    }, []);
+
    return (
       <HomeContainer>
          <HomeHeader />
