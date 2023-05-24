@@ -8,9 +8,13 @@ interface Props {
 }
 
 function ContentsBox({ pick, id }: Props) {
-   const parsedDate = pick.now
-      ? new Date(pick.now).toLocaleString("ko-kr")
-      : "";
+   let parsedDate = "";
+   if (pick.now) {
+      const date = new Date(pick.now);
+      date.setHours(date.getHours() + 9);
+      parsedDate = date.toLocaleString("ko-kr");
+   }
+
    return (
       <ContentsBoxContainer>
          <h1 className="title">{pick.title}</h1>

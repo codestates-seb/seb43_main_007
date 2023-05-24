@@ -13,7 +13,6 @@ interface ContainerT {
 }
 
 function CarouselBox({ pickItems, pickNumber, carouselTransition }: Props) {
-   console.log(pickItems);
    return (
       <CarouselBoxContainer
          pickNumber={pickNumber}
