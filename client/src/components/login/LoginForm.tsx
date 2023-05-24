@@ -11,12 +11,14 @@ import LoginModal from "./LoginModal";
 import { loginPost } from "../../api/axios";
 import { setMemberId } from "../../reducers/memberIdSlice";
 import { setIsAdmin } from "../../reducers/isAdminSlice";
-import Loading from "../Loading";
 import { LoginTypes } from "./loginTypes";
 
 type ResponseType = [string, AxiosResponse | number];
+interface Props {
+   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
+}
 
-function LoginForm() {
+function LoginForm({ setIsLoading }: Props) {
    const dispatch = useDispatch();
    const navigate = useNavigate();
    const { state } = useLocation(); // 들어온 페이지 url
@@ -28,7 +30,6 @@ function LoginForm() {
       formState: { errors },
    } = useForm<LoginTypes>();
    const [isFailModalOpen, setIsFailModalOpen] = useState(false);
-   const [isLoading, setIsLoading] = useState(false);
    const [failMessage, setFailMessage] = useState({
       text1: "",
       text2: "",
@@ -142,11 +143,6 @@ function LoginForm() {
             setIsOpen={setIsFailModalOpen}
             message={failMessage}
          />
-         {isLoading ? (
-            <LoadingContainer className="loading-container">
-               <Loading />
-            </LoadingContainer>
-         ) : null}
       </LoginFormContainer>
    );
 }
@@ -211,16 +207,4 @@ const LoginFormContainer = styled.form`
          transition-duration: 0.2s;
       }
    }
-`;
-
-const LoadingContainer = styled.div`
-   display: flex;
-   justify-content: center;
-   align-items: center;
-   position: absolute;
-   top: 0;
-   bottom: 0;
-   left: 0;
-   right: 0;
-   background: rgba(128, 128, 128, 0.2);
 `;

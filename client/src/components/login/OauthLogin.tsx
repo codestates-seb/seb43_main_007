@@ -1,8 +1,13 @@
 import styled from "styled-components";
 import googleIcon from "../../assets/img/google-icon.png";
 
-function OauthLogin() {
+interface Props {
+   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+function OauthLogin({ setIsLoading }: Props) {
    const handleOauthLogin = () => {
+      setIsLoading(true);
       window.location.assign(
          `${import.meta.env.VITE_API}oauth2/authorization/google`
       );
