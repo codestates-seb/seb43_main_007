@@ -1,6 +1,10 @@
 import { Route, Routes, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import { useState, useEffect } from "react";
+import {
+   BsFillArrowLeftCircleFill,
+   BsFillArrowRightCircleFill,
+} from "react-icons/bs";
 import CommunityList from "./CommunityList";
 import MypageProfile from "./MypageProfile";
 import Home from "./Home";
@@ -30,13 +34,24 @@ function RoutingPage() {
       <Container isOpen={isOpen}>
          <div className="nav-container">{condition ? <Navbar /> : null}</div>
          <MainBox>
-            <button
-               type="button"
-               className="arrow"
-               onClick={() => setIsOpen(!isOpen)}
-            >
-               &gt;
-            </button>
+            {isOpen ? (
+               <button
+                  type="button"
+                  className="arrow"
+                  onClick={() => setIsOpen(!isOpen)}
+               >
+                  <BsFillArrowLeftCircleFill size={25} />
+               </button>
+            ) : (
+               <button
+                  type="button"
+                  className="arrow"
+                  onClick={() => setIsOpen(!isOpen)}
+               >
+                  <BsFillArrowRightCircleFill size={25} />
+               </button>
+            )}
+
             <Routes>
                <Route path="/" element={<Home />} />
                <Route path="/myprofile" element={<MypageProfile />} />
