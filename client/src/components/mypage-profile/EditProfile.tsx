@@ -116,6 +116,7 @@ function EditProfile() {
                   <input
                      id="nickname"
                      type="text"
+                     className="profile-input"
                      placeholder="한글 및 영어, 숫자 10자 이내"
                      {...register("nickname", {
                         required: true,
@@ -140,7 +141,7 @@ function EditProfile() {
                <label htmlFor="profile-pic">프로필 사진</label>
                <InputButtonContainer>
                   <input
-                     className="upload-name"
+                     className="upload-name profile-input"
                      value={fileName}
                      placeholder="jpeg, jpg, png 형식"
                      readOnly
@@ -148,12 +149,17 @@ function EditProfile() {
                   <label htmlFor="img-file" className="find-btn">
                      파일 찾기
                   </label>
-                  <DefaultButton type="button" onClick={handleDelete}>
+                  <DefaultButton
+                     type="button"
+                     className="photo-delete-btn"
+                     onClick={handleDelete}
+                  >
                      삭제
                   </DefaultButton>
                   <input
                      id="img-file"
                      type="file"
+                     className="file-input"
                      accept="image/jpeg, image/png"
                      onChange={handleFileChange}
                   />
@@ -203,7 +209,7 @@ export const SubsectionBox = styled.div`
 export const InputButtonContainer = styled.div`
    display: flex;
    margin-top: 3px;
-   input {
+   .profile-input {
       width: 500px;
       height: 32px;
       margin-right: 15px;
@@ -211,7 +217,7 @@ export const InputButtonContainer = styled.div`
       border: 1px solid var(--light-gray);
    }
 
-   input:focus {
+   .profile:focus {
       box-shadow: 0 0 0 2px rgba(0, 149, 255, 0.15);
       border: 1px solid var(--second-color3);
       outline: none;
@@ -221,7 +227,7 @@ export const InputButtonContainer = styled.div`
       cursor: not-allowed;
    }
 
-   input[type="file"] {
+   .file-input {
       position: absolute;
       width: 0;
       height: 0;
@@ -253,6 +259,16 @@ export const InputButtonContainer = styled.div`
 
       &:active {
          background-color: #c4dccb;
+      }
+   }
+
+   @media all and (max-width: 767px) {
+      .profile-input {
+         width: 75%;
+      }
+
+      .photo-delete-btn {
+         display: none;
       }
    }
 `;
