@@ -30,4 +30,15 @@ const FooterContainer = styled.div`
    .logo {
       width: 160px;
    }
+   @media screen and (max-width: 1024px) {
+      .logo {
+         transform: scale(0.8);
+      }
+   }
+   @media screen and (max-width: 850px) {
+      width: 100%;
+      .logo {
+         transform: scale(0.6);
+      }
+   }
 `;
