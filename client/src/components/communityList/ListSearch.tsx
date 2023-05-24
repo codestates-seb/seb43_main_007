@@ -118,15 +118,16 @@ function ListSearch({
 }
 
 const DivContainer = styled.div`
-   /* border: 1px solid orange; */
-
    display: flex;
    justify-content: center;
    align-items: center;
 
    width: 1050px;
    height: 100px;
-   margin-left: 30px;
+
+   @media (max-width: 1023px) {
+      width: 700px;
+   }
 `;
 
 const DivContent = styled.div`
@@ -154,6 +155,9 @@ const DivSearch = styled.div`
    // 검색창
    .search-div {
       width: 80%;
+      @media (max-width: 1023px) {
+         width: 100px;
+      }
 
       > input {
          text-align: left;
