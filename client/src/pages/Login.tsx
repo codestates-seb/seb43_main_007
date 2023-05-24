@@ -5,21 +5,28 @@ import FindAndSignin from "../components/login/FindAndSignup";
 import OauthLogin from "../components/login/OauthLogin";
 import FindModal from "../components/login/FindModal";
 import leafImg from "../assets/img/login-background-img.png";
+import Loading from "../components/Loading";
 
 function Login() {
    const [isFindModalOpen, setIsFindModalOpen] = useState(false);
    const [curTab, setCurTab] = useState<"id" | "password">("id");
+   const [isLoading, setIsLoading] = useState(false);
    return (
       <LoginContainer>
          <img className="leaf-img" src={leafImg} alt="leaf-img" />
          <FormContainer>
             <span className="login-text">LOGIN</span>
-            <LoginForm />
+            <LoginForm setIsLoading={setIsLoading} />
             <FindAndSignin
                setIsOpen={setIsFindModalOpen}
                setCurTab={setCurTab}
             />
-            <OauthLogin />
+            <OauthLogin setIsLoading={setIsLoading} />
+            {isLoading ? (
+               <LoadingContainer className="loading-container">
+                  <Loading />
+               </LoadingContainer>
+            ) : null}
          </FormContainer>
          <FindModal
             isOpen={isFindModalOpen}
@@ -80,4 +87,16 @@ const FormContainer = styled.div`
       margin: 30px 0;
       letter-spacing: 5px;
    }
+`;
+
+const LoadingContainer = styled.div`
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   position: absolute;
+   top: 0;
+   bottom: 0;
+   left: 0;
+   right: 0;
+   background: rgba(128, 128, 128, 0.2);
 `;
