@@ -1,9 +1,40 @@
 import styled from "styled-components";
+import { useEffect } from "react";
+import { useCookies } from "react-cookie";
+import { useNavigate } from "react-router";
+import { useDispatch } from "react-redux";
 import HomeHeader from "../components/home/HomeHeader";
 import EditerPick from "../components/home/EditerPick";
 import background from "../assets/img/home-background.jpg";
+import { setMemberId } from "../reducers/memberIdSlice";
+import { setIsAdmin } from "../reducers/isAdminSlice";
 
 function Home() {
+   // oauth 인증 토큰&멤버 아이디 가져오기
+   const searchParams = new URLSearchParams(window.location.search);
+   const accessToken = searchParams.get("access_token");
+   const memberId = searchParams.get("memberId");
+   const isAdmin = searchParams.get("Role")?.slice(1, 6) === "ADMIN";
+   const [, setCookie, removeCookie] = useCookies(["accessToken", "isAdmin"]);
+   const navigate = useNavigate();
+   const dispatch = useDispatch();
+
+   useEffect(() => {
+      if (!sessionStorage.getItem("memberId")) {
+         if (accessToken && memberId) {
+            setCookie("accessToken", accessToken);
+            sessionStorage.setItem("memberId", memberId);
+            dispatch(setMemberId(Number(memberId)));
+            if (isAdmin) {
+               setCookie("isAdmin", "true");
+               dispatch(setIsAdmin(true));
+            } else {
+               removeCookie("isAdmin");
+            }
+            navigate("/");
+         }
+      }
+   }, []);
    return (
       <HomeContainer>
          <HomeHeader />
