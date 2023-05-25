@@ -77,6 +77,7 @@ public class OAuth2UserSuccessHandler extends SimpleUrlAuthenticationSuccessHand
         }
 
 
+
     }
 
     private URI createURI(String accessToken, long memberId, List<String> roles) {
