@@ -24,6 +24,7 @@ export type Board = {
    nickName: string;
    userPhoto: string;
    category: string;
+   pick: number;
    pin: number;
    likeCheck: number;
    likeCount: number;

@@ -1,15 +1,19 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { EditorPick } from "../postdetail/PostTitle";
 // import { CommentType } from "./dummyCommentTitleData";
 
 type MypostProps = {
    title: string;
    data: (string | (string | number)[])[] | undefined;
+   editerPick?: number[];
 };
 
-function MyPost({ title, data }: MypostProps) {
+function MyPost({ title, data, editerPick }: MypostProps) {
    const [isData, setIsData] = useState(false);
+   // (에디터 픽 - 구현은 성공! 작동은 실패 - 관리자로 사용자 바뀜)
+   const isEditerPick = editerPick && editerPick[0];
 
    useEffect(() => {
       if (data?.length === 0) {
@@ -28,6 +32,9 @@ function MyPost({ title, data }: MypostProps) {
                   return (
                      <LiPostStyle key={key}>
                         <Link to={`/post/${el[1]}`}>
+                           {isEditerPick ? (
+                              <EditorPick>Editor&apos;s Pick</EditorPick>
+                           ) : null}
                            <div className="number">{idx + 1}.</div>
                            <div>{el[0]}</div>
                         </Link>
