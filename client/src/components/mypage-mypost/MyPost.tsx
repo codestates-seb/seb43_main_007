@@ -37,6 +37,7 @@ function MyPost({ title, data, editerPick }: MypostProps) {
                            ) : null}
                            <div className="number">{idx + 1}.</div>
                            <div>{el[0]}</div>
+                           {console.log(el[0])}
                         </Link>
                      </LiPostStyle>
                   );
