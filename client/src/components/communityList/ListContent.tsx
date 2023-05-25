@@ -70,8 +70,8 @@ function ListContent({ userDatas }: { userDatas: ListData }) {
    };
 
    return (
-      <DivContainer isFixPin={isFixPin}>
-         <Li>
+      <DivContainer>
+         <Li isFixPin={isFixPin}>
             <DivContent>
                {/* 썸네일 */}
                <div className="div-img">
@@ -173,21 +173,23 @@ function ListContent({ userDatas }: { userDatas: ListData }) {
 
 export default ListContent;
 
-const DivContainer = styled.div<{ isFixPin: number }>`
+const DivContainer = styled.div`
    display: flex;
    align-items: center;
 
+   /* border-top: 1px solid black; */
    border-bottom: 1px solid black;
    height: 80px;
    width: 100%;
 
-   margin: 30px 0px 30px 0px;
-
-   background-color: ${({ isFixPin }) => (isFixPin ? "#feffde" : "null")};
+   margin-top: 30px;
+   padding-bottom: 30px;
 `;
 
-const Li = styled.li`
+const Li = styled.li<{ isFixPin: number }>`
    width: 100%;
+
+   background-color: ${({ isFixPin }) => (isFixPin ? "#feffde" : "null")};
 `;
 
 const DivContent = styled.div`

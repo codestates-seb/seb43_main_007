@@ -238,6 +238,8 @@ const DivPagination = styled.div`
    align-items: center;
    justify-content: center;
    height: 50px;
+
+   margin-top: 30px;
 `;
 
 export default ListContents;
