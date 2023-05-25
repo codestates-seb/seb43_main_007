@@ -116,7 +116,7 @@ function ListContent({ userDatas }: { userDatas: ListData }) {
                         <img
                            src={`${userDatas.userPhoto}`}
                            alt="로고이미지"
-                           style={{ width: "30px" }}
+                           style={{ width: "30px", height: "30px" }}
                         />
                      </span>
                      <span>{userDatas.nickName}</span>
