@@ -9,5 +9,5 @@ import java.util.Optional;
 
 public interface
 BoardTagRepository extends JpaRepository<BoardTag, Long> {
-    List<BoardTag> findAllByBoard(Board board);
+    List<BoardTag> findByBoard(Board board);
 }

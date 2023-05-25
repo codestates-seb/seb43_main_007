@@ -110,7 +110,7 @@ public interface BoardMapper {
 
         String photo = "";
         int startIndex = content.indexOf("https");
-        int endIndex = content.indexOf(".png", startIndex) + 4; // .png까지의 인덱스 + 확장자 길이
+        int endIndex = content.indexOf(".png" , startIndex) + 4; // .png까지의 인덱스 + 확장자 길이
 
         if (startIndex != -1 && endIndex != -1 && endIndex>startIndex) {
             photo = content.substring(startIndex, endIndex);
@@ -137,7 +137,9 @@ public interface BoardMapper {
         List<CommentDto.Response> commentlist = new ArrayList<>();
         for (Comment c : comments) {
             long parent = (c.getParent() == null) ? 0 : c.getParent().getCommentId();
-            commentlist.add(new CommentDto.Response(c.getMember().getNickname(), c.getMember().getProfileImageUrl(),
+            String userPhoto1 = (c.getMember().getProfileImageUrl() == null) ?
+                    "https://mainplestory.s3.ap-northeast-2.amazonaws.com/userprofile.png" : c.getMember().getProfileImageUrl();
+            commentlist.add(new CommentDto.Response(c.getMember().getNickname(), userPhoto1,
                     c.getContent(), c.getCreatedAt(), c.getCommentId(), parent));
         }
         BoardDto.Response response1 = new BoardDto.Response(boardId, memberId, title, content, address, now, photo, bookmark,
