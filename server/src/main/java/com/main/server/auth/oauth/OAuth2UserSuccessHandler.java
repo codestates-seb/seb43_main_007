@@ -20,9 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.net.URI;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @Slf4j
 @Component
@@ -50,28 +48,42 @@ public class OAuth2UserSuccessHandler extends SimpleUrlAuthenticationSuccessHand
         //String refreshToken = delegateRefreshToken(oAuth2User);
 
         String redirectURI = "http://ourecostory.s3-website.ap-northeast-2.amazonaws.com/";
+        Optional<Member> optionalMember = memberRepository.findByEmail(email);
 
-        log.info("##해당 멤버 저장 시작");
-        Member member = new Member(email, email.substring(0, email.indexOf("@")));
-        memberRepository.save(member);
-        log.info("##해당 멤버 저장 완료");
 
-        log.info("## 리다이렉트 -> {}", redirectURI);
-        log.info("## 토큰: {}", accessToken);
-        response.setHeader("Authentication", "Bearer_" + accessToken);
-        response.setHeader("memberId", String.valueOf(member.getMemberId()));
-        response.setHeader("role", String.valueOf(member.getRoles()));
+        if(optionalMember.isPresent()) {
+            Member member = optionalMember.get();
+            log.info("## 리다이렉트 -> {}", redirectURI);
+            log.info("## 토큰: {}", accessToken);
+            response.setHeader("Authentication", "Bearer_" + accessToken);
+            response.setHeader("memberId", String.valueOf(member.getMemberId()));
+            response.setHeader("role", String.valueOf(member.getRoles()));
 
-        mailService.sendEmail(email, "반가워요!", "정말 반갑습니다!");
-        log.info("메일 전송 완료!");
-        getRedirectStrategy().sendRedirect(request, response, createURI(accessToken).toString());
+            getRedirectStrategy().sendRedirect(request, response, createURI(accessToken, member.getMemberId(), member.getRoles()).toString());
+        }
+        else {
+            log.info("##해당 멤버 저장 시작");
+            Member member1 = new Member(email, email.substring(0, email.indexOf("@")));
+            List<String> roles = customAuthorityUtils.createRoles(email);
+            member1.setRoles(roles);
+            memberRepository.save(member1);
+            log.info("##해당 멤버 저장 완료");
+            log.info("## 리다이렉트 -> {}", redirectURI);
+            log.info("## 토큰: {}", accessToken);
+
+            mailService.sendEmail(email, "반가워요!", "정말 반갑습니다!");
+            log.info("메일 전송 완료!");
+            getRedirectStrategy().sendRedirect(request, response, createURI(accessToken, member1.getMemberId(), member1.getRoles()).toString());
+        }
+
 
     }
 
-    private URI createURI(String accessToken) {
+    private URI createURI(String accessToken, long memberId, List<String> roles) {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("access_token", accessToken);
-        //queryParams.add("refresh_token", refreshToken);
+        queryParams.add("memberId", String.valueOf(memberId));
+        queryParams.add("Role", String.valueOf(roles));
 
         return UriComponentsBuilder.newInstance()
                 .scheme("http")
