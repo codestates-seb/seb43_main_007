@@ -30,7 +30,10 @@ function BookmarkItem({ data }: { data: BookmartItemType }) {
    date.setHours(date.getHours() + 9);
    const parsedDate = date.toLocaleString("ko-kr");
    // 내용에서 html 태그 제외하고 글자만 빼오기
-   const previewBody = data.content.replace(/(<([^>]+)>)/gi, "").trim();
+   const previewBody = data.content
+      .replace(/(<([^>]+)>)/gi, "")
+      .replace("&nbsp;", " ")
+      .trim();
    const handleClick = () => {
       navigate(`/post/${data.boardId}`);
    };
@@ -58,7 +61,7 @@ function BookmarkItem({ data }: { data: BookmartItemType }) {
             </ul>
             <div className="user-info">
                <img className="user-photo" src={data.userPhoto} alt="user" />
-               <span className="author">{data.nickName}</span>
+               <span className="author">{data.nickName.slice(0, 6)}</span>
             </div>
             <div className="like">
                <AiFillHeart />

@@ -30,29 +30,37 @@ function MypageMypost() {
    const dataTitle =
       data &&
       data[0].map((el: Board) => {
-         if (el.title.length > 25) {
-            return `${el.title.slice(0, 25)}...`;
+         if (el.title.length > 23) {
+            return [`${el.title.slice(0, 23)}...`, el.boardId];
          }
-         return [el.title.slice(0, 25), el.boardId];
+         return [el.title.slice(0, 23), el.boardId];
       });
+   console.log(dataTitle);
 
    // 데이터에 맞게 분기 (코멘트 댓글과 보드 id리턴)
    const dataComment =
       data &&
       data[1].map((el: Board) => {
          // console.log(el.boardId);
-         if (el.content.length > 25) {
-            return `${el.content.slice(0, 25)}...`;
+         if (el.content.length > 23) {
+            return [`${el.content.slice(0, 23)}...`, el.boardId];
          }
-         return [el.content.slice(0, 25), el.boardId];
+         return [el.content.slice(0, 23), el.boardId];
       });
+
+   // 에디터픽 일때 내가 쓴글에 나타내기(코드는 되지만 아쉽게 채택을 하면 사용자가 관리자로 바뀌어 구현은 실패 - 아쉬운대로 코드는 남겨두겠습니당)
+   const editerPick = data && data[0].map((el) => el.pick);
 
    return (
       <MypageMypostContainer>
          <MypageTopProfile />
          <MypageNavbar />
          <DivContents>
-            <MyPost title="내가 쓴 글" data={dataTitle} />
+            <MyPost
+               title="내가 쓴 글"
+               data={dataTitle}
+               editerPick={editerPick}
+            />
             <MyPost title="내가 쓴 댓글" data={dataComment} />
          </DivContents>
       </MypageMypostContainer>

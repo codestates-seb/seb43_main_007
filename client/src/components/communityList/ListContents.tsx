@@ -85,6 +85,11 @@ function ListContents() {
       });
    }, [curPage, cate]);
 
+   // 전체 curPage를 따라가다보니 다른 카테고리 페이지를 갈때 데이터가 없는 현상이 생김 => cate가 바뀔때 curPage를 1로 변경
+   useEffect(() => {
+      setCurPage(1);
+   }, [cate]);
+
    // ListSearch 컴포넌트로 프롬내려주는 함수 (검색 get요청)
    const searchSubmitHandler = async () => {
       let data;
@@ -233,6 +238,8 @@ const DivPagination = styled.div`
    align-items: center;
    justify-content: center;
    height: 50px;
+
+   margin-top: 30px;
 `;
 
 export default ListContents;
