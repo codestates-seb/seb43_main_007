@@ -105,7 +105,8 @@ function Navbar() {
             </NavProfileContainer>
          )}
          <Line />
-         <NavSearchContainer>
+         {/* 네브바 검색 구현x 어드밴스 */}
+         {/* <NavSearchContainer>
             <div className="nav-searchbar">
                <BiSearch className="search-icon" />
                <input
@@ -118,7 +119,7 @@ function Navbar() {
             <SearchButton type="submit" onClick={searchClickHandler}>
                검색
             </SearchButton>
-         </NavSearchContainer>
+         </NavSearchContainer> */}
          <StyledLink to="/">
             <BiHomeAlt2 className="home-icon" />
             <span>Home</span>
