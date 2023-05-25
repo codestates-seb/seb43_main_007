@@ -78,7 +78,7 @@ function ListContent({ userDatas }: { userDatas: ListData }) {
                   <img
                      src={`${userDatas.photo}`}
                      alt="로고이미지"
-                     style={{ width: "70px" }}
+                     style={{ width: "70px", height: "70px" }}
                   />
                </div>
                {/* 에디터픽 + 제목 */}
