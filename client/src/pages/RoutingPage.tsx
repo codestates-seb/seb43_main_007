@@ -34,24 +34,25 @@ function RoutingPage() {
       <Container isOpen={isOpen}>
          <div className="nav-container">{condition ? <Navbar /> : null}</div>
          <MainBox>
-            {isOpen ? (
-               <button
-                  type="button"
-                  className="arrow"
-                  onClick={() => setIsOpen(!isOpen)}
-               >
-                  <BsFillArrowLeftCircleFill size={25} />
-               </button>
-            ) : (
-               <button
-                  type="button"
-                  className="arrow"
-                  onClick={() => setIsOpen(!isOpen)}
-               >
-                  <BsFillArrowRightCircleFill size={25} />
-               </button>
-            )}
-
+            {condition ? (
+               isOpen ? (
+                  <button
+                     type="button"
+                     className="arrow"
+                     onClick={() => setIsOpen(!isOpen)}
+                  >
+                     <BsFillArrowLeftCircleFill size={25} />
+                  </button>
+               ) : (
+                  <button
+                     type="button"
+                     className="arrow"
+                     onClick={() => setIsOpen(!isOpen)}
+                  >
+                     <BsFillArrowRightCircleFill size={25} />
+                  </button>
+               )
+            ) : null}
             <Routes>
                <Route path="/" element={<Home />} />
                <Route path="/myprofile" element={<MypageProfile />} />

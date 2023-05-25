@@ -70,15 +70,15 @@ function ListContent({ userDatas }: { userDatas: ListData }) {
    };
 
    return (
-      <DivContainer isFixPin={isFixPin}>
-         <Li>
+      <DivContainer>
+         <Li isFixPin={isFixPin}>
             <DivContent>
                {/* 썸네일 */}
                <div className="div-img">
                   <img
                      src={`${userDatas.photo}`}
                      alt="로고이미지"
-                     style={{ width: "70px" }}
+                     style={{ width: "70px", height: "70px" }}
                   />
                </div>
                {/* 에디터픽 + 제목 */}
@@ -116,7 +116,7 @@ function ListContent({ userDatas }: { userDatas: ListData }) {
                         <img
                            src={`${userDatas.userPhoto}`}
                            alt="로고이미지"
-                           style={{ width: "30px" }}
+                           style={{ width: "30px", height: "30px" }}
                         />
                      </span>
                      <span>{userDatas.nickName}</span>
@@ -173,21 +173,23 @@ function ListContent({ userDatas }: { userDatas: ListData }) {
 
 export default ListContent;
 
-const DivContainer = styled.div<{ isFixPin: number }>`
+const DivContainer = styled.div`
    display: flex;
    align-items: center;
 
+   /* border-top: 1px solid black; */
    border-bottom: 1px solid black;
    height: 80px;
    width: 100%;
 
-   margin: 30px 0px 30px 0px;
-
-   background-color: ${({ isFixPin }) => (isFixPin ? "#feffde" : "null")};
+   margin-top: 30px;
+   padding-bottom: 30px;
 `;
 
-const Li = styled.li`
+const Li = styled.li<{ isFixPin: number }>`
    width: 100%;
+
+   background-color: ${({ isFixPin }) => (isFixPin ? "#feffde" : "null")};
 `;
 
 const DivContent = styled.div`
