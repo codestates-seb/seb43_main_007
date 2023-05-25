@@ -53,8 +53,8 @@
 
 <img width="900" alt="user flow" src="https://imgur.com/di6afPP.png">
 
-### DB Diagram(백분들 바꾸셔야해요)
-![1](https://user-images.githubusercontent.com/119921683/234817303-f3ad427e-1033-45c8-b305-e384ea4b07b7.png)
+### DB Diagram
+![1](https://file.notion.so/f/s/56e2471d-e157-4ff4-a6ee-f4418813e5a9/Untitled.png?id=31ebcd13-6787-4d55-864e-324cbd1e6a86&table=block&spaceId=82d63a72-8254-4cde-bf1e-b2597b7c099c&expirationTimestamp=1685090580515&signature=aQoMgJ0VL3RhSpK3vYzAAM1MCA0plep2QcEVJYNdiUU&downloadName=Untitled.png)
 
 ### API 명세서
 
