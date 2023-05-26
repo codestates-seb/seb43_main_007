@@ -115,6 +115,7 @@ const DivContainer = styled.div`
    display: flex;
    flex-direction: column;
    margin: 16px 0px 0px 16px;
+   margin-left: 316px;
    width: 100%;
 
    .guide-line {

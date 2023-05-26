@@ -50,4 +50,5 @@ export const MypageProfileContainer = styled.div`
    width: 1080px;
    padding-left: 16px;
    padding-top: 16px;
+   margin-left: 300px;
 `;
