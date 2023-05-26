@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { BiHomeAlt2, BiLogOut } from "react-icons/bi";
+import { BiLogOut } from "react-icons/bi";
 import { useCookies } from "react-cookie";
 import userprofile from "../../assets/img/userprofile.png";
 import { getUserProfile } from "../../api/axios";
