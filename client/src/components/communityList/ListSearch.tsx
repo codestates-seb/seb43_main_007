@@ -107,11 +107,11 @@ function ListSearch({
                   </button>
                </div>
             </DivSearch>
-            <DivCreateText>
-               <button type="button" onClick={createPostHandler}>
+            <div>
+               <DefaultButton type="button" onClick={createPostHandler}>
                   글쓰기
-               </button>
-            </DivCreateText>
+               </DefaultButton>
+            </div>
          </DivContent>
       </DivContainer>
    );
@@ -191,27 +191,31 @@ const DivSearch = styled.div`
    }
 `;
 
-// 글쓰기 생성
-const DivCreateText = styled.div`
-   text-align: right;
-   width: 150px;
+const DefaultButton = styled.button`
    height: 45px;
+   width: 150px;
+   background-color: var(--first-color3);
+   border-radius: 3px;
+   border: 1px solid #c4dccb;
+   color: var(--first-color4);
+   cursor: pointer;
+   font-size: 13px;
+   font-weight: 400;
+   outline: none;
+   text-align: center;
+   transition-duration: 3ms;
 
-   border-radius: 4px;
-   background-color: var(--third-color2);
-
-   :hover {
-      background-color: var(--first-color4);
+   &:hover:not(:disabled) {
+      background-color: #d4e6d9;
    }
 
-   > button {
-      width: 100%;
-      height: 100%;
-      color: white;
-      cursor: pointer;
+   &:active:not(:disabled) {
+      background-color: #c4dccb;
+   }
 
-      border: 0;
-      background-color: transparent;
+   &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
    }
 `;
 

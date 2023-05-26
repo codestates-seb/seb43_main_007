@@ -181,8 +181,7 @@ const DivContainer = styled.div`
    display: flex;
    align-items: center;
 
-   /* border-top: 1px solid black; */
-   border-bottom: 1px solid black;
+   border-bottom: 1px solid #e9ecef;
    height: 80px;
    width: 100%;
 

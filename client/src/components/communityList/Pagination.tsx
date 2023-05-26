@@ -95,17 +95,17 @@ export default Pagination;
 
 const Button = styled.button`
    border: none;
-   border-radius: 50px;
-   width: 50px;
-   height: 50px;
+   border-radius: 10px;
+   width: 40px;
+   height: 40px;
    padding: 8px;
-   margin: 0;
+   margin: 2px;
    background: white;
    color: black;
    font-size: 1rem;
    &:hover {
       color: white;
-      background: var(--first-color4);
+      background: var(--second-color4);
       cursor: pointer;
       transform: translateY(-2px);
    }
