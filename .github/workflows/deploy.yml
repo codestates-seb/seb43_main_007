@@ -15,9 +15,11 @@ jobs:
         
       - name: Install dependencies   
         run: npm install
+        working-directory: ./client
       
       - name: Generate build          
         run: npm run build
+        working-directory: ./client
       
       - name: Deploy                 
         env:
