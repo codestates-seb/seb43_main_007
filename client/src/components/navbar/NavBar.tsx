@@ -131,10 +131,10 @@ function Navbar() {
             <span className="community">Community</span>
             <div>{collectionLinks}</div>
          </CommunityContainer>
-         <Line />
-         <LogoutContainer>
-            {memberId !== 0 && (
-               <>
+         {memberId !== 0 && (
+            <>
+               <Line />
+               <LogoutContainer>
                   <BiLogOut className="logout-icon" />
                   <button
                      type="submit"
@@ -143,9 +143,9 @@ function Navbar() {
                   >
                      로그아웃
                   </button>
-               </>
-            )}
-         </LogoutContainer>
+               </LogoutContainer>
+            </>
+         )}
       </NavbarContainer>
    );
 }
