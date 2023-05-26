@@ -16,7 +16,8 @@ import MypageBookmark from "./MypageBookmark";
 import Footer from "../components/footer/Footer";
 import MypageMylist from "./MypageMypost";
 import PostEdit from "./PostEdit";
-import MainPage from "./MainPage";
+import Home from "./Home";
+import HomeTree from "./HomeTree";
 
 interface Props {
    isOpen: boolean;
@@ -55,7 +56,8 @@ function RoutingPage() {
                )
             ) : null}
             <Routes>
-               <Route path="/" element={<MainPage />} />
+               <Route path="/" element={<HomeTree />} />
+               <Route path="/home" element={<Home />} />
                <Route path="/myprofile" element={<MypageProfile />} />
                <Route path="/bookmark" element={<MypageBookmark />} />
                <Route path="/mypost" element={<MypageMylist />} />

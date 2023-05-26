@@ -120,7 +120,7 @@ function Navbar() {
                검색
             </SearchButton>
          </NavSearchContainer> */}
-         <StyledLink to="/">
+         <StyledLink to="/home">
             <BiHomeAlt2 className="home-icon" />
             <span>Home</span>
          </StyledLink>

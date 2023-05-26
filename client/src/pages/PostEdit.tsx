@@ -70,7 +70,7 @@ function PostEdit() {
       try {
          await editorPick(boardId);
          await updatePostButtonClick();
-         navigate(`/`);
+         navigate("/home");
       } catch (error) {
          console.log(error);
       }
