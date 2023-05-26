@@ -7,7 +7,7 @@ import {
 } from "react-icons/bs";
 import CommunityList from "./CommunityList";
 import MypageProfile from "./MypageProfile";
-import Navbar from "../components/NavBar";
+import Navbar from "../components/navbar/NavBar";
 import Signup from "./Signup";
 import Login from "./Login";
 import PostDetail from "./PostDetail";

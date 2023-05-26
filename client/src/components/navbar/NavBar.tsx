@@ -4,12 +4,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { BiHomeAlt2, BiLogOut } from "react-icons/bi";
 import { useCookies } from "react-cookie";
-import userprofile from "../assets/img/userprofile.png";
-import { getUserProfile } from "../api/axios";
-import { RootState } from "../store/store";
-import { setNickname } from "../reducers/ProfileNicknameSlice";
-import { setPhoto } from "../reducers/ProfilePhotoSlice";
-import { DefaultButton } from "./mypage-profile/EditProfile";
+import userprofile from "../../assets/img/userprofile.png";
+import { getUserProfile } from "../../api/axios";
+import { RootState } from "../../store/store";
+import { setNickname } from "../../reducers/ProfileNicknameSlice";
+import { setPhoto } from "../../reducers/ProfilePhotoSlice";
+import { DefaultButton } from "../mypage-profile/EditProfile";
+import AirPollution from "./AirPollution";
 
 const collections = [
    { emoji: "🌳", label: "전체", path: "/communitylist" },
@@ -120,6 +121,7 @@ function Navbar() {
                검색
             </SearchButton>
          </NavSearchContainer> */}
+         <AirPollution />
          <StyledLink to="/home">
             <BiHomeAlt2 className="home-icon" />
             <span>Home</span>
