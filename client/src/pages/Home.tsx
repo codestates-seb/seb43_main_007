@@ -8,6 +8,8 @@ import EditerPick from "../components/home/EditerPick";
 import background from "../assets/img/home-background.jpg";
 import { setMemberId } from "../reducers/memberIdSlice";
 import { setIsAdmin } from "../reducers/isAdminSlice";
+import Navbar from "../components/NavBar";
+import Footer from "../components/footer/Footer";
 
 function Home() {
    // oauth 인증 토큰&멤버 아이디 가져오기
@@ -39,6 +41,7 @@ function Home() {
 
    return (
       <HomeContainer>
+         <Navbar />
          <HomeHeader />
          <EditerPick />
          <div className="bird-container bird-container--one">
@@ -48,6 +51,7 @@ function Home() {
          <div className="bird-container bird-container--two">
             <div className="bird bird--two" />
          </div>
+         <Footer />
       </HomeContainer>
    );
 }

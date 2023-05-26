@@ -17,6 +17,8 @@ import MypageBookmark from "./MypageBookmark";
 import Footer from "../components/footer/Footer";
 import MypageMylist from "./MypageMypost";
 import PostEdit from "./PostEdit";
+import HomeTree from "./HomeTree";
+import MainPage from "./MainPage";
 
 interface Props {
    isOpen: boolean;
@@ -27,7 +29,8 @@ function RoutingPage() {
    const [condition, setCondition] = useState(true);
    const [isOpen, setIsOpen] = useState(false);
    useEffect(() => {
-      if (pathname === "/signup" || pathname === "/login") setCondition(false);
+      if (pathname === "/signup" || pathname === "/login" || pathname === "/")
+         setCondition(false);
       else setCondition(true);
    }, [pathname]);
    return (
@@ -54,7 +57,7 @@ function RoutingPage() {
                )
             ) : null}
             <Routes>
-               <Route path="/" element={<Home />} />
+               <Route path="/" element={<MainPage />} />
                <Route path="/myprofile" element={<MypageProfile />} />
                <Route path="/bookmark" element={<MypageBookmark />} />
                <Route path="/mypost" element={<MypageMylist />} />
