@@ -5,7 +5,7 @@ import background from "../assets/img/forest2.jpg";
 function HomeTree() {
    return (
       <HomeTreeContainer>
-         <div className="home-title first">We Gather Together</div>
+         <div className="home-title first">We Gather Together,</div>
          <div className="home-title second">We Save The Earth Together</div>
          <Scroll>
             <MdKeyboardDoubleArrowDown className="scroll-icon" />
@@ -26,18 +26,18 @@ const HomeTreeContainer = styled.div`
 
    .home-title {
       color: white;
-      font-size: 100px;
+      font-size: 4.7vw;
       font-weight: 800;
       position: absolute;
-      top: 300px;
-      left: 200px;
+      top: 18vw;
+      left: 10vw;
       text-shadow: 1px 1px 2px black, 0 0 1em var(--first-color4),
          0 0 0.2em var(--first-color4);
    }
 
    .second {
-      top: 500px;
-      left: 750px;
+      top: 28vw;
+      left: 30vw;
    }
 `;
 
