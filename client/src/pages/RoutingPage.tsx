@@ -7,7 +7,6 @@ import {
 } from "react-icons/bs";
 import CommunityList from "./CommunityList";
 import MypageProfile from "./MypageProfile";
-import Home from "./Home";
 import Navbar from "../components/NavBar";
 import Signup from "./Signup";
 import Login from "./Login";
@@ -17,7 +16,6 @@ import MypageBookmark from "./MypageBookmark";
 import Footer from "../components/footer/Footer";
 import MypageMylist from "./MypageMypost";
 import PostEdit from "./PostEdit";
-import HomeTree from "./HomeTree";
 import MainPage from "./MainPage";
 
 interface Props {
