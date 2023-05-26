@@ -1,8 +1,8 @@
 import styled from "styled-components";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { BiSearch, BiHomeAlt2, BiLogOut } from "react-icons/bi";
+import { BiHomeAlt2, BiLogOut } from "react-icons/bi";
 import { useCookies } from "react-cookie";
 import userprofile from "../assets/img/userprofile.png";
 import { getUserProfile } from "../api/axios";
@@ -26,7 +26,7 @@ const collections = [
 
 function Navbar() {
    const [, , removeCookie] = useCookies(["accessToken", "isAdmin"]);
-   const [search, setSearch] = useState("");
+   // const [search, setSearch] = useState("");
    const { pathname } = useLocation();
 
    const memberId = useSelector((state: RootState) => state.memberId);
@@ -56,16 +56,16 @@ function Navbar() {
    }, [dispatch, memberId]);
 
    // 검색창 값 상태 저장하는 함수
-   const searchInputHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-      setSearch(event.target.value);
-   };
+   // const searchInputHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+   //    setSearch(event.target.value);
+   // };
 
-   // 버튼 클릭시 값을 콘솔에 저장하는 함수(ajax요청으로 활용)
-   const searchClickHandler = (event: React.FormEvent<HTMLButtonElement>) => {
-      event.preventDefault();
+   // // 버튼 클릭시 값을 콘솔에 저장하는 함수(ajax요청으로 활용)
+   // const searchClickHandler = (event: React.FormEvent<HTMLButtonElement>) => {
+   //    event.preventDefault();
 
-      console.log(search);
-   };
+   //    console.log(search);
+   // };
 
    // 로그아웃
    const handleLogout = () => {
