@@ -29,4 +29,9 @@ jobs:
           VITE_KAKAO_API: ${{ secrets.VITE_KAKAO_API }}
           VITE_DUST_SERVICEKEY: ${{ secrets.VITE_DUST_SERVICEKEY }}
         run: |
-          aws s3 cp --recursive --region ap-northeast-2 build s3://${ourecostory}
+          aws s3 sync \
+            --region ap-northeast-2 \
+            build s3://ourecostory \
+            --delete
+        working-directory: ./client
+        
