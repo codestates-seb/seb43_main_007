@@ -215,7 +215,7 @@ public class MemberService {
     }
 
     private void verifyNickName(String nickname) { //닉네임 길이 10 이하인지
-        if(nickname.length() >= 10) throw new BusinessLogicException(ExceptionCode.MEMBER_NICKNAME_LONG);
+        if(nickname.length() >= 11) throw new BusinessLogicException(ExceptionCode.MEMBER_NICKNAME_LONG);
     }
     private void verifyExistNickName(String nickname) { //존재하는 닉네임인지
         Optional<Member> optionalMember = memberRepository.findByNickname(nickname);
