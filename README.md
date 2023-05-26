@@ -33,7 +33,7 @@
 </br>
 
 ## ⚙ Project Architecture
-<img alt="Html" src ="https://imgur.com/EExdRLU.png" width="900" height="552" />
+<img alt="Html" src ="https://imgur.com/clxj6mE.png" width="900" height="552" />
 
 
 </br>
