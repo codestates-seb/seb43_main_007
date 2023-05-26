@@ -31,6 +31,4 @@ function MainPage() {
 }
 export default MainPage;
 
-const MainContainer = styled.section`
-   overflow: hidden;
-`;
+const MainContainer = styled.section``;

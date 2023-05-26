@@ -40,26 +40,36 @@ function Home() {
    }, []);
 
    return (
-      <HomeContainer>
-         <Navbar />
-         <HomeHeader />
-         <EditerPick />
-         <div className="bird-container bird-container--one">
-            <div className="bird bird--one" />
+      <HomePageContainer>
+         <div>
+            <Navbar />
          </div>
+         <HomeContainer>
+            <HomeHeader />
+            <EditerPick />
+            <div className="bird-container bird-container--one">
+               <div className="bird bird--one" />
+            </div>
 
-         <div className="bird-container bird-container--two">
-            <div className="bird bird--two" />
-         </div>
-         <Footer />
-      </HomeContainer>
+            <div className="bird-container bird-container--two">
+               <div className="bird bird--two" />
+            </div>
+            <Footer />
+         </HomeContainer>
+      </HomePageContainer>
    );
 }
 export default Home;
 
+const HomePageContainer = styled.div`
+   display: flex;
+   justify-content: center;
+`;
+
 const HomeContainer = styled.div`
    display: flex;
    flex-direction: column;
+   margin-left: 300px;
    align-items: center;
    position: relative;
    width: 1080px;

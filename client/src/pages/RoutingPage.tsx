@@ -80,7 +80,7 @@ export default RoutingPage;
 const Container = styled.div<Props>`
    display: flex;
    flex-direction: column;
-   width: 100%;
+   width: 100vw;
    height: 100%;
    position: relative;
    .arrow {
@@ -112,7 +112,7 @@ const Container = styled.div<Props>`
 
 const MainBox = styled.div`
    display: flex;
-   margin-left: 300px;
+   /* margin-left: 300px; */
    min-height: 100vh;
    @media all and (max-width: 1375px) {
       display: flex;

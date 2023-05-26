@@ -17,6 +17,7 @@ export default MypageBookmark;
 
 const MypageBookmarkContainer = styled.div`
    width: 1080px;
+   margin-left: 300px;
    padding-left: 16px;
    padding-top: 16px;
 `;

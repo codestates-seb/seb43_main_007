@@ -9,9 +9,8 @@ export default HomeTree;
 
 const HomeTreeContainer = styled.div`
    display: flex;
-   width: 100%;
+   width: 100vw;
    height: 100%;
-   z-index: 1000;
    background-image: url(${background});
-   /* background-size: cover; */
+   background-size: 100% 100%;
 `;

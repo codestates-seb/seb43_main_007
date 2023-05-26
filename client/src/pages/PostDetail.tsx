@@ -70,5 +70,6 @@ export default PostDetail;
 
 export const PostDetailContainer = styled.div`
    width: 1080px;
+   margin-left: 300px;
    padding-top: 16px;
 `;
