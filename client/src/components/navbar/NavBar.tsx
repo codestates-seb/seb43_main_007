@@ -123,7 +123,8 @@ function Navbar() {
          </NavSearchContainer> */}
          <AirPollution />
          <StyledLink to="/home">
-            <BiHomeAlt2 className="home-icon" />
+            {/* <BiHomeAlt2 className="home-icon" /> */}
+            <span className="home-icon">🏡</span>
             <span>Home</span>
          </StyledLink>
          <Line />
@@ -243,8 +244,6 @@ export const StyledLink = styled(Link)`
    }
 
    .home-icon {
-      height: 15px;
-      width: 15px;
       margin-right: 10px;
    }
 
