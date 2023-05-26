@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 import { MdKeyboardDoubleArrowDown } from "react-icons/md";
 import background from "../assets/img/forest2.jpg";
 
@@ -7,7 +8,8 @@ function HomeTree() {
       <HomeTreeContainer>
          <div className="home-title first">We Gather Together,</div>
          <div className="home-title second">We Save The Earth Together</div>
-         <Scroll>
+         <Scroll to="/home">
+            <div className="click">Click</div>
             <MdKeyboardDoubleArrowDown className="scroll-icon" />
          </Scroll>
       </HomeTreeContainer>
@@ -67,17 +69,22 @@ const HomeTreeContainer = styled.div`
    }
 `;
 
-const Scroll = styled.article`
+const Scroll = styled(Link)`
    position: absolute;
    display: flex;
    justify-content: center;
    bottom: 100px;
    width: 100%;
    .scroll-icon {
-      margin-top: 5px;
+      margin-top: 15px;
       font-size: 50px;
       color: white;
       opacity: 0;
+      animation: Arrowscroll infinite 2s;
+   }
+   .click {
+      position: absolute;
+      color: white;
       animation: Arrowscroll infinite 2s;
    }
    @keyframes Arrowscroll {

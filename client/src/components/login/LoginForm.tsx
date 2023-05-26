@@ -73,7 +73,7 @@ function LoginForm({ setIsLoading }: Props) {
          if (state) {
             navigate(state);
          } else {
-            navigate("/");
+            navigate("/home");
          }
       } else if (response[1] === 401) {
          // 아이디 비번이 잘못됐을 때
@@ -94,7 +94,7 @@ function LoginForm({ setIsLoading }: Props) {
    };
 
    const navToHome = () => {
-      navigate("/");
+      navigate("/home");
    };
 
    return (

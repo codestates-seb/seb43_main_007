@@ -34,7 +34,7 @@ function SignupForm() {
    };
 
    const navToHome = () => {
-      navigate("/");
+      navigate("/home");
    };
 
    return (
