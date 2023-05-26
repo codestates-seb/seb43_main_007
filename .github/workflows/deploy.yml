@@ -2,7 +2,12 @@ name: seb_main_007
 on:                            
   push:
     branches:
-      - main                        
+      - main
+env: 
+  VITE_API: ${{ secrets.VITE_API }}
+  VITE_KAKAO_API: ${{ secrets.VITE_KAKAO_API }}
+  VITE_DUST_SERVICEKEY: ${{ secrets.VITE_DUST_SERVICEKEY }}
+  
 jobs:                         
   build:
     runs-on: ubuntu-latest
@@ -25,9 +30,6 @@ jobs:
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          VITE_API: ${{ secrets.VITE_API }}
-          VITE_KAKAO_API: ${{ secrets.VITE_KAKAO_API }}
-          VITE_DUST_SERVICEKEY: ${{ secrets.VITE_DUST_SERVICEKEY }}
         run: |
           aws s3 sync \
             --region ap-northeast-2 \
