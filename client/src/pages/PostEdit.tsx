@@ -69,6 +69,7 @@ function PostEdit() {
    const editorUpdateHandler = async () => {
       try {
          await editorPick(boardId);
+         await updatePostButtonClick();
          navigate(`/`);
       } catch (error) {
          console.log(error);

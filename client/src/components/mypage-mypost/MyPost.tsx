@@ -42,7 +42,7 @@ function MyPost({ title, data, editerPick }: MypostProps) {
                   );
                })
             ) : (
-               <div className="error-data">데이터가 없습니다.</div>
+               <div className="error-data">게시 된 글이 없습니다.</div>
             )}
          </UlPostsStyle>
       </DivContainer>
