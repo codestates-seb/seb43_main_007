@@ -116,7 +116,11 @@ function ListContent({ userDatas }: { userDatas: ListData }) {
                         <img
                            src={`${userDatas.userPhoto}`}
                            alt="로고이미지"
-                           style={{ width: "30px", height: "30px" }}
+                           style={{
+                              width: "30px",
+                              height: "30px",
+                              borderRadius: "50px",
+                           }}
                         />
                      </span>
                      <span>{userDatas.nickName}</span>
@@ -255,7 +259,7 @@ const DivContent = styled.div`
 const DivAuthor = styled.div`
    display: flex;
    align-items: center;
-
+   width: 150px;
    margin-top: 8px;
 `;
 
