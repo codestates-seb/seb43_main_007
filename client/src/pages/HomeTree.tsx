@@ -33,11 +33,37 @@ const HomeTreeContainer = styled.div`
       left: 10vw;
       text-shadow: 1px 1px 2px black, 0 0 1em var(--first-color4),
          0 0 0.2em var(--first-color4);
+      opacity: 0;
    }
-
+   .first {
+      animation: fadeIn1 1s ease-in-out 0.3s;
+      animation-fill-mode: forwards;
+   }
    .second {
       top: 28vw;
       left: 30vw;
+      animation: fadeIn2 1s ease-in-out 0.9s;
+      animation-fill-mode: forwards;
+   }
+   @keyframes fadeIn1 {
+      0% {
+         left: 3vw;
+         opacity: 0;
+      }
+      100% {
+         left: 10vw;
+         opacity: 1;
+      }
+   }
+   @keyframes fadeIn2 {
+      0% {
+         left: 23vw;
+         opacity: 0;
+      }
+      100% {
+         left: 30vw;
+         opacity: 1;
+      }
    }
 `;
 
