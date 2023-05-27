@@ -27,6 +27,7 @@
     "axios": "^1.4.0",
     "dayjs": "^1.11.7",
     "eslint-config-airbnb-typescript": "^17.0.0",
+    "framer-motion": "^10.12.16",
     "install": "^0.13.0",
     "moment": "^2.29.4",
     "npm": "^9.6.5",

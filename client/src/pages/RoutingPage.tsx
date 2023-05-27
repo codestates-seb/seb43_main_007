@@ -5,6 +5,7 @@ import {
    BsFillArrowLeftCircleFill,
    BsFillArrowRightCircleFill,
 } from "react-icons/bs";
+import { AnimatePresence } from "framer-motion";
 import CommunityList from "./CommunityList";
 import MypageProfile from "./MypageProfile";
 import Navbar from "../components/NavBar";
@@ -27,8 +28,14 @@ function RoutingPage() {
    const { pathname } = useLocation();
    const [condition, setCondition] = useState(true);
    const [isOpen, setIsOpen] = useState(false);
+   const location = useLocation();
    useEffect(() => {
-      if (pathname === "/signup" || pathname === "/login" || pathname === "/")
+      if (
+         pathname === "/signup" ||
+         pathname === "/login" ||
+         pathname === "/" ||
+         pathname === "/home"
+      )
          setCondition(false);
       else setCondition(true);
    }, [pathname]);
@@ -55,20 +62,25 @@ function RoutingPage() {
                   </button>
                )
             ) : null}
-            <Routes>
-               <Route path="/" element={<HomeTree />} />
-               <Route path="/home" element={<Home />} />
-               <Route path="/myprofile" element={<MypageProfile />} />
-               <Route path="/bookmark" element={<MypageBookmark />} />
-               <Route path="/mypost" element={<MypageMylist />} />
-               <Route path="/communitylist" element={<CommunityList />} />
-               <Route path="/communitylist/:cate" element={<CommunityList />} />
-               <Route path="/createpost" element={<CreatePostPage />} />
-               <Route path="/editpost/:boardId" element={<PostEdit />} />
-               <Route path="/signup" element={<Signup />} />
-               <Route path="/login" element={<Login />} />
-               <Route path="/post/:boardId" element={<PostDetail />} />
-            </Routes>
+            <AnimatePresence>
+               <Routes key={location.pathname} location={location}>
+                  <Route path="/" element={<HomeTree />} />
+                  <Route path="/home" element={<Home />} />
+                  <Route path="/myprofile" element={<MypageProfile />} />
+                  <Route path="/bookmark" element={<MypageBookmark />} />
+                  <Route path="/mypost" element={<MypageMylist />} />
+                  <Route path="/communitylist" element={<CommunityList />} />
+                  <Route
+                     path="/communitylist/:cate"
+                     element={<CommunityList />}
+                  />
+                  <Route path="/createpost" element={<CreatePostPage />} />
+                  <Route path="/editpost/:boardId" element={<PostEdit />} />
+                  <Route path="/signup" element={<Signup />} />
+                  <Route path="/login" element={<Login />} />
+                  <Route path="/post/:boardId" element={<PostDetail />} />
+               </Routes>
+            </AnimatePresence>
          </MainBox>
          {condition ? <Footer /> : null}
       </Container>
