@@ -33,7 +33,7 @@ function Navbar() {
       <StyledLink
          to={collection.path}
          key={collection.label}
-         selectedCategory={selectedCategory}
+         isSelected={selectedCategory === collection.path}
          onClick={() => handleCategoryClick(collection.path)}
       >
          <span className="collection-emoji">{collection.emoji}</span>
@@ -43,7 +43,7 @@ function Navbar() {
 
    return (
       <NavbarContainer>
-         <NavbarProfile />
+         <NavbarProfile onClick={() => setSelectedCategory("/mypage")} />
          <Line />
          <AirPollution />
          <StyledLink to="/home">
@@ -84,6 +84,7 @@ export const Line = styled.div`
 
 interface StyledLinkProps extends LinkProps {
    selectedCategory?: string;
+   isSelected?: boolean;
 }
 
 export const StyledLink = styled(Link)<StyledLinkProps>`
@@ -94,14 +95,17 @@ export const StyledLink = styled(Link)<StyledLinkProps>`
    align-items: center;
    height: 30px;
    margin: 5px 0;
+   background-color: ${({ isSelected }) =>
+      isSelected ? "var(--first-color3)" : "initial"};
+   font-weight: ${({ isSelected }) => (isSelected ? 800 : "initial")};
 
    &:hover {
-      ${({ to, selectedCategory }) =>
-         to !== selectedCategory &&
+      ${({ isSelected }) =>
+         !isSelected &&
          `
-         background-color: #f8f9fa;
-         font-weight: 600;
-      `}
+      background-color: #f8f9fa;
+      font-weight: 600;
+    `}
    }
 
    .home-icon {

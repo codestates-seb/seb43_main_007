@@ -8,7 +8,11 @@ import { RootState } from "../../store/store";
 import { setNickname } from "../../reducers/ProfileNicknameSlice";
 import { setPhoto } from "../../reducers/ProfilePhotoSlice";
 
-function NavbarProfile() {
+interface NavbarProfileProps {
+   onClick: () => void;
+}
+
+function NavbarProfile({ onClick }: NavbarProfileProps) {
    const memberId = useSelector((state: RootState) => state.memberId);
    const profilePhoto = useSelector(
       (state: RootState) => state.profilePhoto.photo
@@ -43,7 +47,7 @@ function NavbarProfile() {
          <div className="nav-profile-nickname">로그인</div>
       </NavProfileContainer>
    ) : (
-      <NavProfileContainer to="/myprofile">
+      <NavProfileContainer to="/myprofile" onClick={onClick}>
          <img
             src={profilePhoto || userprofile}
             alt="프로필 이미지"
