@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { useLocation, useNavigate, useParams } from "react-router";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
+import { motion } from "framer-motion";
 import PostTitle from "../components/postdetail/PostTitle";
 import PostContent from "../components/postdetail/PostContent";
 import PostTags from "../components/postdetail/PostTags";
@@ -34,7 +35,12 @@ function PostDetail() {
    const baordIdNumber = Number(boardIdString) || 0;
 
    return (
-      <PostDetailContainer>
+      <PostDetailContainer
+         initial={{ opacity: 0 }}
+         animate={{ opacity: 1 }}
+         transition={{ duration: 0.5 }}
+         exit={{ opacity: 0 }}
+      >
          <PostTitle
             boardId={baordIdNumber}
             title={post.title}
@@ -68,7 +74,7 @@ function PostDetail() {
 
 export default PostDetail;
 
-export const PostDetailContainer = styled.div`
+export const PostDetailContainer = styled(motion.div)`
    width: 1080px;
    margin-left: 300px;
    padding-top: 16px;

@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router";
 import { useSelector } from "react-redux";
+import { motion } from "framer-motion";
 import { getPostData, updatePost, editorPick } from "../api/axios";
 import GuideLine from "../components/createPost/GuideLine";
 import QuillTextEditor from "../components/createPost/QuillTextEditor";
@@ -77,7 +78,12 @@ function PostEdit() {
    };
 
    return (
-      <DivContainer>
+      <DivContainer
+         initial={{ opacity: 0 }}
+         animate={{ opacity: 1 }}
+         transition={{ duration: 0.5 }}
+         exit={{ opacity: 0 }}
+      >
          <div className="guide-line">
             <GuideLine />
          </div>
@@ -132,7 +138,7 @@ function PostEdit() {
 
 export default PostEdit;
 
-const DivContainer = styled.div`
+const DivContainer = styled(motion.div)`
    display: flex;
    flex-direction: column;
    margin: 16px 0px 0px 16px;

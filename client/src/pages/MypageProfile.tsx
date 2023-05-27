@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { motion } from "framer-motion";
 import MypageTopProfile from "../components/mypage-profile/MypageTopProfile";
 import MypageNavbar from "../components/mypage-profile/MypageNavbar";
 import EditProfile from "../components/mypage-profile/EditProfile";
@@ -34,7 +35,12 @@ function MypageProfile() {
    }, [dispatch, memberId]);
 
    return (
-      <MypageProfileContainer>
+      <MypageProfileContainer
+         initial={{ opacity: 0 }}
+         animate={{ opacity: 1 }}
+         transition={{ duration: 0.5 }}
+         exit={{ opacity: 0 }}
+      >
          <MypageTopProfile />
          <MypageNavbar />
          <EditProfile />
@@ -46,7 +52,7 @@ function MypageProfile() {
 
 export default MypageProfile;
 
-export const MypageProfileContainer = styled.div`
+export const MypageProfileContainer = styled(motion.div)`
    width: 1080px;
    padding-left: 16px;
    padding-top: 16px;

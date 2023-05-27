@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { motion } from "framer-motion";
 import MypageNavbar from "../components/mypage-profile/MypageNavbar";
 import MypageTopProfile from "../components/mypage-profile/MypageTopProfile";
 import MyPost from "../components/mypage-mypost/MyPost";
@@ -52,7 +53,12 @@ function MypageMypost() {
    const editerPick = data && data[0].map((el) => el.pick);
 
    return (
-      <MypageMypostContainer>
+      <MypageMypostContainer
+         initial={{ opacity: 0 }}
+         animate={{ opacity: 1 }}
+         transition={{ duration: 0.5 }}
+         exit={{ opacity: 0 }}
+      >
          <MypageTopProfile />
          <MypageNavbar />
          <DivContents>
@@ -69,7 +75,7 @@ function MypageMypost() {
 
 export default MypageMypost;
 
-const MypageMypostContainer = styled.div`
+const MypageMypostContainer = styled(motion.div)`
    width: 1080px;
    margin-left: 300px;
    padding-left: 16px;

@@ -36,14 +36,15 @@ function HomeTree() {
             navigate("/home");
          }
       }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
    }, []);
 
    return (
       <HomeTreeContainer
          initial={{ opacity: 0 }}
          animate={{ opacity: 1 }}
-         exit={{ opacity: 0, top: "-100vh" }}
-         transition={{ duration: 1 }}
+         exit={{ opacity: 0 }}
+         transition={{ duration: 0.5 }}
       >
          <div className="home-title first">We Gather Together,</div>
          <div className="home-title second">We Save The Earth Together</div>

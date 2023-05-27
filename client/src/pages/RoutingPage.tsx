@@ -62,7 +62,7 @@ function RoutingPage() {
                   </button>
                )
             ) : null}
-            <AnimatePresence>
+            <AnimatePresence mode="wait">
                <Routes key={location.pathname} location={location}>
                   <Route path="/" element={<HomeTree />} />
                   <Route path="/home" element={<Home />} />

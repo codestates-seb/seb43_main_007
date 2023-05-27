@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { useState } from "react";
+import { motion } from "framer-motion";
 import LoginForm from "../components/login/LoginForm";
 import FindAndSignin from "../components/login/FindAndSignup";
 import OauthLogin from "../components/login/OauthLogin";
@@ -12,7 +13,12 @@ function Login() {
    const [curTab, setCurTab] = useState<"id" | "password">("id");
    const [isLoading, setIsLoading] = useState(false);
    return (
-      <LoginContainer>
+      <LoginContainer
+         initial={{ opacity: 0 }}
+         animate={{ opacity: 1 }}
+         transition={{ duration: 0.5 }}
+         exit={{ opacity: 0 }}
+      >
          <img className="leaf-img" src={leafImg} alt="leaf-img" />
          <FormContainer>
             <span className="login-text">LOGIN</span>
@@ -40,7 +46,7 @@ function Login() {
 
 export default Login;
 
-const LoginContainer = styled.div`
+const LoginContainer = styled(motion.div)`
    display: flex;
    justify-content: center;
    align-items: center;
