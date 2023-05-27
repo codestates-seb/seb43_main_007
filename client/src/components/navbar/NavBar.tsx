@@ -104,11 +104,6 @@ export const StyledLink = styled(Link)<StyledLinkProps>`
       `}
    }
 
-   &:active {
-      background-color: var(--first-color3);
-      font-weight: 800;
-   }
-
    .home-icon {
       margin-right: 10px;
    }
