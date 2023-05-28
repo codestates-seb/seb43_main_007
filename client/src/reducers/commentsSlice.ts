@@ -64,6 +64,50 @@ const commentsSlice = createSlice({
             ),
          };
       },
+      updateReply: (
+         state,
+         action: PayloadAction<{ commentId: number; reply: CommentType }>
+      ) => {
+         const { commentId, reply } = action.payload;
+         return {
+            ...state,
+            comments: state.comments.map((comment) =>
+               comment.commentId === commentId
+                  ? {
+                       ...comment,
+                       replies: comment.replies
+                          ? comment.replies.map((r) =>
+                               r.commentId === reply.commentId
+                                  ? { ...r, ...reply }
+                                  : r
+                            )
+                          : [],
+                    }
+                  : comment
+            ),
+         };
+      },
+      deleteReply: (
+         state,
+         action: PayloadAction<{ commentId: number; replyCommentId: number }>
+      ) => {
+         const { commentId, replyCommentId } = action.payload;
+         return {
+            ...state,
+            comments: state.comments.map((comment) =>
+               comment.commentId === commentId
+                  ? {
+                       ...comment,
+                       replies: comment.replies
+                          ? comment.replies.filter(
+                               (r) => r.commentId !== replyCommentId
+                            )
+                          : [],
+                    }
+                  : comment
+            ),
+         };
+      },
    },
 });
 
@@ -73,6 +117,8 @@ export const {
    updateComment,
    deleteComments,
    addReply,
+   updateReply,
+   deleteReply,
 } = commentsSlice.actions;
 
 export default commentsSlice.reducer;

@@ -1,10 +1,11 @@
 import styled from "styled-components";
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import CreateReply from "./CreateReply";
 import Reply from "./Reply";
 import { editComment, deleteComment } from "../../api/axios";
 import { RootState } from "../../store/store";
+import { updateComment, deleteComments } from "../../reducers/commentsSlice";
 import { CommentType } from "./commentType";
 import {
    commentEditSuccess,
@@ -15,25 +16,18 @@ import {
 
 export interface CommentProps {
    comment: CommentType;
-   handleReplySubmit: (commentId: number, content: string) => void;
    handleReplyClick: (commentId: number | null) => void;
    isReplySelected: boolean;
    boardId: number;
-   refreshPost: () => void;
 }
 
 function Comment({
    comment,
-   handleReplySubmit,
    handleReplyClick,
    isReplySelected,
    boardId,
-   refreshPost,
 }: CommentProps) {
-   const handleReplySubmitWrapper = (content: string) => {
-      handleReplySubmit(comment.commentId, content);
-   };
-
+   const dispatch = useDispatch();
    // memberId
    const memberId = useSelector((state: RootState) => state.memberId);
    // 닉네임
@@ -59,7 +53,8 @@ function Comment({
       if (response) {
          commentEditSuccess();
          setIsEditing(false);
-         refreshPost();
+         const updatedComment = { ...comment, content: editedComment };
+         dispatch(updateComment(updatedComment));
       } else {
          commentEditError();
       }
@@ -74,8 +69,8 @@ function Comment({
    const handleDelete = async () => {
       try {
          await deleteComment(comment.commentId);
-         refreshPost();
          commentDeleteSuccess();
+         dispatch(deleteComments(comment.commentId));
       } catch (error) {
          commentDeleteError();
       }
@@ -163,11 +158,9 @@ function Comment({
          </CommentContainer>
          {isReplySelected && (
             <CreateReply
-               onSubmit={handleReplySubmitWrapper}
                onCancel={() => handleReplyClick(null)}
                boardId={boardId}
                parentId={comment.commentId}
-               refreshPost={refreshPost}
             />
          )}
          {comment.replies &&
@@ -176,7 +169,7 @@ function Comment({
                   key={reply.commentId}
                   comment={reply}
                   boardId={boardId}
-                  refreshPost={refreshPost}
+                  parentId={comment.commentId}
                />
             ))}
       </>

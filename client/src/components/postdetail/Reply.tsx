@@ -1,9 +1,10 @@
 import styled from "styled-components";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import { CommentType } from "./commentType";
 import { deleteComment, editComment } from "../../api/axios";
 import { RootState } from "../../store/store";
+import { updateReply, deleteReply } from "../../reducers/commentsSlice";
 import {
    commentEditSuccess,
    commentEditError,
@@ -14,10 +15,12 @@ import {
 export interface ReplyProps {
    comment: CommentType;
    boardId: number;
-   refreshPost: () => void;
+   parentId: number;
 }
 
-function Reply({ comment, boardId, refreshPost }: ReplyProps) {
+function Reply({ comment, boardId, parentId }: ReplyProps) {
+   const dispatch = useDispatch();
+
    // memberId
    const memberId = useSelector((state: RootState) => state.memberId);
 
@@ -44,7 +47,12 @@ function Reply({ comment, boardId, refreshPost }: ReplyProps) {
       if (response) {
          commentEditSuccess();
          setIsEditing(false);
-         refreshPost();
+         dispatch(
+            updateReply({
+               commentId: parentId,
+               reply: { ...comment, content: response.content },
+            })
+         );
       } else {
          commentEditError();
       }
@@ -59,8 +67,13 @@ function Reply({ comment, boardId, refreshPost }: ReplyProps) {
    const handleDelete = async () => {
       try {
          await deleteComment(comment.commentId);
-         refreshPost();
          commentDeleteSuccess();
+         dispatch(
+            deleteReply({
+               commentId: parentId,
+               replyCommentId: comment.commentId,
+            })
+         );
       } catch (error) {
          commentDeleteError();
       }

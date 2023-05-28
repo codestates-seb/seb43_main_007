@@ -19,7 +19,6 @@ export interface PostTitleProps {
    bookmark: number;
    nickName: string;
    userPhoto: string;
-   comments?: any[];
 }
 
 function PostTitle({
@@ -33,10 +32,10 @@ function PostTitle({
    bookmark,
    nickName,
    userPhoto,
-   comments,
 }: PostTitleProps) {
    const memberId = useSelector((state: RootState) => state.memberId);
    const isAdmin = useSelector((state: RootState) => state.isAdmin);
+   const comments = useSelector((state: RootState) => state.comments.comments);
 
    // 채택 유무
    const [isPicked, setIsPicked] = useState(pick);
@@ -111,11 +110,17 @@ function PostTitle({
    const postDate = now.slice(0, 10);
    const postTime = now.slice(11, 16);
 
-   // 좋아요 총 개수
-   let numTotalComments = comments ? comments.length : 0;
+   // 댓글 총 개수
+   let numTotalComments = 0;
+
    if (comments) {
       comments.forEach((comment) => {
-         numTotalComments += comment.replies.length;
+         numTotalComments += 1;
+         if (comment.replies) {
+            comment.replies.forEach(() => {
+               numTotalComments += 1;
+            });
+         }
       });
    }
 

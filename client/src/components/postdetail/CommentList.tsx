@@ -1,6 +1,7 @@
 import styled from "styled-components";
-import { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addComment } from "../../reducers/commentsSlice";
 import Comment from "./Comment";
 import { commentSuccess, commentError } from "../../util/toastify";
 import useCommentCharacterCount from "../../hooks/useCommentCharacterCount";
@@ -9,35 +10,22 @@ import { createComment } from "../../api/axios";
 import { RootState } from "../../store/store";
 
 interface CommentListProps {
-   comments?: any[];
    boardId: number;
-   refreshPost: () => void;
 }
 
-function CommentList({
-   comments: initialComments = [],
-   boardId,
-   refreshPost,
-}: CommentListProps) {
+function CommentList({ boardId }: CommentListProps) {
+   const dispatch = useDispatch();
+
    // 멤버 아이디
    const memberId = useSelector((state: RootState) => state.memberId);
 
-   // 댓글 리스트
-   const [comments, setComments] = useState(initialComments || []);
+   // 댓글
+   const comments = useSelector((state: RootState) => state.comments.comments);
 
+   // 대댓글 클릭된 댓글 Id
    const [selectedCommentId, setSelectedCommentId] = useState<number | null>(
       null
    );
-
-   useEffect(() => {
-      if (initialComments) {
-         setComments(initialComments);
-      }
-   }, [initialComments]);
-
-   const handleReplySubmit = () => {
-      commentSuccess();
-   };
 
    const handleReplyClick = (commentId: number | null) => {
       setSelectedCommentId(commentId);
@@ -55,8 +43,9 @@ function CommentList({
       event.preventDefault();
       const response = await createComment(memberId, boardId, value);
       if (response) {
+         const comment = response.data;
          commentSuccess();
-         setComments((prevComments) => [...prevComments, response.data]);
+         dispatch(addComment(comment));
          clearValue();
       } else {
          commentError();
@@ -91,11 +80,9 @@ function CommentList({
                      <Comment
                         key={comment.commentId}
                         comment={comment}
-                        handleReplySubmit={handleReplySubmit}
                         handleReplyClick={handleReplyClick}
                         isReplySelected={isReplySelected}
                         boardId={boardId}
-                        refreshPost={refreshPost}
                      />
                   );
                })}
