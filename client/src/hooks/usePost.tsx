@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { deletePost, getPostData } from "../api/axios";
 import { postDeleteSuccess, serverError } from "../util/toastify";
 import { CommentType } from "../components/postdetail/commentType";
 import groupCommentsAndReplies from "../util/groupCommentsAndReplies";
 import { RootState } from "../store/store";
+import { setComments } from "../reducers/commentsSlice";
 
 export interface Post {
    memberId: number;
@@ -31,9 +32,9 @@ export interface Post {
 }
 
 const usePost = (boardId: string) => {
+   const dispatch = useDispatch();
    const navigate = useNavigate();
    const [post, setPost] = useState<Post | null>(null);
-   const [refreshKey, setRefreshKey] = useState(0);
 
    const memberId = useSelector((state: RootState) => state.memberId);
 
@@ -41,13 +42,14 @@ const usePost = (boardId: string) => {
       const fetchPost = async () => {
          const data = await getPostData(memberId, parseInt(boardId, 10));
          if (data && data.comments) {
-            data.comments = groupCommentsAndReplies(data.comments);
+            const commentsWithReplies = groupCommentsAndReplies(data.comments);
+            dispatch(setComments(commentsWithReplies));
          }
          setPost(data);
       };
 
       fetchPost();
-   }, [memberId, boardId, refreshKey]);
+   }, [dispatch, memberId, boardId]);
 
    const handleDeletePost = async () => {
       const response = await deletePost(parseInt(boardId, 10));
@@ -60,11 +62,7 @@ const usePost = (boardId: string) => {
       }
    };
 
-   const refreshPost = () => {
-      setRefreshKey((prevKey) => prevKey + 1);
-   };
-
-   return { post, handleDeletePost, refreshPost };
+   return { post, handleDeletePost };
 };
 
 export default usePost;
