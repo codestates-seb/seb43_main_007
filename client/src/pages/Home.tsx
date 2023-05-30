@@ -3,7 +3,6 @@ import { motion } from "framer-motion";
 import HomeHeader from "../components/home/HomeHeader";
 import EditerPick from "../components/home/EditerPick";
 import background from "../assets/img/home-background.jpg";
-import Footer from "../components/footer/Footer";
 
 function Home() {
    return (
@@ -19,7 +18,6 @@ function Home() {
                <EditerPick />
             </HomeContainer>
          </div>
-         <Footer />
       </HomePageContainer>
    );
 }
