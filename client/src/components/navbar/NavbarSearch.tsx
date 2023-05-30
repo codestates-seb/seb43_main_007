@@ -4,7 +4,7 @@ import { BiSearch } from "react-icons/bi";
 import { DefaultButton } from "../mypage-profile/EditProfile";
 
 function NavbarSearch() {
-   const [search, setSearch] = useState("");
+   const [, setSearch] = useState("");
 
    // 검색창 값 상태 저장하는 함수
    const searchInputHandler = (event: React.ChangeEvent<HTMLInputElement>) => {

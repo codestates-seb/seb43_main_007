@@ -4,8 +4,6 @@ import HomeHeader from "../components/home/HomeHeader";
 import EditerPick from "../components/home/EditerPick";
 import background from "../assets/img/home-background.jpg";
 import Footer from "../components/footer/Footer";
-import Navbar from "../components/navbar/NavBar";
-
 
 function Home() {
    return (
@@ -16,7 +14,6 @@ function Home() {
          transition={{ duration: 0.5 }}
       >
          <div>
-            <Navbar />
             <HomeContainer>
                <HomeHeader />
                <EditerPick />

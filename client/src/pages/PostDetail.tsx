@@ -52,7 +52,6 @@ function PostDetail() {
             bookmark={post.bookmark}
             nickName={post.nickName}
             userPhoto={post.userPhoto}
-            comments={post.comments}
          />
          <PostAddress address={post.address} />
          <PostContent content={post.content} />

@@ -30,12 +30,7 @@ function RoutingPage() {
    const [isOpen, setIsOpen] = useState(false);
    const location = useLocation();
    useEffect(() => {
-      if (
-         pathname === "/signup" ||
-         pathname === "/login" ||
-         pathname === "/" ||
-         pathname === "/home"
-      )
+      if (pathname === "/signup" || pathname === "/login" || pathname === "/")
          setCondition(false);
       else setCondition(true);
    }, [pathname]);
