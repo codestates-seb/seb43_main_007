@@ -46,7 +46,7 @@ function Navbar() {
          <NavbarProfile onClick={() => setSelectedCategory("/mypage")} />
          <Line />
          <AirPollution />
-         <StyledLink to="/home">
+         <StyledLink to="/home" onClick={() => setSelectedCategory("/mypage")}>
             <span className="home-icon">🏡</span>
             <span>Home</span>
          </StyledLink>
