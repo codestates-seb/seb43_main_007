@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router";
 import { useSelector } from "react-redux";
 import { motion } from "framer-motion";
+import { createBrowserHistory } from "history";
 import { createPost } from "../api/axios";
 import GuideLine from "../components/createPost/GuideLine";
 import QuillTextEditor from "../components/createPost/QuillTextEditor";
@@ -39,10 +40,12 @@ function CreatePost() {
 
    // 로그인 상태가 아니면 로그인 페이지로 이동
    const { pathname } = useLocation();
+   const history = createBrowserHistory();
    useEffect(() => {
       // 로그인 상태가 아니면(memberId가 없으면)
       if (!memberId) {
          //  로그인 페이지로 이동, 현재 페이지 url 기억
+         history.replace("/communitylist");
          navigate("/login", { state: pathname });
       }
    }, [memberId, navigate, pathname]);

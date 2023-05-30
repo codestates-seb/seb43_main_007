@@ -26,7 +26,6 @@ export default Home;
 const HomePageContainer = styled(motion.div)`
    display: flex;
    flex-direction: column;
-   justify-content: center;
 `;
 
 const HomeContainer = styled.div`
