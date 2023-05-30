@@ -14,7 +14,7 @@ import { RootState } from "../store/store";
 
 function PostDetail() {
    const { boardId: boardIdString } = useParams<{ [key: string]: string }>();
-   const { post, handleDeletePost } = usePost(boardIdString || "");
+   const { post, handleDeletePost, postDeleted } = usePost(boardIdString || "");
 
    // 로그인 상태가 아니면 로그인 페이지 이동
    const navigate = useNavigate();
@@ -28,8 +28,14 @@ function PostDetail() {
       }
    }, [memberId, navigate, pathname]);
 
+   useEffect(() => {
+      if (postDeleted) {
+         navigate("/communitylist");
+      }
+   }, [postDeleted, navigate]);
+
    if (!post) {
-      return <div>Loading...</div>;
+      return <div>존재하지 않는 게시글 입니다.</div>;
    }
 
    const baordIdNumber = Number(boardIdString) || 0;

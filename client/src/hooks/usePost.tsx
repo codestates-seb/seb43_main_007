@@ -35,6 +35,7 @@ const usePost = (boardId: string) => {
    const dispatch = useDispatch();
    const navigate = useNavigate();
    const [post, setPost] = useState<Post | null>(null);
+   const [postDeleted, setPostDeleted] = useState(false);
 
    const memberId = useSelector((state: RootState) => state.memberId);
 
@@ -44,6 +45,8 @@ const usePost = (boardId: string) => {
          if (data && data.comments) {
             const commentsWithReplies = groupCommentsAndReplies(data.comments);
             dispatch(setComments(commentsWithReplies));
+         } else if (!data) {
+            setPostDeleted(true);
          }
          setPost(data);
       };
@@ -56,13 +59,14 @@ const usePost = (boardId: string) => {
       if (response) {
          console.log("게시글 삭제");
          postDeleteSuccess();
+         setPostDeleted(true);
          navigate("/communitylist");
       } else {
          serverError();
       }
    };
 
-   return { post, handleDeletePost };
+   return { post, handleDeletePost, postDeleted };
 };
 
 export default usePost;
