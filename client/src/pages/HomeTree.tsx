@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router";
 import { useDispatch } from "react-redux";
+import { motion } from "framer-motion";
 import background from "../assets/img/forest2.jpg";
 import { setMemberId } from "../reducers/memberIdSlice";
 import { setIsAdmin } from "../reducers/isAdminSlice";
@@ -35,10 +36,16 @@ function HomeTree() {
             navigate("/home");
          }
       }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
    }, []);
 
    return (
-      <HomeTreeContainer>
+      <HomeTreeContainer
+         initial={{ opacity: 0 }}
+         animate={{ opacity: 1 }}
+         exit={{ opacity: 0 }}
+         transition={{ duration: 0.5 }}
+      >
          <div className="home-title first">We Gather Together,</div>
          <div className="home-title second">We Save The Earth Together</div>
          <Scroll to="/home">
@@ -51,13 +58,15 @@ function HomeTree() {
 
 export default HomeTree;
 
-const HomeTreeContainer = styled.div`
+const HomeTreeContainer = styled(motion.div)`
    display: flex;
    width: 100vw;
    height: 100%;
    background-image: url(${background});
    background-size: 100% 100%;
-   position: relative;
+   position: fixed;
+   top: 0;
+   left: 0;
 
    .home-title {
       color: white;

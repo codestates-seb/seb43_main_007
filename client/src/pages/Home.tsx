@@ -1,26 +1,36 @@
 import styled from "styled-components";
+import { motion } from "framer-motion";
 import HomeHeader from "../components/home/HomeHeader";
 import EditerPick from "../components/home/EditerPick";
 import background from "../assets/img/home-background.jpg";
+import Footer from "../components/footer/Footer";
 import Navbar from "../components/navbar/NavBar";
+
 
 function Home() {
    return (
-      <HomePageContainer>
+      <HomePageContainer
+         initial={{ opacity: 0 }}
+         animate={{ opacity: 1 }}
+         exit={{ opacity: 0 }}
+         transition={{ duration: 0.5 }}
+      >
          <div>
             <Navbar />
+            <HomeContainer>
+               <HomeHeader />
+               <EditerPick />
+            </HomeContainer>
          </div>
-         <HomeContainer>
-            <HomeHeader />
-            <EditerPick />
-         </HomeContainer>
+         <Footer />
       </HomePageContainer>
    );
 }
 export default Home;
 
-const HomePageContainer = styled.div`
+const HomePageContainer = styled(motion.div)`
    display: flex;
+   flex-direction: column;
    justify-content: center;
 `;
 

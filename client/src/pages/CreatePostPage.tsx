@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router";
 import { useSelector } from "react-redux";
+import { motion } from "framer-motion";
 import { createPost } from "../api/axios";
 import GuideLine from "../components/createPost/GuideLine";
 import QuillTextEditor from "../components/createPost/QuillTextEditor";
@@ -75,7 +76,12 @@ function CreatePost() {
    };
 
    return (
-      <DivContainer>
+      <DivContainer
+         initial={{ opacity: 0 }}
+         animate={{ opacity: 1 }}
+         transition={{ duration: 0.5 }}
+         exit={{ opacity: 0 }}
+      >
          <div className="guide-line">
             <GuideLine />
          </div>
@@ -111,7 +117,7 @@ function CreatePost() {
 
 export default CreatePost;
 
-const DivContainer = styled.div`
+const DivContainer = styled(motion.div)`
    display: flex;
    flex-direction: column;
    margin: 16px 0px 0px 16px;
