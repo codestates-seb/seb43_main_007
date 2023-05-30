@@ -2,7 +2,7 @@ import styled from "styled-components";
 import HomeHeader from "../components/home/HomeHeader";
 import EditerPick from "../components/home/EditerPick";
 import background from "../assets/img/home-background.jpg";
-import Navbar from "../components/NavBar";
+import Navbar from "../components/navbar/NavBar";
 
 function Home() {
    return (
