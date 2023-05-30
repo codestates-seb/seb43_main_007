@@ -1,46 +1,45 @@
 import styled from "styled-components";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import useCommentCharacterCount from "../../hooks/useCommentCharacterCount";
 import { DefaultButton } from "../mypage-profile/EditProfile";
 import { createReply } from "../../api/axios";
 import { RootState } from "../../store/store";
-import { commentError } from "../../util/toastify";
+import { addReply } from "../../reducers/commentsSlice";
+import { commentSuccess, commentError } from "../../util/toastify";
 
 export interface CreateReplyProps {
-   onSubmit: (content: string) => void;
    onCancel: () => void;
    boardId: number;
    parentId: number;
-   refreshPost: () => void;
 }
 
-function CreateReply({
-   onSubmit,
-   onCancel,
-   boardId,
-   parentId,
-   refreshPost,
-}: CreateReplyProps) {
+function CreateReply({ onCancel, boardId, parentId }: CreateReplyProps) {
    const maxLength = 300;
    const { value, characterCount, handleChange, clearValue } =
       useCommentCharacterCount({
          maxLength,
       });
 
+   const dispatch = useDispatch();
+
    const memberId = useSelector((state: RootState) => state.memberId);
 
    const handleReplySubmit = async (event: React.FormEvent) => {
       event.preventDefault();
-      const response = await createReply(boardId, value, memberId, parentId);
-      if (response) {
-         onSubmit(value);
+      try {
+         const response = await createReply(boardId, value, memberId, parentId);
+         if (response) {
+            dispatch(addReply({ commentId: parentId, reply: response }));
+            clearValue();
+            onCancel();
+            commentSuccess();
+         } else {
+            commentError();
+         }
          clearValue();
-         onCancel();
-         refreshPost();
-      } else {
-         commentError();
+      } catch (error) {
+         console.error("Error creating reply:", error);
       }
-      clearValue();
    };
 
    return (
