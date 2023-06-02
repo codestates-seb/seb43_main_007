@@ -50,7 +50,7 @@ function PostTitle({
    // 채택 클릭 이벤트
    const editorPickHandler = () => {
       if (pick === 0) {
-         navigate(`/editpost/${boardId}`);
+         navigate(`/pickpost/${boardId}`);
       } else if (pick === 1) {
          editorPick(boardId);
          setIsPicked(0);

@@ -29,7 +29,7 @@ function PostDetail() {
          history.replace("/communitylist");
          navigate("/login", { state: pathname });
       }
-   }, [memberId, navigate, pathname]);
+   }, [memberId, navigate, pathname, history]);
 
    useEffect(() => {
       if (postDeleted) {

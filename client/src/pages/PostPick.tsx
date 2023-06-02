@@ -3,14 +3,14 @@ import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router";
 import { useSelector } from "react-redux";
 import { motion } from "framer-motion";
-import { getPostData, updatePost } from "../api/axios";
+import { getPostData, updatePost, editorPick } from "../api/axios";
 import GuideLine from "../components/createPost/GuideLine";
 import QuillTextEditor from "../components/createPost/QuillTextEditor";
 import TitleTagCommuForm from "../components/createPost/TitleTagCommuForm";
 import { RootState } from "../store/store";
 import { postError } from "../util/toastify";
 
-function PostEdit() {
+function PostPick() {
    const { boardId: boardIdString } = useParams<{ [key: string]: string }>();
    const boardId = Number(boardIdString) || 0;
    const [item, setItem] = useState("");
@@ -66,6 +66,16 @@ function PostEdit() {
       }
    };
 
+   const editorUpdateHandler = async () => {
+      try {
+         await editorPick(boardId);
+         await updatePostButtonClick();
+         navigate("/home");
+      } catch (error) {
+         console.log(error);
+      }
+   };
+
    return (
       <DivContainer
          initial={{ opacity: 0 }}
@@ -96,17 +106,17 @@ function PostEdit() {
          <DivButton>
             <button
                type="button"
-               onClick={updatePostButtonClick}
+               onClick={editorUpdateHandler}
                className="submit-button"
             >
-               수정
+               채택
             </button>
          </DivButton>
       </DivContainer>
    );
 }
 
-export default PostEdit;
+export default PostPick;
 
 const DivContainer = styled(motion.div)`
    display: flex;

@@ -17,6 +17,7 @@ import MypageBookmark from "./MypageBookmark";
 import Footer from "../components/footer/Footer";
 import MypageMylist from "./MypageMypost";
 import PostEdit from "./PostEdit";
+import PostPick from "./PostPick";
 import Home from "./Home";
 import HomeTree from "./HomeTree";
 
@@ -71,6 +72,7 @@ function RoutingPage() {
                   />
                   <Route path="/createpost" element={<CreatePostPage />} />
                   <Route path="/editpost/:boardId" element={<PostEdit />} />
+                  <Route path="/pickpost/:boardId" element={<PostPick />} />
                   <Route path="/signup" element={<Signup />} />
                   <Route path="/login" element={<Login />} />
                   <Route path="/post/:boardId" element={<PostDetail />} />
