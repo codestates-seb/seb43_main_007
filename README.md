@@ -52,9 +52,6 @@
 |회원정보수정|북마크|내가 쓴 글|
 |<img src="./image/askquestion.png" width="400px">|<img src="./image/questionDetail.png" width="400px">|<img src="./image/editQuestion.png" width="400px">|
 |질문 작성 페이지 <br /> - 각각의 input창에 focus시 오른쪽에 question helper 표시 <br /> - title 작성하고 next버튼 클릭시 detail box 활성화 <br /> - detail 작성 후 next 버튼 클릭시 tryAndExpect box 활성화 <br />  - tryAndExpect 작성 후 next 버튼 클릭시 submit 버튼 활성화 <br /> - submit 버튼 클릭시 제출여부 결정하는 Modal창 표시, Yes를 누르면 질문 작성 POST 요청|질문 수정 페이지 <br /> -질문의 세부내용을 조회가능 <br /> -답변의 내용을 조회 가능<br /> -게시물 주소 copy, 본인 게시물의 경우 edit,delete 기능지원<br />- 게시물 작성 유저 정보 표시 기능<br />- 게시물 투표기능<br />- 질문 정렬기능(최신순, 오래된순)<br />- 타임라인 이동기능|질문 수정 페이지 <br /> -질문의 세부내용을 조회 가능 <br /> -질문의 제목,내용을 수정 가능
-|답변수정|타임라인||
-|<img src="./image/editAnswer.png" width="400px">|<img src="./image/timeline.png" width="400px">||
-|답변 수정 페이지 <br /> -답변의 내용을 조회 가능 <br /> -답변의 내용을 수정 가능|타임라인 페이지 <br /> - 게시물의 생성시간과 수정시간을 조회 가능 ||
 
 
 <br />
