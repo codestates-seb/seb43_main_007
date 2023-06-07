@@ -39,18 +39,18 @@
 </br>
 
 ## 🖥️ Demo
-|회원가입|로그인/로그아웃|아이디/비밀번호 찾기|
+|회원가입|로그인|아이디/비밀번호 찾기|
 | :---: | :---: | :---: |
-|<img src="./image/Signup.png" width="400px">|<img src="./image/success.png" width="400px">|<img src="./image/login.png" width="400px">|
+|<img src="https://imgur.com/uerglF1.png" width="400px">|<img src="https://imgur.com/Wg4kveH.png" width="400px">|<img src="https://imgur.com/rpiZKpW.png" width="400px">|
 |이메일 형식의 아이디와 패스워드를 사용자가 직접 입력하여 가입한다. <br /> 회원 가입 시 별도 이메일 인증 과정은 생략한다. <br /> 이미 가입되어 있는 이메일로는 회원 가입이 불가능하다. <br /> Sign up 버튼 클릭시  Display name, Email, Password 입력 받는 창이 나타난다. <br /> - Display name, Email, Password는 필수값이다. <br /> - Email 형식 (aaa@aaa.aaa) 충족 여부 확인 <br /> - Password는 알파벳과 숫자가 1개 이상, 총 8자 이상|가입 성공 시 로그인 화면으로 이동할 수 있는 버튼이 있는 회원 가입 성공 페이지로 이동한다. <br /> 이메일 주소와 함께 회원 가입 성공 메시지를 띄운다|회원은 이메일과 비밀번호로 로그인을 할 수 있다. <br /> - 로그인 성공시 질문 목록 페이지로 이동하고, 실패시 에러 메시지 출력 <br /> - 로그인 성공 시 헤더의 버튼이 변경된다. <br /> - 변경된 헤더의 로그아웃 버튼 클릭 시 로그아웃된 후 홈 화면으로 이동한다.
 |홈/나비게이션바|게시글 목록|게시글 상세|
-|<img src="./image/myprofile.png" width="400px">|<img src="./image/myactivity.png" width="400px">|<img src="./image/myedit.png" width="400px">|
+|<img src="https://imgur.com/U2pj9xT.png" width="400px">|<img src="https://imgur.com/vHdALZf.png" width="400px">|<img src="https://imgur.com/nkM74pc.png" width="400px">|
 |마이프로필 <br /> - 자신의 프로필을 클릭할 시 마이페이지로 이동한다. <br /> - 프로필로 설정한 나의 소개가 있을 시 확인이 가능하다. <br /> - 활동 내역 중 투표수가 가장 높은 순으로 자신이 쓴 게시물 확인이 가능하다.|마이액티비티 <br /> - 마이페이지에서 Activity 버튼을 클릭할 시 이동한다. <br /> - 자신의 활동 내역을 확인 할 수 있으며, 답변 내용 중 투표 수가 높은 5개와 게시물 중 투표 수가 높은 5개의 글을 확인할 수 있다. <br /> - 5개의 유저가 설정한 웹페이지 연결이 가능하다.|정보변경 <br /> - 마이페이지에서 EditProfile을 클릭할 시 이동한다. <br /> - 닉네임, Title, 자기소개, 다른 페이지 연결 주소를 입력할 수 있다. <br /> - 입력하고 Save 버튼을 누르면 정보가 새로히 저장되고, cancel을 누르면 저장되지 않는다.|
 |게시글 작성|게시글 수정|채택 게시글 수정|
-|<img src="./image/userprofile.png" width="400px">|<img src="./image/useractivity.png" width="400px">|<img src="./image/questionhome.png" width="400px">
+|<img src="https://imgur.com/j3wBHag.png" width="400px">|<img src="https://imgur.com/899XAWu.png" width="400px">|<img src="https://imgur.com/oXE2Icr.png" width="400px">
 |마이프로필 <br /> - 유저의 프로필을 클릭할 시 유저페이지로 이동한다. <br /> - 프로필로 설정한 나의 소개가 있을 시 확인이 가능하다. <br /> - 활동 내역 중 투표수가 가장 높은 순으로 유저가 쓴 게시물 확인이 가능하다.|유저액티비티 <br /> - 유저페이지에서 Activity 버튼을 클릭할 시 이동한다. <br /> - 유저의 활동 내역을 확인 할 수 있으며, 답변 내용 중 투표 수가 높은 5개와 게시물 중 투표 수가 높은 5개의 글을 확인할 수 있다. <br /> - 5개의 유저가 설정한 웹페이지 연결이 가능하다|질문 리스트 페이지(Home) <br /> - AskQuestion 버튼 클릭시 질문 작성 페이지 이동 <br /> - Filter 버튼을 누르면 각 조건에 맞게 필터링 <br /> - 질문 title누르면 질문 상세 페이지 이동, username 클릭시 userprofile 페이지로 이동 <br /> - 페이지 버튼 누르면 각 페이지로 이동, 페이지당 질문 수 버튼누르면 페이지당 질문수 변경|
 |회원정보수정|북마크|내가 쓴 글|
-|<img src="./image/askquestion.png" width="400px">|<img src="./image/questionDetail.png" width="400px">|<img src="./image/editQuestion.png" width="400px">|
+|<img src="https://imgur.com/Zk7l6sb.png" width="400px">|<img src="https://imgur.com/Ph2s8cn.png" width="400px">|<img src="https://imgur.com/hWOUGt2.png" width="400px">|
 |질문 작성 페이지 <br /> - 각각의 input창에 focus시 오른쪽에 question helper 표시 <br /> - title 작성하고 next버튼 클릭시 detail box 활성화 <br /> - detail 작성 후 next 버튼 클릭시 tryAndExpect box 활성화 <br />  - tryAndExpect 작성 후 next 버튼 클릭시 submit 버튼 활성화 <br /> - submit 버튼 클릭시 제출여부 결정하는 Modal창 표시, Yes를 누르면 질문 작성 POST 요청|질문 수정 페이지 <br /> -질문의 세부내용을 조회가능 <br /> -답변의 내용을 조회 가능<br /> -게시물 주소 copy, 본인 게시물의 경우 edit,delete 기능지원<br />- 게시물 작성 유저 정보 표시 기능<br />- 게시물 투표기능<br />- 질문 정렬기능(최신순, 오래된순)<br />- 타임라인 이동기능|질문 수정 페이지 <br /> -질문의 세부내용을 조회 가능 <br /> -질문의 제목,내용을 수정 가능
 
 
