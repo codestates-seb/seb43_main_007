@@ -217,7 +217,7 @@ export const InputButtonContainer = styled.div`
       border: 1px solid var(--light-gray);
    }
 
-   .profile:focus {
+   .profile-input:focus {
       box-shadow: 0 0 0 2px rgba(0, 149, 255, 0.15);
       border: 1px solid var(--second-color3);
       outline: none;
